@@ -1,7 +1,7 @@
-Header
+![Header](https://github.com/NikitaBoyarkin/NikitaBoyarkin/blob/main/assets/name.png)(https://nikitaboyarkin.github.io/Personal_Projects.github.io/)
 
-About me
+# About me
 
-Languas and tools
+# Languas and tools
 
-Contacts
+# Contacts
