@@ -6,7 +6,7 @@
 
 <h3 align="left">Languages and Tools:</h3>
 
-<img src="assets/python-icon.svg"><img src="assets/apache-airflow.svg" width="60" height="60"><img src="assets/postgresql-icon.svg"><img src="assets/clickhouse.svg" width="60" height="60"><img src="assets/tableau-icon.svg" width="60" height="60"><img src="assets/apache-superset-icon.svg" width="60" height="60">
+<img src="assets/python-icon.svg">  <img src="assets/apache-airflow.svg" width="60" height="60">  <img src="assets/postgresql-icon.svg">  <img src="assets/clickhouse.svg" width="60" height="60">  <img src="assets/tableau-icon.svg" width="60" height="60">  <img src="assets/apache-superset-icon.svg" width="60" height="60">
 
 
 
