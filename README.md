@@ -7,6 +7,7 @@
 # Languages and tools
 - Python
 - SQL
+- Airflow
 
 # Contacts
 ![Telegram](assets/telegrem_qr_code.JPG)
