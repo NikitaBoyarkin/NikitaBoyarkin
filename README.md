@@ -10,4 +10,6 @@
 - Airflow
 
 # Contacts
-![Telegram](assets/telegrem_qr_code.JPG)
+<img src="assets/telegrem_qr_code.JPG" width="400" height="600">
+
+
