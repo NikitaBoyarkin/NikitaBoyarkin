@@ -9,4 +9,4 @@
 - SQL
 
 # Contacts
-- telegram: @lofinibo
+![Telegram](assets/telegrem_qr_code.JPG)
