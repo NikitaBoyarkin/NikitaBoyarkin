@@ -1,6 +1,7 @@
 <h3 align="center"> Hi Everyone!</h3>
 
 - I am data analyst/ product analyst
+  
 - All my projects are available at [portfolio](https://nikitaboyarkin.github.io/Personal_Projects.github.io/)
 
 
