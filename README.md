@@ -12,8 +12,8 @@
 <img src="assets/python-icon.svg" width="60" height="60">  <img src="assets/apache-airflow.svg" width="60" height="60">  <img src="assets/postgresql-icon.svg" width="60" height="60">  <img src="assets/clickhouse.svg" width="60" height="60">  <img src="assets/tableau-icon.svg" width="60" height="60">  <img src="assets/apache-superset-icon.svg" width="60" height="60"> <img src="assets/Docker Logo.svg" width="60" height="60"> <img src="assets/Obsidian Dark.svg" width="60" height="60">
 
 
-
 <h3 align="left"> Connect with me </h3>
-<img src="assets/telegrem_qr_code.JPG" width="200" height="200">
-<img src="assets/сетка.JPG" width="200" height="200">
-
+<div style="display: flex; justify-content: space-between; align-items: center;">
+  <img src="assets/telegrem_qr_code.JPG" width="200" height="200" style="margin-right: 20px;">
+  <img src="assets/сетка.JPG" width="200" height="200"tyle="margin-right: 20px;">
+</div>
