@@ -15,5 +15,5 @@
 
 <h3 align="left"> Connect with me </h3>
 <img src="assets/telegrem_qr_code.JPG" width="200" height="200">
-
+<img src="assets/сетка.JPG" width="200" height="200">
 
