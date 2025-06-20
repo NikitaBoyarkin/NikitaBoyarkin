@@ -2,10 +2,10 @@
 
 I'm data analyst/ product analyst
   
-World, the time has come to (push the button) [portfolio](https://nikitaboyarkin.github.io/Personal_Projects.github.io/)
+World, the time has come to push the button → [portfolio](https://nikitaboyarkin.github.io/Personal_Projects.github.io/) Come on, come on, come on with it
 
-World, the time has come to (push the button) [notes](https://nikitaboyarkin.github.io/digital_garden/) 
-
+World, the time has come to push the button → [notes](https://nikitaboyarkin.github.io/digital_garden/) 
+Come on, come on, come on with it
 
 <h3 align="left">Languages and Tools:</h3>
 
