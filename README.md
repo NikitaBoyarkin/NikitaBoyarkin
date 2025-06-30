@@ -1,25 +1,52 @@
-<h3 align="center" > Hi Everyone! Glad to see you!</h3>
+<h3 align="center" > 👋 Hi Everyone! I'm Nikita</h3>
 <div style="display: flex; justify-content: space-between; align-items: left;">
   <div style="flex: 1;">
-I'm data analyst/ product analyst <br><br>
 
-World, the time has come to push the button → [portfolio](https://nikitaboyarkin.github.io/Personal_Projects.github.io/) <br>
-Come on, come on, come on with it <br><br>
+## 📌 About Me
+Data Analyst | Product Analyst | Data Storyteller  
+Passionate about transforming raw data into meaningful insights <br><br>
 
-World, the time has come to push the button → [notes](https://nikitaboyarkin.github.io/digital_garden/) <br>
-Come on, come on, come on with it
+---
+## 🚀 Projects & Notes
+→ [portfolio](https://nikitaboyarkin.github.io/Personal_Projects.github.io/) <br>
+
+→ [notes](https://nikitaboyarkin.github.io/digital_garden/) <br>
+
 </div>
 
 
 </div>
 
-<h3 align="left">Languages and Tools:</h3>
+---
 
-<img src="assets/python-icon.svg" width="60" height="60">  <img src="assets/apache-airflow.svg" width="60" height="60">  <img src="assets/postgresql-icon.svg" width="60" height="60">  <img src="assets/clickhouse.svg" width="60" height="60">  <img src="assets/tableau-icon.svg" width="60" height="60">  <img src="assets/apache-superset-icon.svg" width="60" height="60"> <img src="assets/Docker Logo.svg" width="60" height="60"> <img src="assets/Obsidian Dark.svg" width="60" height="60">
+## 🛠 Tech Stack
+**Data Processing**:  
+<img src="assets/python-icon.svg" width="40" title="Python"> 
+<img src="assets/apache-airflow.svg" width="40" title="Airflow">
 
-<h3 align="left"> Connect with me </h3>
-<div style="display: flex; justify-content: space-between; align-items: center;">
-  <img src="assets/telegrem_qr_code.JPG" width="200" height="200" style="margin-right: 20px;">
-  <img src="assets/сетка.JPG" width="200" height="200"tyle="margin-right: 20px;">
+**Databases**:  
+<img src="assets/postgresql-icon.svg" width="40" title="PostgreSQL"> 
+<img src="assets/clickhouse.svg" width="40" title="ClickHouse">
+
+**Visualization**:  
+<img src="assets/tableau-icon.svg" width="40" title="Tableau"> 
+<img src="assets/apache-superset-icon.svg" width="40" title="Superset">
+
+**Tools**:  
+<img src="assets/Docker Logo.svg" width="40" title="Docker"> 
+<img src="assets/Obsidian Dark.svg" width="40" title="Obsidian">
+
+---
+
+## 📫 Connect With Me
+<div style="display: flex; justify-content: center; gap: 30px;">
+  <div style="text-align: center;">
+    <img src="assets/telegrem_qr_code.JPG" width="150">
+    <p>Telegram</p>
+  </div>
+  <div style="text-align: center;">
+    <img src="assets/сетка.JPG" width="150">
+    <p>Other Network</p>
+  </div>
 </div>
 

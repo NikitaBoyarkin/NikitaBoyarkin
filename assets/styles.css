@@ -1,0 +1,96 @@
+/* assets/css/styles.css */
+.readme-container {
+  max-width: 800px;
+  margin: 0 auto;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  color: #24292e;
+  line-height: 1.5;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.profile-img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #f6f8fa;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.section {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: #f6f8fa;
+  border-radius: 8px;
+}
+
+.section-title {
+  color: #0366d6;
+  border-bottom: 2px solid #e1e4e8;
+  padding-bottom: 0.5rem;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.btn {
+  padding: 0.8rem 1.5rem;
+  background: #0366d6;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  background: #0356b6;
+  transform: translateY(-2px);
+}
+
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.tech-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tech-icon {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 0.5rem;
+}
+
+.contact-cards {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+
+.contact-card {
+  text-align: center;
+}
+
+.qr-code {
+  width: 150px;
+  height: 150px;
+  border: 1px solid #e1e4e8;
+  border-radius: 8px;
+  padding: 0.5rem;
+  background: white;
+}
