@@ -1,11 +1,18 @@
 <h3 align="center" > Hi Everyone! Glad to see you!</h3>
+<div style="display: flex; justify-content: space-between; align-items: center;">
+  <div style="flex: 1;">
+I'm data analyst/ product analyst <br><br>
 
-I'm data analyst/ product analyst
-  
 World, the time has come to push the button → [portfolio](https://nikitaboyarkin.github.io/Personal_Projects.github.io/) Come on, come on, come on with it
 
 World, the time has come to push the button → [notes](https://nikitaboyarkin.github.io/digital_garden/) 
 Come on, come on, come on with it
+</div>
+
+<div style="flex: 1; text-align: right;">
+     <img src="assets/telegrem_qr_code.JPG" width="200" height="200" style="margin-right: 20px;">
+  </div>
+</div>
 
 <h3 align="left">Languages and Tools:</h3>
 
