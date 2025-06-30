@@ -15,7 +15,7 @@ Transforming raw data into actionable insights
 
   </td>
     <td width="60%" align="center">
-
+<a href="https://t.me/lofinibo" target="Telegram">
 <img src="assets/telegrem_qr_code.JPG" width="200" alt="Telegram QR">  
 
 **Telegram**
@@ -74,21 +74,23 @@ Transforming raw data into actionable insights
 ### 📫 Connect With Me
 <table>
   <tr>
-    <td width="70%">
-<p align="left">
-  <a href="https://t.me/your_telegram" target="_blank">
-    <img src="assets/telegrem_qr_code.JPG" width="150" alt="Telegram">
-  </a> 
-  <b>Telegram</b>
+    </td>
+    <td width="60%" align="center">
+<a href="https://t.me/lofinibo" target="Telegram">
+<img src="assets/telegrem_qr_code.JPG" width="200" alt="Telegram QR">  
+
+Telegram
+
+  </td>
+
   </td>
   <tr>
-    <td width="70%">
-  <p align="left">
-  <a href="https://your-other-network.com" target="_blank">
-    <img src="assets/сетка.JPG" width="150" alt="Other Network">
-  </a>
-  <b>Networking</b>
+    <td width="60%">
+  <p align="center">
+  <a href="https://set.ki/4eH9VSA" target="Networking">
+  <img src="assets/сетка.JPG" width="150" alt="Other Network">
+  
+<p align="center"> Networking
 </p>
-<p align="left">
 
-</p>
+</td>
