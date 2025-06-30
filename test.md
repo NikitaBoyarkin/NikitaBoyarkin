@@ -9,15 +9,15 @@
 Transforming raw data into actionable insights  
 
 ### 🚀 My Work  
-- [→ View Portfolio ](https://nikitaboyarkin.github.io/Personal_Projects.github.io/)  
-- [→ View Notes](https://nikitaboyarkin.github.io/digital_garden/)  
+[→ View Portfolio ](https://nikitaboyarkin.github.io/Personal_Projects.github.io/)  
+[→ View Notes](https://nikitaboyarkin.github.io/digital_garden/)  
 
   </td>
     <td width="40%" align="center">
 
-<img src="assets/telegrem_qr_code.JPG" width="200" alt="Telegram QR">  
+### Contacts
 
-**Telegram**
+[Telegram](https://t.me/lofinibo)
 
   </td>
   </tr>

@@ -2,18 +2,19 @@
 
 <table>
   <tr>
-    <td width="60%">
+    <td width="70%">
 
 ### 📌 About Me  
 **Data Analyst | Product Analyst | Data Storyteller**  
 Transforming raw data into actionable insights  
 
 ### 🚀 My Work  
-- [→ View Portfolio ](https://nikitaboyarkin.github.io/Personal_Projects.github.io/)  
-- [→ View Notes](https://nikitaboyarkin.github.io/digital_garden/)  
+[→ View Portfolio ](https://nikitaboyarkin.github.io/Personal_Projects.github.io/)  
+
+[→ View Notes](https://nikitaboyarkin.github.io/digital_garden/)  
 
   </td>
-    <td width="40%" align="center">
+    <td width="60%" align="center">
 
 <img src="assets/telegrem_qr_code.JPG" width="200" alt="Telegram QR">  
 
@@ -55,15 +56,17 @@ Transforming raw data into actionable insights
 
 ### 📫 Connect With Me
 
-<p align="center">
+<p align="left">
   <a href="https://t.me/your_telegram" target="_blank">
     <img src="assets/telegrem_qr_code.JPG" width="150" alt="Telegram">
-  </a> &nbsp;&nbsp;
+  </a> 
+  <b>Telegram</b>
+  <p align="right">
   <a href="https://your-other-network.com" target="_blank">
     <img src="assets/сетка.JPG" width="150" alt="Other Network">
   </a>
+  <b>Other Network</b>
 </p>
 <p align="center">
-  <b>Telegram</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-  <b>Other Network</b>
+
 </p>
