@@ -90,7 +90,7 @@ Telegram
   <a href="https://set.ki/4eH9VSA" target="Networking">
   <img src="assets/сетка.JPG" width="150" alt="Other Network">
   
- Networking
+ [Networking](https://set.ki/4eH9VSA)
 
 
 </td>
