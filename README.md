@@ -4,19 +4,21 @@
   <tr>
     <td width="70%">
 
-### 📌 About Me  
+### 📌 About Me 
+
 **Data Analyst | Product Analyst | Data Storyteller**  
-Transforming raw data into actionable insights  
+Transforming raw data into actionable insights
 
-### 🚀 My Work  
-[→ View Portfolio ](https://nikitaboyarkin.github.io/Personal_Projects.github.io/)  
+### 🚀 My Work
 
-[→ View Notes](https://nikitaboyarkin.github.io/digital_garden/)  
+[→ View Portfolio ](https://nikitaboyarkin.github.io/Personal_Projects.github.io/)
+
+[→ View Notes](https://nikitaboyarkin.github.io/digital_garden/)
 
   </td>
-    <td width="60%" align="center">
+    <td width="100%" align="center">
 <a href="https://t.me/lofinibo" target="Telegram">
-<img src="assets/telegrem_qr_code.JPG" width="200" alt="Telegram QR">  
+<img src="assets/telegrem_qr_code.JPG" width="200" alt="Telegram QR">
 
 **Telegram**
 
@@ -27,6 +29,7 @@ Transforming raw data into actionable insights
 ---
 
 ### 🛠 Tech Stack
+
 <table>
   <tr>
     <td width="70%">
@@ -37,11 +40,11 @@ Transforming raw data into actionable insights
   <img src="assets/apache-airflow.svg" width="40" title="Airflow" alt="Airflow">
 </p>
 
-
 <tr>
     <td width="70%">
 
 #### Databases
+
 <p>
   <img src="assets/postgresql-icon.svg" width="40" title="PostgreSQL" alt="PostgreSQL">
   <img src="assets/clickhouse.svg" width="40" title="ClickHouse" alt="ClickHouse">
@@ -51,6 +54,7 @@ Transforming raw data into actionable insights
     <td width="70%">
 
 #### Visualization
+
 <p>
   <img src="assets/tableau-icon.svg" width="40" title="Tableau" alt="Tableau">
   <img src="assets/apache-superset-icon.svg" width="40" title="Superset" alt="Superset">
@@ -58,8 +62,8 @@ Transforming raw data into actionable insights
 <tr>
     <td width="70%">
 
-
 #### Tools
+
 <p>
   <img src="assets/Docker Logo.svg" width="40" title="Docker" alt="Docker">
   <img src="assets/Obsidian Dark.svg" width="40" title="Obsidian" alt="Obsidian">
@@ -72,25 +76,34 @@ Transforming raw data into actionable insights
 ---
 
 ### 📫 Connect With Me
+
+
 <table>
   <tr>
+    <td width="70%">
+
+
+Phone: +7(985)699-96-86
+
+Email: boyarkin_yandex@mail.ru
+
+  </td>
     </td>
-    <td width="60%" align="center">
+    <td width="100%" align="center">
 <a href="https://t.me/lofinibo" target="Telegram">
-<img src="assets/telegrem_qr_code.JPG" width="200" alt="Telegram QR">  
+<img src="assets/telegrem_qr_code.JPG" width="200" alt="Telegram QR">
 
-Telegram
-
-  </td>
+**Telegram**
 
   </td>
+  
   <tr>
-    <td width="60%">
+    <td width="50%">
   <p align="center">
   <a href="https://set.ki/4eH9VSA" target="Networking">
-  <img src="assets/сетка.JPG" width="150" alt="Other Network">
+  <img src="assets/сетка.JPG" width="200" alt="Other Network">
   
  [Networking](https://set.ki/4eH9VSA)
 
-
 </td>
+</table>
