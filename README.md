@@ -18,7 +18,7 @@ Transforming raw data into actionable insights
   </td>
     <td width="100%" align="center">
 <a href="https://linktr.ee/lofinibo" target="linktr">
-<img src="assets/Linktree.svg" width="200" alt="Telegram QR">
+<img src="assets/linktr.jpeg" width="200" alt="Telegram QR">
 
 **linktr**
 
