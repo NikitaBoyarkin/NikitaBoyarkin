@@ -17,10 +17,10 @@ Transforming raw data into actionable insights
 
   </td>
     <td width="100%" align="center">
-<a href="https://t.me/lofinibo" target="Telegram">
-<img src="assets/telegrem_qr_code.JPG" width="200" alt="Telegram QR">
+<a href="https://linktr.ee/lofinibo" target="linktr">
+<img src="assets/Linktree.svg" width="200" alt="Telegram QR">
 
-**Telegram**
+**linktr**
 
   </td>
   </tr>
@@ -89,7 +89,7 @@ Email: boyarkin_yandex@mail.ru
 
   </td>
     </td>
-    <td width="100%" align="center">
+    <td width="60%" align="center">
 <a href="https://t.me/lofinibo" target="Telegram">
 <img src="assets/telegrem_qr_code.JPG" width="200" alt="Telegram QR">
 
@@ -102,8 +102,12 @@ Email: boyarkin_yandex@mail.ru
   <p align="center">
   <a href="https://set.ki/4eH9VSA" target="Networking">
   <img src="assets/сетка.JPG" width="200" alt="Other Network">
-  
- [Networking](https://set.ki/4eH9VSA)
+
+
+[Networking](https://set.ki/4eH9VSA)
+
+
+
 
 </td>
 </table>
