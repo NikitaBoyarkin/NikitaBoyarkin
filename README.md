@@ -49,7 +49,7 @@ I transform complex data into clear, actionable stories that drive product strat
 **📧 Email:** boyarkin_yandex@mail.ru
 
 [![Telegram](https://img.shields.io/badge/Telegram-Contact_Me-26A5E4)](https://t.me/lofinibo)
-[![Networking](https://img.shields.io/badge/🌐-All_My_Links-FFA500)](https://set.ki/4eH9VSA)
+[![Networking](https://img.shields.io/badge/Сетка-Contact_Me-FFA500)](https://set.ki/4eH9VSA)
 
 <a href="https://t.me/lofinibo">
   <img src="assets/telegrem_qr_code.JPG" width="150" alt="Telegram QR">
