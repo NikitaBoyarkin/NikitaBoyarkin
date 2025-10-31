@@ -1,113 +1,58 @@
 ## 👋 Hi Everyone! I'm Nikita
 
-<table>
-  <tr>
-    <td width="70%">
-
-### 📌 About Me 
-
 **Data Analyst | Product Analyst | Data Storyteller**  
-Transforming raw data into actionable insights
+I transform complex data into clear, actionable stories that drive product strategy and business decisions.
 
-### 🚀 My Work
+---
 
-[→ View Portfolio ](https://nikitaboyarkin.github.io/Personal_Projects.github.io/)
+### 🚀 My Work & Resources
 
-[→ View Notes](https://nikitaboyarkin.github.io/digital_garden/)
+<div align="center">
+  
+[![Portfolio](https://img.shields.io/badge/📊_Portfolio-View_Projects-8A2BE2)](https://nikitaboyarkin.github.io/Personal_Projects.github.io/)
+[![Notes](https://img.shields.io/badge/🌱_Digital_Garden-Read_Notes-228B22)](https://nikitaboyarkin.github.io/digital_garden/)
+[![All Links](https://img.shields.io/badge/🔗_All_Links-Linktree-FF69B4)](https://linktr.ee/lofinibo)
 
-  </td>
-    <td width="100%" align="center">
-<a href="https://linktr.ee/lofinibo" target="linktr">
-<img src="assets/linktr.jpeg" width="200" alt="Telegram QR">
-
-**linktr**
-
-  </td>
-  </tr>
-</table>
+</div>
 
 ---
 
 ### 🛠 Tech Stack
 
-<table>
-  <tr>
-    <td width="70%">
-    
-#### Data Processing
-<p>
-  <img src="assets/python-icon.svg" width="40" title="Python" alt="Python">
-  <img src="assets/apache-airflow.svg" width="40" title="Airflow" alt="Airflow">
-</p>
+<div align="center">
 
-<tr>
-    <td width="70%">
+#### **Data Processing**
+<img src="assets/python-icon.svg" width="50" title="Python">
+<img src="assets/apache-airflow.svg" width="50" title="Airflow">
 
-#### Databases
+#### **Databases**
+<img src="assets/postgresql-icon.svg" width="50" title="PostgreSQL">
+<img src="assets/clickhouse.svg" width="50" title="ClickHouse">
 
-<p>
-  <img src="assets/postgresql-icon.svg" width="40" title="PostgreSQL" alt="PostgreSQL">
-  <img src="assets/clickhouse.svg" width="40" title="ClickHouse" alt="ClickHouse">
-</p>
-</td>
-<tr>
-    <td width="70%">
+#### **Visualization**
+<img src="assets/tableau-icon.svg" width="50" title="Tableau">
+<img src="assets/apache-superset-icon.svg" width="50" title="Superset">
 
-#### Visualization
+#### **Tools**
+<img src="assets/Docker Logo.svg" width="50" title="Docker">
+<img src="assets/Obsidian Dark.svg" width="50" title="Obsidian">
 
-<p>
-  <img src="assets/tableau-icon.svg" width="40" title="Tableau" alt="Tableau">
-  <img src="assets/apache-superset-icon.svg" width="40" title="Superset" alt="Superset">
-</p>
-<tr>
-    <td width="70%">
-
-#### Tools
-
-<p>
-  <img src="assets/Docker Logo.svg" width="40" title="Docker" alt="Docker">
-  <img src="assets/Obsidian Dark.svg" width="40" title="Obsidian" alt="Obsidian">
-</p>
-</td>
-
-</tr>
-</table>
+</div>
 
 ---
 
 ### 📫 Connect With Me
 
+<div align="center">
 
-<table>
-  <tr>
-    <td width="70%">
+**📞 Phone:** +7 (985) 699-96-86  
+**📧 Email:** boyarkin_yandex@mail.ru
 
+[![Telegram](https://img.shields.io/badge/Telegram-Contact_Me-26A5E4)](https://t.me/lofinibo)
+[![Networking](https://img.shields.io/badge/🌐-All_My_Links-FFA500)](https://set.ki/4eH9VSA)
 
-Phone: +7(985)699-96-86
+<a href="https://t.me/lofinibo">
+  <img src="assets/telegrem_qr_code.JPG" width="150" alt="Telegram QR">
+</a>
 
-Email: boyarkin_yandex@mail.ru
-
-  </td>
-    </td>
-    <td width="60%" align="center">
-<a href="https://t.me/lofinibo" target="Telegram">
-<img src="assets/telegrem_qr_code.JPG" width="200" alt="Telegram QR">
-
-**Telegram**
-
-  </td>
-  
-  <tr>
-    <td width="50%">
-  <p align="center">
-  <a href="https://set.ki/4eH9VSA" target="Networking">
-  <img src="assets/сетка.JPG" width="200" alt="Other Network">
-
-
-[Networking](https://set.ki/4eH9VSA)
-
-
-
-
-</td>
-</table>
+</div>
