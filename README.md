@@ -14,13 +14,9 @@ Links: [linktr.ee/lofinibo](https://linktr.ee/lofinibo)
 ### GitHub Stats & Top Languages
 
 <p align="center">
-  <!-- Stats card: dual light/dark -->
-  <img height="170" src="https://beautiful-github-homepage.vercel.app/api?username=NikitaBoyarkin&show_icons=true&include_all_commits=true&hide=issues&theme=dark#gh-dark-mode-only" alt="NikitaBoyarkin GitHub Stats" />
-  <img height="170" src="https://beautiful-github-homepage.vercel.app/api?username=NikitaBoyarkin&show_icons=true&include_all_commits=true&hide=issues&theme=default#gh-light-mode-only" alt="NikitaBoyarkin GitHub Stats" />
+  <img height="170" src="https://beautiful-github-homepage.vercel.app/api?username=NikitaBoyarkin&show_icons=true&include_all_commits=true&hide=issues&theme=dark" alt="NikitaBoyarkin GitHub Stats" />
   &nbsp;
-  <!-- Top languages: dual light/dark -->
-  <img height="170" src="https://beautiful-github-homepage.vercel.app/api/top-langs?username=NikitaBoyarkin&layout=donut&theme=dark#gh-dark-mode-only" alt="Top Languages" />
-  <img height="170" src="https://beautiful-github-homepage.vercel.app/api/top-langs?username=NikitaBoyarkin&layout=donut&theme=default#gh-light-mode-only" alt="Top Languages" />
+  <img height="170" src="https://beautiful-github-homepage.vercel.app/api/top-langs?username=NikitaBoyarkin&layout=donut&theme=dark" alt="Top Languages" />
 </p>
 
 ---
