@@ -1,4 +1,11 @@
-## Hi, I'm Nikita — Product & Data Analyst
+<p align="center">
+  <img src="https://github.com/NikitaBoyarkin.png" width="140" height="140" alt="NikitaBoyarkin" style="border-radius:50%" />
+</p>
+<p align="center">
+  <img src="https://readme-typing-svg.demolab.com?lines=Product+%26+Data+Analyst;A%2FB+testing;Cohort+retention;RFM+segmentation&center=true&vCenter=true&width=520&height=70&font=JetBrains+Mono&size=24" alt="Typing SVG" />
+</p>
+
+## Hi, I'm Nikita
 
 I turn ambiguous product questions into clean experiments, SQL pipelines, and decisions backed by data.
 
@@ -14,9 +21,24 @@ Links: [linktr.ee/lofinibo](https://linktr.ee/lofinibo)
 ### GitHub Stats & Top Languages
 
 <p align="center">
-  <img height="170" src="https://beautiful-github-homepage.vercel.app/api?username=NikitaBoyarkin&show_icons=true&include_all_commits=true&hide=issues&theme=dark" alt="NikitaBoyarkin GitHub Stats" />
+  <img height="170" src="https://beautiful-github-homepage.vercel.app/api?username=NikitaBoyarkin&show_icons=true&include_all_commits=true&hide=issues&show=reviews,prs_merged_percentage&rank_icon=github&theme=dark&hide_border=true" alt="NikitaBoyarkin GitHub Stats" />
   &nbsp;
-  <img height="170" src="https://beautiful-github-homepage.vercel.app/api/top-langs?username=NikitaBoyarkin&layout=donut&theme=dark" alt="Top Languages" />
+  <img height="170" src="https://beautiful-github-homepage.vercel.app/api/top-langs?username=NikitaBoyarkin&layout=donut&theme=dark&hide_border=true" alt="Top Languages" />
+</p>
+
+---
+
+### Activity & Streak
+
+<p align="center">
+  <img src="https://streak-stats.demolab.com/?user=NikitaBoyarkin&theme=dark&hide_border=true" alt="GitHub Streak Stats" />
+</p>
+<p align="center">
+  <img src="https://github-readme-activity-graph.vercel.app/graph?username=NikitaBoyarkin&theme=react-dark&hide_border=true&area=true" alt="NikitaBoyarkin Activity Graph" />
+</p>
+
+<p align="center">
+  <img src="https://komarev.com/ghpvc/?username=NikitaBoyarkin&color=blueviolet&style=flat-square&label=Profile+Views" alt="Profile views" />
 </p>
 
 ---
@@ -53,16 +75,20 @@ Links: [linktr.ee/lofinibo](https://linktr.ee/lofinibo)
 
 ### Tech Stack
 
+<p align="center">
+  <img src="https://skillicons.dev/icons?i=python,scikitlearn,postgres,sqlite,docker,git&theme=dark&perline=6" alt="Core stack" />
+</p>
+
 **Languages & Libraries**
 
-![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white)
 ![Pandas](https://img.shields.io/badge/Pandas-150458?logo=pandas&logoColor=white)
 ![NumPy](https://img.shields.io/badge/NumPy-013243?logo=numpy&logoColor=white)
-![Scikit-learn](https://img.shields.io/badge/Scikit--learn-F7931E?logo=scikitlearn&logoColor=white)
+![SciPy](https://img.shields.io/badge/SciPy-6B7B8A?logo=scipy&logoColor=white)
+![Statsmodels](https://img.shields.io/badge/Statsmodels-7B1FA2?logo=statsmodels&logoColor=white)
+![Matplotlib](https://img.shields.io/badge/Matplotlib-11557c?logo=matplotlib&logoColor=white)
 
 **Databases & Warehouses**
 
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=white)
 ![ClickHouse](https://img.shields.io/badge/ClickHouse-FFCC00?logo=clickhouse&logoColor=black)
 ![SQL](https://img.shields.io/badge/SQL-003B57?logo=sqlite&logoColor=white)
 
@@ -70,13 +96,10 @@ Links: [linktr.ee/lofinibo](https://linktr.ee/lofinibo)
 
 ![Tableau](https://img.shields.io/badge/Tableau-E97627?logo=tableau&logoColor=white)
 ![Apache Superset](https://img.shields.io/badge/Superset-20A6C9?logo=apachesuperset&logoColor=white)
-![Matplotlib](https://img.shields.io/badge/Matplotlib-11557c?logo=matplotlib&logoColor=white)
 
 **Orchestration & Dev Tools**
 
 ![Apache Airflow](https://img.shields.io/badge/Airflow-017CEE?logo=apacheairflow&logoColor=white)
-![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
-![Git](https://img.shields.io/badge/Git-F05032?logo=git&logoColor=white)
 
 ---
 
@@ -89,4 +112,4 @@ Open to product analytics roles, freelance data projects, and collaborations in 
 
 ---
 
-<sub>Dynamic cards powered by [beautiful-github-homepage](https://github.com/ishandutta2007/beautiful-github-homepage).</sub>
+<sub>Dynamic cards powered by [beautiful-github-homepage](https://github.com/ishandutta2007/beautiful-github-homepage), [streak-stats](https://github.com/DenverCoder1/github-readme-streak-stats), [activity-graph](https://github.com/ashutosh00710/github-readme-activity-graph), [skill-icons](https://github.com/tandpfun/skill-icons), and [typing-svg](https://github.com/DenverCoder1/readme-typing-svg).</sub>
