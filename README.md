@@ -1,12 +1,33 @@
-## Hi, I'm Nikita — Data & Product Analyst
+## Hi, I'm Nikita — Product & Data Analyst
 
-**Turning complex data into clear product decisions.**
+I turn ambiguous product questions into clean experiments, SQL pipelines, and decisions backed by data.
 
-I specialize in product analytics, A/B testing, and data storytelling. I build end-to-end analytical solutions — from SQL pipelines and Python automations to interactive dashboards and strategic insights.
+- **Product experimentation** — A/B test design, sample-size planning, guardrail metrics, reproducible reporting.
+- **User lifecycle analytics** — cohort retention, funnel analysis, RFM segmentation.
+- **End-to-end delivery** — SQL → Python → dashboard → stakeholder narrative.
 
-- Portfolio: [nikitaboyarkin.github.io](https://nikitaboyarkin.github.io/Personal_Projects.github.io/)
-- Digital Garden: [nikitaboyarkin.github.io/digital_garden](https://nikitaboyarkin.github.io/digital_garden/)
-- All links: [linktr.ee/lofinibo](https://linktr.ee/lofinibo)
+Portfolio: [nikitaboyarkin.github.io/Personal_Projects.github.io](https://nikitaboyarkin.github.io/Personal_Projects.github.io/)  
+Links: [linktr.ee/lofinibo](https://linktr.ee/lofinibo)
+
+---
+
+### Featured Projects
+
+| Project | What it does | Stack |
+|---|---|---|
+| [A/B Testing Framework](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/abtest/) | End-to-end experiment workflow: hypothesis → sample size → randomization checks → stat test → decision report. | Python, SciPy, Statsmodels, Pandas |
+| [Cohort Analysis Dashboard](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/cohort/) | Interactive retention matrix and churn curves by acquisition channel. | Python, SQL, Tableau |
+| [RFM Segmentation of Bank Clients](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/rfm/) | Customer segmentation by recency, frequency, and monetary value; actionable cluster profiles. | Python, SQL, Tableau |
+| [Telegram Reporting Bot](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/bot/) | Automated metrics delivery and ad-hoc SQL queries via a Telegram bot. | Python, SQL, Tableau |
+
+---
+
+### Recent Notes
+
+- [Bayesian A/B Testing: When and How](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/bayesian-ab-testing/)
+- [Cohort Retention Guide](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/cohort-retention-guide/)
+- [RFM Segmentation in Practice](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/rfm-segmentation-practical/)
+- [Building a Telegram Reporting Bot](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/telegram-reporting-bot/)
 
 ---
 
@@ -17,19 +38,19 @@ I specialize in product analytics, A/B testing, and data storytelling. I build e
 ![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white)
 ![Pandas](https://img.shields.io/badge/Pandas-150458?logo=pandas&logoColor=white)
 ![NumPy](https://img.shields.io/badge/NumPy-013243?logo=numpy&logoColor=white)
-![Scikit--learn](https://img.shields.io/badge/Scikit--learn-F7931E?logo=scikitlearn&logoColor=white)
+![Scikit-learn](https://img.shields.io/badge/Scikit--learn-F7931E?logo=scikitlearn&logoColor=white)
 
 **Databases & Warehouses**
 
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=white)
 ![ClickHouse](https://img.shields.io/badge/ClickHouse-FFCC00?logo=clickhouse&logoColor=black)
-![SQL](https://img.shields.io/badge/SQL-003B57?logo=databricks&logoColor=white)
+![SQL](https://img.shields.io/badge/SQL-003B57?logo=sqlite&logoColor=white)
 
 **Visualization & BI**
 
 ![Tableau](https://img.shields.io/badge/Tableau-E97627?logo=tableau&logoColor=white)
 ![Apache Superset](https://img.shields.io/badge/Superset-20A6C9?logo=apachesuperset&logoColor=white)
-![Matplotlib](https://img.shields.io/badge/Matplotlib-11557c?logo=plotly&logoColor=white)
+![Matplotlib](https://img.shields.io/badge/Matplotlib-11557c?logo=matplotlib&logoColor=white)
 
 **Orchestration & Dev Tools**
 
@@ -37,37 +58,11 @@ I specialize in product analytics, A/B testing, and data storytelling. I build e
 ![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
 ![Git](https://img.shields.io/badge/Git-F05032?logo=git&logoColor=white)
 
-**Productivity & Knowledge**
-
-![Obsidian](https://img.shields.io/badge/Obsidian-7C3AED?logo=obsidian&logoColor=white)
-![Jupyter](https://img.shields.io/badge/Jupyter-F37626?logo=jupyter&logoColor=white)
-
----
-
-### Featured Projects
-
-| Project | Stack | What it does |
-|---------|-------|--------------|
-| [E-commerce A/B Testing Framework](https://nikitaboyarkin.github.io/Personal_Projects.github.io/ab_testing_framework/) | Python, SQL, Airflow | An end-to-end A/B testing pipeline for e-commerce platforms, including data collection, analysis, and reporting. |
-
----
-
-### Currently Working On
-
-> portfolio updates, a new A/B testing case study, and a deep dive into customer segmentation techniques. Stay tuned for more insights and projects!
-
 ---
 
 ### Let's Connect
 
 [![Telegram](https://img.shields.io/badge/Telegram-Contact-26A5E4?logo=telegram&logoColor=white)](https://t.me/lofinibo)
 [![Email](https://img.shields.io/badge/Email-boyarkin__yandex@mail.ru-EA4335?logo=gmail&logoColor=white)](mailto:boyarkin_yandex@mail.ru)
-[![Set.ki](https://img.shields.io/badge/Set.ki-Network-FFA500)](https://set.ki/4eH9VSA)
 
-<a href="https://t.me/lofinibo">
-  <img src="assets/telegrem_qr_code.JPG" width="120" alt="Telegram QR">
-</a>
-
----
-
-*Open to product analytics roles, freelance data projects, and collaborations in the A/B testing & experimentation space.*
+Open to product analytics roles, freelance data projects, and collaborations in experimentation & user retention.
