@@ -47,29 +47,32 @@ Links: [linktr.ee/lofinibo](https://linktr.ee/lofinibo)
 
 | Project | What it does | Stack |
 |---|---|---|
-| [A/B Testing Framework](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/abtest/) | End-to-end experiment workflow: hypothesis → sample size → randomization checks → stat test → decision report. | Python, SciPy, Statsmodels, Pandas |
-| [Cohort Analysis Dashboard](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/cohort/) | Interactive retention matrix and churn curves by acquisition channel. | Python, SQL, Tableau |
-| [RFM Segmentation of Bank Clients](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/rfm/) | Customer segmentation by recency, frequency, and monetary value; actionable cluster profiles. | Python, SQL, Tableau |
-| [Telegram Reporting Bot](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/bot/) | Automated metrics delivery and ad-hoc SQL queries via a Telegram bot. | Python, SQL, Tableau |
+| [Volta Neobank — Product Analytics](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/volta/) | End-to-end neobank analytics: funnel, A/B test, retention, segmentation. +6.24pp KYC conversion (Z=6.35, p<0.0001), €716K/yr (48× ROI). CUPED + AA-test + Bonferroni. | Python, SciPy, Statsmodels, scikit-learn |
+| [SQL Analytics Case Study](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/sql/) | Ten end-to-end SQL cases on DuckDB — funnel, N-day retention, DAU/MAU stickiness, LTV, streaks, A/B conversion, attribution. One command, no server. | SQL, DuckDB, pytest |
+| [Cohort Analysis Dashboard](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/cohort/) | Cohort retention + LTV analysis with Tableau-ready export (CSV + Hyper extract). Reproducible seeded pipeline. | Python, pandas, Tableau |
+| [RFM Segmentation of Bank Clients](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/rfm/) | Customer segmentation by recency, frequency, monetary value; actionable cluster profiles. | Python, SQL, Tableau |
+| [Reporting Automation Telegram Bot](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/bot/) | Automated weekly reporting via Telegram bot — KPI tables + sparklines delivered on schedule, with fallback alerts. | Python, aiogram, SQL |
+| [Digital Garden](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/garden/) | Personal Zettelkasten published with Quartz v4 — linked notes, backlinks, graph view, atomic evergreen notes. | TypeScript, Quartz v4 |
 
 ### Pinned Repositories
 
 <p align="center">
   <a href="https://github.com/NikitaBoyarkin/rfm-analysis-of-bank-clients"><img src="https://beautiful-github-homepage.vercel.app/api/pin?username=NikitaBoyarkin&repo=rfm-analysis-of-bank-clients" alt="rfm-analysis-of-bank-clients" /></a>
-  <a href="https://github.com/NikitaBoyarkin/sales-calls-dashboard"><img src="https://beautiful-github-homepage.vercel.app/api/pin?username=NikitaBoyarkin&repo=sales-calls-dashboard" alt="sales-calls-dashboard" /></a>
+  <a href="https://github.com/NikitaBoyarkin/volta-banking"><img src="https://beautiful-github-homepage.vercel.app/api/pin?username=NikitaBoyarkin&repo=volta-banking" alt="volta-banking" /></a>
   <br />
   <a href="https://github.com/NikitaBoyarkin/tableau_cohort_analysis"><img src="https://beautiful-github-homepage.vercel.app/api/pin?username=NikitaBoyarkin&repo=tableau_cohort_analysis" alt="tableau_cohort_analysis" /></a>
-  <a href="https://github.com/NikitaBoyarkin/ab_test"><img src="https://beautiful-github-homepage.vercel.app/api/pin?username=NikitaBoyarkin&repo=ab_test" alt="ab_test" /></a>
+  <a href="https://github.com/NikitaBoyarkin/sql-analytics-case-study"><img src="https://beautiful-github-homepage.vercel.app/api/pin?username=NikitaBoyarkin&repo=sql-analytics-case-study" alt="sql-analytics-case-study" /></a>
 </p>
 
 ---
 
 ### Recent Notes
 
-- [Bayesian A/B Testing: When and How](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/bayesian-ab-testing/)
-- [Cohort Retention Guide](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/cohort-retention-guide/)
-- [RFM Segmentation in Practice](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/rfm-segmentation-practical/)
-- [Building a Telegram Reporting Bot](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/telegram-reporting-bot/)
+- [Чек-лист портфолио дата-аналитика](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/data-analyst-portfolio-checklist/)
+- [Автоматизация недельных отчётов через Telegram-бота](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/telegram-reporting-bot/)
+- [RFM-сегментация клиентов](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/rfm-segmentation-practical/)
+- [Когортный анализ удержания](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/cohort-retention-guide/)
+- [Почему мы перешли на байесовское A/B-тестирование](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/bayesian-ab-testing/)
 
 ---
 
@@ -90,6 +93,7 @@ Links: [linktr.ee/lofinibo](https://linktr.ee/lofinibo)
 **Databases & Warehouses**
 
 ![ClickHouse](https://img.shields.io/badge/ClickHouse-FFCC00?logo=clickhouse&logoColor=black)
+![DuckDB](https://img.shields.io/badge/DuckDB-FFF000?logo=duckdb&logoColor=black)
 ![SQL](https://img.shields.io/badge/SQL-003B57?logo=sqlite&logoColor=white)
 
 **Visualization & BI**
