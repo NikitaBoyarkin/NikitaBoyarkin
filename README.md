@@ -28,6 +28,20 @@ Links: [linktr.ee/lofinibo](https://linktr.ee/lofinibo)
 
 ---
 
+### Profile Dashboard
+
+<p align="center">
+  <a href="https://github.com/NikitaBoyarkin"><img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=NikitaBoyarkin&theme=dark" alt="Profile details" /></a>
+  &nbsp;
+  <a href="https://github.com/NikitaBoyarkin?tab=repositories"><img src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=NikitaBoyarkin&theme=dark" alt="Repos per language" /></a>
+  <br />
+  <a href="https://github.com/NikitaBoyarkin"><img src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=NikitaBoyarkin&theme=dark" alt="Top language by commits" /></a>
+  &nbsp;
+  <a href="https://github.com/NikitaBoyarkin"><img src="https://github-profile-summary-cards.vercel.app/api/cards/productive-time?username=NikitaBoyarkin&theme=dark&utcOffset=3" alt="Productive time" /></a>
+</p>
+
+---
+
 ### Activity & Streak
 
 <p align="center">
