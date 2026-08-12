@@ -1,0 +1,24 @@
+name: Update Recent Notes
+
+on:
+  schedule:
+    - cron: "33 3 * * *" # daily ~03:33 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Update recent notes from RSS
+        uses: gautamkrishnar/blog-post-workflow@master
+        with:
+          comment_tag_name: "RECENT-POSTS-LIST"
+          max_post_count: "5"
+          feed_list: "https://nikitaboyarkin.github.io/Personal_Projects.github.io/rss.xml"
+          commit_message: "chore: update recent notes from RSS"

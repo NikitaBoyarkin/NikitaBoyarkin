@@ -18,6 +18,21 @@ Links: [linktr.ee/lofinibo](https://linktr.ee/lofinibo)
 
 ---
 
+### Currently
+
+- 🔭 Working on: dissertation on IT-leaders' emotional intelligence (ВАК 5.3.3)
+- 📚 Learning: Bayesian A/B testing, ClickHouse deep dives
+- 💼 Open to: product / data analyst roles, freelance data projects
+- 🤝 Collab: experimentation, user retention analytics
+
+---
+
+### Contents
+
+- [Currently](#currently) · [Stats](#github-stats--top-languages) · [Dashboard](#profile-dashboard) · [Activity](#activity--streak) · [Featured Projects](#featured-projects) · [Pinned](#pinned-repositories) · [Recent Notes](#recent-notes) · [Tech Stack](#tech-stack) · [Connect](#lets-connect)
+
+---
+
 ### GitHub Stats & Top Languages
 
 <p align="center">
@@ -52,6 +67,13 @@ Links: [linktr.ee/lofinibo](https://linktr.ee/lofinibo)
 </p>
 
 <p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/output/github-contribution-grid-snake-dark.svg" />
+    <img src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/output/github-contribution-grid-snake.svg" alt="Contribution snake" />
+  </picture>
+</p>
+
+<p align="center">
   <img src="https://komarev.com/ghpvc/?username=NikitaBoyarkin&color=blueviolet&style=flat-square&label=Profile+Views" alt="Profile views" />
 </p>
 
@@ -59,14 +81,14 @@ Links: [linktr.ee/lofinibo](https://linktr.ee/lofinibo)
 
 ### Featured Projects
 
-| Project | What it does | Stack |
-| --- | --- | --- |
-| [Volta Neobank — Product Analytics](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/volta/) | End-to-end neobank analytics: funnel, A/B test, retention, segmentation. +6.24pp KYC conversion (Z=6.35, p<0.0001), €716K/yr (48× ROI). CUPED + AA-test + Bonferroni. | Python, SciPy, Statsmodels, scikit-learn |
-| [SQL Analytics Case Study](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/sql/) | Ten end-to-end SQL cases on DuckDB — funnel, N-day retention, DAU/MAU stickiness, LTV, streaks, A/B conversion, attribution. One command, no server. | SQL, DuckDB, pytest |
-| [Cohort Analysis Dashboard](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/cohort/) | Cohort retention + LTV analysis with Tableau-ready export (CSV + Hyper extract). Reproducible seeded pipeline. | Python, pandas, Tableau |
-| [RFM Segmentation of Bank Clients](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/rfm/) | Customer segmentation by recency, frequency, monetary value; actionable cluster profiles. | Python, SQL, Tableau |
-| [Reporting Automation Telegram Bot](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/bot/) | Automated weekly reporting via Telegram bot — KPI tables + sparklines delivered on schedule, with fallback alerts. | Python, aiogram, SQL |
-| [Digital Garden](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/garden/) | Personal Zettelkasten published with Quartz v4 — linked notes, backlinks, graph view, atomic evergreen notes. | TypeScript, Quartz v4 |
+| Project | What it does | Stack | Activity |
+| --- | --- | --- | --- |
+| [Volta Neobank — Product Analytics](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/volta/) | End-to-end neobank analytics: funnel, A/B test, retention, segmentation. +6.24pp KYC conversion (Z=6.35, p<0.0001), €716K/yr (48× ROI). CUPED + AA-test + Bonferroni. | Python, SciPy, Statsmodels, scikit-learn | ![stars](https://img.shields.io/github/stars/NikitaBoyarkin/volta-banking?style=flat-square) ![last-commit](https://img.shields.io/github/last-commit/NikitaBoyarkin/volta-banking?style=flat-square) |
+| [SQL Analytics Case Study](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/sql/) | Ten end-to-end SQL cases on DuckDB — funnel, N-day retention, DAU/MAU stickiness, LTV, streaks, A/B conversion, attribution. One command, no server. | SQL, DuckDB, pytest | ![stars](https://img.shields.io/github/stars/NikitaBoyarkin/sql-analytics-case-study?style=flat-square) ![last-commit](https://img.shields.io/github/last-commit/NikitaBoyarkin/sql-analytics-case-study?style=flat-square) |
+| [Cohort Analysis Dashboard](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/cohort/) | Cohort retention + LTV analysis with Tableau-ready export (CSV + Hyper extract). Reproducible seeded pipeline. | Python, pandas, Tableau | ![stars](https://img.shields.io/github/stars/NikitaBoyarkin/tableau_cohort_analysis?style=flat-square) ![last-commit](https://img.shields.io/github/last-commit/NikitaBoyarkin/tableau_cohort_analysis?style=flat-square) |
+| [RFM Segmentation of Bank Clients](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/rfm/) | Customer segmentation by recency, frequency, monetary value; actionable cluster profiles. | Python, SQL, Tableau | ![stars](https://img.shields.io/github/stars/NikitaBoyarkin/rfm-analysis-of-bank-clients?style=flat-square) ![last-commit](https://img.shields.io/github/last-commit/NikitaBoyarkin/rfm-analysis-of-bank-clients?style=flat-square) |
+| [Reporting Automation Telegram Bot](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/bot/) | Automated weekly reporting via Telegram bot — KPI tables + sparklines delivered on schedule, with fallback alerts. | Python, aiogram, SQL | ![stars](https://img.shields.io/github/stars/NikitaBoyarkin/telegram_bot_public?style=flat-square) ![last-commit](https://img.shields.io/github/last-commit/NikitaBoyarkin/telegram_bot_public?style=flat-square) |
+| [Digital Garden](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/garden/) | Personal Zettelkasten published with Quartz v4 — linked notes, backlinks, graph view, atomic evergreen notes. | TypeScript, Quartz v4 | ![stars](https://img.shields.io/github/stars/NikitaBoyarkin/digital_garden?style=flat-square) ![last-commit](https://img.shields.io/github/last-commit/NikitaBoyarkin/digital_garden?style=flat-square) |
 
 ### Pinned Repositories
 
@@ -82,11 +104,15 @@ Links: [linktr.ee/lofinibo](https://linktr.ee/lofinibo)
 
 ### Recent Notes
 
+<!-- RECENT-POSTS-LIST:START -->
 - [Чек-лист портфолио дата-аналитика](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/data-analyst-portfolio-checklist/)
 - [Автоматизация недельных отчётов через Telegram-бота](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/telegram-reporting-bot/)
 - [RFM-сегментация клиентов](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/rfm-segmentation-practical/)
 - [Когортный анализ удержания](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/cohort-retention-guide/)
 - [Почему мы перешли на байесовское A/B-тестирование](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/bayesian-ab-testing/)
+<!-- RECENT-POSTS-LIST:END -->
+
+> Auto-updated daily from the [site RSS](https://nikitaboyarkin.github.io/Personal_Projects.github.io/rss.xml) via GitHub Actions.
 
 ---
 
@@ -98,26 +124,38 @@ Links: [linktr.ee/lofinibo](https://linktr.ee/lofinibo)
 
 **Languages & Libraries**
 
+![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white)
 ![Pandas](https://img.shields.io/badge/Pandas-150458?logo=pandas&logoColor=white)
 ![NumPy](https://img.shields.io/badge/NumPy-013243?logo=numpy&logoColor=white)
 ![SciPy](https://img.shields.io/badge/SciPy-6B7B8A?logo=scipy&logoColor=white)
 ![Statsmodels](https://img.shields.io/badge/Statsmodels-7B1FA2?logo=statsmodels&logoColor=white)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?logo=scikitlearn&logoColor=white)
 ![Matplotlib](https://img.shields.io/badge/Matplotlib-11557c?logo=matplotlib&logoColor=white)
+![Seaborn](https://img.shields.io/badge/Seaborn-3776AB?logo=python&logoColor=white)
+![Jupyter](https://img.shields.io/badge/Jupyter-F37626?logo=jupyter&logoColor=white)
 
 **Databases & Warehouses**
 
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=white)
 ![ClickHouse](https://img.shields.io/badge/ClickHouse-FFCC00?logo=clickhouse&logoColor=black)
 ![DuckDB](https://img.shields.io/badge/DuckDB-FFF000?logo=duckdb&logoColor=black)
 ![SQL](https://img.shields.io/badge/SQL-003B57?logo=sqlite&logoColor=white)
+![dbt](https://img.shields.io/badge/dbt-FF694B?logo=dbt&logoColor=white)
 
 **Visualization & BI**
 
 ![Tableau](https://img.shields.io/badge/Tableau-E97627?logo=tableau&logoColor=white)
 ![Apache Superset](https://img.shields.io/badge/Superset-20A6C9?logo=apachesuperset&logoColor=white)
+![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?logo=streamlit&logoColor=white)
 
 **Orchestration & Dev Tools**
 
 ![Apache Airflow](https://img.shields.io/badge/Airflow-017CEE?logo=apacheairflow&logoColor=white)
+![aiogram](https://img.shields.io/badge/aiogram-2A9B5C?logo=telegram&logoColor=white)
+![pytest](https://img.shields.io/badge/pytest-0A9EDC?logo=pytest&logoColor=white)
+![uv](https://img.shields.io/badge/uv-de5ff9?logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
+![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?logo=githubactions&logoColor=white)
 
 ---
 
@@ -130,4 +168,4 @@ Open to product analytics roles, freelance data projects, and collaborations in 
 
 ---
 
-<sub>Dynamic cards powered by [beautiful-github-homepage](https://github.com/ishandutta2007/beautiful-github-homepage), [streak-stats](https://github.com/DenverCoder1/github-readme-streak-stats), [activity-graph](https://github.com/ashutosh00710/github-readme-activity-graph), [skill-icons](https://github.com/tandpfun/skill-icons), and [typing-svg](https://github.com/DenverCoder1/readme-typing-svg).</sub>
+<sub>Dynamic cards powered by [beautiful-github-homepage](https://github.com/ishandutta2007/beautiful-github-homepage), [github-readme-stats](https://github.com/anuraghazra/github-readme-stats), [profile-summary-cards](https://github.com/profile-summary-cards), [streak-stats](https://github.com/DenverCoder1/github-readme-streak-stats), [activity-graph](https://github.com/ashutosh00710/github-readme-activity-graph), [snk](https://github.com/Platane/snk), [blog-post-workflow](https://github.com/gautamkrishnar/blog-post-workflow), [skill-icons](https://github.com/tandpfun/skill-icons), and [typing-svg](https://github.com/DenverCoder1/readme-typing-svg).</sub>
