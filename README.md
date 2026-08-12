@@ -21,9 +21,9 @@ Links: [linktr.ee/lofinibo](https://linktr.ee/lofinibo)
 ### GitHub Stats & Top Languages
 
 <p align="center">
-  <img height="170" src="https://github-readme-stats-pi-liard-96.vercel.app/api?username=NikitaBoyarkin&show_icons=true&include_all_commits=true&hide=issues&show=reviews&rank_icon=github&theme=dark&hide_border=true&cache_seconds=600" alt="NikitaBoyarkin GitHub Stats" />
+  <img height="200" src="https://github-readme-stats-pi-liard-96.vercel.app/api?username=NikitaBoyarkin&show_icons=true&include_all_commits=true&hide=issues&show=reviews&rank_icon=github&theme=dark&hide_border=true&card_width=420&cache_seconds=600" alt="NikitaBoyarkin GitHub Stats" />
   &nbsp;
-  <img height="170" src="https://github-readme-stats-pi-liard-96.vercel.app/api/top-langs?username=NikitaBoyarkin&layout=donut&langs_count=10&theme=dark&hide_border=true&cache_seconds=600" alt="Top Languages" />
+  <img height="200" src="https://github-readme-stats-pi-liard-96.vercel.app/api/top-langs?username=NikitaBoyarkin&layout=donut&langs_count=10&theme=dark&hide_border=true&card_width=320&cache_seconds=600" alt="Top Languages" />
 </p>
 
 ---
