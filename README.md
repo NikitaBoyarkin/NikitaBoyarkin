@@ -28,7 +28,7 @@ Links: [linktr.ee/lofinibo](https://linktr.ee/lofinibo)
 
 ### Contents
 
-- [Currently](#currently) · [Stats](#github-stats--top-languages) · [Dashboard](#profile-dashboard) · [Activity](#activity--streak) · [Featured Projects](#featured-projects) · [Pinned](#pinned-repositories) · [Recent Notes](#recent-notes) · [Tech Stack](#tech-stack) · [Connect](#lets-connect)
+- [Currently](#currently) · [Stats](#github-stats--top-languages) · [Dashboard](#profile-dashboard) · [Metrics](#github-metrics) · [Activity](#activity--streak) · [Featured Projects](#featured-projects) · [Pinned](#pinned-repositories) · [Recent Notes](#recent-notes) · [Tech Stack](#tech-stack) · [Connect](#lets-connect)
 
 ---
 
@@ -52,6 +52,14 @@ Links: [linktr.ee/lofinibo](https://linktr.ee/lofinibo)
   <a href="https://github.com/NikitaBoyarkin"><img src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=NikitaBoyarkin&theme=dark" alt="Top language by commits" /></a>
   &nbsp;
   <a href="https://github.com/NikitaBoyarkin"><img src="https://github-profile-summary-cards.vercel.app/api/cards/productive-time?username=NikitaBoyarkin&theme=dark&utcOffset=3" alt="Productive time" /></a>
+</p>
+
+---
+
+### GitHub Metrics
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/metrics.svg" alt="GitHub Metrics" />
 </p>
 
 ---
@@ -167,4 +175,4 @@ Open to product analytics roles, freelance data projects, and collaborations in 
 
 ---
 
-<sub>Dynamic cards powered by [beautiful-github-homepage](https://github.com/ishandutta2007/beautiful-github-homepage), [github-readme-stats](https://github.com/anuraghazra/github-readme-stats), [profile-summary-cards](https://github.com/profile-summary-cards), [streak-stats](https://github.com/DenverCoder1/github-readme-streak-stats), [activity-graph](https://github.com/ashutosh00710/github-readme-activity-graph), [snk](https://github.com/Platane/snk), [blog-post-workflow](https://github.com/gautamkrishnar/blog-post-workflow), [skill-icons](https://github.com/tandpfun/skill-icons), and [typing-svg](https://github.com/DenverCoder1/readme-typing-svg).</sub>
+<sub>Dynamic cards powered by [beautiful-github-homepage](https://github.com/ishandutta2007/beautiful-github-homepage), [github-readme-stats](https://github.com/anuraghazra/github-readme-stats), [profile-summary-cards](https://github.com/profile-summary-cards), [lowlighter/metrics](https://github.com/lowlighter/metrics), [streak-stats](https://github.com/DenverCoder1/github-readme-streak-stats), [activity-graph](https://github.com/ashutosh00710/github-readme-activity-graph), [snk](https://github.com/Platane/snk), [blog-post-workflow](https://github.com/gautamkrishnar/blog-post-workflow), [skill-icons](https://github.com/tandpfun/skill-icons), and [typing-svg](https://github.com/DenverCoder1/readme-typing-svg).</sub>
