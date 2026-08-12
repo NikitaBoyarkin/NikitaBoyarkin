@@ -20,7 +20,6 @@ Links: [linktr.ee/lofinibo](https://linktr.ee/lofinibo)
 
 ### Currently
 
-- 🔭 Working on: dissertation on IT-leaders' emotional intelligence (ВАК 5.3.3)
 - 📚 Learning: Bayesian A/B testing, ClickHouse deep dives
 - 💼 Open to: product / data analyst roles, freelance data projects
 - 🤝 Collab: experimentation, user retention analytics
