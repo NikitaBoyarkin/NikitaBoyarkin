@@ -81,7 +81,7 @@ Links: [linktr.ee/lofinibo](https://linktr.ee/lofinibo)
 </p>
 
 <p align="center">
-  <img src="https://komarev.com/ghpvc/?username=NikitaBoyarkin&color=blueviolet&style=flat-square&label=Profile+Views" alt="Profile views" />
+  <img src="https://hits.sh/github.com/NikitaBoyarkin.svg?label=Profile+Views&color=blueviolet&logo=github&style=flat-square" alt="Profile views" />
 </p>
 
 ---
