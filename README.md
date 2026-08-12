@@ -46,7 +46,7 @@ Links: [linktr.ee/lofinibo](https://linktr.ee/lofinibo)
 ### Featured Projects
 
 | Project | What it does | Stack |
-|---|---|---|
+| --- | --- | --- |
 | [Volta Neobank — Product Analytics](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/volta/) | End-to-end neobank analytics: funnel, A/B test, retention, segmentation. +6.24pp KYC conversion (Z=6.35, p<0.0001), €716K/yr (48× ROI). CUPED + AA-test + Bonferroni. | Python, SciPy, Statsmodels, scikit-learn |
 | [SQL Analytics Case Study](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/sql/) | Ten end-to-end SQL cases on DuckDB — funnel, N-day retention, DAU/MAU stickiness, LTV, streaks, A/B conversion, attribution. One command, no server. | SQL, DuckDB, pytest |
 | [Cohort Analysis Dashboard](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/cohort/) | Cohort retention + LTV analysis with Tableau-ready export (CSV + Hyper extract). Reproducible seeded pipeline. | Python, pandas, Tableau |
