@@ -20,10 +20,6 @@ I turn ambiguous product questions into clean experiments, SQL pipelines, and de
 Portfolio: [nikitaboyarkin.github.io/Personal_Projects.github.io](https://nikitaboyarkin.github.io/Personal_Projects.github.io/?utm_source=github&utm_medium=profile_readme&utm_campaign=portfolio)  
 Links: [linktr.ee/lofinibo](https://linktr.ee/lofinibo?utm_source=github&utm_medium=profile_readme&utm_campaign=links)
 
-<p align="center">
-  <img src="https://www.gitskins.com/api/section/hero?username=NikitaBoyarkin&theme=github-dark&mode=dark" alt="Profile hero" />
-</p>
-
 ---
 
 ### Currently
