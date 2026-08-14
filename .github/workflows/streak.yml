@@ -1,0 +1,46 @@
+name: Update Streak Stats
+
+on:
+  schedule:
+    - cron: "41 3 * * *" # daily ~03:41 UTC
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/streak.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Fetch streak SVG (retry, self-host)
+        run: |
+          set -euo pipefail
+          url="https://streak-stats.demolab.com/?user=NikitaBoyarkin&theme=dark&hide_border=true"
+          ok=0
+          for i in 1 2 3 4 5 6; do
+            if curl -fsS --max-time 30 "$url" -o streak.svg; then
+              echo "fetched on try $i"
+              ok=1
+              break
+            fi
+            echo "try $i failed; backing off"
+            sleep 20
+          done
+          if [ "$ok" -ne 1 ]; then
+            echo "all retries failed; keeping previous streak.svg" >&2
+            exit 0
+          fi
+          test -s streak.svg
+
+      - name: Commit streak.svg
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: update streak stats"
+          file_pattern: "streak.svg"

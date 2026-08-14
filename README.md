@@ -75,7 +75,7 @@ Links: [linktr.ee/lofinibo](https://linktr.ee/lofinibo?utm_source=github&utm_med
 ### Activity & Streak
 
 <p align="center">
-  <img src="https://streak-stats.demolab.com/?user=NikitaBoyarkin&theme=dark&hide_border=true" alt="GitHub Streak Stats" />
+  <img src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/streak.svg" alt="GitHub Streak Stats" />
 </p>
 <p align="center">
   <img src="https://github-readme-activity-graph.vercel.app/graph?username=NikitaBoyarkin&theme=react-dark&hide_border=true&area=true" alt="NikitaBoyarkin Activity Graph" />
