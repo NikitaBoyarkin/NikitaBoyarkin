@@ -28,7 +28,7 @@ Links: [linktr.ee/lofinibo](https://linktr.ee/lofinibo?utm_source=github&utm_med
 
 ### Currently
 
-- 📚 Learning: Bayesian A/B testing, ClickHouse deep dives
+- 📚 Learning: Bayesian A/B testing, ClickHouse, dbt, Apache Airflow, Apache Superset
 - 💼 Open to: product / data analyst roles, freelance data projects
 - 🤝 Collab: experimentation, user retention analytics
 
@@ -75,7 +75,7 @@ Links: [linktr.ee/lofinibo](https://linktr.ee/lofinibo?utm_source=github&utm_med
 ### Activity & Streak
 
 <p align="center">
-  <img src="https://github-readme-streak-stats.herokuapp.com/?user=NikitaBoyarkin&theme=dark&hide_border=true" alt="GitHub Streak Stats" />
+  <img src="https://streak-stats.demolab.com/?user=NikitaBoyarkin&theme=dark&hide_border=true" alt="GitHub Streak Stats" />
 </p>
 <p align="center">
   <img src="https://github-readme-activity-graph.vercel.app/graph?username=NikitaBoyarkin&theme=react-dark&hide_border=true&area=true" alt="NikitaBoyarkin Activity Graph" />
@@ -152,20 +152,16 @@ Links: [linktr.ee/lofinibo](https://linktr.ee/lofinibo?utm_source=github&utm_med
 **Databases & Warehouses**
 
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=white)
-![ClickHouse](https://img.shields.io/badge/ClickHouse-FFCC00?logo=clickhouse&logoColor=black)
 ![DuckDB](https://img.shields.io/badge/DuckDB-FFF000?logo=duckdb&logoColor=black)
 ![SQL](https://img.shields.io/badge/SQL-003B57?logo=sqlite&logoColor=white)
-![dbt](https://img.shields.io/badge/dbt-FF694B?logo=dbt&logoColor=white)
 
 **Visualization & BI**
 
 ![Tableau](https://img.shields.io/badge/Tableau-E97627?logo=tableau&logoColor=white)
-![Apache Superset](https://img.shields.io/badge/Superset-20A6C9?logo=apachesuperset&logoColor=white)
 ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?logo=streamlit&logoColor=white)
 
 **Orchestration & Dev Tools**
 
-![Apache Airflow](https://img.shields.io/badge/Airflow-017CEE?logo=apacheairflow&logoColor=white)
 ![aiogram](https://img.shields.io/badge/aiogram-2A9B5C?logo=telegram&logoColor=white)
 ![pytest](https://img.shields.io/badge/pytest-0A9EDC?logo=pytest&logoColor=white)
 ![uv](https://img.shields.io/badge/uv-de5ff9?logoColor=white)
