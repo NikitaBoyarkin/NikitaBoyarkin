@@ -1,4 +1,8 @@
 <p align="center">
+  <img src="https://www.gitskins.com/api/section/wordmark?username=NikitaBoyarkin&theme=github-dark&label=Nikita%20Boyarkin" alt="Nikita Boyarkin wordmark" />
+</p>
+
+<p align="center">
   <img src="https://github.com/NikitaBoyarkin.png" width="140" height="140" alt="NikitaBoyarkin" style="border-radius:50%" />
 </p>
 <p align="center">
@@ -15,6 +19,10 @@ I turn ambiguous product questions into clean experiments, SQL pipelines, and de
 
 Portfolio: [nikitaboyarkin.github.io/Personal_Projects.github.io](https://nikitaboyarkin.github.io/Personal_Projects.github.io/)  
 Links: [linktr.ee/lofinibo](https://linktr.ee/lofinibo)
+
+<p align="center">
+  <img src="https://www.gitskins.com/api/section/hero?username=NikitaBoyarkin&theme=github-dark&mode=dark" alt="Profile hero" />
+</p>
 
 ---
 
@@ -175,4 +183,4 @@ Open to product analytics roles, freelance data projects, and collaborations in 
 
 ---
 
-<sub>Dynamic cards powered by [beautiful-github-homepage](https://github.com/ishandutta2007/beautiful-github-homepage), [github-readme-stats](https://github.com/anuraghazra/github-readme-stats), [profile-summary-cards](https://github.com/profile-summary-cards), [lowlighter/metrics](https://github.com/lowlighter/metrics), [streak-stats](https://github.com/DenverCoder1/github-readme-streak-stats), [activity-graph](https://github.com/ashutosh00710/github-readme-activity-graph), [snk](https://github.com/Platane/snk), [blog-post-workflow](https://github.com/gautamkrishnar/blog-post-workflow), [skill-icons](https://github.com/tandpfun/skill-icons), and [typing-svg](https://github.com/DenverCoder1/readme-typing-svg).</sub>
+<sub>Dynamic cards powered by [beautiful-github-homepage](https://github.com/ishandutta2007/beautiful-github-homepage), [github-readme-stats](https://github.com/anuraghazra/github-readme-stats), [profile-summary-cards](https://github.com/profile-summary-cards), [lowlighter/metrics](https://github.com/lowlighter/metrics), [streak-stats](https://github.com/DenverCoder1/github-readme-streak-stats), [activity-graph](https://github.com/ashutosh00710/github-readme-activity-graph), [snk](https://github.com/Platane/snk), [blog-post-workflow](https://github.com/gautamkrishnar/blog-post-workflow), [skill-icons](https://github.com/tandpfun/skill-icons), [GitSkins](https://www.gitskins.com), and [typing-svg](https://github.com/DenverCoder1/readme-typing-svg).</sub>
