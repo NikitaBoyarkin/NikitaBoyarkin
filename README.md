@@ -17,8 +17,8 @@ I turn ambiguous product questions into clean experiments, SQL pipelines, and de
 - **User lifecycle analytics** — cohort retention, funnel analysis, RFM segmentation.
 - **End-to-end delivery** — SQL → Python → dashboard → stakeholder narrative.
 
-Portfolio: [nikitaboyarkin.github.io/Personal_Projects.github.io](https://nikitaboyarkin.github.io/Personal_Projects.github.io/)  
-Links: [linktr.ee/lofinibo](https://linktr.ee/lofinibo)
+Portfolio: [nikitaboyarkin.github.io/Personal_Projects.github.io](https://nikitaboyarkin.github.io/Personal_Projects.github.io/?utm_source=github&utm_medium=profile_readme&utm_campaign=portfolio)  
+Links: [linktr.ee/lofinibo](https://linktr.ee/lofinibo?utm_source=github&utm_medium=profile_readme&utm_campaign=links)
 
 <p align="center">
   <img src="https://www.gitskins.com/api/section/hero?username=NikitaBoyarkin&theme=github-dark&mode=dark" alt="Profile hero" />
@@ -176,10 +176,12 @@ Links: [linktr.ee/lofinibo](https://linktr.ee/lofinibo)
 
 ### Let's Connect
 
-[![Telegram](https://img.shields.io/badge/Telegram-Contact-26A5E4?logo=telegram&logoColor=white)](https://t.me/lofinibo)
+[![Telegram](https://img.shields.io/badge/Telegram-Contact-26A5E4?logo=telegram&logoColor=white)](https://t.me/lofinibo?utm_source=github&utm_medium=profile_readme&utm_campaign=contact)
 [![Email](https://img.shields.io/badge/Email-boyarkin__yandex@mail.ru-EA4335?logo=gmail&logoColor=white)](mailto:boyarkin_yandex@mail.ru)
 
 Open to product analytics roles, freelance data projects, and collaborations in experimentation & user retention.
+
+📫 **Contacts:** [Portfolio](https://nikitaboyarkin.github.io/Personal_Projects.github.io/?utm_source=github&utm_medium=profile_readme&utm_campaign=footer) · [Telegram](https://t.me/lofinibo?utm_source=github&utm_medium=profile_readme&utm_campaign=footer) · [linktr.ee/lofinibo](https://linktr.ee/lofinibo?utm_source=github&utm_medium=profile_readme&utm_campaign=footer)
 
 ---
 
