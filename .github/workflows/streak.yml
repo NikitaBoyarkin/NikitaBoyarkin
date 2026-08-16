@@ -38,6 +38,15 @@ jobs:
             exit 0
           fi
           test -s streak.svg
+          # Reject error/placeholder cards so we never commit a sad-face SVG
+          if grep -q "Failed to retrieve" streak.svg; then
+            echo "API returned an error card; keeping previous streak.svg" >&2
+            exit 0
+          fi
+          grep -q "Current Streak" streak.svg || {
+            echo "unexpected SVG content; keeping previous streak.svg" >&2
+            exit 0
+          }
 
       - name: Commit streak.svg
         uses: stefanzweifel/git-auto-commit-action@v5
