@@ -67,7 +67,8 @@ I turn ambiguous product questions into clean experiments, SQL pipelines, and de
 ### 🔬 Featured Projects
 
 #### 1. Volta Neobank — Product Analytics
-*End-to-end neobank analytics: funnel, A/B test, retention, segmentation. **+6.24pp KYC conversion (Z=6.35, p<0.0001), €716K/yr — 48× ROI.** CUPED + AA-test + Bonferroni.*
+
+_End-to-end neobank analytics: funnel, A/B test, retention, segmentation. **+6.24pp KYC conversion (Z=6.35, p<0.0001), €716K/yr — 48× ROI.** CUPED + AA-test + Bonferroni._
 
 [![Repo](https://img.shields.io/badge/Repo-volta--banking-0f2a2b?style=for-the-badge&logo=github&logoColor=00ff9c)](https://github.com/NikitaBoyarkin/volta-banking)
 [![Case study](https://img.shields.io/badge/Case_study-00ff9c?style=for-the-badge)](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/volta/)
@@ -75,14 +76,16 @@ I turn ambiguous product questions into clean experiments, SQL pipelines, and de
 **Stack:** Python · SciPy · Statsmodels · scikit-learn
 
 #### 2. Supabase Product Analytics
-*Full-stack analytics platform: Streamlit + Supabase with RLS and an Edge Function. **Significant A/B result (p=0.0034) on 8,000 seeded users**, reproducible pipeline.*
+
+_Full-stack analytics platform: Streamlit + Supabase with RLS and an Edge Function. **Significant A/B result (p=0.0034) on 8,000 seeded users**, reproducible pipeline._
 
 [![Repo](https://img.shields.io/badge/Repo-supabase--product--analytics-0f2a2b?style=for-the-badge&logo=github&logoColor=00ff9c)](https://github.com/NikitaBoyarkin/supabase-product-analytics)
 
 **Stack:** Python · Streamlit · Supabase · PostgreSQL
 
 #### 3. SQL Analytics Case Study
-*Ten end-to-end SQL cases on DuckDB — funnel, N-day retention, DAU/MAU stickiness, LTV, streaks, A/B conversion, attribution. **One command, no server, pytest-verified.***
+
+\*Ten end-to-end SQL cases on DuckDB — funnel, N-day retention, DAU/MAU stickiness, LTV, streaks, A/B conversion, attribution. **One command, no server, pytest-verified.\***
 
 [![Repo](https://img.shields.io/badge/Repo-sql--analytics--case--study-0f2a2b?style=for-the-badge&logo=github&logoColor=00ff9c)](https://github.com/NikitaBoyarkin/sql-analytics-case-study)
 [![Case study](https://img.shields.io/badge/Case_study-00ff9c?style=for-the-badge)](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/sql/)
@@ -94,6 +97,7 @@ I turn ambiguous product questions into clean experiments, SQL pipelines, and de
 ### 📝 Recent Notes
 
 <!-- RECENT-POSTS-LIST:START -->
+
 - [Чек-лист портфолио дата-аналитика](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/data-analyst-portfolio-checklist/)
 - [Автоматизация недельных отчётов через Telegram-бота](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/telegram-reporting-bot/)
 - [RFM-сегментация клиентов](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/rfm-segmentation-practical/)
