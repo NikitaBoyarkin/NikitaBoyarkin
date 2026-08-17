@@ -97,7 +97,6 @@ _Full-stack analytics platform: Streamlit + Supabase with RLS and an Edge Functi
 ### 📝 Recent Notes
 
 <!-- RECENT-POSTS-LIST:START -->
-
 - [Чек-лист портфолио дата-аналитика](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/data-analyst-portfolio-checklist/)
 - [Автоматизация недельных отчётов через Telegram-бота](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/telegram-reporting-bot/)
 - [RFM-сегментация клиентов](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/rfm-segmentation-practical/)
