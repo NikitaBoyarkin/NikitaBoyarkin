@@ -127,6 +127,16 @@ I turn ambiguous product questions into clean experiments, SQL pipelines, and de
 
 > Click a card to play the game full screen — opens in a new tab.
 
+### 🕹️ How to Play
+
+| Game | Controls | Goal |
+|---|---|---|
+| 🐍 Snake | Arrows / WASD · R to restart | Eat food, grow longer, don't hit walls or yourself |
+| 🧪 A/B Test | Click anywhere (or Space / Enter) | Collect data until the p-value drops below 0.05 |
+| 🏓 Pong | W/S or ↑/↓ — or move the mouse · R to restart | Beat the CPU — first to 11 |
+| 🔢 2048 | Arrows / WASD · R to restart | Slide and merge tiles to reach 2048 |
+| 🔻 Funnel Drop | ←/→ or move the mouse | Catch falling users to convert them |
+
 ---
 
 ### 🔬 Featured Projects
