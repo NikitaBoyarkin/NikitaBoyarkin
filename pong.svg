@@ -38,7 +38,7 @@
         ballx += vx; bally += vy;
         if (bally <= 4) { bally = 4; vy = -vy; }
         if (bally >= H - 4) { bally = H - 4; vy = -vy; }
-        if (vx < 0 && ballx <= 26 && ballx >= 8 && bally > py - 6 && bally < py + 66) { vx = -Math.min(7, -vx * 1.05); ballx = 26; }
+        if (vx < 0 && ballx <= 26 && ballx >= 8 && bally > py - 6 && bally < py + 66) { vx = Math.min(7, -vx * 1.05); ballx = 26; }
         if (vx > 0 && ballx >= 314 && ballx <= 332 && bally > cy - 6 && bally < cy + 66) { vx = Math.min(7, -vx * 1.05); ballx = 314; }
         if (ballx < -12) { score2++; resetBall(1); }
         if (ballx > W + 12) { score1++; resetBall(-1); }
