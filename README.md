@@ -1,12 +1,4 @@
 <p align="center">
-  <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/game.svg">
-    <img src="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/game.svg" alt="Playable Snake game" width="480" />
-  </a>
-  <br/>
-  <sub>🐍 Playable Snake — click the board to play</sub>
-</p>
-
-<p align="center">
   <img src="https://github.com/NikitaBoyarkin.png" width="140" height="140" alt="NikitaBoyarkin" style="border-radius:50%" />
 </p>
 
@@ -65,6 +57,44 @@ I turn ambiguous product questions into clean experiments, SQL pipelines, and de
 <p align="center">
   <img src="https://hits.sh/github.com/NikitaBoyarkin.svg?label=Profile+Views&color=00ff9c&logo=github&style=flat-square&extra_count=124" alt="Profile views" />
 </p>
+
+---
+
+### 🎮 Playable Games
+
+<p align="center">
+  <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/snake.svg">
+    <img src="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/snake.svg" alt="Snake" width="160" />
+    <br/>
+    <sub>🐍 Snake</sub>
+  </a>
+  &nbsp;
+  <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/ab-test.svg">
+    <img src="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/ab-test.svg" alt="A/B Test" width="160" />
+    <br/>
+    <sub>🧪 A/B Test</sub>
+  </a>
+  &nbsp;
+  <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/pong.svg">
+    <img src="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/pong.svg" alt="Pong" width="160" />
+    <br/>
+    <sub>🏓 Pong</sub>
+  </a>
+  &nbsp;
+  <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/2048.svg">
+    <img src="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/2048.svg" alt="2048" width="160" />
+    <br/>
+    <sub>🔢 2048</sub>
+  </a>
+  &nbsp;
+  <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/funnel-drop.svg">
+    <img src="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/funnel-drop.svg" alt="Funnel Drop" width="160" />
+    <br/>
+    <sub>🔻 Funnel Drop</sub>
+  </a>
+</p>
+
+> Click any game to play — opens in a new tab.
 
 ---
 

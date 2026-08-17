@@ -1,16 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="520" height="560" viewBox="0 0 520 560" font-family="'Fira Code', 'SF Mono', Menlo, monospace">
-  <rect width="520" height="560" fill="#0a0a12"/>
-  <text x="260" y="28" text-anchor="middle" fill="#00ff9c" font-size="16" font-weight="bold" letter-spacing="3">SNAKE</text>
-  <text id="score" x="260" y="52" text-anchor="middle" fill="#f4f4f5" font-size="13">Score: 0</text>
-  <g transform="translate(10,66)">
-    <rect width="500" height="500" fill="#12121c" stroke="#00ff9c" stroke-width="2" rx="6"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="440" viewBox="0 0 400 440" font-family="'Fira Code','SF Mono',Menlo,monospace">
+  <rect width="400" height="440" fill="#0a0a12"/>
+  <text x="200" y="28" text-anchor="middle" fill="#00ff9c" font-size="16" font-weight="bold" letter-spacing="3">SNAKE</text>
+  <text id="score" x="200" y="52" text-anchor="middle" fill="#f4f4f5" font-size="12">Score: 0</text>
+  <g transform="translate(30,70)">
+    <rect width="340" height="340" fill="#12121c" stroke="#00ff9c" stroke-width="2" rx="6"/>
     <g id="snake"></g>
     <g id="food"></g>
   </g>
-  <text id="overlay" x="260" y="320" text-anchor="middle" fill="#f4f4f5" font-size="18">Press any arrow key to start</text>
+  <text id="overlay" x="200" y="250" text-anchor="middle" fill="#f4f4f5" font-size="15">Press any arrow key to start</text>
   <script type="text/javascript"><![CDATA[
     (function () {
-      var CELL = 20, COLS = 25, ROWS = 25;
+      var CELL = 17, COLS = 20, ROWS = 20;
       var snakeG = document.getElementById('snake');
       var foodG = document.getElementById('food');
       var scoreT = document.getElementById('score');
@@ -18,7 +18,7 @@
       var snake, dir, nextDir, food, score, running, gameOver, timer;
 
       function init() {
-        snake = [{x:12,y:12},{x:11,y:12},{x:10,y:12}];
+        snake = [{x:10,y:10},{x:9,y:10},{x:8,y:10}];
         dir = {x:1,y:0}; nextDir = {x:1,y:0};
         score = 0; running = false; gameOver = false;
         if (timer) { clearInterval(timer); timer = null; }
