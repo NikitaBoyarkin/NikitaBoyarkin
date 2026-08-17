@@ -1,6 +1,6 @@
 <p align="center">
-  <a href="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/game.svg">
-    <img src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/game.svg" alt="Playable Snake game" width="480" />
+  <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/game.svg">
+    <img src="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/game.svg" alt="Playable Snake game" width="480" />
   </a>
   <br/>
   <sub>🐍 Playable Snake — click the board to play</sub>
