@@ -36,12 +36,14 @@
 
       function slide(a) {
         var out = [];
-        for (var i = 0; i < a.length; i++) {
-          if (i + 1 < a.length && a[i] && a[i] === a[i + 1]) { out.push(a[i] * 2); score += a[i] * 2; i++; }
-          else out.push(a[i]);
+        for (var i = 0; i < a.length; i++) if (a[i]) out.push(a[i]);
+        var merged = [];
+        for (var i = 0; i < out.length; i++) {
+          if (i + 1 < out.length && out[i] === out[i + 1]) { merged.push(out[i] * 2); score += out[i] * 2; i++; }
+          else merged.push(out[i]);
         }
-        while (out.length < W) out.push(0);
-        return out;
+        while (merged.length < W) merged.push(0);
+        return merged;
       }
 
       function move(dir) {
