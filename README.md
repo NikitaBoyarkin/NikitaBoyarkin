@@ -1,5 +1,9 @@
 <p align="center">
-  <img src="https://www.gitskins.com/api/section/wordmark?username=NikitaBoyarkin&theme=github-dark&label=Nikita%20Boyarkin" alt="Nikita Boyarkin wordmark" />
+  <a href="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/game.svg">
+    <img src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/game.svg" alt="Playable Snake game" width="480" />
+  </a>
+  <br/>
+  <sub>🐍 Playable Snake — click the board to play</sub>
 </p>
 
 <p align="center">
@@ -22,7 +26,7 @@ I turn ambiguous product questions into clean experiments, SQL pipelines, and de
 ### 📚 Currently
 
 - 📚 Learning: Bayesian A/B testing, ClickHouse, dbt, Apache Airflow, Apache Superset
-- 💼 Open to: product / data analyst roles, freelance data projects
+- 💼 Open to: BI / product / data analyst roles — actively interviewing
 - 🤝 Collab: experimentation, user retention analytics
 
 ---
@@ -129,7 +133,9 @@ _Full-stack analytics platform: Streamlit + Supabase with RLS and an Edge Functi
 **Databases & Warehouses**
 
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=white)
+![ClickHouse](https://img.shields.io/badge/ClickHouse-FFCC01?logo=clickhouse&logoColor=black)
 ![DuckDB](https://img.shields.io/badge/DuckDB-FFF000?logo=duckdb&logoColor=black)
+![Supabase](https://img.shields.io/badge/Supabase-3FCF8E?logo=supabase&logoColor=white)
 ![SQL](https://img.shields.io/badge/SQL-003B57?logo=sqlite&logoColor=white)
 
 **Visualization & BI**
@@ -157,4 +163,4 @@ _Full-stack analytics platform: Streamlit + Supabase with RLS and an Edge Functi
 
 ---
 
-<sub>Dynamic cards powered by [github-readme-stats](https://github.com/anuraghazra/github-readme-stats), [lowlighter/metrics](https://github.com/lowlighter/metrics), [streak-stats](https://github.com/DenverCoder1/github-readme-streak-stats), [activity-graph](https://github.com/ashutosh00710/github-readme-activity-graph), [snk](https://github.com/Platane/snk), [blog-post-workflow](https://github.com/gautamkrishnar/blog-post-workflow), [skill-icons](https://github.com/tandpfun/skill-icons), [GitSkins](https://www.gitskins.com).</sub>
+<sub>Dynamic cards powered by [github-readme-stats](https://github.com/anuraghazra/github-readme-stats), [lowlighter/metrics](https://github.com/lowlighter/metrics), [streak-stats](https://github.com/DenverCoder1/github-readme-streak-stats), [activity-graph](https://github.com/ashutosh00710/github-readme-activity-graph), [snk](https://github.com/Platane/snk), [blog-post-workflow](https://github.com/gautamkrishnar/blog-post-workflow), [skill-icons](https://github.com/tandpfun/skill-icons).</sub>
