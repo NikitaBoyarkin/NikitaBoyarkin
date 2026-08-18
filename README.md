@@ -28,13 +28,12 @@ I turn ambiguous product questions into clean experiments, SQL pipelines, and de
 <p align="center">
   <img height="190" src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/stats.svg" alt="NikitaBoyarkin GitHub Stats" />
   &nbsp;
-  <img height="190" src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/streak.svg" alt="GitHub Streak Stats" />
 </p>
 
 ### 🗣️ Top Languages
 
 <p align="center">
-  <img height="190" src="https://github-readme-stats-pi-liard-96.vercel.app/api/top-langs?username=NikitaBoyarkin&layout=donut&langs_count=10&title_color=00ff9c&text_color=f4f4f5&bg_color=0a0a12&hide_border=true&card_width=320&cache_seconds=600" alt="Top Languages" />
+  <img height="400" src="https://github-readme-stats-pi-liard-96.vercel.app/api/top-langs?username=NikitaBoyarkin&layout=donut&langs_count=10&title_color=00ff9c&text_color=f4f4f5&bg_color=0a0a12&hide_border=true&card_width=320&cache_seconds=600" alt="Top Languages" />
 </p>
 
 ---
@@ -49,9 +48,6 @@ I turn ambiguous product questions into clean experiments, SQL pipelines, and de
   <img src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/activity.svg" alt="NikitaBoyarkin Activity Graph" />
 </p>
 
-<p align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=NikitaBoyarkin&theme=react-dark&hide_border=true&area=true" alt="NikitaBoyarkin Activity Graph" />
-</p>
 
 <p align="center">
   <picture>
