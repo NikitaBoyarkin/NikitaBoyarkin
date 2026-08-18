@@ -1,0 +1,37 @@
+name: keepalive
+
+on:
+  schedule:
+    - cron: '0 6,12,18,23 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  keepalive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.STREAK_PAT }}
+          fetch-depth: 0
+
+      - name: Daily keepalive commit
+        run: |
+          set -euo pipefail
+          git config user.name "NikitaBoyarkin"
+          git config user.email "${{ secrets.STREAK_EMAIL }}"
+
+          last=$(git log -1 --format=%ct)
+          now=$(date -u +%s)
+          days_since=$(( (now - last) / 86400 ))
+
+          if [ "$days_since" -ge 1 ]; then
+            git commit --allow-empty -m "chore: daily keepalive $(date -u +%Y-%m-%d)"
+            git push origin HEAD
+            echo "Created keepalive commit"
+          else
+            echo "Streak already safe"
+          fi
