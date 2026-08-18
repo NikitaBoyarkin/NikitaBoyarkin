@@ -1,9 +1,9 @@
 <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 140' width='800px' height='140px'>
     <rect fill='#0a0a12' width='800' height='140'/>
     <text x='400.0' y='20' text-anchor='middle' fill='#9E9E9E' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='13px' font-weight='400'>Last 30 Days Activity</text>
-    <polyline points='40.0,110.0 65.5,110.0 91.0,110.0 116.6,110.0 142.1,110.0 167.6,110.0 193.1,110.0 218.6,110.0 244.1,110.0 269.7,110.0 295.2,110.0 320.7,110.0 346.2,86.0 371.7,110.0 397.2,110.0 422.8,110.0 448.3,107.3 473.8,94.0 499.3,110.0 524.8,96.7 550.3,102.0 575.9,91.3 601.4,30.0 626.9,56.7 652.4,91.3 677.9,78.0 703.4,91.3 729.0,102.0 754.5,56.7 780.0,86.0' fill='none' stroke='#00ff9c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' opacity='0.8'/>
+    <polyline points='40.0,110.0 65.5,109.4 91.0,110.0 116.6,110.0 142.1,110.0 167.6,110.0 193.1,110.0 218.6,110.0 244.1,110.0 269.7,110.0 295.2,71.0 320.7,51.1 346.2,59.4 371.7,86.3 397.2,65.8 422.8,40.9 448.3,74.2 473.8,71.0 499.3,82.5 524.8,30.0 550.3,74.8 575.9,74.2 601.4,39.0 626.9,68.4 652.4,30.0 677.9,74.2 703.4,104.9 729.0,81.2 754.5,96.6 780.0,103.0' fill='none' stroke='#00ff9c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' opacity='0.8'/>
       <circle cx='40.0' cy='110.0' r='3' fill='#00ff9c'><title>2026-07-20: 0 contributions</title></circle>
-  <circle cx='65.5' cy='110.0' r='3' fill='#00ff9c'><title>2026-07-21: 0 contributions</title></circle>
+  <circle cx='65.5' cy='109.4' r='3' fill='#00ff9c'><title>2026-07-21: 1 contributions</title></circle>
   <circle cx='91.0' cy='110.0' r='3' fill='#00ff9c'><title>2026-07-22: 0 contributions</title></circle>
   <circle cx='116.6' cy='110.0' r='3' fill='#00ff9c'><title>2026-07-23: 0 contributions</title></circle>
   <circle cx='142.1' cy='110.0' r='3' fill='#00ff9c'><title>2026-07-24: 0 contributions</title></circle>
@@ -12,26 +12,26 @@
   <circle cx='218.6' cy='110.0' r='3' fill='#00ff9c'><title>2026-07-27: 0 contributions</title></circle>
   <circle cx='244.1' cy='110.0' r='3' fill='#00ff9c'><title>2026-07-28: 0 contributions</title></circle>
   <circle cx='269.7' cy='110.0' r='3' fill='#00ff9c'><title>2026-07-29: 0 contributions</title></circle>
-  <circle cx='295.2' cy='110.0' r='3' fill='#00ff9c'><title>2026-07-30: 0 contributions</title></circle>
-  <circle cx='320.7' cy='110.0' r='3' fill='#00ff9c'><title>2026-07-31: 0 contributions</title></circle>
-  <circle cx='346.2' cy='86.0' r='3' fill='#00ff9c'><title>2026-08-01: 9 contributions</title></circle>
-  <circle cx='371.7' cy='110.0' r='3' fill='#00ff9c'><title>2026-08-02: 0 contributions</title></circle>
-  <circle cx='397.2' cy='110.0' r='3' fill='#00ff9c'><title>2026-08-03: 0 contributions</title></circle>
-  <circle cx='422.8' cy='110.0' r='3' fill='#00ff9c'><title>2026-08-04: 0 contributions</title></circle>
-  <circle cx='448.3' cy='107.3' r='3' fill='#00ff9c'><title>2026-08-05: 1 contributions</title></circle>
-  <circle cx='473.8' cy='94.0' r='3' fill='#00ff9c'><title>2026-08-06: 6 contributions</title></circle>
-  <circle cx='499.3' cy='110.0' r='3' fill='#00ff9c'><title>2026-08-07: 0 contributions</title></circle>
-  <circle cx='524.8' cy='96.7' r='3' fill='#00ff9c'><title>2026-08-08: 5 contributions</title></circle>
-  <circle cx='550.3' cy='102.0' r='3' fill='#00ff9c'><title>2026-08-09: 3 contributions</title></circle>
-  <circle cx='575.9' cy='91.3' r='3' fill='#00ff9c'><title>2026-08-10: 7 contributions</title></circle>
-  <circle cx='601.4' cy='30.0' r='3' fill='#00ff9c'><title>2026-08-11: 30 contributions</title></circle>
-  <circle cx='626.9' cy='56.7' r='3' fill='#00ff9c'><title>2026-08-12: 20 contributions</title></circle>
-  <circle cx='652.4' cy='91.3' r='3' fill='#00ff9c'><title>2026-08-13: 7 contributions</title></circle>
-  <circle cx='677.9' cy='78.0' r='3' fill='#00ff9c'><title>2026-08-14: 12 contributions</title></circle>
-  <circle cx='703.4' cy='91.3' r='3' fill='#00ff9c'><title>2026-08-15: 7 contributions</title></circle>
-  <circle cx='729.0' cy='102.0' r='3' fill='#00ff9c'><title>2026-08-16: 3 contributions</title></circle>
-  <circle cx='754.5' cy='56.7' r='3' fill='#00ff9c'><title>2026-08-17: 20 contributions</title></circle>
-  <circle cx='780.0' cy='86.0' r='3' fill='#00ff9c'><title>2026-08-18: 9 contributions</title></circle>
+  <circle cx='295.2' cy='71.0' r='3' fill='#00ff9c'><title>2026-07-30: 61 contributions</title></circle>
+  <circle cx='320.7' cy='51.1' r='3' fill='#00ff9c'><title>2026-07-31: 92 contributions</title></circle>
+  <circle cx='346.2' cy='59.4' r='3' fill='#00ff9c'><title>2026-08-01: 79 contributions</title></circle>
+  <circle cx='371.7' cy='86.3' r='3' fill='#00ff9c'><title>2026-08-02: 37 contributions</title></circle>
+  <circle cx='397.2' cy='65.8' r='3' fill='#00ff9c'><title>2026-08-03: 69 contributions</title></circle>
+  <circle cx='422.8' cy='40.9' r='3' fill='#00ff9c'><title>2026-08-04: 108 contributions</title></circle>
+  <circle cx='448.3' cy='74.2' r='3' fill='#00ff9c'><title>2026-08-05: 56 contributions</title></circle>
+  <circle cx='473.8' cy='71.0' r='3' fill='#00ff9c'><title>2026-08-06: 61 contributions</title></circle>
+  <circle cx='499.3' cy='82.5' r='3' fill='#00ff9c'><title>2026-08-07: 43 contributions</title></circle>
+  <circle cx='524.8' cy='30.0' r='3' fill='#00ff9c'><title>2026-08-08: 125 contributions</title></circle>
+  <circle cx='550.3' cy='74.8' r='3' fill='#00ff9c'><title>2026-08-09: 55 contributions</title></circle>
+  <circle cx='575.9' cy='74.2' r='3' fill='#00ff9c'><title>2026-08-10: 56 contributions</title></circle>
+  <circle cx='601.4' cy='39.0' r='3' fill='#00ff9c'><title>2026-08-11: 111 contributions</title></circle>
+  <circle cx='626.9' cy='68.4' r='3' fill='#00ff9c'><title>2026-08-12: 65 contributions</title></circle>
+  <circle cx='652.4' cy='30.0' r='3' fill='#00ff9c'><title>2026-08-13: 125 contributions</title></circle>
+  <circle cx='677.9' cy='74.2' r='3' fill='#00ff9c'><title>2026-08-14: 56 contributions</title></circle>
+  <circle cx='703.4' cy='104.9' r='3' fill='#00ff9c'><title>2026-08-15: 8 contributions</title></circle>
+  <circle cx='729.0' cy='81.2' r='3' fill='#00ff9c'><title>2026-08-16: 45 contributions</title></circle>
+  <circle cx='754.5' cy='96.6' r='3' fill='#00ff9c'><title>2026-08-17: 21 contributions</title></circle>
+  <circle cx='780.0' cy='103.0' r='3' fill='#00ff9c'><title>2026-08-18: 11 contributions</title></circle>
 <text x='40' y='132' fill='#9E9E9E' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='10px'>2026-07-20</text>
     <text x='780' y='132' text-anchor='end' fill='#9E9E9E' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='10px'>2026-08-18</text>
   </svg>
