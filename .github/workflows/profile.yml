@@ -1,0 +1,37 @@
+name: Build Profile
+
+on:
+  schedule:
+    - cron: "23 4 * * *"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/build_profile.py"
+      - ".github/workflows/profile.yml"
+      - "*.svg"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.STREAK_PAT }}
+          fetch-depth: 0
+
+      - name: Build self-hosted profile assets
+        env:
+          GH_TOKEN: ${{ secrets.STREAK_PAT }}
+          USER: NikitaBoyarkin
+        run: python3 scripts/build_profile.py
+
+      - name: Commit profile assets
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: update profile assets"
+          file_pattern: "streak.svg activity.svg README.md"
