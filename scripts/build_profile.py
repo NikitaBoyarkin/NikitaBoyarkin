@@ -2,6 +2,7 @@
 """Build self-hosted profile assets for github.com/NikitaBoyarkin.
 
 Assets generated:
+- stats.svg: total contributions, streak, public repos, followers from GraphQL
 - streak.svg: current / longest / total contributions from GitHub GraphQL
 - activity.svg: 30-day contribution activity sparkline
 - README.md: update pinned commit SHA for playable games to the latest stable commit
@@ -47,13 +48,20 @@ def graphql(query: str, variables: dict) -> dict:
     return data["data"]
 
 
-def fetch_contributions() -> list[dict]:
+def fetch_user_data() -> dict:
     end = datetime.now(timezone.utc).date()
     start = end - timedelta(days=364)
     start = start - timedelta(days=(start.weekday() + 1) % 7)
     query = """
     query($login: String!, $from: DateTime!, $to: DateTime!) {
       user(login: $login) {
+        login
+        followers {
+          totalCount
+        }
+        repositories(isFork: false, privacy: PUBLIC, first: 0) {
+          totalCount
+        }
         contributionsCollection(from: $from, to: $to) {
           contributionCalendar {
             totalContributions
@@ -68,10 +76,14 @@ def fetch_contributions() -> list[dict]:
         "from": start.isoformat() + "T00:00:00Z",
         "to": end.isoformat() + "T23:59:59Z",
     }
-    data = graphql(query, variables)
+    return graphql(query, variables)
+
+
+def fetch_contributions() -> list[dict]:
+    data = fetch_user_data()
     calendar = data["user"]["contributionsCollection"]["contributionCalendar"]
     days = [d for w in calendar["weeks"] for d in w["contributionDays"]]
-    today_iso = end.isoformat()
+    today_iso = datetime.now(timezone.utc).date().isoformat()
     return [d for d in days if d["date"] <= today_iso]
 
 
@@ -123,8 +135,52 @@ def build_streak_svg(days: list[dict], total: int, current: int, longest: int) -
     return textwrap.dedent(svg).strip() + "\n"
 
 
+def build_stats_svg(user_data: dict, total: int, current: int, longest: int) -> str:
+    user = user_data["user"]
+    public_repos = user["repositories"]["totalCount"]
+    followers = user["followers"]["totalCount"]
+
+    W, H = 495, 195
+    svg = f"""\
+    <svg xmlns='http://www.w3.org/2000/svg' style='isolation: isolate' viewBox='0 0 {W} {H}' width='{W}px' height='{H}px'>
+      <defs>
+        <clipPath id='rs'><rect width='{W}' height='{H}' rx='4.5'/></clipPath>
+      </defs>
+      <g clip-path='url(#rs)'>
+        <rect fill='{SURFACE}' width='{W}' height='{H}'/>
+        <text x='247.5' y='32' text-anchor='middle' fill='{TEXT_MUTED}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='14px' font-weight='400'>{USER}'s GitHub Stats</text>
+        <g transform='translate(0, 55)'>
+          <text x='82.5' y='0' text-anchor='middle' fill='{TEXT_MUTED}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='12px' font-weight='400'>Contributions</text>
+          <text x='82.5' y='28' text-anchor='middle' fill='{ACCENT}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='28px' font-weight='700'>{total}</text>
+        </g>
+        <g transform='translate(165, 55)'>
+          <text x='82.5' y='0' text-anchor='middle' fill='{TEXT_MUTED}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='12px' font-weight='400'>Public Repos</text>
+          <text x='82.5' y='28' text-anchor='middle' fill='{ACCENT}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='28px' font-weight='700'>{public_repos}</text>
+        </g>
+        <g transform='translate(330, 55)'>
+          <text x='82.5' y='0' text-anchor='middle' fill='{TEXT_MUTED}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='12px' font-weight='400'>Followers</text>
+          <text x='82.5' y='28' text-anchor='middle' fill='{ACCENT}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='28px' font-weight='700'>{followers}</text>
+        </g>
+        <g transform='translate(0, 118)'>
+          <text x='82.5' y='0' text-anchor='middle' fill='{TEXT_MUTED}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='12px' font-weight='400'>Current Streak</text>
+          <text x='82.5' y='28' text-anchor='middle' fill='{ACCENT}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='28px' font-weight='700'>{current}</text>
+        </g>
+        <g transform='translate(165, 118)'>
+          <text x='82.5' y='0' text-anchor='middle' fill='{TEXT_MUTED}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='12px' font-weight='400'>Longest Streak</text>
+          <text x='82.5' y='28' text-anchor='middle' fill='{ACCENT}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='28px' font-weight='700'>{longest}</text>
+        </g>
+        <g transform='translate(330, 118)'>
+          <text x='82.5' y='0' text-anchor='middle' fill='{TEXT_MUTED}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='12px' font-weight='400'>Active Since</text>
+          <text x='82.5' y='28' text-anchor='middle' fill='{ACCENT}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='28px' font-weight='700'>2021</text>
+        </g>
+        <text x='247.5' y='182' text-anchor='middle' fill='{TEXT_MUTED}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='11px' font-weight='400'>Last updated: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}</text>
+      </g>
+    </svg>
+    """
+    return textwrap.dedent(svg).strip() + "\n"
+
+
 def build_activity_svg(days: list[dict]) -> str:
-    # Take last 30 days with contributions.
     tail = days[-30:]
     W, H = 800, 140
     pad_left, pad_right = 40, 20
@@ -144,7 +200,6 @@ def build_activity_svg(days: list[dict]) -> str:
 
     polyline = " ".join(f"{x:.1f},{y:.1f}" for x, y, _, _ in points)
 
-    # Add small circles + tooltips as title elements.
     circles = ""
     for x, y, count, day in points:
         circles += f"    <circle cx='{x:.1f}' cy='{y:.1f}' r='3' fill='{ACCENT}'><title>{day}: {count} contributions</title></circle>\n"
@@ -187,14 +242,16 @@ def update_readme_game_sha() -> bool:
 
 
 def main() -> None:
-    print("Fetching contributions...")
+    print("Fetching user data...")
+    user_data = fetch_user_data()
     days = fetch_contributions()
     total, current, longest = compute_streaks(days)
     print(f"total={total} current={current} longest={longest}")
 
+    (REPO_ROOT / "stats.svg").write_text(build_stats_svg(user_data, total, current, longest), encoding="utf-8")
     (REPO_ROOT / "streak.svg").write_text(build_streak_svg(days, total, current, longest), encoding="utf-8")
     (REPO_ROOT / "activity.svg").write_text(build_activity_svg(days), encoding="utf-8")
-    print("Wrote streak.svg and activity.svg")
+    print("Wrote stats.svg, streak.svg and activity.svg")
 
     update_readme_game_sha()
 

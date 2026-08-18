@@ -1,0 +1,34 @@
+<svg xmlns='http://www.w3.org/2000/svg' style='isolation: isolate' viewBox='0 0 495 195' width='495px' height='195px'>
+  <defs>
+    <clipPath id='rs'><rect width='495' height='195' rx='4.5'/></clipPath>
+  </defs>
+  <g clip-path='url(#rs)'>
+    <rect fill='#151515' width='495' height='195'/>
+    <text x='247.5' y='32' text-anchor='middle' fill='#9E9E9E' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='14px' font-weight='400'>NikitaBoyarkin's GitHub Stats</text>
+    <g transform='translate(0, 55)'>
+      <text x='82.5' y='0' text-anchor='middle' fill='#9E9E9E' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='12px' font-weight='400'>Contributions</text>
+      <text x='82.5' y='28' text-anchor='middle' fill='#00ff9c' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='28px' font-weight='700'>237</text>
+    </g>
+    <g transform='translate(165, 55)'>
+      <text x='82.5' y='0' text-anchor='middle' fill='#9E9E9E' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='12px' font-weight='400'>Public Repos</text>
+      <text x='82.5' y='28' text-anchor='middle' fill='#00ff9c' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='28px' font-weight='700'>16</text>
+    </g>
+    <g transform='translate(330, 55)'>
+      <text x='82.5' y='0' text-anchor='middle' fill='#9E9E9E' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='12px' font-weight='400'>Followers</text>
+      <text x='82.5' y='28' text-anchor='middle' fill='#00ff9c' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='28px' font-weight='700'>338</text>
+    </g>
+    <g transform='translate(0, 118)'>
+      <text x='82.5' y='0' text-anchor='middle' fill='#9E9E9E' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='12px' font-weight='400'>Current Streak</text>
+      <text x='82.5' y='28' text-anchor='middle' fill='#00ff9c' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='28px' font-weight='700'>11</text>
+    </g>
+    <g transform='translate(165, 118)'>
+      <text x='82.5' y='0' text-anchor='middle' fill='#9E9E9E' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='12px' font-weight='400'>Longest Streak</text>
+      <text x='82.5' y='28' text-anchor='middle' fill='#00ff9c' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='28px' font-weight='700'>11</text>
+    </g>
+    <g transform='translate(330, 118)'>
+      <text x='82.5' y='0' text-anchor='middle' fill='#9E9E9E' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='12px' font-weight='400'>Active Since</text>
+      <text x='82.5' y='28' text-anchor='middle' fill='#00ff9c' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='28px' font-weight='700'>2021</text>
+    </g>
+    <text x='247.5' y='182' text-anchor='middle' fill='#9E9E9E' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='11px' font-weight='400'>Last updated: 2026-08-18 17:15 UTC</text>
+  </g>
+</svg>

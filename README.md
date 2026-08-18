@@ -26,7 +26,7 @@ I turn ambiguous product questions into clean experiments, SQL pipelines, and de
 ### 📊 GitHub Stats & Top Languages
 
 <p align="center">
-  <img height="190" src="https://github-readme-stats-pi-liard-96.vercel.app/api?username=NikitaBoyarkin&show_icons=true&include_all_commits=true&hide=issues&show=reviews&rank_icon=github&title_color=00ff9c&icon_color=00ff9c&text_color=f4f4f5&bg_color=0a0a12&hide_border=true&card_width=420&cache_seconds=600" alt="NikitaBoyarkin GitHub Stats" />
+  <img height="190" src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/stats.svg" alt="NikitaBoyarkin GitHub Stats" />
   &nbsp;
   <img height="190" src="https://github-readme-stats-pi-liard-96.vercel.app/api/top-langs?username=NikitaBoyarkin&layout=donut&langs_count=10&title_color=00ff9c&text_color=f4f4f5&bg_color=0a0a12&hide_border=true&card_width=320&cache_seconds=600" alt="Top Languages" />
 </p>
