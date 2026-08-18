@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 400 440" preserveAspectRatio="xMidYMid meet" style="background:#0a0a12" font-family="'Fira Code','SF Mono',Menlo,monospace">
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 400 440" preserveAspectRatio="xMidYMid meet" style="background:#0a0a12;touch-action:none" font-family="'Fira Code','SF Mono',Menlo,monospace">
   <rect width="400" height="440" fill="#0a0a12"/>
   <text x="200" y="28" text-anchor="middle" fill="#00ff9c" font-size="16" font-weight="bold" letter-spacing="3">2048</text>
   <text id="score" x="200" y="52" text-anchor="middle" fill="#f4f4f5" font-size="12">Score: 0</text>
@@ -6,7 +6,7 @@
     <rect width="340" height="340" fill="#12121c" stroke="#00ff9c" stroke-width="2" rx="6"/>
     <g id="tiles"></g>
   </g>
-  <text id="overlay" x="200" y="430" text-anchor="middle" fill="#f4f4f5" font-size="13">Arrow keys / WASD to move</text>
+  <text id="overlay" x="200" y="430" text-anchor="middle" fill="#f4f4f5" font-size="13">Swipe or arrow keys to move</text>
   <script type="text/javascript"><![CDATA[
     (function () {
       var W = 4, CELL = 79, GAP = 8, STEP = 87;
@@ -22,7 +22,7 @@
         grid = []; for (var i = 0; i < W; i++) grid.push([0, 0, 0, 0]);
         score = 0; over = false; won = false;
         scoreT.textContent = 'Score: 0';
-        overlay.textContent = 'Arrow keys / WASD to move';
+        overlay.textContent = 'Swipe or arrow keys to move';
         overlay.setAttribute('fill', '#f4f4f5');
       }
 
@@ -67,13 +67,13 @@
 
       function checkEnd() {
         for (var i = 0; i < W; i++) for (var j = 0; j < W; j++) {
-          if (grid[i][j] === 2048 && !won) { won = true; overlay.textContent = '2048! You did it · press R'; }
+          if (grid[i][j] === 2048 && !won) { won = true; overlay.textContent = '2048! You did it · tap to continue'; }
           if (!grid[i][j]) return;
           if (j + 1 < W && grid[i][j] === grid[i][j + 1]) return;
           if (i + 1 < W && grid[i][j] === grid[i + 1][j]) return;
         }
         over = true;
-        overlay.textContent = 'Game over · press R';
+        overlay.textContent = 'Game over · tap to restart';
         overlay.setAttribute('fill', '#ff4b4b');
       }
 
@@ -116,6 +116,18 @@
         else if (k === 'ArrowRight' || k === 'd' || k === 'D') { e.preventDefault(); move('right'); }
         else if (k === 'r' || k === 'R') { empty(); spawn(); spawn(); draw(); }
       });
+
+      // --- Touch controls (mobile) ---
+      var tsx = 0, tsy = 0;
+      document.addEventListener('touchstart', function (e) { tsx = e.touches[0].clientX; tsy = e.touches[0].clientY; }, {passive: true});
+      document.addEventListener('touchmove', function (e) { e.preventDefault(); }, {passive: false});
+      document.addEventListener('touchend', function (e) {
+        var t = e.changedTouches[0];
+        var dx = t.clientX - tsx, dy = t.clientY - tsy;
+        if (Math.abs(dx) < 24 && Math.abs(dy) < 24) { if (over) { empty(); spawn(); spawn(); draw(); } return; }
+        if (Math.abs(dx) > Math.abs(dy)) move(dx > 0 ? 'right' : 'left');
+        else move(dy > 0 ? 'down' : 'up');
+      }, {passive: false});
 
       empty(); spawn(); spawn(); draw();
     })();
