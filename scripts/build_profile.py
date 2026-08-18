@@ -56,6 +56,7 @@ def fetch_user_data() -> dict:
     query($login: String!, $from: DateTime!, $to: DateTime!) {
       user(login: $login) {
         login
+        createdAt
         followers {
           totalCount
         }
@@ -139,6 +140,9 @@ def build_stats_svg(user_data: dict, total: int, current: int, longest: int) -> 
     user = user_data["user"]
     public_repos = user["repositories"]["totalCount"]
     followers = user["followers"]["totalCount"]
+    # "Active Since" = year the GitHub account was created (user.createdAt),
+    # not the year of the first contribution — so it reflects "on GitHub since".
+    active_since = datetime.fromisoformat(user["createdAt"].replace("Z", "+00:00")).year
 
     W, H = 495, 195
     svg = f"""\
@@ -171,7 +175,7 @@ def build_stats_svg(user_data: dict, total: int, current: int, longest: int) -> 
         </g>
         <g transform='translate(330, 118)'>
           <text x='82.5' y='0' text-anchor='middle' fill='{TEXT_MUTED}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='12px' font-weight='400'>Active Since</text>
-          <text x='82.5' y='28' text-anchor='middle' fill='{ACCENT}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='28px' font-weight='700'>2021</text>
+          <text x='82.5' y='28' text-anchor='middle' fill='{ACCENT}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='28px' font-weight='700'>{active_since}</text>
         </g>
         <text x='247.5' y='182' text-anchor='middle' fill='{TEXT_MUTED}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='11px' font-weight='400'>Last updated: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}</text>
       </g>
