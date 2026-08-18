@@ -2,7 +2,7 @@ name: Update Streak Stats
 
 on:
   schedule:
-    - cron: "41 3 * * *" # daily ~03:41 UTC
+    - cron: "41 3 * * *"
   workflow_dispatch:
   push:
     branches: [main]
@@ -18,35 +18,130 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.STREAK_PAT }}
+          fetch-depth: 0
 
-      - name: Fetch streak SVG (retry, self-host)
+      - name: Build streak SVG from GitHub contributions
+        env:
+          GH_TOKEN: ${{ secrets.STREAK_PAT }}
+          USER: NikitaBoyarkin
         run: |
           set -euo pipefail
-          url="https://streak-stats.demolab.com/?user=NikitaBoyarkin&theme=dark&hide_border=true"
-          ok=0
-          for i in 1 2 3 4 5 6; do
-            if curl -fsS --max-time 30 "$url" -o streak.svg; then
-              echo "fetched on try $i"
-              ok=1
-              break
-            fi
-            echo "try $i failed; backing off"
-            sleep 20
-          done
-          if [ "$ok" -ne 1 ]; then
-            echo "all retries failed; keeping previous streak.svg" >&2
-            exit 0
-          fi
-          test -s streak.svg
-          # Reject error/placeholder cards so we never commit a sad-face SVG
-          if grep -q "Failed to retrieve" streak.svg; then
-            echo "API returned an error card; keeping previous streak.svg" >&2
-            exit 0
-          fi
-          grep -q "Current Streak" streak.svg || {
-            echo "unexpected SVG content; keeping previous streak.svg" >&2
-            exit 0
+          python3 <<'PY'
+          import os, json, urllib.request, urllib.error, textwrap, datetime
+
+          USER = os.environ["USER"]
+          TOKEN = os.environ["GH_TOKEN"]
+
+          # GitHub counts contributions by UTC day. contributionCalendar returns
+          # complete weeks (Sun-Sat). The API allows at most 1 year, so request
+          # 364 days and round start back to the previous Sunday.
+          end = datetime.datetime.now(datetime.timezone.utc).date()
+          start = end - datetime.timedelta(days=364)
+          start = start - datetime.timedelta(days=(start.weekday() + 1) % 7)
+
+          query = """
+          query($login: String!, $from: DateTime!, $to: DateTime!) {
+            user(login: $login) {
+              contributionsCollection(from: $from, to: $to) {
+                contributionCalendar {
+                  totalContributions
+                  weeks { contributionDays { date contributionCount } }
+                }
+              }
+            }
           }
+          """
+          variables = {
+              "login": USER,
+              "from": start.isoformat() + "T00:00:00Z",
+              "to": end.isoformat() + "T23:59:59Z",
+          }
+
+          req = urllib.request.Request(
+              "https://api.github.com/graphql",
+              data=json.dumps({"query": query, "variables": variables}).encode(),
+              headers={
+                  "Authorization": f"bearer {TOKEN}",
+                  "Content-Type": "application/json",
+              },
+          )
+          with urllib.request.urlopen(req, timeout=60) as resp:
+              data = json.loads(resp.read().decode())
+
+          if "errors" in data:
+              raise RuntimeError("GraphQL errors: " + json.dumps(data["errors"]))
+
+          calendar = data["data"]["user"]["contributionsCollection"]["contributionCalendar"]
+          days = [d for w in calendar["weeks"] for d in w["contributionDays"]]
+          # Keep only days up to today UTC; future days have 0 anyway but trim explicitly.
+          today_iso = end.isoformat()
+          days = [d for d in days if d["date"] <= today_iso]
+
+          total = sum(d["contributionCount"] for d in days)
+
+          # Compute streaks from oldest to newest.
+          current_streak = 0
+          longest_streak = 0
+          running = 0
+          for d in days:
+              if d["contributionCount"] > 0:
+                  running += 1
+                  longest_streak = max(longest_streak, running)
+              else:
+                  running = 0
+          # Current streak is the running streak ending on the latest day with contributions.
+          for d in reversed(days):
+              if d["contributionCount"] > 0:
+                  current_streak += 1
+              else:
+                  break
+
+          # Card dimensions and palette (matches streak-stats dark theme roughly).
+          W, H = 495, 195
+          bg = "#151515"
+          accent = "#FB8C00"
+          text_main = "#FEFEFE"
+          text_muted = "#9E9E9E"
+
+          def fmt(n):
+              return str(n) if n > 0 else "0"
+
+          svg = f"""\
+          <svg xmlns='http://www.w3.org/2000/svg' style='isolation: isolate' viewBox='0 0 {W} {H}' width='{W}px' height='{H}px'>
+            <defs>
+              <clipPath id='r'><rect width='{W}' height='{H}' rx='4.5'/></clipPath>
+            </defs>
+            <g clip-path='url(#r)'>
+              <rect fill='{bg}' width='{W}' height='{H}'/>
+              <text x='247.5' y='32' text-anchor='middle' fill='{text_muted}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='14px' font-weight='400'>{NikitaBoyarkin}'s GitHub Streak</text>
+
+              <g transform='translate(0, 55)'>
+                <text x='82.5' y='0' text-anchor='middle' fill='{text_muted}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='12px' font-weight='400'>Total Contributions</text>
+                <text x='82.5' y='28' text-anchor='middle' fill='{accent}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='28px' font-weight='700'>{fmt(total)}</text>
+              </g>
+
+              <g transform='translate(165, 55)'>
+                <text x='82.5' y='0' text-anchor='middle' fill='{text_muted}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='12px' font-weight='400'>Current Streak</text>
+                <text x='82.5' y='28' text-anchor='middle' fill='{accent}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='28px' font-weight='700'>{fmt(current_streak)}</text>
+              </g>
+
+              <g transform='translate(330, 55)'>
+                <text x='82.5' y='0' text-anchor='middle' fill='{text_muted}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='12px' font-weight='400'>Longest Streak</text>
+                <text x='82.5' y='28' text-anchor='middle' fill='{accent}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='28px' font-weight='700'>{fmt(longest_streak)}</text>
+              </g>
+
+              <text x='247.5' y='155' text-anchor='middle' fill='{text_muted}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='11px' font-weight='400'>Last updated: {datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}</text>
+            </g>
+          </svg>
+          """
+
+          with open("streak.svg", "w", encoding="utf-8") as f:
+              f.write(textwrap.dedent(svg).strip() + "\n")
+
+          print(f"total={total} current={current_streak} longest={longest_streak}")
+          PY
 
       - name: Commit streak.svg
         uses: stefanzweifel/git-auto-commit-action@v5
