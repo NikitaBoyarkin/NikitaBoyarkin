@@ -174,11 +174,11 @@ _Full-stack analytics platform: Streamlit + Supabase with RLS and an Edge Functi
 ### 📝 Recent Notes
 
 <!-- RECENT-POSTS-LIST:START -->
-- [Чек-лист портфолио дата-аналитика](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/data-analyst-portfolio-checklist/)
-- [Автоматизация недельных отчётов через Telegram-бота](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/telegram-reporting-bot/)
-- [RFM-сегментация клиентов](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/rfm-segmentation-practical/)
-- [Когортный анализ удержания](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/cohort-retention-guide/)
-- [Почему мы перешли на байесовское A/B-тестирование](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/bayesian-ab-testing/)
+- [Дашборды, которые не врут: принципы продуктовой визуализации](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/dashboards-that-dont-lie/)
+- [Кейс Volta: воронка, A/B и retention на синтетике необанка](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/volta-neobank-case-study/)
+- [Воспроизводимые пайплайны данных: от seed до CI](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/reproducible-data-pipelines/)
+- [Оконные функции: gaps-and-islands, топ-N, range-join для stickiness](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/sql-window-functions/)
+- [Почему агрегат врёт: когортные треугольники удержания](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/cohort-triangles-retention/)
 <!-- RECENT-POSTS-LIST:END -->
 
 > Auto-updated daily from the [site RSS](https://nikitaboyarkin.github.io/Personal_Projects.github.io/rss.xml) via GitHub Actions.
