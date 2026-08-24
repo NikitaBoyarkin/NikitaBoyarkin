@@ -33,7 +33,7 @@ I turn ambiguous product questions into clean experiments, SQL pipelines, and de
 ### 🗣️ Top Languages
 
 <p align="center">
-  <img height="400" src="https://github-readme-stats-pi-liard-96.vercel.app/api/top-langs?username=NikitaBoyarkin&layout=donut&langs_count=10&title_color=00ff9c&text_color=f4f4f5&bg_color=0a0a12&hide_border=true&card_width=320&cache_seconds=600" alt="Top Languages" />
+  <img height="400" src="https://github-readme-stats-pi-liard-96.vercel.app/api/top-langs?username=NikitaBoyarkin&layout=donut&langs_count=10&title_color=ff6643&text_color=f4f4f5&bg_color=0a0a12&hide_border=true&card_width=320&cache_seconds=600" alt="Top Languages" />
 </p>
 
 ---
@@ -57,7 +57,7 @@ I turn ambiguous product questions into clean experiments, SQL pipelines, and de
 </p>
 
 <p align="center">
-  <img src="https://hits.sh/github.com/NikitaBoyarkin.svg?label=Profile+Views&color=00ff9c&logo=github&style=flat-square&extra_count=124" alt="Profile views" />
+  <img src="https://hits.sh/github.com/NikitaBoyarkin.svg?label=Profile+Views&color=ff6643&logo=github&style=flat-square&extra_count=124" alt="Profile views" />
 </p>
 
 ---
@@ -74,7 +74,7 @@ I turn ambiguous product questions into clean experiments, SQL pipelines, and de
       <br/><sub style="color:#8b949e">classic · arrows / WASD</sub>
       <br/><br/>
       <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@a7b1ba7749320346612a867a33b6abd0edf94f13/snake.svg">
-        <img src="https://img.shields.io/badge/Play_fullscreen-00ff9c?style=for-the-badge" alt="Play fullscreen"/>
+        <img src="https://img.shields.io/badge/Play_fullscreen-ff6643?style=for-the-badge" alt="Play fullscreen"/>
       </a>
     </td>
     <td align="center" style="width:210px; background:#0c1118; border:1px solid #262a38; border-radius:12px; padding:14px 10px">
@@ -85,7 +85,7 @@ I turn ambiguous product questions into clean experiments, SQL pipelines, and de
       <br/><sub style="color:#8b949e">click until p-value &lt; 0.05</sub>
       <br/><br/>
       <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@a7b1ba7749320346612a867a33b6abd0edf94f13/ab-test.svg">
-        <img src="https://img.shields.io/badge/Play_fullscreen-00ff9c?style=for-the-badge" alt="Play fullscreen"/>
+        <img src="https://img.shields.io/badge/Play_fullscreen-ff6643?style=for-the-badge" alt="Play fullscreen"/>
       </a>
     </td>
     <td align="center" style="width:210px; background:#0c1118; border:1px solid #262a38; border-radius:12px; padding:14px 10px">
@@ -96,7 +96,7 @@ I turn ambiguous product questions into clean experiments, SQL pipelines, and de
       <br/><sub style="color:#8b949e">beat the CPU · first to 11</sub>
       <br/><br/>
       <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@a7b1ba7749320346612a867a33b6abd0edf94f13/pong.svg">
-        <img src="https://img.shields.io/badge/Play_fullscreen-00ff9c?style=for-the-badge" alt="Play fullscreen"/>
+        <img src="https://img.shields.io/badge/Play_fullscreen-ff6643?style=for-the-badge" alt="Play fullscreen"/>
       </a>
     </td>
   </tr>
@@ -109,7 +109,7 @@ I turn ambiguous product questions into clean experiments, SQL pipelines, and de
       <br/><sub style="color:#8b949e">merge tiles to 2048</sub>
       <br/><br/>
       <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@a7b1ba7749320346612a867a33b6abd0edf94f13/2048.svg">
-        <img src="https://img.shields.io/badge/Play_fullscreen-00ff9c?style=for-the-badge" alt="Play fullscreen"/>
+        <img src="https://img.shields.io/badge/Play_fullscreen-ff6643?style=for-the-badge" alt="Play fullscreen"/>
       </a>
     </td>
     <td align="center" style="width:210px; background:#0c1118; border:1px solid #262a38; border-radius:12px; padding:14px 10px">
@@ -120,7 +120,7 @@ I turn ambiguous product questions into clean experiments, SQL pipelines, and de
       <br/><sub style="color:#8b949e">catch users through the funnel</sub>
       <br/><br/>
       <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@a7b1ba7749320346612a867a33b6abd0edf94f13/funnel-drop.svg">
-        <img src="https://img.shields.io/badge/Play_fullscreen-00ff9c?style=for-the-badge" alt="Play fullscreen"/>
+        <img src="https://img.shields.io/badge/Play_fullscreen-ff6643?style=for-the-badge" alt="Play fullscreen"/>
       </a>
     </td>
     <td align="center" style="width:210px; border:none; background:transparent"></td>
@@ -147,8 +147,8 @@ I turn ambiguous product questions into clean experiments, SQL pipelines, and de
 
 _End-to-end neobank analytics: funnel, A/B test, retention, segmentation. **+6.24pp KYC conversion (Z=6.35, p<0.0001), €716K/yr — 48× ROI.** CUPED + AA-test + Bonferroni._
 
-[![Repo](https://img.shields.io/badge/Repo-volta--banking-0f2a2b?style=for-the-badge&logo=github&logoColor=00ff9c)](https://github.com/NikitaBoyarkin/volta-banking)
-[![Case study](https://img.shields.io/badge/Case_study-00ff9c?style=for-the-badge)](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/volta/)
+[![Repo](https://img.shields.io/badge/Repo-volta--banking-0f2a2b?style=for-the-badge&logo=github&logoColor=ff6643)](https://github.com/NikitaBoyarkin/volta-banking)
+[![Case study](https://img.shields.io/badge/Case_study-ff6643?style=for-the-badge)](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/volta/)
 
 **Stack:** Python · SciPy · Statsmodels · scikit-learn
 
@@ -156,7 +156,7 @@ _End-to-end neobank analytics: funnel, A/B test, retention, segmentation. **+6.2
 
 _Full-stack analytics platform: Streamlit + Supabase with RLS and an Edge Function. **Significant A/B result (p=0.0034) on 8,000 seeded users**, reproducible pipeline._
 
-[![Repo](https://img.shields.io/badge/Repo-supabase--product--analytics-0f2a2b?style=for-the-badge&logo=github&logoColor=00ff9c)](https://github.com/NikitaBoyarkin/supabase-product-analytics)
+[![Repo](https://img.shields.io/badge/Repo-supabase--product--analytics-0f2a2b?style=for-the-badge&logo=github&logoColor=ff6643)](https://github.com/NikitaBoyarkin/supabase-product-analytics)
 
 **Stack:** Python · Streamlit · Supabase · PostgreSQL
 
@@ -164,8 +164,8 @@ _Full-stack analytics platform: Streamlit + Supabase with RLS and an Edge Functi
 
 \*Ten end-to-end SQL cases on DuckDB — funnel, N-day retention, DAU/MAU stickiness, LTV, streaks, A/B conversion, attribution. **One command, no server, pytest-verified.\***
 
-[![Repo](https://img.shields.io/badge/Repo-sql--analytics--case--study-0f2a2b?style=for-the-badge&logo=github&logoColor=00ff9c)](https://github.com/NikitaBoyarkin/sql-analytics-case-study)
-[![Case study](https://img.shields.io/badge/Case_study-00ff9c?style=for-the-badge)](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/sql/)
+[![Repo](https://img.shields.io/badge/Repo-sql--analytics--case--study-0f2a2b?style=for-the-badge&logo=github&logoColor=ff6643)](https://github.com/NikitaBoyarkin/sql-analytics-case-study)
+[![Case study](https://img.shields.io/badge/Case_study-ff6643?style=for-the-badge)](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/sql/)
 
 **Stack:** SQL · DuckDB · pytest
 
@@ -229,8 +229,8 @@ _Full-stack analytics platform: Streamlit + Supabase with RLS and an Edge Functi
 ### 🌐 Connect
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/nikita-boyarkin)
-[![Portfolio](https://img.shields.io/badge/Portfolio-0f2a2b?style=for-the-badge&logo=github&logoColor=00ff9c)](https://nikitaboyarkin.github.io/Personal_Projects.github.io/?utm_source=github&utm_medium=profile_readme&utm_campaign=connect)
-[![Blog](https://img.shields.io/badge/Blog-0f2a2b?style=for-the-badge&logo=githubpages&logoColor=00ff9c)](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/)
+[![Portfolio](https://img.shields.io/badge/Portfolio-0f2a2b?style=for-the-badge&logo=github&logoColor=ff6643)](https://nikitaboyarkin.github.io/Personal_Projects.github.io/?utm_source=github&utm_medium=profile_readme&utm_campaign=connect)
+[![Blog](https://img.shields.io/badge/Blog-0f2a2b?style=for-the-badge&logo=githubpages&logoColor=ff6643)](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/)
 [![Telegram](https://img.shields.io/badge/Telegram-26A5E4?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/lofinibo?utm_source=github&utm_medium=profile_readme&utm_campaign=connect)
 [![Email](https://img.shields.io/badge/Email-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:boyarkin_yandex@mail.ru)
 

@@ -25,7 +25,7 @@ TOKEN = os.environ.get("GH_TOKEN", "")
 # Palette (matches README dark theme)
 BG = "#0a0a12"
 SURFACE = "#151515"
-ACCENT = "#00ff9c"
+ACCENT = "#ff6643"
 TEXT_MAIN = "#f4f4f5"
 TEXT_MUTED = "#9E9E9E"
 
