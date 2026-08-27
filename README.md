@@ -174,11 +174,11 @@ _Full-stack analytics platform: Streamlit + Supabase with RLS and an Edge Functi
 ### 📝 Recent Notes
 
 <!-- RECENT-POSTS-LIST:START -->
-- [Дашборды, которые не врут: принципы продуктовой визуализации](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/dashboards-that-dont-lie/)
-- [Кейс Volta: воронка, A/B и retention на синтетике необанка](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/volta-neobank-case-study/)
-- [Воспроизводимые пайплайны данных: от seed до CI](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/reproducible-data-pipelines/)
-- [Оконные функции: gaps-and-islands, топ-N, range-join для stickiness](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/sql-window-functions/)
-- [Почему агрегат врёт: когортные треугольники удержания](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/cohort-triangles-retention/)
+- [Проактивность аналитика за рамками роли](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/analyst-proactivity/)
+- [Кейсы с собеседований: как диагностировать просадку метрики](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/analyst-interview-cases/)
+- [Churn + uplift: кому дать скидку &lpar;причинный таргетинг&rpar;](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/churn-uplift-discount/)
+- [Feature Impact: как измерить влияние фичи, когда A/B невозможен](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/feature-impact-analysis/)
+- [Первая транзакция: как измерить активацию финтех-продукта](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/first-value-moment-activation/)
 <!-- RECENT-POSTS-LIST:END -->
 
 > Auto-updated daily from the [site RSS](https://nikitaboyarkin.github.io/Personal_Projects.github.io/rss.xml) via GitHub Actions.
