@@ -1,7 +1,7 @@
 <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 140' width='800px' height='140px'>
     <rect fill='#0a0a12' width='800' height='140'/>
     <text x='400.0' y='20' text-anchor='middle' fill='#9E9E9E' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='13px' font-weight='400'>Last 30 Days Activity</text>
-    <polyline points='40.0,62.8 65.5,87.9 91.0,68.8 116.6,45.5 142.1,76.6 167.6,73.6 193.1,84.3 218.6,35.4 244.1,77.2 269.7,76.6 295.2,43.7 320.7,71.2 346.2,35.4 371.7,76.6 397.2,105.2 422.8,83.1 448.3,97.5 473.8,84.3 499.3,102.2 524.8,82.5 550.3,63.4 575.9,30.0 601.4,82.5 626.9,58.7 652.4,44.3 677.9,71.2 703.4,57.5 729.0,84.3 754.5,84.9 780.0,94.5' fill='none' stroke='#ff6643' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' opacity='0.8'/>
+    <polyline points='40.0,62.8 65.5,87.9 91.0,68.8 116.6,45.5 142.1,76.6 167.6,73.6 193.1,84.3 218.6,35.4 244.1,77.2 269.7,76.6 295.2,43.7 320.7,71.2 346.2,35.4 371.7,76.6 397.2,105.2 422.8,83.1 448.3,97.5 473.8,84.3 499.3,102.2 524.8,82.5 550.3,63.4 575.9,30.0 601.4,82.5 626.9,58.7 652.4,44.3 677.9,71.2 703.4,57.5 729.0,84.3 754.5,84.9 780.0,93.9' fill='none' stroke='#ff6643' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' opacity='0.8'/>
       <circle cx='40.0' cy='62.8' r='3' fill='#ff6643'><title>2026-08-01: 79 contributions</title></circle>
   <circle cx='65.5' cy='87.9' r='3' fill='#ff6643'><title>2026-08-02: 37 contributions</title></circle>
   <circle cx='91.0' cy='68.8' r='3' fill='#ff6643'><title>2026-08-03: 69 contributions</title></circle>
@@ -31,7 +31,7 @@
   <circle cx='703.4' cy='57.5' r='3' fill='#ff6643'><title>2026-08-27: 88 contributions</title></circle>
   <circle cx='729.0' cy='84.3' r='3' fill='#ff6643'><title>2026-08-28: 43 contributions</title></circle>
   <circle cx='754.5' cy='84.9' r='3' fill='#ff6643'><title>2026-08-29: 42 contributions</title></circle>
-  <circle cx='780.0' cy='94.5' r='3' fill='#ff6643'><title>2026-08-30: 26 contributions</title></circle>
+  <circle cx='780.0' cy='93.9' r='3' fill='#ff6643'><title>2026-08-30: 27 contributions</title></circle>
 <text x='40' y='132' fill='#9E9E9E' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='10px'>2026-08-01</text>
     <text x='780' y='132' text-anchor='end' fill='#9E9E9E' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='10px'>2026-08-30</text>
   </svg>
