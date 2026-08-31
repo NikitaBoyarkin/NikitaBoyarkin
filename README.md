@@ -44,7 +44,7 @@ I turn ambiguous product questions into clean experiments, SQL pipelines, and de
 ### ⚡ Activity
 
 <!-- LAST-REFRESHED:START -->
-_Last refreshed: 2026-08-31 21:55 UTC · 429 contributions in the last 7 days_
+_Last refreshed: 2026-08-31 23:07 UTC · 429 contributions in the last 7 days_
 <!-- LAST-REFRESHED:END -->
 
 
@@ -106,59 +106,59 @@ _Full-stack analytics platform: Streamlit + Supabase with RLS and an Edge Functi
 <table align="center">
   <tr>
     <td align="center" style="width:210px; background:#1400c3; border:1px solid #0c0078; border-radius:12px; padding:14px 10px">
-      <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@6d8c74e48e1710fbee5c0c0b5c6860c75a7577c4/snake.svg">
-        <img src="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@6d8c74e48e1710fbee5c0c0b5c6860c75a7577c4/snake.svg" width="170" height="187" alt="Snake"/>
+      <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@52cb0adff13c3be98abbb355b6bf600cc53a9afe/snake.svg">
+        <img src="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@52cb0adff13c3be98abbb355b6bf600cc53a9afe/snake.svg" width="170" height="187" alt="Snake"/>
       </a>
       <br/><b>🐍 Snake</b>
       <br/><sub style="color:#c9c2a8">classic · arrows / WASD</sub>
       <br/><br/>
-      <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@6d8c74e48e1710fbee5c0c0b5c6860c75a7577c4/snake.svg">
+      <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@52cb0adff13c3be98abbb355b6bf600cc53a9afe/snake.svg">
         <img src="https://img.shields.io/badge/Play_fullscreen-fe4e02?style=for-the-badge" alt="Play fullscreen"/>
       </a>
     </td>
     <td align="center" style="width:210px; background:#1400c3; border:1px solid #0c0078; border-radius:12px; padding:14px 10px">
-      <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@6d8c74e48e1710fbee5c0c0b5c6860c75a7577c4/ab-test.svg">
-        <img src="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@6d8c74e48e1710fbee5c0c0b5c6860c75a7577c4/ab-test.svg" width="170" height="187" alt="A/B Test"/>
+      <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@52cb0adff13c3be98abbb355b6bf600cc53a9afe/ab-test.svg">
+        <img src="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@52cb0adff13c3be98abbb355b6bf600cc53a9afe/ab-test.svg" width="170" height="187" alt="A/B Test"/>
       </a>
       <br/><b>🧪 A/B Test</b>
       <br/><sub style="color:#c9c2a8">click until p &lt; 0.05</sub>
       <br/><br/>
-      <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@6d8c74e48e1710fbee5c0c0b5c6860c75a7577c4/ab-test.svg">
+      <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@52cb0adff13c3be98abbb355b6bf600cc53a9afe/ab-test.svg">
         <img src="https://img.shields.io/badge/Play_fullscreen-fe4e02?style=for-the-badge" alt="Play fullscreen"/>
       </a>
     </td>
     <td align="center" style="width:210px; background:#1400c3; border:1px solid #0c0078; border-radius:12px; padding:14px 10px">
-      <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@6d8c74e48e1710fbee5c0c0b5c6860c75a7577c4/pong.svg">
-        <img src="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@6d8c74e48e1710fbee5c0c0b5c6860c75a7577c4/pong.svg" width="170" height="187" alt="Pong"/>
+      <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@52cb0adff13c3be98abbb355b6bf600cc53a9afe/pong.svg">
+        <img src="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@52cb0adff13c3be98abbb355b6bf600cc53a9afe/pong.svg" width="170" height="187" alt="Pong"/>
       </a>
       <br/><b>🏓 Pong</b>
       <br/><sub style="color:#c9c2a8">beat the CPU · first to 11</sub>
       <br/><br/>
-      <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@6d8c74e48e1710fbee5c0c0b5c6860c75a7577c4/pong.svg">
+      <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@52cb0adff13c3be98abbb355b6bf600cc53a9afe/pong.svg">
         <img src="https://img.shields.io/badge/Play_fullscreen-fe4e02?style=for-the-badge" alt="Play fullscreen"/>
       </a>
     </td>
   </tr>
   <tr>
     <td align="center" style="width:210px; background:#1400c3; border:1px solid #0c0078; border-radius:12px; padding:14px 10px">
-      <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@6d8c74e48e1710fbee5c0c0b5c6860c75a7577c4/2048.svg">
-        <img src="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@6d8c74e48e1710fbee5c0c0b5c6860c75a7577c4/2048.svg" width="170" height="187" alt="2048"/>
+      <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@52cb0adff13c3be98abbb355b6bf600cc53a9afe/2048.svg">
+        <img src="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@52cb0adff13c3be98abbb355b6bf600cc53a9afe/2048.svg" width="170" height="187" alt="2048"/>
       </a>
       <br/><b>🔢 2048</b>
       <br/><sub style="color:#c9c2a8">merge tiles to 2048</sub>
       <br/><br/>
-      <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@6d8c74e48e1710fbee5c0c0b5c6860c75a7577c4/2048.svg">
+      <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@52cb0adff13c3be98abbb355b6bf600cc53a9afe/2048.svg">
         <img src="https://img.shields.io/badge/Play_fullscreen-fe4e02?style=for-the-badge" alt="Play fullscreen"/>
       </a>
     </td>
     <td align="center" style="width:210px; background:#1400c3; border:1px solid #0c0078; border-radius:12px; padding:14px 10px">
-      <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@6d8c74e48e1710fbee5c0c0b5c6860c75a7577c4/funnel-drop.svg">
-        <img src="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@6d8c74e48e1710fbee5c0c0b5c6860c75a7577c4/funnel-drop.svg" width="170" height="187" alt="Funnel Drop"/>
+      <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@52cb0adff13c3be98abbb355b6bf600cc53a9afe/funnel-drop.svg">
+        <img src="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@52cb0adff13c3be98abbb355b6bf600cc53a9afe/funnel-drop.svg" width="170" height="187" alt="Funnel Drop"/>
       </a>
       <br/><b>🔻 Funnel Drop</b>
       <br/><sub style="color:#c9c2a8">catch users through the funnel</sub>
       <br/><br/>
-      <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@6d8c74e48e1710fbee5c0c0b5c6860c75a7577c4/funnel-drop.svg">
+      <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@52cb0adff13c3be98abbb355b6bf600cc53a9afe/funnel-drop.svg">
         <img src="https://img.shields.io/badge/Play_fullscreen-fe4e02?style=for-the-badge" alt="Play fullscreen"/>
       </a>
     </td>
