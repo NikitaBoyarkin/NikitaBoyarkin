@@ -245,6 +245,122 @@ def update_readme_game_sha() -> bool:
     return True
 
 
+def fetch_languages() -> list[tuple[str, int, str]]:
+    """Aggregate language bytes across public non-fork repos via GraphQL.
+
+    Returns [(name, bytes, color), ...] sorted by bytes desc. Color is the
+    GitHub linguist color for the language (falls back to neutral grey).
+    """
+    query = """
+    query($login: String!) {
+      user(login: $login) {
+        repositories(isFork: false, privacy: PUBLIC, first: 100,
+                     ownerAffiliations: OWNER,
+                     orderBy: {field: UPDATED_AT, direction: DESC}) {
+          nodes {
+            languages(first: 50, orderBy: {field: SIZE, direction: DESC}) {
+              edges { size node { name color } }
+            }
+          }
+        }
+      }
+    }
+    """
+    data = graphql(query, {"login": USER})
+    agg: dict[str, list] = {}
+    for repo in data["user"]["repositories"]["nodes"]:
+        langs = (repo or {}).get("languages")
+        if not langs:
+            continue
+        for edge in langs["edges"]:
+            name = edge["node"]["name"]
+            color = edge["node"].get("color") or "#666666"
+            size = edge["size"]
+            agg.setdefault(name, [0, color])[0] += size
+    items = [(name, v[0], v[1]) for name, v in agg.items()]
+    items.sort(key=lambda x: x[1], reverse=True)
+    return items
+
+
+def build_top_languages_svg(langs: list[tuple[str, int, str]]) -> str:
+    import math
+    W, H = 340, 210
+    cx, cy, R, sw = 70, 100, 52, 16
+    circumference = 2 * math.pi * R
+    top = langs[:10]
+    total = sum(s for _, s, _ in top) or 1
+    cum = 0.0
+    slices = ""
+    for name, size, color in top:
+        frac = size / total
+        dash = frac * circumference
+        offset = -cum * circumference
+        slices += (
+            f"    <circle cx='{cx}' cy='{cy}' r='{R}' fill='none' stroke='{color}' "
+            f"stroke-width='{sw}' stroke-dasharray='{dash:.1f} {circumference - dash:.1f}' "
+            f"stroke-dashoffset='{offset:.1f}'>"
+            f"<title>{name}: {size / total * 100:.1f}%</title></circle>\n"
+        )
+        cum += frac
+    legend = ""
+    for i, (name, size, color) in enumerate(top):
+        ly = 30 + i * 17
+        pct = size / total * 100
+        legend += (
+            f"    <rect x='150' y='{ly - 9}' width='10' height='10' rx='2' fill='{color}'/>\n"
+            f"    <text x='166' y='{ly}' fill='{TEXT_MAIN}' "
+            f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='11px'>"
+            f"{name} {pct:.1f}%</text>\n"
+        )
+    svg = f"""\
+    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 {W} {H}' width='{W}px' height='{H}px'>
+      <rect fill='{BG}' width='{W}' height='{H}' rx='6'/>
+      <text x='{W / 2}' y='20' text-anchor='middle' fill='{TEXT_MUTED}'
+            font-family='Segoe UI, Ubuntu, sans-serif' font-size='13px' font-weight='400'>Top Languages</text>
+      <g transform='rotate(-90 {cx} {cy})'>
+        <circle cx='{cx}' cy='{cy}' r='{R}' fill='none' stroke='#1c1c28' stroke-width='{sw}'/>
+    {slices}  </g>
+    {legend}  <text x='{W / 2}' y='{H - 8}' text-anchor='middle' fill='{TEXT_MUTED}'
+            font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px'>Last updated: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}</text>
+    </svg>
+    """
+    return textwrap.dedent(svg).strip() + "\n"
+
+
+def update_readme_refresh_block(days: list[dict]) -> bool:
+    """Refresh the 'Last refreshed' marker block in README.
+
+    The timestamp changes every run, so the README always carries a diff and
+    git-auto-commit produces a MEANINGFUL commit each day — replacing the
+    empty keepalive commits that game the streak (TOS risk mitigation).
+    """
+    readme_path = REPO_ROOT / "README.md"
+    content = readme_path.read_text(encoding="utf-8")
+    week = sum(d["contributionCount"] for d in days[-7:])
+    now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    block = (
+        f"<!-- LAST-REFRESHED:START -->\n"
+        f"_Last refreshed: {now} \u00b7 {week} contributions in the last 7 days_\n"
+        f"<!-- LAST-REFRESHED:END -->"
+    )
+    pattern = re.compile(r"<!-- LAST-REFRESHED:START -->.*?<!-- LAST-REFRESHED:END -->", re.DOTALL)
+    if pattern.search(content):
+        new_content = pattern.sub(lambda _: block, content)
+    else:
+        # Fallback: insert under the Activity header if the marker was removed.
+        new_content = content.replace(
+            "### \u26a1 Activity\n",
+            f"### \u26a1 Activity\n\n{block}\n\n",
+            1,
+        )
+    if new_content == content:
+        print("Refresh block already up to date")
+        return False
+    readme_path.write_text(new_content, encoding="utf-8")
+    print(f"Refreshed README 'Last refreshed' block: {now} ({week} contribs/7d)")
+    return True
+
+
 def main() -> None:
     print("Fetching user data...")
     user_data = fetch_user_data()
@@ -256,6 +372,15 @@ def main() -> None:
     (REPO_ROOT / "streak.svg").write_text(build_streak_svg(days, total, current, longest), encoding="utf-8")
     (REPO_ROOT / "activity.svg").write_text(build_activity_svg(days), encoding="utf-8")
     print("Wrote stats.svg, streak.svg and activity.svg")
+
+    try:
+        langs = fetch_languages()
+        (REPO_ROOT / "top-languages.svg").write_text(build_top_languages_svg(langs), encoding="utf-8")
+        print(f"Wrote top-languages.svg ({len(langs)} languages)")
+    except Exception as exc:
+        print(f"top-languages.svg skipped: {exc}")
+
+    update_readme_refresh_block(days)
 
     update_readme_game_sha()
 

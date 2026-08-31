@@ -21,7 +21,7 @@ jobs:
           token: ${{ secrets.METRICS_TOKEN }}
           user: NikitaBoyarkin
           template: classic
-          base: header, activity, community, repositories, metadata
+          base: header, activity, community, repositories
           config_timezone: Europe/Moscow
           plugin_languages: yes
           plugin_languages_limit: 10
@@ -31,7 +31,6 @@ jobs:
           plugin_commit: yes
           plugin_commit_limit: 0
           plugin_followup: yes
-          plugin_notable: yes
           filename: metrics.svg
 
       - name: Commit metrics.svg

@@ -33,12 +33,17 @@ I turn ambiguous product questions into clean experiments, SQL pipelines, and de
 ### 🗣️ Top Languages
 
 <p align="center">
-  <img height="400" src="https://github-readme-stats-pi-liard-96.vercel.app/api/top-langs?username=NikitaBoyarkin&layout=donut&langs_count=10&title_color=ff6643&text_color=f4f4f5&bg_color=0a0a12&hide_border=true&card_width=320&cache_seconds=600" alt="Top Languages" />
+  <img height="210" src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/top-languages.svg" alt="Top Languages" />
 </p>
 
 ---
 
 ### ⚡ Activity
+
+<!-- LAST-REFRESHED:START -->
+_Last refreshed: pending first build · 0 contributions in the last 7 days_
+<!-- LAST-REFRESHED:END -->
+
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/metrics.svg" alt="GitHub Metrics" />
@@ -59,6 +64,36 @@ I turn ambiguous product questions into clean experiments, SQL pipelines, and de
 <p align="center">
   <img src="https://hits.sh/github.com/NikitaBoyarkin.svg?label=Profile+Views&color=ff6643&logo=github&style=flat-square&extra_count=124" alt="Profile views" />
 </p>
+
+---
+
+### 🔬 Featured Projects
+
+#### 1. Volta Neobank — Product Analytics
+
+_End-to-end neobank analytics: funnel, A/B test, retention, segmentation. **+6.24pp KYC conversion (Z=6.35, p<0.0001), €716K/yr — 48× ROI.** CUPED + AA-test + Bonferroni._
+
+[![Repo](https://img.shields.io/badge/Repo-volta--banking-0f2a2b?style=for-the-badge&logo=github&logoColor=ff6643)](https://github.com/NikitaBoyarkin/volta-banking)
+[![Case study](https://img.shields.io/badge/Case_study-ff6643?style=for-the-badge)](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/volta/)
+
+**Stack:** Python · SciPy · Statsmodels · scikit-learn
+
+#### 2. Supabase Product Analytics
+
+_Full-stack analytics platform: Streamlit + Supabase with RLS and an Edge Function. **Significant A/B result (p=0.0034) on 8,000 seeded users**, reproducible pipeline._
+
+[![Repo](https://img.shields.io/badge/Repo-supabase--product--analytics-0f2a2b?style=for-the-badge&logo=github&logoColor=ff6643)](https://github.com/NikitaBoyarkin/supabase-product-analytics)
+
+**Stack:** Python · Streamlit · Supabase · PostgreSQL
+
+#### 3. SQL Analytics Case Study
+
+\*Ten end-to-end SQL cases on DuckDB — funnel, N-day retention, DAU/MAU stickiness, LTV, streaks, A/B conversion, attribution. **One command, no server, pytest-verified.\***
+
+[![Repo](https://img.shields.io/badge/Repo-sql--analytics--case--study-0f2a2b?style=for-the-badge&logo=github&logoColor=ff6643)](https://github.com/NikitaBoyarkin/sql-analytics-case-study)
+[![Case study](https://img.shields.io/badge/Case_study-ff6643?style=for-the-badge)](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/sql/)
+
+**Stack:** SQL · DuckDB · pytest
 
 ---
 
@@ -138,36 +173,6 @@ I turn ambiguous product questions into clean experiments, SQL pipelines, and de
 | 🏓 Pong | W/S or ↑/↓ — or move the mouse · R to restart | Beat the CPU — first to 11 |
 | 🔢 2048 | Arrows / WASD · R to restart | Slide and merge tiles to reach 2048 |
 | 🔻 Funnel Drop | ←/→ or move the mouse | Catch falling users to convert them |
-
----
-
-### 🔬 Featured Projects
-
-#### 1. Volta Neobank — Product Analytics
-
-_End-to-end neobank analytics: funnel, A/B test, retention, segmentation. **+6.24pp KYC conversion (Z=6.35, p<0.0001), €716K/yr — 48× ROI.** CUPED + AA-test + Bonferroni._
-
-[![Repo](https://img.shields.io/badge/Repo-volta--banking-0f2a2b?style=for-the-badge&logo=github&logoColor=ff6643)](https://github.com/NikitaBoyarkin/volta-banking)
-[![Case study](https://img.shields.io/badge/Case_study-ff6643?style=for-the-badge)](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/volta/)
-
-**Stack:** Python · SciPy · Statsmodels · scikit-learn
-
-#### 2. Supabase Product Analytics
-
-_Full-stack analytics platform: Streamlit + Supabase with RLS and an Edge Function. **Significant A/B result (p=0.0034) on 8,000 seeded users**, reproducible pipeline._
-
-[![Repo](https://img.shields.io/badge/Repo-supabase--product--analytics-0f2a2b?style=for-the-badge&logo=github&logoColor=ff6643)](https://github.com/NikitaBoyarkin/supabase-product-analytics)
-
-**Stack:** Python · Streamlit · Supabase · PostgreSQL
-
-#### 3. SQL Analytics Case Study
-
-\*Ten end-to-end SQL cases on DuckDB — funnel, N-day retention, DAU/MAU stickiness, LTV, streaks, A/B conversion, attribution. **One command, no server, pytest-verified.\***
-
-[![Repo](https://img.shields.io/badge/Repo-sql--analytics--case--study-0f2a2b?style=for-the-badge&logo=github&logoColor=ff6643)](https://github.com/NikitaBoyarkin/sql-analytics-case-study)
-[![Case study](https://img.shields.io/badge/Case_study-ff6643?style=for-the-badge)](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/sql/)
-
-**Stack:** SQL · DuckDB · pytest
 
 ---
 
