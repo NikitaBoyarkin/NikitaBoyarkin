@@ -6,14 +6,20 @@ Assets generated:
 - streak.svg: current / longest / total contributions from GitHub GraphQL
 - activity.svg: 30-day contribution activity sparkline
 - README.md: update pinned commit SHA for playable games to the latest stable commit
+
+Network calls retry up to 3 times with exponential backoff. Use --dry-run to
+preview planned writes without touching files.
 """
 
 from __future__ import annotations
 
+import argparse
 import json
 import os
 import re
 import textwrap
+import time
+import urllib.error
 import urllib.request
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
@@ -21,6 +27,18 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parent.parent
 USER = os.environ.get("USER", "NikitaBoyarkin")
 TOKEN = os.environ.get("GH_TOKEN", "")
+
+DRY_RUN = False
+
+
+def write_asset(path: Path, content: str) -> None:
+    """Write an asset file, respecting --dry-run."""
+    if DRY_RUN:
+        print(f"[dry-run] would write {path.name} ({len(content)} chars)")
+        return
+    path.write_text(content, encoding="utf-8")
+    print(f"Wrote {path.name}")
+
 
 # Palette (matches README dark theme)
 BG = "#0a0a12"
@@ -30,22 +48,34 @@ TEXT_MAIN = "#f4f4f5"
 TEXT_MUTED = "#9E9E9E"
 
 
-def graphql(query: str, variables: dict) -> dict:
+def graphql(query: str, variables: dict, retries: int = 3) -> dict:
     if not TOKEN:
         raise RuntimeError("GH_TOKEN is not set")
-    req = urllib.request.Request(
-        "https://api.github.com/graphql",
-        data=json.dumps({"query": query, "variables": variables}).encode(),
-        headers={
-            "Authorization": f"bearer {TOKEN}",
-            "Content-Type": "application/json",
-        },
-    )
-    with urllib.request.urlopen(req, timeout=60) as resp:
-        data = json.loads(resp.read().decode())
-    if "errors" in data:
-        raise RuntimeError("GraphQL errors: " + json.dumps(data["errors"]))
-    return data["data"]
+    payload = json.dumps({"query": query, "variables": variables}).encode()
+    last_exc: Exception | None = None
+    for attempt in range(1, retries + 1):
+        req = urllib.request.Request(
+            "https://api.github.com/graphql",
+            data=payload,
+            headers={
+                "Authorization": f"bearer {TOKEN}",
+                "Content-Type": "application/json",
+            },
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=60) as resp:
+                data = json.loads(resp.read().decode())
+            if "errors" in data:
+                raise RuntimeError("GraphQL errors: " + json.dumps(data["errors"]))
+            return data["data"]
+        except (urllib.error.URLError, TimeoutError) as exc:
+            last_exc = exc
+            if attempt == retries:
+                raise
+            wait = 2 ** (attempt - 1)
+            print(f"GraphQL attempt {attempt}/{retries} failed: {exc}; retrying in {wait}s")
+            time.sleep(wait)
+    raise RuntimeError(f"GraphQL exhausted retries: {last_exc}")
 
 
 def fetch_user_data() -> dict:
@@ -370,27 +400,41 @@ def update_readme_refresh_block(days: list[dict]) -> bool:
 
 
 def main() -> None:
+    global DRY_RUN
+    parser = argparse.ArgumentParser(description="Build self-hosted profile assets.")
+    parser.add_argument("--dry-run", action="store_true",
+                        help="print planned writes without modifying files")
+    args = parser.parse_args()
+    DRY_RUN = args.dry_run
+    if DRY_RUN:
+        print("[dry-run] no files will be written")
+
     print("Fetching user data...")
     user_data = fetch_user_data()
     days = fetch_contributions()
     total, current, longest = compute_streaks(days)
     print(f"total={total} current={current} longest={longest}")
 
-    (REPO_ROOT / "stats.svg").write_text(build_stats_svg(user_data, total, current, longest), encoding="utf-8")
-    (REPO_ROOT / "streak.svg").write_text(build_streak_svg(days, total, current, longest), encoding="utf-8")
-    (REPO_ROOT / "activity.svg").write_text(build_activity_svg(days), encoding="utf-8")
-    print("Wrote stats.svg, streak.svg and activity.svg")
+    write_asset(REPO_ROOT / "stats.svg", build_stats_svg(user_data, total, current, longest))
+    write_asset(REPO_ROOT / "streak.svg", build_streak_svg(days, total, current, longest))
+    write_asset(REPO_ROOT / "activity.svg", build_activity_svg(days))
 
     try:
         langs = fetch_languages()
-        (REPO_ROOT / "top-languages.svg").write_text(build_top_languages_svg(langs), encoding="utf-8")
-        print(f"Wrote top-languages.svg ({len(langs)} languages)")
+        write_asset(REPO_ROOT / "top-languages.svg", build_top_languages_svg(langs))
+        print(f"top-languages: {len(langs)} languages")
     except Exception as exc:
         print(f"top-languages.svg skipped: {exc}")
 
-    update_readme_refresh_block(days)
+    if DRY_RUN:
+        print("[dry-run] skip README refresh block")
+    else:
+        update_readme_refresh_block(days)
 
-    update_readme_game_sha()
+    if DRY_RUN:
+        print("[dry-run] skip README game SHA bump")
+    else:
+        update_readme_game_sha()
 
 
 if __name__ == "__main__":
