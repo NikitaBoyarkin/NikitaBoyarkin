@@ -174,11 +174,11 @@ _Full-stack analytics platform: Streamlit + Supabase with RLS and an Edge Functi
 ### 📝 Recent Notes
 
 <!-- RECENT-POSTS-LIST:START -->
-- [Проактивность аналитика за рамками роли](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/analyst-proactivity/)
 - [Кейсы с собеседований: как диагностировать просадку метрики](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/analyst-interview-cases/)
+- [Проактивность аналитика за рамками роли](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/analyst-proactivity/)
 - [Churn + uplift: кому дать скидку &lpar;причинный таргетинг&rpar;](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/churn-uplift-discount/)
+- [EDA-шаблон с кодом: разведочный анализ по-продуктовому](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/eda-python-template/)
 - [Feature Impact: как измерить влияние фичи, когда A/B невозможен](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/feature-impact-analysis/)
-- [Первая транзакция: как измерить активацию финтех-продукта](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/first-value-moment-activation/)
 <!-- RECENT-POSTS-LIST:END -->
 
 > Auto-updated daily from the [site RSS](https://nikitaboyarkin.github.io/Personal_Projects.github.io/rss.xml) via GitHub Actions.
