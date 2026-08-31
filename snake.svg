@@ -45,7 +45,7 @@
           r.setAttribute('width', CELL - 2);
           r.setAttribute('height', CELL - 2);
           r.setAttribute('rx', 3);
-          r.setAttribute('fill', i === 0 ? '#ff6643' : '#8a2e15');
+          r.setAttribute('fill', i === 0 ? '#fe4e02' : '#8a2301');
           snakeG.appendChild(r);
         }
         var f = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
