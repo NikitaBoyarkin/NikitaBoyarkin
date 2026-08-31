@@ -6,7 +6,7 @@
   <rect x="20" y="92" width="360" height="58" fill="#0c0078" stroke="#0c0078" stroke-width="1.5" rx="6"/>
   <text id="query" x="30" y="126" fill="#f8f2da" font-size="11.5">SELECT ___ FROM events</text>
   <g id="opts"></g>
-  <text x="200" y="410" text-anchor="middle" fill="#666" font-size="10">click the token that fills the blank · keys 1-4</text>
+  <text x="200" y="410" text-anchor="middle" fill="#c9c2a8" font-size="10">click the token that fills the blank · keys 1-4</text>
   <script type="text/javascript"><![CDATA[
     (function () {
       var svgns='http://www.w3.org/2000/svg';
@@ -33,7 +33,7 @@
           var y=ys[i];
           var rect=document.createElementNS(svgns,'rect');
           rect.setAttribute('x',40); rect.setAttribute('y',y); rect.setAttribute('width',320); rect.setAttribute('height',30); rect.setAttribute('rx',6);
-          rect.setAttribute('fill','#17212b'); rect.setAttribute('stroke','#0c0078'); rect.setAttribute('stroke-width','1.5'); rect.style.cursor='pointer';
+          rect.setAttribute('fill','#0c0078'); rect.setAttribute('stroke','#0c0078'); rect.setAttribute('stroke-width','1.5'); rect.style.cursor='pointer';
           var t=document.createElementNS(svgns,'text');
           t.setAttribute('x',60); t.setAttribute('y',y+20); t.setAttribute('fill','#f8f2da'); t.setAttribute('font-size','12'); t.style.pointerEvents='none';
           t.textContent=(i+1)+'.  '+r.o[i];
@@ -48,9 +48,9 @@
         var r=rounds[idx];
         queryT.textContent=r.q.replace('___', r.o[i]);
         if(i===r.a){
-          score++; btns[i].setAttribute('fill','#1d3a2a'); btns[i].setAttribute('stroke','#3FCF8E'); lbls[i].setAttribute('fill','#3FCF8E'); queryT.setAttribute('fill','#3FCF8E');
+          score++; btns[i].setAttribute('fill','#0c0078'); btns[i].setAttribute('stroke','#3FCF8E'); lbls[i].setAttribute('fill','#3FCF8E'); queryT.setAttribute('fill','#3FCF8E');
         } else {
-          btns[i].setAttribute('fill','#3a1d1d'); btns[i].setAttribute('stroke','#c0431e'); lbls[i].setAttribute('fill','#c0431e'); queryT.setAttribute('fill','#c0431e');
+          btns[i].setAttribute('fill','#0c0078'); btns[i].setAttribute('stroke','#c0431e'); lbls[i].setAttribute('fill','#c0431e'); queryT.setAttribute('fill','#c0431e');
           btns[r.a].setAttribute('stroke','#3FCF8E');
         }
         statusT.textContent='Round '+(idx+1)+' / '+rounds.length+'  ·  score '+score;

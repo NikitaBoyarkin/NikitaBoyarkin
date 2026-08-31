@@ -3,7 +3,7 @@
   <text x="200" y="28" text-anchor="middle" fill="#fe4e02" font-size="16" font-weight="bold" letter-spacing="3">METRIC MATCH</text>
   <text id="status" x="200" y="52" text-anchor="middle" fill="#f8f2da" font-size="12">Matches 0 / 6  ·  moves 0</text>
   <g id="board"></g>
-  <text x="200" y="410" text-anchor="middle" fill="#666" font-size="10">flip two cards · match metric to its formula</text>
+  <text x="200" y="410" text-anchor="middle" fill="#c9c2a8" font-size="10">flip two cards · match metric to its formula</text>
   <script type="text/javascript"><![CDATA[
     (function () {
       var svgns='http://www.w3.org/2000/svg';
@@ -36,9 +36,9 @@
         t.setAttribute('font-size', info.text.length>10?'9':'11'); t.setAttribute('font-weight','bold');
         var card={g:g,rect:rect,t:t,info:info,up:false,matched:false};
         card.paint=function(){
-          if(card.matched){ rect.setAttribute('fill','#1d3a2a'); rect.setAttribute('stroke','#3FCF8E'); t.setAttribute('fill','#3FCF8E'); t.textContent=info.text; }
+          if(card.matched){ rect.setAttribute('fill','#0c0078'); rect.setAttribute('stroke','#3FCF8E'); t.setAttribute('fill','#3FCF8E'); t.textContent=info.text; }
           else if(card.up){ rect.setAttribute('fill','#0c0078'); rect.setAttribute('stroke','#fe4e02'); t.setAttribute('fill','#f8f2da'); t.textContent=info.text; }
-          else { rect.setAttribute('fill','#17212b'); rect.setAttribute('stroke','#0c0078'); t.setAttribute('fill','#666'); t.textContent='?'; }
+          else { rect.setAttribute('fill','#0c0078'); rect.setAttribute('stroke','#0c0078'); t.setAttribute('fill','#c9c2a8'); t.textContent='?'; }
         };
         g.appendChild(rect); g.appendChild(t);
         g.addEventListener('click',function(){ flip(card); });

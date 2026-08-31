@@ -2,11 +2,11 @@
   <rect width="400" height="440" fill="#1400c3"/>
   <text x="200" y="28" text-anchor="middle" fill="#fe4e02" font-size="16" font-weight="bold" letter-spacing="3">COHORT CATCH</text>
   <text id="status" x="200" y="52" text-anchor="middle" fill="#f8f2da" font-size="12">Retention 0% · kept 0 · lost 0</text>
-  <text x="30" y="72" fill="#666" font-size="10">D0 cohort &gt;&gt; D1 · D7 · D30</text>
+  <text x="30" y="72" fill="#c9c2a8" font-size="10">D0 cohort &gt;&gt; D1 · D7 · D30</text>
   <rect x="20" y="80" width="360" height="298" fill="#0c0078" stroke="#0c0078" stroke-width="1.5" rx="6"/>
   <g id="dots"></g>
   <rect id="paddle" x="145" y="382" width="100" height="10" rx="5" fill="#f8f2da"/>
-  <text x="200" y="410" text-anchor="middle" fill="#666" font-size="10">arrows / drag · catch Returning (green), avoid Churned (grey)</text>
+  <text x="200" y="410" text-anchor="middle" fill="#c9c2a8" font-size="10">arrows / drag · catch Returning (green), avoid Churned (cream)</text>
   <script type="text/javascript"><![CDATA[
     (function () {
       var svgns='http://www.w3.org/2000/svg';
@@ -20,7 +20,7 @@
           var d=dots[i];
           var c=document.createElementNS(svgns,'circle');
           c.setAttribute('cx',d.x); c.setAttribute('cy',d.y); c.setAttribute('r',9);
-          c.setAttribute('fill', d.ret?'#3FCF8E':'#5a6275');
+          c.setAttribute('fill', d.ret?'#3FCF8E':'#c9c2a8');
           dotsG.appendChild(c);
           var t=document.createElementNS(svgns,'text');
           t.setAttribute('x',d.x); t.setAttribute('y',d.y+3); t.setAttribute('text-anchor','middle');

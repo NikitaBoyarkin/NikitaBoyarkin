@@ -8,18 +8,18 @@
   <rect id="barA" x="40" y="100" width="0" height="20" fill="#fe4e02" rx="4"/>
   <text id="valA" x="360" y="115" text-anchor="end" fill="#f8f2da" font-size="12">0.0%</text>
 
-  <text x="40" y="162" fill="#9db4e8" font-size="11" font-weight="bold">CONTROL B</text>
+  <text x="40" y="162" fill="#9d91d1" font-size="11" font-weight="bold">CONTROL B</text>
   <rect x="40" y="170" width="320" height="20" fill="#0c0078" rx="4"/>
-  <rect id="barB" x="40" y="170" width="0" height="20" fill="#4169E1" rx="4"/>
+  <rect id="barB" x="40" y="170" width="0" height="20" fill="#9d91d1" rx="4"/>
   <text id="valB" x="360" y="185" text-anchor="end" fill="#f8f2da" font-size="12">0.0%</text>
 
-  <line x1="60" y1="224" x2="340" y2="224" stroke="#333a47" stroke-width="1"/>
-  <text x="200" y="246" text-anchor="middle" fill="#888" font-size="11">p-value</text>
+  <line x1="60" y1="224" x2="340" y2="224" stroke="#0c0078" stroke-width="1"/>
+  <text x="200" y="246" text-anchor="middle" fill="#c9c2a8" font-size="11">p-value</text>
   <text id="pval" x="200" y="282" text-anchor="middle" fill="#f8f2da" font-size="32" font-weight="bold">1.000</text>
 
   <rect id="btn" x="80" y="316" width="240" height="46" rx="8" fill="#fe4e02"/>
   <text id="btnLabel" x="200" y="345" text-anchor="middle" fill="#1400c3" font-size="13" font-weight="bold">COLLECT DATA</text>
-  <text x="200" y="408" text-anchor="middle" fill="#666" font-size="10">tap / click anywhere to run the experiment</text>
+  <text x="200" y="408" text-anchor="middle" fill="#c9c2a8" font-size="10">tap / click anywhere to run the experiment</text>
   <script type="text/javascript"><![CDATA[
     (function () {
       var state = {nA:0, xA:0, nB:0, xB:0, sig:false};

@@ -14,7 +14,7 @@
       var scoreT = document.getElementById('score'), overlay = document.getElementById('overlay');
       var grid = [], score = 0, over = false, won = false;
       var COLORS = {
-        2:'#333a47', 4:'#3d4656', 8:'#c0431e', 16:'#e05730', 32:'#fe4e02',
+        2:'#1a0a8f', 4:'#1400c3', 8:'#c0431e', 16:'#e05730', 32:'#fe4e02',
         64:'#ffbe99', 128:'#ffd166', 256:'#ff9f1c', 512:'#ff6b6b', 1024:'#f43f5e', 2048:'#f43f5e'
       };
 
@@ -85,7 +85,7 @@
             var bg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
             bg.setAttribute('x', x); bg.setAttribute('y', y);
             bg.setAttribute('width', CELL); bg.setAttribute('height', CELL);
-            bg.setAttribute('rx', 6); bg.setAttribute('fill', '#1a1f2a');
+            bg.setAttribute('rx', 6); bg.setAttribute('fill', '#0c0078');
             tiles.appendChild(bg);
             continue;
           }
