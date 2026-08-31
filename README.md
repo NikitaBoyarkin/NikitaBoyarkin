@@ -11,7 +11,8 @@ I turn ambiguous product questions into clean experiments, SQL pipelines, and de
 - **End-to-end delivery** — SQL → Python → dashboard → stakeholder narrative.
 
 📦 **Portfolio:** [nikitaboyarkin.github.io](https://nikitaboyarkin.github.io/Personal_Projects.github.io/?utm_source=github&utm_medium=profile_readme&utm_campaign=header)  
-🔗 **Links:** [linktr.ee/lofinibo](https://linktr.ee/lofinibo?utm_source=github&utm_medium=profile_readme&utm_campaign=header)
+🔗 **Links:** [linktr.ee/lofinibo](https://linktr.ee/lofinibo?utm_source=github&utm_medium=profile_readme&utm_campaign=header)  
+📄 **CV:** [Download PDF](https://nikitaboyarkin.github.io/Personal_Projects.github.io/CV-Nikita-Boyarkin.pdf?utm_source=github&utm_medium=profile_readme&utm_campaign=cv)
 
 ---
 
@@ -20,6 +21,8 @@ I turn ambiguous product questions into clean experiments, SQL pipelines, and de
 - 📚 Learning: Bayesian A/B testing, ClickHouse, dbt, Apache Airflow, Apache Superset
 - 💼 Open to: BI / product / data analyst roles — actively interviewing
 - 🤝 Collab: experimentation, user retention analytics
+<!-- TODO P1.4: confirm/edit the 'currently building' line below -->
+- 🚧 Building: interactive analyst portfolio — playable SVG games + self-hosted GitHub stats
 
 ---
 
@@ -68,13 +71,14 @@ _Last refreshed: 2026-08-31 21:20 UTC · 435 contributions in the last 7 days_
 ---
 
 ### 🔬 Featured Projects
+<!-- TODO P1.3: add 1-2 social proof quotes from colleagues/recruiters -->
 
 #### 1. Volta Neobank — Product Analytics
 
 _End-to-end neobank analytics: funnel, A/B test, retention, segmentation. **+6.24pp KYC conversion (Z=6.35, p<0.0001), €716K/yr — 48× ROI.** CUPED + AA-test + Bonferroni._
 
 [![Repo](https://img.shields.io/badge/Repo-volta--banking-0f2a2b?style=for-the-badge&logo=github&logoColor=ff6643)](https://github.com/NikitaBoyarkin/volta-banking)
-[![Case study](https://img.shields.io/badge/Case_study-ff6643?style=for-the-badge)](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/volta/)
+[![Case study](https://img.shields.io/badge/Case_study-ff6643?style=for-the-badge)](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/volta/?utm_source=github&utm_medium=profile_readme&utm_campaign=featured)
 
 **Stack:** Python · SciPy · Statsmodels · scikit-learn
 
@@ -91,7 +95,7 @@ _Full-stack analytics platform: Streamlit + Supabase with RLS and an Edge Functi
 \*Ten end-to-end SQL cases on DuckDB — funnel, N-day retention, DAU/MAU stickiness, LTV, streaks, A/B conversion, attribution. **One command, no server, pytest-verified.\***
 
 [![Repo](https://img.shields.io/badge/Repo-sql--analytics--case--study-0f2a2b?style=for-the-badge&logo=github&logoColor=ff6643)](https://github.com/NikitaBoyarkin/sql-analytics-case-study)
-[![Case study](https://img.shields.io/badge/Case_study-ff6643?style=for-the-badge)](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/sql/)
+[![Case study](https://img.shields.io/badge/Case_study-ff6643?style=for-the-badge)](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/sql/?utm_source=github&utm_medium=profile_readme&utm_campaign=featured)
 
 **Stack:** SQL · DuckDB · pytest
 
