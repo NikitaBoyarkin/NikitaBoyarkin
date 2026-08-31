@@ -56,8 +56,8 @@ _Last refreshed: 2026-08-31 21:10 UTC · 429 contributions in the last 7 days_
 
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/output/github-contribution-grid-snake-dark.svg" />
-    <img src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/output/github-contribution-grid-snake.svg" alt="Contribution snake" />
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/github-contribution-grid-snake-dark.svg" />
+    <img src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/github-contribution-grid-snake.svg" alt="Contribution snake" />
   </picture>
 </p>
 

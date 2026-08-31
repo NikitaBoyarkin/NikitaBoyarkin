@@ -12,6 +12,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+
       - name: Generate contribution snake
         uses: Platane/snk@v3
         with:
@@ -20,10 +22,15 @@ jobs:
             dist/github-contribution-grid-snake.svg
             dist/github-contribution-grid-snake-dark.svg?palette=github-dark
 
-      - name: Push to output branch
-        uses: crazy-max/ghaction-github-pages@v4
-        with:
-          target_branch: output
-          build_dir: dist
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Move SVGs to repo root
+        run: |
+          cp dist/github-contribution-grid-snake.svg github-contribution-grid-snake.svg
+          cp dist/github-contribution-grid-snake-dark.svg github-contribution-grid-snake-dark.svg
+
+      - name: Commit to main
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add github-contribution-grid-snake.svg github-contribution-grid-snake-dark.svg
+          git commit -m "chore: refresh contribution-grid snake" || echo "no changes to commit"
+          git push
