@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 400 440" preserveAspectRatio="xMidYMid meet" style="background:#0a0a12;touch-action:none" font-family="'Fira Code','SF Mono',Menlo,monospace">
+  <rect width="400" height="440" fill="#0a0a12"/>
+  <text x="200" y="28" text-anchor="middle" fill="#ff6643" font-size="16" font-weight="bold" letter-spacing="3">METRIC MATCH</text>
+  <text id="status" x="200" y="52" text-anchor="middle" fill="#f4f4f5" font-size="12">Matches 0 / 6  ·  moves 0</text>
+  <g id="board"></g>
+  <text x="200" y="410" text-anchor="middle" fill="#666" font-size="10">flip two cards · match metric to its formula</text>
+  <script type="text/javascript"><![CDATA[
+    (function () {
+      var svgns='http://www.w3.org/2000/svg';
+      var pairs=[
+        ["DAU","unique users / day"],
+        ["MAU","unique users / month"],
+        ["Retention","Dn / D0"],
+        ["Churn","1 - retention"],
+        ["LTV","ARPU x lifespan"],
+        ["ARPU","revenue / users"]
+      ];
+      var deck=[];
+      for(var p=0;p<pairs.length;p++){ deck.push({pairId:p,text:pairs[p][0]}); deck.push({pairId:p,text:pairs[p][1]}); }
+      for(var i=deck.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var tmp=deck[i]; deck[i]=deck[j]; deck[j]=tmp; }
+
+      var cols=4, rows=3, cw=85, ch=95, gx=8, gy=8;
+      var startX=(400-(cols*cw+(cols-1)*gx))/2;
+      var startY=66;
+      var board=document.getElementById('board');
+      var statusT=document.getElementById('status');
+      var first=null, lock=false, moves=0, matches=0;
+
+      function makeCard(c,r,info){
+        var x=startX+c*(cw+gx), y=startY+r*(ch+gy);
+        var g=document.createElementNS(svgns,'g'); g.style.cursor='pointer';
+        var rect=document.createElementNS(svgns,'rect');
+        rect.setAttribute('x',x); rect.setAttribute('y',y); rect.setAttribute('width',cw); rect.setAttribute('height',ch); rect.setAttribute('rx',6); rect.setAttribute('stroke-width','1.5');
+        var t=document.createElementNS(svgns,'text');
+        t.setAttribute('x',x+cw/2); t.setAttribute('y',y+ch/2+4); t.setAttribute('text-anchor','middle');
+        t.setAttribute('font-size', info.text.length>10?'9':'11'); t.setAttribute('font-weight','bold');
+        var card={g:g,rect:rect,t:t,info:info,up:false,matched:false};
+        card.paint=function(){
+          if(card.matched){ rect.setAttribute('fill','#1d3a2a'); rect.setAttribute('stroke','#3FCF8E'); t.setAttribute('fill','#3FCF8E'); t.textContent=info.text; }
+          else if(card.up){ rect.setAttribute('fill','#12121c'); rect.setAttribute('stroke','#ff6643'); t.setAttribute('fill','#f4f4f5'); t.textContent=info.text; }
+          else { rect.setAttribute('fill','#17212b'); rect.setAttribute('stroke','#2a3240'); t.setAttribute('fill','#666'); t.textContent='?'; }
+        };
+        g.appendChild(rect); g.appendChild(t);
+        g.addEventListener('click',function(){ flip(card); });
+        card.paint();
+        return card;
+      }
+
+      function flip(card){
+        if(lock||card.up||card.matched) return;
+        card.up=true; card.paint();
+        if(!first){ first=card; return; }
+        moves++; lock=true;
+        var a=first, b=card; first=null;
+        if(a.info.pairId===b.info.pairId){
+          matches++; a.matched=true; b.matched=true; a.paint(); b.paint(); lock=false;
+          statusT.textContent='Matches '+matches+' / '+pairs.length+'  ·  moves '+moves + (matches===pairs.length?'  ·  SOLVED':'');
+        } else {
+          statusT.textContent='Matches '+matches+' / '+pairs.length+'  ·  moves '+moves;
+          setTimeout(function(){ a.up=false; b.up=false; a.paint(); b.paint(); lock=false; }, 750);
+        }
+      }
+
+      var k=0;
+      for(var rr=0;rr<rows;rr++) for(var cc=0;cc<cols;cc++){
+        var card=makeCard(cc,rr,deck[k++]); board.appendChild(card.g);
+      }
+      statusT.textContent='Matches 0 / '+pairs.length+'  ·  moves 0';
+    })();
+  ]]></script>
+</svg>

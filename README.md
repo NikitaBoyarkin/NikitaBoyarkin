@@ -117,7 +117,7 @@ _Full-stack analytics platform: Streamlit + Supabase with RLS and an Edge Functi
         <img src="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@663b8a324257b6f5452316ea0923e2ef1466451c/ab-test.svg" width="170" height="187" alt="A/B Test"/>
       </a>
       <br/><b>🧪 A/B Test</b>
-      <br/><sub style="color:#8b949e">click until p-value &lt; 0.05</sub>
+      <br/><sub style="color:#8b949e">click until p &lt; 0.05</sub>
       <br/><br/>
       <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@663b8a324257b6f5452316ea0923e2ef1466451c/ab-test.svg">
         <img src="https://img.shields.io/badge/Play_fullscreen-ff6643?style=for-the-badge" alt="Play fullscreen"/>
@@ -158,6 +158,41 @@ _Full-stack analytics platform: Streamlit + Supabase with RLS and an Edge Functi
         <img src="https://img.shields.io/badge/Play_fullscreen-ff6643?style=for-the-badge" alt="Play fullscreen"/>
       </a>
     </td>
+    <td align="center" style="width:210px; background:#0c1118; border:1px solid #262a38; border-radius:12px; padding:14px 10px">
+      <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/cohort-catch.svg">
+        <img src="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/cohort-catch.svg" width="170" height="187" alt="Cohort Catch"/>
+      </a>
+      <br/><b>📊 Cohort Catch</b>
+      <br/><sub style="color:#8b949e">catch returning users</sub>
+      <br/><br/>
+      <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/cohort-catch.svg">
+        <img src="https://img.shields.io/badge/Play_fullscreen-ff6643?style=for-the-badge" alt="Play fullscreen"/>
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" style="width:210px; background:#0c1118; border:1px solid #262a38; border-radius:12px; padding:14px 10px">
+      <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/sql-query.svg">
+        <img src="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/sql-query.svg" width="170" height="187" alt="SQL Query"/>
+      </a>
+      <br/><b>🧩 SQL Query</b>
+      <br/><sub style="color:#8b949e">fill the blank</sub>
+      <br/><br/>
+      <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/sql-query.svg">
+        <img src="https://img.shields.io/badge/Play_fullscreen-ff6643?style=for-the-badge" alt="Play fullscreen"/>
+      </a>
+    </td>
+    <td align="center" style="width:210px; background:#0c1118; border:1px solid #262a38; border-radius:12px; padding:14px 10px">
+      <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/metric-match.svg">
+        <img src="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/metric-match.svg" width="170" height="187" alt="Metric Match"/>
+      </a>
+      <br/><b>🃏 Metric Match</b>
+      <br/><sub style="color:#8b949e">match metric to formula</sub>
+      <br/><br/>
+      <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/metric-match.svg">
+        <img src="https://img.shields.io/badge/Play_fullscreen-ff6643?style=for-the-badge" alt="Play fullscreen"/>
+      </a>
+    </td>
     <td align="center" style="width:210px; border:none; background:transparent"></td>
   </tr>
 </table>
@@ -173,6 +208,9 @@ _Full-stack analytics platform: Streamlit + Supabase with RLS and an Edge Functi
 | 🏓 Pong | W/S or ↑/↓ — or move the mouse · R to restart | Beat the CPU — first to 11 |
 | 🔢 2048 | Arrows / WASD · R to restart | Slide and merge tiles to reach 2048 |
 | 🔻 Funnel Drop | ←/→ or move the mouse | Catch falling users to convert them |
+| 📊 Cohort Catch | ←/→ or move the mouse | Catch Returning users (green), avoid Churned (grey) |
+| 🧩 SQL Query | Click an option (or keys 1-4) | Pick the token that fills the SQL blank |
+| 🃏 Metric Match | Click two cards | Match each metric to its formula |
 
 ---
 

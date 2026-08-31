@@ -230,16 +230,24 @@ def latest_commit_sha(paths: list[str]) -> str:
 
 
 def update_readme_game_sha() -> bool:
+    """Pin legacy game SVG refs in README to the latest game-file commit.
+
+    Bumps pinned-SHA refs (``@<hex>/``) for the legacy games to the latest commit
+    touching any game file. New games ship on ``@main`` and stay there: ``@main``
+    always resolves to the latest pushed main, so the links work the moment the
+    SVGs are pushed and never get prematurely pinned to a SHA that lacks them.
+    """
     readme_path = REPO_ROOT / "README.md"
     content = readme_path.read_text(encoding="utf-8")
-    game_files = ["snake.svg", "ab-test.svg", "pong.svg", "2048.svg", "funnel-drop.svg"]
+    game_files = ["snake.svg", "ab-test.svg", "pong.svg", "2048.svg", "funnel-drop.svg",
+                  "cohort-catch.svg", "sql-query.svg", "metric-match.svg"]
     new_sha = latest_commit_sha(game_files)
     old_sha_match = re.search(r"@([a-f0-9]{7,40})/", content)
     old_sha = old_sha_match.group(1) if old_sha_match else None
-    if old_sha == new_sha:
+    updated = re.sub(r"@([a-f0-9]{7,40})/", f"@{new_sha}/", content)
+    if updated == content:
         print(f"README game SHA already up to date: {new_sha[:7]}")
         return False
-    updated = re.sub(r"@([a-f0-9]{7,40})/", f"@{new_sha}/", content)
     readme_path.write_text(updated, encoding="utf-8")
     print(f"Updated README game SHA: {old_sha[:7] if old_sha else 'none'} -> {new_sha[:7]}")
     return True

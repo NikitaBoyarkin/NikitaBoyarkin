@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 400 440" preserveAspectRatio="xMidYMid meet" style="background:#0a0a12;touch-action:none" font-family="'Fira Code','SF Mono',Menlo,monospace">
+  <rect width="400" height="440" fill="#0a0a12"/>
+  <text x="200" y="28" text-anchor="middle" fill="#ff6643" font-size="16" font-weight="bold" letter-spacing="3">COHORT CATCH</text>
+  <text id="status" x="200" y="52" text-anchor="middle" fill="#f4f4f5" font-size="12">Retention 0% · kept 0 · lost 0</text>
+  <text x="30" y="72" fill="#666" font-size="10">D0 cohort &gt;&gt; D1 · D7 · D30</text>
+  <rect x="20" y="80" width="360" height="298" fill="#12121c" stroke="#2a3240" stroke-width="1.5" rx="6"/>
+  <g id="dots"></g>
+  <rect id="paddle" x="145" y="382" width="100" height="10" rx="5" fill="#f4f4f5"/>
+  <text x="200" y="410" text-anchor="middle" fill="#666" font-size="10">arrows / drag · catch Returning (green), avoid Churned (grey)</text>
+  <script type="text/javascript"><![CDATA[
+    (function () {
+      var svgns='http://www.w3.org/2000/svg';
+      var dotsG=document.getElementById('dots'), paddle=document.getElementById('paddle'), statusT=document.getElementById('status');
+      var dots=[], kept=0, lost=0, px=195, keys={};
+      var labels=['D1','D7','D30'];
+      function spawn(){ dots.push({x:40+Math.random()*320, y:92, s:1.4+Math.random()*1.0, ret:Math.random()<0.55, lbl:labels[Math.floor(Math.random()*3)]}); }
+      function draw(){
+        while(dotsG.firstChild) dotsG.removeChild(dotsG.firstChild);
+        for(var i=0;i<dots.length;i++){
+          var d=dots[i];
+          var c=document.createElementNS(svgns,'circle');
+          c.setAttribute('cx',d.x); c.setAttribute('cy',d.y); c.setAttribute('r',9);
+          c.setAttribute('fill', d.ret?'#3FCF8E':'#5a6275');
+          dotsG.appendChild(c);
+          var t=document.createElementNS(svgns,'text');
+          t.setAttribute('x',d.x); t.setAttribute('y',d.y+3); t.setAttribute('text-anchor','middle');
+          t.setAttribute('fill','#0a0a12'); t.setAttribute('font-size','7'); t.setAttribute('font-weight','bold');
+          t.textContent=d.lbl; dotsG.appendChild(t);
+        }
+      }
+      function step(){
+        if(keys['ArrowLeft']||keys['a']||keys['A']) px-=6;
+        if(keys['ArrowRight']||keys['d']||keys['D']) px+=6;
+        px=Math.max(50,Math.min(350,px));
+        paddle.setAttribute('x',px-50);
+        for(var i=dots.length-1;i>=0;i--){
+          var d=dots[i]; d.y+=d.s;
+          if(d.y+9>=372 && d.y-9<=395 && Math.abs(d.x-px)<56){
+            if(d.ret) kept++; else lost++; dots.splice(i,1);
+          } else if(d.y>395){ if(d.ret) lost++; dots.splice(i,1); }
+        }
+        var total=kept+lost, ret=total?Math.round(kept/total*100):0;
+        statusT.textContent='Retention '+ret+'% · kept '+kept+' · lost '+lost;
+        draw();
+      }
+      document.addEventListener('keydown',function(e){keys[e.key]=true;});
+      document.addEventListener('keyup',function(e){keys[e.key]=false;});
+      document.addEventListener('mousemove',function(e){var r=document.documentElement.getBoundingClientRect();px=(e.clientX-r.left)*(400/r.width);px=Math.max(50,Math.min(350,px));});
+      function tx(cx){var r=document.documentElement.getBoundingClientRect();px=(cx-r.left)*(400/r.width);px=Math.max(50,Math.min(350,px));}
+      document.addEventListener('touchstart',function(e){e.preventDefault();tx(e.touches[0].clientX);},{passive:false});
+      document.addEventListener('touchmove',function(e){e.preventDefault();tx(e.touches[0].clientX);},{passive:false});
+      for(var i=0;i<3;i++) spawn();
+      setInterval(step,16);
+      setInterval(spawn, Math.max(400, 820-kept*3));
+      draw();
+    })();
+  ]]></script>
+</svg>
