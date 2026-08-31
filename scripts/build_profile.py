@@ -40,12 +40,12 @@ def write_asset(path: Path, content: str) -> None:
     print(f"Wrote {path.name}")
 
 
-# Palette (matches README dark theme)
-BG = "#0a0a12"
-SURFACE = "#151515"
-ACCENT = "#ff6643"
-TEXT_MAIN = "#f4f4f5"
-TEXT_MUTED = "#9E9E9E"
+# Palette (deep-blue brand theme: #1400c3 / #f8f2da / #fe4e02)
+BG = "#1400c3"
+SURFACE = "#1400c3"
+ACCENT = "#fe4e02"
+TEXT_MAIN = "#f8f2da"
+TEXT_MUTED = "#c9c2a8"
 
 
 def graphql(query: str, variables: dict, retries: int = 3) -> dict:
@@ -356,7 +356,7 @@ def build_top_languages_svg(langs: list[tuple[str, int, str]]) -> str:
       <text x='{W / 2}' y='20' text-anchor='middle' fill='{TEXT_MUTED}'
             font-family='Segoe UI, Ubuntu, sans-serif' font-size='13px' font-weight='400'>Top Languages</text>
       <g transform='rotate(-90 {cx} {cy})'>
-        <circle cx='{cx}' cy='{cy}' r='{R}' fill='none' stroke='#1c1c28' stroke-width='{sw}'/>
+        <circle cx='{cx}' cy='{cy}' r='{R}' fill='none' stroke='#0c0078' stroke-width='{sw}'/>
     {slices}  </g>
     {legend}  <text x='{W / 2}' y='{H - 8}' text-anchor='middle' fill='{TEXT_MUTED}'
             font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px'>Last updated: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}</text>

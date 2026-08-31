@@ -1,24 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 400 440" preserveAspectRatio="xMidYMid meet" style="background:#0a0a12;touch-action:none" font-family="'Fira Code','SF Mono',Menlo,monospace">
-  <rect width="400" height="440" fill="#0a0a12"/>
-  <text x="200" y="28" text-anchor="middle" fill="#ff6643" font-size="16" font-weight="bold" letter-spacing="3">A/B TEST</text>
-  <text id="status" x="200" y="52" text-anchor="middle" fill="#f4f4f5" font-size="12">p = 1.000 · n = 0 / arm</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 400 440" preserveAspectRatio="xMidYMid meet" style="background:#1400c3;touch-action:none" font-family="'Fira Code','SF Mono',Menlo,monospace">
+  <rect width="400" height="440" fill="#1400c3"/>
+  <text x="200" y="28" text-anchor="middle" fill="#fe4e02" font-size="16" font-weight="bold" letter-spacing="3">A/B TEST</text>
+  <text id="status" x="200" y="52" text-anchor="middle" fill="#f8f2da" font-size="12">p = 1.000 · n = 0 / arm</text>
 
   <text x="40" y="92" fill="#ffbe99" font-size="11" font-weight="bold">TREATMENT A</text>
-  <rect x="40" y="100" width="320" height="20" fill="#12121c" rx="4"/>
-  <rect id="barA" x="40" y="100" width="0" height="20" fill="#ff6643" rx="4"/>
-  <text id="valA" x="360" y="115" text-anchor="end" fill="#f4f4f5" font-size="12">0.0%</text>
+  <rect x="40" y="100" width="320" height="20" fill="#0c0078" rx="4"/>
+  <rect id="barA" x="40" y="100" width="0" height="20" fill="#fe4e02" rx="4"/>
+  <text id="valA" x="360" y="115" text-anchor="end" fill="#f8f2da" font-size="12">0.0%</text>
 
   <text x="40" y="162" fill="#9db4e8" font-size="11" font-weight="bold">CONTROL B</text>
-  <rect x="40" y="170" width="320" height="20" fill="#12121c" rx="4"/>
+  <rect x="40" y="170" width="320" height="20" fill="#0c0078" rx="4"/>
   <rect id="barB" x="40" y="170" width="0" height="20" fill="#4169E1" rx="4"/>
-  <text id="valB" x="360" y="185" text-anchor="end" fill="#f4f4f5" font-size="12">0.0%</text>
+  <text id="valB" x="360" y="185" text-anchor="end" fill="#f8f2da" font-size="12">0.0%</text>
 
   <line x1="60" y1="224" x2="340" y2="224" stroke="#333a47" stroke-width="1"/>
   <text x="200" y="246" text-anchor="middle" fill="#888" font-size="11">p-value</text>
-  <text id="pval" x="200" y="282" text-anchor="middle" fill="#f4f4f5" font-size="32" font-weight="bold">1.000</text>
+  <text id="pval" x="200" y="282" text-anchor="middle" fill="#f8f2da" font-size="32" font-weight="bold">1.000</text>
 
-  <rect id="btn" x="80" y="316" width="240" height="46" rx="8" fill="#ff6643"/>
-  <text id="btnLabel" x="200" y="345" text-anchor="middle" fill="#0a0a12" font-size="13" font-weight="bold">COLLECT DATA</text>
+  <rect id="btn" x="80" y="316" width="240" height="46" rx="8" fill="#fe4e02"/>
+  <text id="btnLabel" x="200" y="345" text-anchor="middle" fill="#1400c3" font-size="13" font-weight="bold">COLLECT DATA</text>
   <text x="200" y="408" text-anchor="middle" fill="#666" font-size="10">tap / click anywhere to run the experiment</text>
   <script type="text/javascript"><![CDATA[
     (function () {
@@ -54,14 +54,14 @@
         valB.textContent = (pB * 100).toFixed(1) + '%';
         if (p < 0.05) {
           pval.textContent = '< 0.05';
-          pval.setAttribute('fill', '#ff6643');
+          pval.setAttribute('fill', '#fe4e02');
           if (!state.sig) {
             state.sig = true;
             btnLabel.textContent = 'RESET';
           }
         } else {
           pval.textContent = p.toFixed(3);
-          pval.setAttribute('fill', '#f4f4f5');
+          pval.setAttribute('fill', '#f8f2da');
         }
         var n = document.getElementById('status');
         n.textContent = 'p = ' + (p < 0.05 ? '< 0.05' : p.toFixed(3)) + ' · n = ' + Math.round(nA) + ' / arm';

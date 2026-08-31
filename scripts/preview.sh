@@ -18,14 +18,14 @@ html = f"""<!doctype html>
 <style>
   body {{ max-width: 980px; margin: 2rem auto; padding: 0 1rem;
          font-family: -apple-system, "Segoe UI", Ubuntu, sans-serif;
-         color: #0a0a12; background: #fff; line-height: 1.5; }}
+         color: #1400c3; background: #fff; line-height: 1.5; }}
   img {{ max-width: 100%; }}
   table {{ border-collapse: collapse; }}
   td, th {{ border: 1px solid #ddd; padding: 6px 10px; }}
-  code {{ background: #f4f4f5; padding: 2px 4px; border-radius: 3px; }}
-  pre {{ background: #0a0a12; color: #f4f4f5; padding: 1rem; border-radius: 6px; overflow-x: auto; }}
-  a {{ color: #ff6643; }}
-  blockquote {{ border-left: 3px solid #ff6643; margin: 0; padding-left: 1rem; color: #555; }}
+  code {{ background: #f8f2da; padding: 2px 4px; border-radius: 3px; }}
+  pre {{ background: #1400c3; color: #f8f2da; padding: 1rem; border-radius: 6px; overflow-x: auto; }}
+  a {{ color: #fe4e02; }}
+  blockquote {{ border-left: 3px solid #fe4e02; margin: 0; padding-left: 1rem; color: #555; }}
 </style></head>
 <body><div id="c"></div>
 <script>

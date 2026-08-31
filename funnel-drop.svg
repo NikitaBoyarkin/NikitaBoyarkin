@@ -1,18 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 400 440" preserveAspectRatio="xMidYMid meet" style="background:#0a0a12;touch-action:none" font-family="'Fira Code','SF Mono',Menlo,monospace">
-  <rect width="400" height="440" fill="#0a0a12"/>
-  <text x="200" y="28" text-anchor="middle" fill="#ff6643" font-size="16" font-weight="bold" letter-spacing="3">FUNNEL DROP</text>
-  <text id="status" x="200" y="52" text-anchor="middle" fill="#f4f4f5" font-size="12">CVR 0% · caught 0 · missed 0</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 400 440" preserveAspectRatio="xMidYMid meet" style="background:#1400c3;touch-action:none" font-family="'Fira Code','SF Mono',Menlo,monospace">
+  <rect width="400" height="440" fill="#1400c3"/>
+  <text x="200" y="28" text-anchor="middle" fill="#fe4e02" font-size="16" font-weight="bold" letter-spacing="3">FUNNEL DROP</text>
+  <text id="status" x="200" y="52" text-anchor="middle" fill="#f8f2da" font-size="12">CVR 0% · caught 0 · missed 0</text>
 
-  <rect x="30" y="78" width="340" height="30" fill="#17212b" stroke="#2a3240" stroke-width="1.5" rx="4"/>
+  <rect x="30" y="78" width="340" height="30" fill="#17212b" stroke="#0c0078" stroke-width="1.5" rx="4"/>
   <text x="40" y="97" fill="#ffbe99" font-size="11" font-weight="bold">SIGNUP</text>
   <rect x="70" y="118" width="260" height="30" fill="#251712" stroke="#8a2e15" stroke-width="1.5" rx="4"/>
   <text x="80" y="137" fill="#ffbe99" font-size="11" font-weight="bold">ACTIVE</text>
   <rect x="115" y="158" width="170" height="30" fill="#211511" stroke="#c0431e" stroke-width="1.5" rx="4"/>
   <text x="125" y="177" fill="#ffbe99" font-size="11" font-weight="bold">PAY</text>
 
-  <rect x="30" y="200" width="340" height="200" fill="#12121c" stroke="#2a3240" stroke-width="1.5" rx="6"/>
+  <rect x="30" y="200" width="340" height="200" fill="#0c0078" stroke="#0c0078" stroke-width="1.5" rx="6"/>
   <g id="dots"></g>
-  <rect id="paddle" x="120" y="385" width="80" height="10" rx="5" fill="#f4f4f5"/>
+  <rect id="paddle" x="120" y="385" width="80" height="10" rx="5" fill="#f8f2da"/>
 
   <text x="200" y="425" text-anchor="middle" fill="#666" font-size="10">Drag or ← → · catch users to convert</text>
   <script type="text/javascript"><![CDATA[
@@ -31,7 +31,7 @@
           c.setAttribute('cx', dots[i].x);
           c.setAttribute('cy', dots[i].y);
           c.setAttribute('r', 6);
-          c.setAttribute('fill', '#ff6643');
+          c.setAttribute('fill', '#fe4e02');
           dotsG.appendChild(c);
         }
       }

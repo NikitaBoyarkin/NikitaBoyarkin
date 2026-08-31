@@ -1,12 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 400 440" preserveAspectRatio="xMidYMid meet" style="background:#0a0a12;touch-action:none" font-family="'Fira Code','SF Mono',Menlo,monospace">
-  <rect width="400" height="440" fill="#0a0a12"/>
-  <text x="200" y="28" text-anchor="middle" fill="#ff6643" font-size="16" font-weight="bold" letter-spacing="3">2048</text>
-  <text id="score" x="200" y="52" text-anchor="middle" fill="#f4f4f5" font-size="12">Score: 0</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 400 440" preserveAspectRatio="xMidYMid meet" style="background:#1400c3;touch-action:none" font-family="'Fira Code','SF Mono',Menlo,monospace">
+  <rect width="400" height="440" fill="#1400c3"/>
+  <text x="200" y="28" text-anchor="middle" fill="#fe4e02" font-size="16" font-weight="bold" letter-spacing="3">2048</text>
+  <text id="score" x="200" y="52" text-anchor="middle" fill="#f8f2da" font-size="12">Score: 0</text>
   <g id="board" transform="translate(30,70)">
-    <rect width="340" height="340" fill="#12121c" stroke="#ff6643" stroke-width="2" rx="6"/>
+    <rect width="340" height="340" fill="#0c0078" stroke="#fe4e02" stroke-width="2" rx="6"/>
     <g id="tiles"></g>
   </g>
-  <text id="overlay" x="200" y="430" text-anchor="middle" fill="#f4f4f5" font-size="13">Swipe or arrow keys to move</text>
+  <text id="overlay" x="200" y="430" text-anchor="middle" fill="#f8f2da" font-size="13">Swipe or arrow keys to move</text>
   <script type="text/javascript"><![CDATA[
     (function () {
       var W = 4, CELL = 79, GAP = 8, STEP = 87;
@@ -14,7 +14,7 @@
       var scoreT = document.getElementById('score'), overlay = document.getElementById('overlay');
       var grid = [], score = 0, over = false, won = false;
       var COLORS = {
-        2:'#333a47', 4:'#3d4656', 8:'#c0431e', 16:'#e05730', 32:'#ff6643',
+        2:'#333a47', 4:'#3d4656', 8:'#c0431e', 16:'#e05730', 32:'#fe4e02',
         64:'#ffbe99', 128:'#ffd166', 256:'#ff9f1c', 512:'#ff6b6b', 1024:'#f43f5e', 2048:'#f43f5e'
       };
 
@@ -23,7 +23,7 @@
         score = 0; over = false; won = false;
         scoreT.textContent = 'Score: 0';
         overlay.textContent = 'Swipe or arrow keys to move';
-        overlay.setAttribute('fill', '#f4f4f5');
+        overlay.setAttribute('fill', '#f8f2da');
       }
 
       function spawn() {
@@ -102,7 +102,7 @@
           s.setAttribute('text-anchor', 'middle');
           s.setAttribute('font-size', fs);
           s.setAttribute('font-weight', 'bold');
-          s.setAttribute('fill', v >= 64 ? '#0a0a12' : '#f4f4f5');
+          s.setAttribute('fill', v >= 64 ? '#1400c3' : '#f8f2da');
           s.textContent = v;
           tiles.appendChild(s);
         }

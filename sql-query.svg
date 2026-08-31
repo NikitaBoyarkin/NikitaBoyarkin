@@ -1,10 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 400 440" preserveAspectRatio="xMidYMid meet" style="background:#0a0a12;touch-action:none" font-family="'Fira Code','SF Mono',Menlo,monospace">
-  <rect width="400" height="440" fill="#0a0a12"/>
-  <text x="200" y="28" text-anchor="middle" fill="#ff6643" font-size="16" font-weight="bold" letter-spacing="3">SQL QUERY</text>
-  <text id="status" x="200" y="52" text-anchor="middle" fill="#f4f4f5" font-size="12">Round 1 / 6  ·  score 0</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 400 440" preserveAspectRatio="xMidYMid meet" style="background:#1400c3;touch-action:none" font-family="'Fira Code','SF Mono',Menlo,monospace">
+  <rect width="400" height="440" fill="#1400c3"/>
+  <text x="200" y="28" text-anchor="middle" fill="#fe4e02" font-size="16" font-weight="bold" letter-spacing="3">SQL QUERY</text>
+  <text id="status" x="200" y="52" text-anchor="middle" fill="#f8f2da" font-size="12">Round 1 / 6  ·  score 0</text>
   <text id="metric" x="200" y="76" text-anchor="middle" fill="#ffbe99" font-size="11">metric: ...</text>
-  <rect x="20" y="92" width="360" height="58" fill="#12121c" stroke="#2a3240" stroke-width="1.5" rx="6"/>
-  <text id="query" x="30" y="126" fill="#f4f4f5" font-size="11.5">SELECT ___ FROM events</text>
+  <rect x="20" y="92" width="360" height="58" fill="#0c0078" stroke="#0c0078" stroke-width="1.5" rx="6"/>
+  <text id="query" x="30" y="126" fill="#f8f2da" font-size="11.5">SELECT ___ FROM events</text>
   <g id="opts"></g>
   <text x="200" y="410" text-anchor="middle" fill="#666" font-size="10">click the token that fills the blank · keys 1-4</text>
   <script type="text/javascript"><![CDATA[
@@ -24,7 +24,7 @@
       function render(){
         var r=rounds[idx];
         metricT.textContent='metric: '+r.m;
-        queryT.textContent=r.q; queryT.setAttribute('fill','#f4f4f5');
+        queryT.textContent=r.q; queryT.setAttribute('fill','#f8f2da');
         statusT.textContent='Round '+(idx+1)+' / '+rounds.length+'  ·  score '+score;
         while(optsG.firstChild) optsG.removeChild(optsG.firstChild);
         btns=[]; lbls=[];
@@ -33,9 +33,9 @@
           var y=ys[i];
           var rect=document.createElementNS(svgns,'rect');
           rect.setAttribute('x',40); rect.setAttribute('y',y); rect.setAttribute('width',320); rect.setAttribute('height',30); rect.setAttribute('rx',6);
-          rect.setAttribute('fill','#17212b'); rect.setAttribute('stroke','#2a3240'); rect.setAttribute('stroke-width','1.5'); rect.style.cursor='pointer';
+          rect.setAttribute('fill','#17212b'); rect.setAttribute('stroke','#0c0078'); rect.setAttribute('stroke-width','1.5'); rect.style.cursor='pointer';
           var t=document.createElementNS(svgns,'text');
-          t.setAttribute('x',60); t.setAttribute('y',y+20); t.setAttribute('fill','#f4f4f5'); t.setAttribute('font-size','12'); t.style.pointerEvents='none';
+          t.setAttribute('x',60); t.setAttribute('y',y+20); t.setAttribute('fill','#f8f2da'); t.setAttribute('font-size','12'); t.style.pointerEvents='none';
           t.textContent=(i+1)+'.  '+r.o[i];
           (function(k){ rect.addEventListener('click',function(){choose(k);}); })(i);
           optsG.appendChild(rect); optsG.appendChild(t);

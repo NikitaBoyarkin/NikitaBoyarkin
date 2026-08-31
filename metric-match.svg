@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 400 440" preserveAspectRatio="xMidYMid meet" style="background:#0a0a12;touch-action:none" font-family="'Fira Code','SF Mono',Menlo,monospace">
-  <rect width="400" height="440" fill="#0a0a12"/>
-  <text x="200" y="28" text-anchor="middle" fill="#ff6643" font-size="16" font-weight="bold" letter-spacing="3">METRIC MATCH</text>
-  <text id="status" x="200" y="52" text-anchor="middle" fill="#f4f4f5" font-size="12">Matches 0 / 6  ·  moves 0</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 400 440" preserveAspectRatio="xMidYMid meet" style="background:#1400c3;touch-action:none" font-family="'Fira Code','SF Mono',Menlo,monospace">
+  <rect width="400" height="440" fill="#1400c3"/>
+  <text x="200" y="28" text-anchor="middle" fill="#fe4e02" font-size="16" font-weight="bold" letter-spacing="3">METRIC MATCH</text>
+  <text id="status" x="200" y="52" text-anchor="middle" fill="#f8f2da" font-size="12">Matches 0 / 6  ·  moves 0</text>
   <g id="board"></g>
   <text x="200" y="410" text-anchor="middle" fill="#666" font-size="10">flip two cards · match metric to its formula</text>
   <script type="text/javascript"><![CDATA[
@@ -37,8 +37,8 @@
         var card={g:g,rect:rect,t:t,info:info,up:false,matched:false};
         card.paint=function(){
           if(card.matched){ rect.setAttribute('fill','#1d3a2a'); rect.setAttribute('stroke','#3FCF8E'); t.setAttribute('fill','#3FCF8E'); t.textContent=info.text; }
-          else if(card.up){ rect.setAttribute('fill','#12121c'); rect.setAttribute('stroke','#ff6643'); t.setAttribute('fill','#f4f4f5'); t.textContent=info.text; }
-          else { rect.setAttribute('fill','#17212b'); rect.setAttribute('stroke','#2a3240'); t.setAttribute('fill','#666'); t.textContent='?'; }
+          else if(card.up){ rect.setAttribute('fill','#0c0078'); rect.setAttribute('stroke','#fe4e02'); t.setAttribute('fill','#f8f2da'); t.textContent=info.text; }
+          else { rect.setAttribute('fill','#17212b'); rect.setAttribute('stroke','#0c0078'); t.setAttribute('fill','#666'); t.textContent='?'; }
         };
         g.appendChild(rect); g.appendChild(t);
         g.addEventListener('click',function(){ flip(card); });
