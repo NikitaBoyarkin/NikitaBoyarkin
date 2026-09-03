@@ -10,9 +10,9 @@ I turn ambiguous product questions into clean experiments, SQL pipelines, and de
 - **User lifecycle analytics** — cohort retention, funnel analysis, RFM segmentation.
 - **End-to-end delivery** — SQL → Python → dashboard → stakeholder narrative.
 
-📦 **Portfolio:** [nikitaboyarkin.github.io](https://nikitaboyarkin.github.io/Personal_Projects.github.io/?utm_source=github&utm_medium=profile_readme&utm_campaign=header)  
-🔗 **Links:** [linktr.ee/lofinibo](https://linktr.ee/lofinibo?utm_source=github&utm_medium=profile_readme&utm_campaign=header)  
-📄 **CV:** [Download PDF](https://nikitaboyarkin.github.io/Personal_Projects.github.io/CV-Nikita-Boyarkin.pdf?utm_source=github&utm_medium=profile_readme&utm_campaign=cv)
+📦 **Portfolio:** <a href="https://nikitaboyarkin.github.io/Personal_Projects.github.io/?utm_source=github&utm_medium=profile_readme&utm_campaign=header"><img src="portfolio.svg" align="absmiddle" alt="Portfolio" /></a>  
+🔗 **Links:** <a href="https://linktr.ee/lofinibo?utm_source=github&utm_medium=profile_readme&utm_campaign=header"><img src="links.svg" align="absmiddle" alt="Links" /></a>  
+📄 **CV:** <a href="https://nikitaboyarkin.github.io/Personal_Projects.github.io/CV-Nikita-Boyarkin.pdf?utm_source=github&utm_medium=profile_readme&utm_campaign=cv"><img src="cv.svg" align="absmiddle" alt="CV" /></a>
 
 ---
 
@@ -73,7 +73,7 @@ _Last refreshed: 2026-09-03 08:58 UTC · 297 contributions in the last 7 days_
 ### 🔬 Featured Projects
 <!-- TODO P1.3: add 1-2 social proof quotes from colleagues/recruiters -->
 
-#### 1. Volta Neobank — Product Analytics
+#### 1. <a href="https://github.com/NikitaBoyarkin/volta-banking"><img src="volta-neobank.svg" align="absmiddle" alt="Volta Neobank" /></a> — Product Analytics
 
 _End-to-end neobank analytics: funnel, A/B test, retention, segmentation. **+6.24pp KYC conversion (Z=6.35, p<0.0001), €716K/yr — 48× ROI.** CUPED + AA-test + Bonferroni._
 
@@ -82,7 +82,7 @@ _End-to-end neobank analytics: funnel, A/B test, retention, segmentation. **+6.2
 
 **Stack:** Python · SciPy · Statsmodels · scikit-learn
 
-#### 2. Supabase Product Analytics
+#### 2. <a href="https://github.com/NikitaBoyarkin/supabase-product-analytics"><img src="supabase-analytics.svg" align="absmiddle" alt="Supabase Product Analytics" /></a>
 
 _Full-stack analytics platform: Streamlit + Supabase with RLS and an Edge Function. **Significant A/B result (p=0.0034) on 8,000 seeded users**, reproducible pipeline._
 
@@ -90,7 +90,7 @@ _Full-stack analytics platform: Streamlit + Supabase with RLS and an Edge Functi
 
 **Stack:** Python · Streamlit · Supabase · PostgreSQL
 
-#### 3. SQL Analytics Case Study
+#### 3. <a href="https://github.com/NikitaBoyarkin/sql-analytics-case-study"><img src="sql-case-study.svg" align="absmiddle" alt="SQL Analytics Case Study" /></a>
 
 \*Ten end-to-end SQL cases on DuckDB — funnel, N-day retention, DAU/MAU stickiness, LTV, streaks, A/B conversion, attribution. **One command, no server, pytest-verified.\***
 
