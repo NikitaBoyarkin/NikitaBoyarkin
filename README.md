@@ -274,9 +274,9 @@ _Full-stack analytics platform: Streamlit + Supabase with RLS and an Edge Functi
 
 ### 🌐 Connect
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/nikita-boyarkin)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/nikita-boyarkin?utm_source=github&utm_medium=profile_readme&utm_campaign=connect)
 [![Portfolio](https://img.shields.io/badge/Portfolio-0f2a2b?style=for-the-badge&logo=github&logoColor=fe4e02)](https://nikitaboyarkin.github.io/Personal_Projects.github.io/?utm_source=github&utm_medium=profile_readme&utm_campaign=connect)
-[![Blog](https://img.shields.io/badge/Blog-0f2a2b?style=for-the-badge&logo=githubpages&logoColor=fe4e02)](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/)
+[![Blog](https://img.shields.io/badge/Blog-0f2a2b?style=for-the-badge&logo=githubpages&logoColor=fe4e02)](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/?utm_source=github&utm_medium=profile_readme&utm_campaign=connect)
 [![Telegram](https://img.shields.io/badge/Telegram-26A5E4?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/lofinibo?utm_source=github&utm_medium=profile_readme&utm_campaign=connect)
 [![Email](https://img.shields.io/badge/Email-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:boyarkin_yandex@mail.ru)
 
