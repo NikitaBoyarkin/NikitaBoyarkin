@@ -2,8 +2,10 @@
 
 **Автор:** Nikita Boyarkin
 **Дата:** 2026-09-07
-**Статус:** Draft
-**Версия:** 1.0
+**Статус:** In Review
+**Версия:** 1.1
+
+> **Статус реализации (2026-09-07):** 8 из 13 REQ уже реализованы (REQ-001, 003, 006, 009, 010, 011, 012, 013). Осталось: REQ-002 (трекинг), REQ-004, REQ-005, REQ-007, REQ-008 (TODO). См. пометки `[DONE]`/`[PARTIAL]` в секции 5.
 
 ---
 
@@ -102,7 +104,7 @@ GitHub profile README (`NikitaBoyarkin/NikitaBoyarkin`) — это лендин�
 
 ### Must Have (P0) — критично для запуска
 
-#### REQ-001: Игровая секция — 6+ on-brand игр
+#### REQ-001: Игровая секция — 6+ on-brand игр `[DONE]`
 **Описание:** Поддерживать и расширять секцию SVG-игр, каждая игра — on-brand (аналитика/метрики), с управлением и целью. Текущее состояние: 8 игр (Snake, A/B Test, Pong, 2048, Funnel Drop, Cohort Catch, SQL Query, Metric Match).
 
 **Acceptance Criteria:**
@@ -124,8 +126,8 @@ SVG-игра: интерактивный <svg> с <script>, self-contained, бе
 
 **Dependencies:** None
 
-#### REQ-002: CTA «Download CV» выше фолда
-**Описание:** Добавить явный CTA загрузки CV в верхнюю часть профиля (рядом с portfolio/links), с UTM-меткой и трекингом.
+#### REQ-002: CTA «Download CV» выше фолда `[PARTIAL]`
+**Описание:** Добавить явный CTA загрузки CV в верхнюю часть профиля (рядом с portfolio/links), с UTM-меткой и трекингом. Ссылка с UTM уже есть в header; не хватает выделения как CTA и трекинга (зависит от REQ-005).
 
 **Acceptance Criteria:**
 - [ ] CTA «Download CV» виден без скролла на десктопе и мобильном.
@@ -146,8 +148,8 @@ SVG-игра: интерактивный <svg> с <script>, self-contained, бе
 
 **Dependencies:** REQ-005 (трекинг)
 
-#### REQ-003: Self-host top-languages SVG
-**Описание:** Заменить внешнюю карточку top-languages (Vercel) на self-hosted SVG, генерируемый `build_profile.py` через GitHub GraphQL.
+#### REQ-003: Self-host top-languages SVG `[DONE]`
+**Описание:** Заменить внешнюю карточку top-languages (Vercel) на self-hosted SVG, генерируемый `build_profile.py` через GitHub GraphQL. Реализовано: `build_top_languages_svg()` + `profile.yml` коммитит `top-languages.svg`.
 
 **Acceptance Criteria:**
 - [ ] `top-languages.svg` генерируется локально `build_profile.py` и коммитится в репозиторий.
@@ -167,8 +169,8 @@ build_profile.py → GraphQL (user.repositories.primaryLanguage) → top-languag
 
 **Dependencies:** REQ-009 (тесты)
 
-#### REQ-004: Slim metrics.svg
-**Описание:** Уменьшить вес `metrics.svg` с 367KB до ≤ 80KB, убрав необязательные блоки (notable, metadata) и оптимизировав SVG.
+#### REQ-004: Slim metrics.svg `[TODO]`
+**Описание:** Уменьшить вес `metrics.svg` с 367KB до ≤ 80KB, убрав необязательные блоки (notable, metadata) и оптимизировав SVG. Правка: убрать тяжёлые плагины из `metrics.yml` (`plugin_commit`, `plugin_followup`, `plugin_isocalendar`).
 
 **Acceptance Criteria:**
 - [ ] `metrics.svg` весит ≤ 80KB.
@@ -184,8 +186,8 @@ build_profile.py → GraphQL (user.repositories.primaryLanguage) → top-languag
 
 ### Should Have (P1) — важно, но не блокирует
 
-#### REQ-005: UTM-атрибуция + PostHog дашборд
-**Описание:** Добавить UTM-метки по секциям (header, featured, games, connect) и агрегировать клики в PostHog. Портфельный проект: профиль как источник данных.
+#### REQ-005: UTM-атрибуция + PostHog дашборд `[TODO]`
+**Описание:** Добавить UTM-метки по секциям (header, featured, games, connect) и агрегировать клики в PostHog. Портфельный проект: профиль как источник данных. UTM-метки уже есть на portfolio/links/CV; не хватает PostHog-агрегации (требует решения Q3).
 
 **Acceptance Criteria:**
 - [ ] Каждая секция README имеет уникальную UTM-метку (`utm_campaign=<section>`).
@@ -206,8 +208,8 @@ PostHog: posthog.capture('profile_link_click', {section, href})
 
 **Dependencies:** None
 
-#### REQ-006: Featured projects выше игр
-**Описание:** Переместить секцию featured projects выше игровой секции, чтобы кейсы с метриками были видны раньше.
+#### REQ-006: Featured projects выше игр `[DONE]`
+**Описание:** Переместить секцию featured projects выше игровой секции, чтобы кейсы с метриками были видны раньше. Реализовано: порядок секций header → stats → featured → games.
 
 **Acceptance Criteria:**
 - [ ] Порядок секций: header → featured projects → games → recent notes.
@@ -220,8 +222,8 @@ PostHog: posthog.capture('profile_link_click', {section, href})
 
 **Dependencies:** REQ-005
 
-#### REQ-007: Social proof — цитаты
-**Описание:** Добавить 1-2 цитаты от коллег/рекрутеров в секцию featured projects.
+#### REQ-007: Social proof — цитаты `[TODO]`
+**Описание:** Добавить 1-2 цитаты от коллег/рекрутеров в секцию featured projects. Блокируется получением реальных цитат (Q2).
 
 **Acceptance Criteria:**
 - [ ] ≥ 1 цитата с именем и ролью автора.
@@ -234,8 +236,8 @@ PostHog: posthog.capture('profile_link_click', {section, href})
 
 **Dependencies:** None
 
-#### REQ-008: «Currently building» — пинн активного проекта
-**Описание:** Заменить TODO-строку «Currently building» на актуальный активный проект с ссылкой.
+#### REQ-008: «Currently building» — пинн активного проекта `[PARTIAL]`
+**Описание:** Заменить TODO-строку «Currently building» на актуальный активный проект с ссылкой. Строка уже заполнена («interactive analyst portfolio»); осталось убрать TODO-комментарий P1.4.
 
 **Acceptance Criteria:**
 - [ ] Строка «Currently building» указывает на реальный активный проект.
@@ -249,8 +251,8 @@ PostHog: posthog.capture('profile_link_click', {section, href})
 
 ### Nice to Have (P2) — будущее улучшение
 
-#### REQ-009: Тесты для build_profile.py
-**Описание:** Добавить pytest-тесты для `compute_streaks`, `build_*_svg` и других функций build-скрипта.
+#### REQ-009: Тесты для build_profile.py `[DONE]`
+**Описание:** Добавить pytest-тесты для `compute_streaks`, `build_*_svg` и других функций build-скрипта. Реализовано: `tests/test_build_profile.py`.
 
 **Acceptance Criteria:**
 - [ ] Покрытие ≥ 80% для `build_profile.py`.
@@ -263,8 +265,8 @@ PostHog: posthog.capture('profile_link_click', {section, href})
 
 **Dependencies:** None
 
-#### REQ-010: Ретраи + --dry-run в build_profile.py
-**Описание:** Добавить ретраи на сетевые вызовы GraphQL и флаг `--dry-run` для безопасного запуска.
+#### REQ-010: Ретраи + --dry-run в build_profile.py `[DONE]`
+**Описание:** Добавить ретраи на сетевые вызовы GraphQL и флаг `--dry-run` для безопасного запуска. Реализовано: `graphql(retries=3, backoff)`, `--dry-run` в `main()`.
 
 **Acceptance Criteria:**
 - [ ] Сетевые вызовы имеют ретраи (≥ 2 попытки с backoff).
@@ -277,8 +279,8 @@ PostHog: posthog.capture('profile_link_click', {section, href})
 
 **Dependencies:** REQ-009
 
-#### REQ-011: Консолидация workflows
-**Описание:** Сократить 5 daily workflows и keepalive 4×/день до минимального набора; заменить empty-commits на meaningful.
+#### REQ-011: Консолидация workflows `[DONE]`
+**Описание:** Сократить 5 daily workflows и keepalive 4×/день до минимального набора; заменить empty-commits на meaningful. Реализовано: keepalive 1×/день, `update_readme_refresh_block()` даёт meaningful-коммит (TOS-риск митигирован).
 
 **Acceptance Criteria:**
 - [ ] Keepalive 4×/день → 1×/день.
@@ -290,8 +292,8 @@ PostHog: posthog.capture('profile_link_click', {section, href})
 
 **Dependencies:** None
 
-#### REQ-012: Локальный превью README
-**Описание:** Добавить `scripts/preview.sh` для локального рендера README.
+#### REQ-012: Локальный превью README `[DONE]`
+**Описание:** Добавить `scripts/preview.sh` для локального рендера README. Реализовано: `scripts/preview.sh`.
 
 **Acceptance Criteria:**
 - [ ] `scripts/preview.sh` открывает локальный превью README.
@@ -303,8 +305,8 @@ PostHog: posthog.capture('profile_link_click', {section, href})
 
 **Dependencies:** None
 
-#### REQ-013: Snake в main вместо ветки output
-**Описание:** Перенести snake.svg в ветку main, убрав зависимость от отдельной ветки.
+#### REQ-013: Snake в main вместо ветки output `[DONE]`
+**Описание:** Перенести snake.svg в ветку main, убрав зависимость от отдельной ветки. Реализовано: `snake.yml` коммитит в main.
 
 **Acceptance Criteria:**
 - [ ] `snake.svg` доступен в main.
@@ -372,26 +374,26 @@ PostHog (UTM-клики, cv_download) → дашборд
 
 ## 8. Implementation Roadmap
 
-### Phase 1: Быстрые победы (Week 1)
+### Phase 1: Быстрые победы (Week 1) — 3/5 done
 **Goal:** Производительность + явный CTA + консолидация.
 **Tasks:**
+- [x] Task 1.3: Self-host top-languages (REQ-003) — done
+- [x] Task 1.4: Консолидация workflows, keepalive 1×/день (REQ-011) — done
+- [x] Task 1.5: Snake в main (REQ-013) — done
 - [ ] Task 1.1: CTA «Download CV» выше фолда (REQ-002) — Small (3h)
 - [ ] Task 1.2: Slim metrics.svg 367KB → 80KB (REQ-004) — Medium (5h)
-- [ ] Task 1.3: Self-host top-languages (REQ-003) — Medium (6h)
-- [ ] Task 1.4: Консолидация workflows, keepalive 1×/день (REQ-011) — Medium (5h)
-- [ ] Task 1.5: Snake в main (REQ-013) — Small (2h)
 **Validation Checkpoint:** LCP < 2s; metrics.svg ≤ 80KB; keepalive 1×/день; CTA виден выше фолда.
 
-### Phase 2: Измерение и конверсия (Week 2)
+### Phase 2: Измерение и конверсия (Week 2) — 4/7 done
 **Goal:** Измерить воронку, поднять конверсию к кейсам.
 **Tasks:**
+- [x] Task 2.2: Featured projects выше игр (REQ-006) — done
+- [x] Task 2.5: Тесты build_profile.py (REQ-009) — done
+- [x] Task 2.6: Ретраи + --dry-run (REQ-010) — done
+- [x] Task 2.7: Локальный превью (REQ-012) — done
 - [ ] Task 2.1: UTM-атрибуция + PostHog дашборд (REQ-005) — Medium (8h)
-- [ ] Task 2.2: Featured projects выше игр (REQ-006) — Small (3h)
 - [ ] Task 2.3: Social proof — цитаты (REQ-007) — Small (3h)
 - [ ] Task 2.4: «Currently building» — пинн проекта (REQ-008) — Small (2h)
-- [ ] Task 2.5: Тесты build_profile.py (REQ-009) — Medium (6h)
-- [ ] Task 2.6: Ретраи + --dry-run (REQ-010) — Medium (5h)
-- [ ] Task 2.7: Локальный превью (REQ-012) — Small (3h)
 **Validation Checkpoint:** PostHog дашборд показывает CTR по секциям; CV-загрузки трекаются; тесты ≥ 80% покрытия.
 
 ### Зависимости задач
@@ -418,8 +420,9 @@ Critical Path: REQ-005 (UTM) → REQ-002 (CV-CTA трекинг) → REQ-006 (р
 
 ### Open Questions
 #### Q1: Как трекать контакты от рекрутеров?
-- **Статус:** открыт
+- **Статус:** рекомендация — вариант (C) оба
 - **Варианты:** (A) ручной учёт в PostHog (событие `recruiter_contact`), (B) UTM на LinkedIn/email, (C) оба.
+- **Рекомендация:** (C) — UTM-метки на LinkedIn/email дают автоматический трекинг источника, ручной учёт в PostHog закрывает контакты без клика (прямые сообщения). Оба канала в одном дашборде.
 - **Владелец:** Nikita
 - **Дедлайн:** конец Phase 2
 - **Влияние:** High (North Star метрика)
@@ -432,8 +435,9 @@ Critical Path: REQ-005 (UTM) → REQ-002 (CV-CTA трекинг) → REQ-006 (р
 - **Влияние:** Medium
 
 #### Q3: PostHog-проект — отдельный или в существующий?
-- **Статус:** открыт
+- **Статус:** рекомендация — вариант (A)
 - **Варианты:** (A) новый проект в существующей организации NBxHive, (B) отдельная организация.
+- **Рекомендация:** (A) — новый проект в NBxHive: организация уже настроена, free tier достаточно (< 1k событий/мес), дашборды в одном месте с остальными портфельными проектами.
 - **Владелец:** Nikita
 - **Дедлайн:** начало Phase 2
 - **Влияние:** Low

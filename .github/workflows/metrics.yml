@@ -27,10 +27,6 @@ jobs:
           plugin_languages_limit: 10
           plugin_languages_details: bytes-size, percentage
           plugin_languages_inherited: yes
-          plugin_isocalendar: yes
-          plugin_commit: yes
-          plugin_commit_limit: 0
-          plugin_followup: yes
           filename: metrics.svg
 
       - name: Commit metrics.svg

@@ -12,7 +12,7 @@ I turn ambiguous product questions into clean experiments, SQL pipelines, and de
 
 📦 **Portfolio:** <a href="https://nikitaboyarkin.github.io/Personal_Projects.github.io/?utm_source=github&utm_medium=profile_readme&utm_campaign=header"><img src="portfolio.svg" align="absmiddle" alt="Portfolio" /></a>  
 🔗 **Links:** <a href="https://linktr.ee/lofinibo?utm_source=github&utm_medium=profile_readme&utm_campaign=header"><img src="links.svg" align="absmiddle" alt="Links" /></a>  
-📄 **CV:** <a href="https://nikitaboyarkin.github.io/Personal_Projects.github.io/CV-Nikita-Boyarkin.pdf?utm_source=github&utm_medium=profile_readme&utm_campaign=cv"><img src="cv.svg" align="absmiddle" alt="CV" /></a>
+📄 **Download CV:** <a href="https://nikitaboyarkin.github.io/Personal_Projects.github.io/CV-Nikita-Boyarkin.pdf?utm_source=github&utm_medium=profile_readme&utm_campaign=cv"><img src="cv.svg" align="absmiddle" alt="Download CV" /></a>
 
 ---
 
@@ -21,7 +21,6 @@ I turn ambiguous product questions into clean experiments, SQL pipelines, and de
 - 📚 Learning: Bayesian A/B testing, ClickHouse, dbt, Apache Airflow, Apache Superset
 - 💼 Open to: BI / product / data analyst roles — actively interviewing
 - 🤝 Collab: experimentation, user retention analytics
-<!-- TODO P1.4: confirm/edit the 'currently building' line below -->
 - 🚧 Building: interactive analyst portfolio — playable SVG games + self-hosted GitHub stats
 
 ---
