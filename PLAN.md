@@ -37,6 +37,7 @@ Profile view → scroll → click portfolio → case study view → contact
 
 ### P1 — Измерение и конверсия
 - P1.1 UTM по секциям + агрегация в PostHog (портфельный проект)
+  - [ ] Создать PostHog-проект `NikitaBoyarkin Profile` в NBxHive (UI) + взять `phc_...` ключ → гайд: `docs/posthog-setup.md`
 - P1.2 Featured projects ВЫШЕ игр
 - P1.3 Social proof — 1–2 цитаты
 - P1.4 «Currently building» — пинн активного проекта
