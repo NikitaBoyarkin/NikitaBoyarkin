@@ -43,7 +43,7 @@ I turn ambiguous product questions into clean experiments, SQL pipelines, and de
 ### ⚡ Activity
 
 <!-- LAST-REFRESHED:START -->
-_Last refreshed: 2026-09-07 09:26 UTC · 338 contributions in the last 7 days_
+_Last refreshed: 2026-09-08 08:53 UTC · 307 contributions in the last 7 days_
 <!-- LAST-REFRESHED:END -->
 
 
