@@ -1,5 +1,6 @@
 <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 190' width='800px' height='190px'>
     <rect fill='#1400c3' width='800' height='190' rx='6'/>
+<<<<<<< HEAD
     <text x='400.0' y='28' text-anchor='middle' fill='#c9c2a8' font-family='Segoe UI, Ubuntu, sans-serif' font-size='14px' font-weight='400'>NikitaBoyarkin's Monthly Contributions (last 12 months)</text>
       <line x1='60' y1='150' x2='780' y2='150' stroke='#0c0078' stroke-width='1'/>
   <rect x='72.0' y='124.5' width='36.0' height='25.5' rx='2' fill='#fe4e02'><title>2025-10: 987 contributions</title></rect>
@@ -39,4 +40,45 @@
   <text x='750.0' y='166' text-anchor='middle' fill='#c9c2a8' font-family='Segoe UI, Ubuntu, sans-serif' font-size='10px'>Sep</text>
   <text x='750.0' y='125.0' text-anchor='middle' fill='#f8f2da' font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px'>775</text>
 <text x='400.0' y='182' text-anchor='middle' fill='#c9c2a8' font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px'>Last updated: 2026-09-18 13:37 UTC</text>
+=======
+    <text x='400.0' y='28' text-anchor='middle' fill='#f8f2da' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='14px' font-weight='400'>NikitaBoyarkin's Monthly Contributions (last 12 months)</text>
+      <line x1='60' y1='150' x2='780' y2='150' stroke='#f8f2da' stroke-opacity='0.14' stroke-width='1'/>
+  <rect x='72.0' y='149.4' width='36.0' height='0.6' rx='2' fill='#fe4e02'><title>2025-10: 2 contributions</title></rect>
+  <text x='90.0' y='166' text-anchor='middle' fill='#f8f2da' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='10px'>Oct</text>
+  <text x='90.0' y='144.4' text-anchor='middle' fill='#f8f2da' font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px'>2</text>
+  <rect x='132.0' y='145.8' width='36.0' height='4.2' rx='2' fill='#fe4e02'><title>2025-11: 14 contributions</title></rect>
+  <text x='150.0' y='166' text-anchor='middle' fill='#f8f2da' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='10px'>Nov</text>
+  <text x='150.0' y='140.8' text-anchor='middle' fill='#f8f2da' font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px'>14</text>
+  <rect x='192.0' y='143.4' width='36.0' height='6.6' rx='2' fill='#fe4e02'><title>2025-12: 22 contributions</title></rect>
+  <text x='210.0' y='166' text-anchor='middle' fill='#f8f2da' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='10px'>Dec</text>
+  <text x='210.0' y='138.4' text-anchor='middle' fill='#f8f2da' font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px'>22</text>
+  <rect x='252.0' y='145.2' width='36.0' height='4.8' rx='2' fill='#fe4e02'><title>2026-01: 16 contributions</title></rect>
+  <text x='270.0' y='166' text-anchor='middle' fill='#f8f2da' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='10px'>Jan</text>
+  <text x='270.0' y='140.2' text-anchor='middle' fill='#f8f2da' font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px'>16</text>
+  <rect x='312.0' y='144.9' width='36.0' height='5.1' rx='2' fill='#fe4e02'><title>2026-02: 17 contributions</title></rect>
+  <text x='330.0' y='166' text-anchor='middle' fill='#f8f2da' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='10px'>Feb</text>
+  <text x='330.0' y='139.9' text-anchor='middle' fill='#f8f2da' font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px'>17</text>
+  <rect x='372.0' y='149.4' width='36.0' height='0.6' rx='2' fill='#fe4e02'><title>2026-03: 2 contributions</title></rect>
+  <text x='390.0' y='166' text-anchor='middle' fill='#f8f2da' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='10px'>Mar</text>
+  <text x='390.0' y='144.4' text-anchor='middle' fill='#f8f2da' font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px'>2</text>
+  <rect x='432.0' y='149.7' width='36.0' height='0.3' rx='2' fill='#fe4e02'><title>2026-04: 1 contributions</title></rect>
+  <text x='450.0' y='166' text-anchor='middle' fill='#f8f2da' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='10px'>Apr</text>
+  <text x='450.0' y='144.7' text-anchor='middle' fill='#f8f2da' font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px'>1</text>
+  <rect x='492.0' y='148.5' width='36.0' height='1.5' rx='2' fill='#fe4e02'><title>2026-05: 5 contributions</title></rect>
+  <text x='510.0' y='166' text-anchor='middle' fill='#f8f2da' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='10px'>May</text>
+  <text x='510.0' y='143.5' text-anchor='middle' fill='#f8f2da' font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px'>5</text>
+  <rect x='552.0' y='148.8' width='36.0' height='1.2' rx='2' fill='#fe4e02'><title>2026-06: 4 contributions</title></rect>
+  <text x='570.0' y='166' text-anchor='middle' fill='#f8f2da' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='10px'>Jun</text>
+  <text x='570.0' y='143.8' text-anchor='middle' fill='#f8f2da' font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px'>4</text>
+  <rect x='612.0' y='147.6' width='36.0' height='2.4' rx='2' fill='#fe4e02'><title>2026-07: 8 contributions</title></rect>
+  <text x='630.0' y='166' text-anchor='middle' fill='#f8f2da' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='10px'>Jul</text>
+  <text x='630.0' y='142.6' text-anchor='middle' fill='#f8f2da' font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px'>8</text>
+  <rect x='672.0' y='50.0' width='36.0' height='100.0' rx='2' fill='#fe4e02'><title>2026-08: 331 contributions</title></rect>
+  <text x='690.0' y='166' text-anchor='middle' fill='#f8f2da' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='10px'>Aug</text>
+  <text x='690.0' y='45.0' text-anchor='middle' fill='#f8f2da' font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px'>331</text>
+  <rect x='732.0' y='72.4' width='36.0' height='77.6' rx='2' fill='#fe4e02'><title>2026-09: 257 contributions</title></rect>
+  <text x='750.0' y='166' text-anchor='middle' fill='#f8f2da' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='10px'>Sep</text>
+  <text x='750.0' y='67.4' text-anchor='middle' fill='#f8f2da' font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px'>257</text>
+<text x='400.0' y='182' text-anchor='middle' fill='#f8f2da' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px'>Last updated: 2026-09-18 17:27 UTC</text>
+>>>>>>> 29651d7 (feat: update SVG stats and top languages for improved aesthetics and accuracy)
   </svg>

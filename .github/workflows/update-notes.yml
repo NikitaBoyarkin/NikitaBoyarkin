@@ -24,7 +24,7 @@ jobs:
         with:
           comment_tag_name: "RECENT-POSTS-LIST"
           max_post_count: "5"
-          feed_list: "https://nikitaboyarkin.github.io/Personal_Projects.github.io/rss.xml"
+          feed_list: "https://nikitaboyarkin.github.io/rss.xml"
           commit_message: "chore: update recent notes from RSS [skip ci]"
           # REQ-019: no dummy/keepalive commits — daily build already keeps the repo active.
           enable_keepalive: "false"

@@ -105,7 +105,7 @@
 
 1. **Полный редизайн README** — точечные правки.
 2. **Измерение воронки (PostHog + редирект-сервис)** — deferred до REQ-027.
-3. **Правки сайта `Personal_Projects.github.io`** — внешняя зависимость (REQ-028).
+3. **Правки сайта `NikitaBoyarkin.github.io`** — внешняя зависимость (REQ-028).
 4. **Новые игры / расширение игровой секции.**
 5. **Платная аналитика.**
 
@@ -166,11 +166,11 @@ concurrency:
 **Dependencies:** None
 
 #### REQ-015: Приватный featured-репозиторий → Case study `[P0]`
-**Описание:** `supabase-product-analytics` приватный (`README.md:88`) — бейдж `Repo` ведёт в 404. Заменить на бейдж `Case study`, ведущий на существующий публичный кейс `https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/supabase/` (HTTP 200).
+**Описание:** `supabase-product-analytics` приватный (`README.md:88`) — бейдж `Repo` ведёт в 404. Заменить на бейдж `Case study`, ведущий на существующий публичный кейс `https://nikitaboyarkin.github.io/projects/supabase/` (HTTP 200).
 
 **Acceptance Criteria:**
 - [x] Для проекта Supabase бейдж `Repo` заменён на `Case study`.
-- [x] Ссылка ведёт на `/Personal_Projects.github.io/projects/supabase/` (с base, не root-relative).
+- [x] Ссылка ведёт на `/projects/supabase/` (root-relative, сайт отдаётся с корня `nikitaboyarkin.github.io`).
 - [x] Бейдж `Case study` есть у **всех трёх** featured-проектов.
 - [x] Все featured-ссылки возвращают HTTP 200 для анонимного посетителя. _(volta/supabase/sql case-study URL и public repos: 200; приватный supabase-repo отдаёт 404 и больше нигде не залинкован.)_
 
@@ -312,7 +312,7 @@ concurrency:
 **Dependencies:** REQ-023 (UTM готовы).
 
 #### REQ-028: Внешняя зависимость — дополнение сайт-кейсов `[P2] [EXTERNAL]`
-**Описание:** Часть правок требует соседнего репозитория `Personal_Projects.github.io`: добавить `n=8000` в кейс Supabase (сейчас только профиль), опубликовать ROI-методологию Volta для восстановления `€716K/yr`/`48× ROI`. **Вне скоупа исполнения этого PRD** — фиксируется как зависимость.
+**Описание:** Часть правок требует соседнего репозитория `NikitaBoyarkin.github.io`: добавить `n=8000` в кейс Supabase (сейчас только профиль), опубликовать ROI-методологию Volta для восстановления `€716K/yr`/`48× ROI`. **Вне скоупа исполнения этого PRD** — фиксируется как зависимость.
 
 **Acceptance Criteria (в соседнем репо):**
 - [ ] Кейс Supabase содержит размер выборки.
@@ -393,7 +393,7 @@ concurrency:
 
 1. Полный редизайн README.
 2. PostHog/редирект-инфраструктура в этой итерации (REQ-027 deferred).
-3. Правки сайта `Personal_Projects.github.io` (REQ-028 — внешняя зависимость).
+3. Правки сайта `NikitaBoyarkin.github.io` (REQ-028 — внешняя зависимость).
 4. Новые игры и расширение игровой секции.
 5. Платная аналитика; CRM-автоматизация контактов.
 6. Генерация выдуманных отзывов (Q14/Q18).

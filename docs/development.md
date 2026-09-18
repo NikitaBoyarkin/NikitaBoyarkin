@@ -47,6 +47,24 @@ must stay offline). CI prints the number with `pytest --cov=build_profile`.
   for all games — no mixed pinned-SHA refs. `@main` resolves the moment the SVG is
   pushed, so links never point at a commit that lacks the file.
 
+## Palette
+
+Single brand palette — 60 / 30 / 10 by area:
+
+| Token | Hex | Share | Role |
+|---|---|---|---|
+| `BG` / `SURFACE` | `#1400c3` | 60% | background, card surfaces |
+| `ACCENT` | `#fe4e02` | 30% | primary data, actions |
+| `TEXT_MAIN` | `#f8f2da` | 10% | text, highlights |
+
+Defined once in `scripts/build_profile.py`. Secondary tones are **opacity on
+these three tokens** — `MUTED_OP` (secondary text), `FAINT_OP` (gridlines,
+baselines, empty bars/tiles), `GHOST_OP` (the `Other` language slice) — never
+new hex values, so the rendered cards stay exactly 3 colors. Two deliberate
+exceptions are semantic and kept: GitHub linguist colors in `top-languages.svg`
+and in-game state colors (e.g. Cohort Catch green/grey). README game-card
+borders use the cream token.
+
 ## UTM scheme
 
 All outbound section links use one scheme:

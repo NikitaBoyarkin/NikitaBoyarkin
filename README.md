@@ -10,9 +10,9 @@
 - **User lifecycle analytics** — cohort retention, funnel analysis, RFM segmentation.
 - **End-to-end delivery** — SQL → Python → dashboard → stakeholder narrative.
 
-📦 **Portfolio:** <a href="https://nikitaboyarkin.github.io/Personal_Projects.github.io/?utm_source=github&utm_medium=profile_readme&utm_campaign=header"><img src="portfolio.svg" align="absmiddle" alt="Portfolio" /></a>  
+📦 **Portfolio:** <a href="https://nikitaboyarkin.github.io/?utm_source=github&utm_medium=profile_readme&utm_campaign=header"><img src="portfolio.svg" align="absmiddle" alt="Portfolio" /></a>  
 🔗 **Links:** <a href="https://linktr.ee/lofinibo?utm_source=github&utm_medium=profile_readme&utm_campaign=header"><img src="links.svg" align="absmiddle" alt="Links" /></a>  
-📄 **Download CV:** <a href="https://nikitaboyarkin.github.io/Personal_Projects.github.io/CV-Nikita-Boyarkin.pdf?utm_source=github&utm_medium=profile_readme&utm_campaign=cv"><img src="cv.svg" align="absmiddle" alt="Download CV" /></a>
+📄 **Download CV:** <a href="https://nikitaboyarkin.github.io/CV-Nikita-Boyarkin.pdf?utm_source=github&utm_medium=profile_readme&utm_campaign=cv"><img src="cv.svg" align="absmiddle" alt="Download CV" /></a>
 
 ---
 
@@ -21,7 +21,7 @@
 - 📚 Learning: Bayesian A/B testing, ClickHouse, dbt, Apache Airflow, Apache Superset
 - 💼 Open to: BI / product / data analyst roles — actively interviewing
 - 🤝 Collab: experimentation, user retention analytics
-- 🚧 Building: [interactive analyst portfolio](https://nikitaboyarkin.github.io/Personal_Projects.github.io/?utm_source=github&utm_medium=profile_readme&utm_campaign=building) — playable SVG games + self-hosted GitHub stats
+- 🚧 Building: [interactive analyst portfolio](https://nikitaboyarkin.github.io/?utm_source=github&utm_medium=profile_readme&utm_campaign=building) — playable SVG games + self-hosted GitHub stats
 
 ---
 
@@ -42,7 +42,11 @@
 ### ⚡ Activity
 
 <!-- LAST-REFRESHED:START -->
+<<<<<<< HEAD
 _Last refreshed: 2026-09-18 13:37 UTC · 373 contributions in the last 7 days_
+=======
+_Last refreshed: 2026-09-18 17:27 UTC · 126 contributions in the last 7 days_
+>>>>>>> 29651d7 (feat: update SVG stats and top languages for improved aesthetics and accuracy)
 <!-- LAST-REFRESHED:END -->
 
 
@@ -83,15 +87,15 @@ _Last refreshed: 2026-09-18 13:37 UTC · 373 contributions in the last 7 days_
 _End-to-end neobank analytics: funnel, A/B test, retention, segmentation. **+6.24pp KYC conversion (Z=6.35, p<0.0001).** CUPED + AA-test + Bonferroni — full methodology in the case study._
 
 [![Repo](https://img.shields.io/badge/Repo-volta--banking-0f2a2b?style=for-the-badge&logo=github&logoColor=fe4e02)](https://github.com/NikitaBoyarkin/volta-banking)
-[![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/volta/?utm_source=github&utm_medium=profile_readme&utm_campaign=featured)
+[![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/projects/volta/?utm_source=github&utm_medium=profile_readme&utm_campaign=featured)
 
 **Stack:** Python · SciPy · Statsmodels · scikit-learn
 
-#### 2. <a href="https://github.com/NikitaBoyarkin/supabase-product-analytics"><img src="supabase-analytics.svg" align="absmiddle" alt="Supabase Product Analytics" /></a>
+#### 2. <a href="https://nikitaboyarkin.github.io/projects/supabase/?utm_source=github&utm_medium=profile_readme&utm_campaign=featured"><img src="supabase-analytics.svg" align="absmiddle" alt="Supabase Product Analytics" /></a>
 
 _Full-stack analytics platform: Streamlit + Supabase with RLS and an Edge Function. **Significant A/B result (p=0.0034) on 8,000 seeded users**, reproducible pipeline._
 
-[![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/supabase/?utm_source=github&utm_medium=profile_readme&utm_campaign=featured)
+[![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/projects/supabase/?utm_source=github&utm_medium=profile_readme&utm_campaign=featured)
 
 **Stack:** Python · Streamlit · Supabase · PostgreSQL
 
@@ -100,7 +104,7 @@ _Full-stack analytics platform: Streamlit + Supabase with RLS and an Edge Functi
 _Ten end-to-end SQL cases on DuckDB — funnel, N-day retention, DAU/MAU stickiness, LTV, streaks, A/B conversion, attribution. **One command, no server, pytest-verified.**_
 
 [![Repo](https://img.shields.io/badge/Repo-sql--analytics--case--study-0f2a2b?style=for-the-badge&logo=github&logoColor=fe4e02)](https://github.com/NikitaBoyarkin/sql-analytics-case-study)
-[![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/sql/?utm_source=github&utm_medium=profile_readme&utm_campaign=featured)
+[![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/projects/sql/?utm_source=github&utm_medium=profile_readme&utm_campaign=featured)
 
 **Stack:** SQL · DuckDB · pytest
 
@@ -110,7 +114,7 @@ _Ten end-to-end SQL cases on DuckDB — funnel, N-day retention, DAU/MAU stickin
 
 <table align="center">
   <tr>
-    <td align="center" style="width:210px; background:#1400c3; border:1px solid #0c0078; border-radius:12px; padding:14px 10px">
+    <td align="center" style="width:210px; background:#1400c3; border:1px solid #f8f2da; border-radius:12px; padding:14px 10px">
       <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/snake.svg">
         <img src="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/snake.svg" width="170" height="187" alt="Snake"/>
       </a>
@@ -120,7 +124,7 @@ _Ten end-to-end SQL cases on DuckDB — funnel, N-day retention, DAU/MAU stickin
         <img src="https://img.shields.io/badge/Play_fullscreen-fe4e02?style=for-the-badge" alt="Play fullscreen"/>
       </a>
     </td>
-    <td align="center" style="width:210px; background:#1400c3; border:1px solid #0c0078; border-radius:12px; padding:14px 10px">
+    <td align="center" style="width:210px; background:#1400c3; border:1px solid #f8f2da; border-radius:12px; padding:14px 10px">
       <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/ab-test.svg">
         <img src="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/ab-test.svg" width="170" height="187" alt="A/B Test"/>
       </a>
@@ -130,7 +134,7 @@ _Ten end-to-end SQL cases on DuckDB — funnel, N-day retention, DAU/MAU stickin
         <img src="https://img.shields.io/badge/Play_fullscreen-fe4e02?style=for-the-badge" alt="Play fullscreen"/>
       </a>
     </td>
-    <td align="center" style="width:210px; background:#1400c3; border:1px solid #0c0078; border-radius:12px; padding:14px 10px">
+    <td align="center" style="width:210px; background:#1400c3; border:1px solid #f8f2da; border-radius:12px; padding:14px 10px">
       <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/pong.svg">
         <img src="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/pong.svg" width="170" height="187" alt="Pong"/>
       </a>
@@ -142,7 +146,7 @@ _Ten end-to-end SQL cases on DuckDB — funnel, N-day retention, DAU/MAU stickin
     </td>
   </tr>
   <tr>
-    <td align="center" style="width:210px; background:#1400c3; border:1px solid #0c0078; border-radius:12px; padding:14px 10px">
+    <td align="center" style="width:210px; background:#1400c3; border:1px solid #f8f2da; border-radius:12px; padding:14px 10px">
       <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/2048.svg">
         <img src="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/2048.svg" width="170" height="187" alt="2048"/>
       </a>
@@ -152,7 +156,7 @@ _Ten end-to-end SQL cases on DuckDB — funnel, N-day retention, DAU/MAU stickin
         <img src="https://img.shields.io/badge/Play_fullscreen-fe4e02?style=for-the-badge" alt="Play fullscreen"/>
       </a>
     </td>
-    <td align="center" style="width:210px; background:#1400c3; border:1px solid #0c0078; border-radius:12px; padding:14px 10px">
+    <td align="center" style="width:210px; background:#1400c3; border:1px solid #f8f2da; border-radius:12px; padding:14px 10px">
       <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/funnel-drop.svg">
         <img src="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/funnel-drop.svg" width="170" height="187" alt="Funnel Drop"/>
       </a>
@@ -162,7 +166,7 @@ _Ten end-to-end SQL cases on DuckDB — funnel, N-day retention, DAU/MAU stickin
         <img src="https://img.shields.io/badge/Play_fullscreen-fe4e02?style=for-the-badge" alt="Play fullscreen"/>
       </a>
     </td>
-    <td align="center" style="width:210px; background:#1400c3; border:1px solid #0c0078; border-radius:12px; padding:14px 10px">
+    <td align="center" style="width:210px; background:#1400c3; border:1px solid #f8f2da; border-radius:12px; padding:14px 10px">
       <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/cohort-catch.svg">
         <img src="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/cohort-catch.svg" width="170" height="187" alt="Cohort Catch"/>
       </a>
@@ -174,7 +178,7 @@ _Ten end-to-end SQL cases on DuckDB — funnel, N-day retention, DAU/MAU stickin
     </td>
   </tr>
   <tr>
-    <td align="center" style="width:210px; background:#1400c3; border:1px solid #0c0078; border-radius:12px; padding:14px 10px">
+    <td align="center" style="width:210px; background:#1400c3; border:1px solid #f8f2da; border-radius:12px; padding:14px 10px">
       <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/sql-query.svg">
         <img src="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/sql-query.svg" width="170" height="187" alt="SQL Query"/>
       </a>
@@ -184,7 +188,7 @@ _Ten end-to-end SQL cases on DuckDB — funnel, N-day retention, DAU/MAU stickin
         <img src="https://img.shields.io/badge/Play_fullscreen-fe4e02?style=for-the-badge" alt="Play fullscreen"/>
       </a>
     </td>
-    <td align="center" style="width:210px; background:#1400c3; border:1px solid #0c0078; border-radius:12px; padding:14px 10px">
+    <td align="center" style="width:210px; background:#1400c3; border:1px solid #f8f2da; border-radius:12px; padding:14px 10px">
       <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/metric-match.svg">
         <img src="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/metric-match.svg" width="170" height="187" alt="Metric Match"/>
       </a>
@@ -218,14 +222,14 @@ _Ten end-to-end SQL cases on DuckDB — funnel, N-day retention, DAU/MAU stickin
 ### 📝 Recent Notes
 
 <!-- RECENT-POSTS-LIST:START -->
-- [Кейсы с собеседований: как диагностировать просадку метрики](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/analyst-interview-cases/)
-- [Проактивность аналитика за рамками роли](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/analyst-proactivity/)
-- [Churn + uplift: кому дать скидку &lpar;причинный таргетинг&rpar;](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/churn-uplift-discount/)
-- [EDA-шаблон с кодом: разведочный анализ по-продуктовому](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/eda-python-template/)
-- [Feature Impact: как измерить влияние фичи, когда A/B невозможен](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/feature-impact-analysis/)
+- [Кейсы с собеседований: как диагностировать просадку метрики](https://nikitaboyarkin.github.io/posts/analyst-interview-cases/)
+- [Проактивность аналитика за рамками роли](https://nikitaboyarkin.github.io/posts/analyst-proactivity/)
+- [Churn + uplift: кому дать скидку &lpar;причинный таргетинг&rpar;](https://nikitaboyarkin.github.io/posts/churn-uplift-discount/)
+- [EDA-шаблон с кодом: разведочный анализ по-продуктовому](https://nikitaboyarkin.github.io/posts/eda-python-template/)
+- [Feature Impact: как измерить влияние фичи, когда A/B невозможен](https://nikitaboyarkin.github.io/posts/feature-impact-analysis/)
 <!-- RECENT-POSTS-LIST:END -->
 
-> Auto-updated daily from the [site RSS](https://nikitaboyarkin.github.io/Personal_Projects.github.io/rss.xml) via GitHub Actions.
+> Auto-updated daily from the [site RSS](https://nikitaboyarkin.github.io/rss.xml) via GitHub Actions.
 
 ---
 
@@ -273,8 +277,8 @@ _Ten end-to-end SQL cases on DuckDB — funnel, N-day retention, DAU/MAU stickin
 ### 🌐 Connect
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/nikita-boyarkin?utm_source=github&utm_medium=profile_readme&utm_campaign=connect)
-[![Portfolio](https://img.shields.io/badge/Portfolio-0f2a2b?style=for-the-badge&logo=github&logoColor=fe4e02)](https://nikitaboyarkin.github.io/Personal_Projects.github.io/?utm_source=github&utm_medium=profile_readme&utm_campaign=connect)
-[![Blog](https://img.shields.io/badge/Blog-0f2a2b?style=for-the-badge&logo=githubpages&logoColor=fe4e02)](https://nikitaboyarkin.github.io/Personal_Projects.github.io/posts/?utm_source=github&utm_medium=profile_readme&utm_campaign=connect)
+[![Portfolio](https://img.shields.io/badge/Portfolio-0f2a2b?style=for-the-badge&logo=github&logoColor=fe4e02)](https://nikitaboyarkin.github.io/?utm_source=github&utm_medium=profile_readme&utm_campaign=connect)
+[![Blog](https://img.shields.io/badge/Blog-0f2a2b?style=for-the-badge&logo=githubpages&logoColor=fe4e02)](https://nikitaboyarkin.github.io/notes/?utm_source=github&utm_medium=profile_readme&utm_campaign=connect)
 [![Telegram](https://img.shields.io/badge/Telegram-26A5E4?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/lofinibo?utm_source=github&utm_medium=profile_readme&utm_campaign=connect)
 [![Email](https://img.shields.io/badge/Email-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:boyarkin_yandex@mail.ru)
 
