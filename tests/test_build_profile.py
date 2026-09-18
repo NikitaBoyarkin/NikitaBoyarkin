@@ -2,10 +2,10 @@
 
 Run: python3 -m pytest tests/test_build_profile.py -v
 """
+
 import math
 import re
 import sys
-from datetime import datetime, timezone
 from pathlib import Path
 
 # scripts/ is not a package — import via sys.path, mirroring the vault pattern.
@@ -17,8 +17,9 @@ import build_profile as bp  # noqa: E402
 
 # ---------- compute_streaks ----------
 
+
 def _days(counts):
-    return [{"date": f"2026-01-{i+1:02d}", "contributionCount": c} for i, c in enumerate(counts)]
+    return [{"date": f"2026-01-{i + 1:02d}", "contributionCount": c} for i, c in enumerate(counts)]
 
 
 def test_streaks_empty():
@@ -50,9 +51,13 @@ def test_streaks_longest_in_middle():
 
 # ---------- build_top_languages_svg (donut math) ----------
 
+
 def test_top_languages_svg_renders():
-    langs = [("Python", 120000, "#3776AB"), ("SQL", 60000, "#003B57"),
-             ("TypeScript", 30000, "#3178C6")]
+    langs = [
+        ("Python", 120000, "#3776AB"),
+        ("SQL", 60000, "#003B57"),
+        ("TypeScript", 30000, "#3178C6"),
+    ]
     svg = bp.build_top_languages_svg(langs)
     assert svg.startswith("<svg")
     assert "Top Languages" in svg
@@ -62,8 +67,11 @@ def test_top_languages_svg_renders():
 
 def test_top_languages_donut_dasharray_sums_to_circumference():
     """Each donut slice is a circle with stroke-dasharray='dash (C-dash)' → pair sums to C."""
-    langs = [("Python", 120000, "#3776AB"), ("SQL", 60000, "#003B57"),
-             ("TypeScript", 30000, "#3178C6")]
+    langs = [
+        ("Python", 120000, "#3776AB"),
+        ("SQL", 60000, "#003B57"),
+        ("TypeScript", 30000, "#3178C6"),
+    ]
     svg = bp.build_top_languages_svg(langs)
     R = 52
     C = 2 * math.pi * R
@@ -71,7 +79,7 @@ def test_top_languages_donut_dasharray_sums_to_circumference():
     assert dasharrays, "no dasharray found"
     for dash_str, rest_str in dasharrays:
         dash, rest = float(dash_str), float(rest_str)
-        assert abs((dash + rest) - C) < 0.2, f"dash+rest={dash+rest} != C={C}"
+        assert abs((dash + rest) - C) < 0.2, f"dash+rest={dash + rest} != C={C}"
 
 
 def test_top_languages_empty_does_not_crash():
@@ -82,12 +90,15 @@ def test_top_languages_empty_does_not_crash():
 
 # ---------- build_stats_svg / build_streak_svg / build_activity_svg ----------
 
+
 def _user_data():
-    return {"user": {
-        "createdAt": "2020-03-15T10:00:00Z",
-        "repositories": {"totalCount": 42},
-        "followers": {"totalCount": 17},
-    }}
+    return {
+        "user": {
+            "createdAt": "2020-03-15T10:00:00Z",
+            "repositories": {"totalCount": 42},
+            "followers": {"totalCount": 17},
+        }
+    }
 
 
 def test_build_stats_svg():
@@ -118,6 +129,7 @@ def test_build_activity_svg_all_zero():
 
 # ---------- update_readme_refresh_block ----------
 
+
 def test_refresh_block_updates_existing_marker(tmp_path, monkeypatch):
     readme = tmp_path / "README.md"
     readme.write_text(
@@ -145,3 +157,59 @@ def test_refresh_block_inserts_when_marker_missing(tmp_path, monkeypatch):
     content = readme.read_text(encoding="utf-8")
     assert "LAST-REFRESHED:START" in content
     assert "0 contributions in the last 7 days" in content
+
+
+# ---------- extract_contributions ----------
+
+
+def test_default_user_is_profile_login_not_os_user():
+    # Regression: the login must never be derived from the shell `$USER`.
+    assert bp.DEFAULT_USER == "NikitaBoyarkin"
+
+
+def test_extract_contributions_flattens_and_drops_future():
+    data = {
+        "user": {
+            "contributionsCollection": {
+                "contributionCalendar": {
+                    "weeks": [
+                        {
+                            "contributionDays": [
+                                {"date": "2000-01-01", "contributionCount": 1},
+                                {"date": "2999-01-01", "contributionCount": 1},
+                            ]
+                        },
+                    ],
+                }
+            }
+        }
+    }
+    days = bp.extract_contributions(data)
+    assert days == [{"date": "2000-01-01", "contributionCount": 1}]
+
+
+# ---------- build_metrics_svg (slim card, REQ-018 budget) ----------
+
+
+def test_metrics_svg_is_self_contained_and_within_budget():
+    # A full year of days → worst-case payload. Must stay well under the
+    # 80 KB REQ-018 budget and never reference an external host.
+    days = _days((i % 7) for i in range(371))
+    svg = bp.build_metrics_svg(days, total=667, current=42, longest=42)
+    assert svg.startswith("<svg")
+    assert "Contribution Map" in svg
+    assert "Total 667" in svg and "Longest 42" in svg
+    # Zero external requests: no remote images / hrefs, only the SVG namespace.
+    assert "<image" not in svg
+    assert "url(http" not in svg
+    assert 'href="http' not in svg
+    assert svg.count("http") == 1  # the xmlns declaration only
+    assert len(svg.encode("utf-8")) < 80_000
+
+
+def test_metrics_svg_title_marks_every_day():
+    days = _days([0, 1, 2, 3, 4, 5, 6])
+    svg = bp.build_metrics_svg(days, total=21, current=1, longest=1)
+    # Each day is a rect with an accessible <title>.
+    assert svg.count("<rect") >= len(days)
+    assert svg.count("<title>") == len(days)

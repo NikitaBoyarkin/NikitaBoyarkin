@@ -7,7 +7,7 @@ Assets generated:
 - activity.svg: 30-day contribution activity sparkline
 - metrics.svg: slim self-hosted contribution map (replaces lowlighter/metrics)
 - top-languages.svg: aggregated language bytes donut
-- README.md: update pinned commit SHA for playable games to the latest stable commit
+- README.md: refresh the 'Last refreshed' marker block
 
 Writes are idempotent: an asset whose content is unchanged apart from the
 rendered timestamp is left untouched, so daily runs do not churn git history.
@@ -26,11 +26,15 @@ import textwrap
 import time
 import urllib.error
 import urllib.request
-from datetime import date, datetime, timedelta, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-USER = os.environ.get("USER", "NikitaBoyarkin")
+# GitHub login is a config value, never the OS user: `$USER` on macOS/Linux is
+# the shell account (e.g. "nikitaboarkin"), which would lowercase the rendered
+# cards. Prefer an explicit env var, fall back to the profile owner.
+DEFAULT_USER = "NikitaBoyarkin"
+USER = os.environ.get("GH_USER") or DEFAULT_USER
 TOKEN = os.environ.get("GH_TOKEN", "")
 
 DRY_RUN = False
@@ -47,9 +51,9 @@ def _without_timestamp(content: str) -> str:
 
 def write_asset(path: Path, content: str) -> None:
     """Write an asset file idempotently, respecting --dry-run."""
-    if path.exists() and _without_timestamp(
-        path.read_text(encoding="utf-8")
-    ) == _without_timestamp(content):
+    if path.exists() and _without_timestamp(path.read_text(encoding="utf-8")) == _without_timestamp(
+        content
+    ):
         print(f"Unchanged {path.name} (timestamp-only diff)")
         return
     if DRY_RUN:
@@ -92,9 +96,7 @@ def graphql(query: str, variables: dict, retries: int = 3) -> dict:
             if attempt == retries:
                 raise
             wait = 2 ** (attempt - 1)
-            print(
-                f"GraphQL attempt {attempt}/{retries} failed: {exc}; retrying in {wait}s"
-            )
+            print(f"GraphQL attempt {attempt}/{retries} failed: {exc}; retrying in {wait}s")
             time.sleep(wait)
     raise RuntimeError(f"GraphQL exhausted retries: {last_exc}")
 
@@ -131,9 +133,12 @@ def fetch_user_data() -> dict:
     return graphql(query, variables)
 
 
-def fetch_contributions() -> list[dict]:
-    data = fetch_user_data()
-    calendar = data["user"]["contributionsCollection"]["contributionCalendar"]
+def extract_contributions(user_data: dict) -> list[dict]:
+    """Flatten the contribution calendar into a list of past days.
+
+    Takes already-fetched user data so a run makes exactly one GraphQL call.
+    """
+    calendar = user_data["user"]["contributionsCollection"]["contributionCalendar"]
     days = [d for w in calendar["weeks"] for d in w["contributionDays"]]
     today_iso = datetime.now(timezone.utc).date().isoformat()
     return [d for d in days if d["date"] <= today_iso]
@@ -303,50 +308,6 @@ def build_metrics_svg(days: list[dict], total: int, current: int, longest: int) 
     return textwrap.dedent(svg).strip() + "\n"
 
 
-def latest_commit_sha(paths: list[str]) -> str:
-    """Return full SHA of the most recent commit touching any of the given paths."""
-    import subprocess
-
-    repo = REPO_ROOT
-    cmd = ["git", "log", "-1", "--format=%H", "--", *paths]
-    result = subprocess.run(cmd, cwd=repo, capture_output=True, text=True, check=True)
-    return result.stdout.strip()
-
-
-def update_readme_game_sha() -> bool:
-    """Pin legacy game SVG refs in README to the latest game-file commit.
-
-    Bumps pinned-SHA refs (``@<hex>/``) for the legacy games to the latest commit
-    touching any game file. New games ship on ``@main`` and stay there: ``@main``
-    always resolves to the latest pushed main, so the links work the moment the
-    SVGs are pushed and never get prematurely pinned to a SHA that lacks them.
-    """
-    readme_path = REPO_ROOT / "README.md"
-    content = readme_path.read_text(encoding="utf-8")
-    game_files = [
-        "snake.svg",
-        "ab-test.svg",
-        "pong.svg",
-        "2048.svg",
-        "funnel-drop.svg",
-        "cohort-catch.svg",
-        "sql-query.svg",
-        "metric-match.svg",
-    ]
-    new_sha = latest_commit_sha(game_files)
-    old_sha_match = re.search(r"@([a-f0-9]{7,40})/", content)
-    old_sha = old_sha_match.group(1) if old_sha_match else None
-    updated = re.sub(r"@([a-f0-9]{7,40})/", f"@{new_sha}/", content)
-    if updated == content:
-        print(f"README game SHA already up to date: {new_sha[:7]}")
-        return False
-    readme_path.write_text(updated, encoding="utf-8")
-    print(
-        f"Updated README game SHA: {old_sha[:7] if old_sha else 'none'} -> {new_sha[:7]}"
-    )
-    return True
-
-
 def fetch_languages() -> list[tuple[str, int, str]]:
     """Aggregate language bytes across public non-fork repos via GraphQL.
 
@@ -446,9 +407,7 @@ def update_readme_refresh_block(days: list[dict]) -> bool:
         f"_Last refreshed: {now} \u00b7 {week} contributions in the last 7 days_\n"
         f"<!-- LAST-REFRESHED:END -->"
     )
-    pattern = re.compile(
-        r"<!-- LAST-REFRESHED:START -->.*?<!-- LAST-REFRESHED:END -->", re.DOTALL
-    )
+    pattern = re.compile(r"<!-- LAST-REFRESHED:START -->.*?<!-- LAST-REFRESHED:END -->", re.DOTALL)
     if pattern.search(content):
         new_content = pattern.sub(lambda _: block, content)
     else:
@@ -467,34 +426,34 @@ def update_readme_refresh_block(days: list[dict]) -> bool:
 
 
 def main() -> None:
-    global DRY_RUN
+    global DRY_RUN, USER
     parser = argparse.ArgumentParser(description="Build self-hosted profile assets.")
     parser.add_argument(
         "--dry-run",
         action="store_true",
         help="print planned writes without modifying files",
     )
+    parser.add_argument(
+        "--user",
+        default=USER,
+        help=f"GitHub login to render (default: {DEFAULT_USER})",
+    )
     args = parser.parse_args()
     DRY_RUN = args.dry_run
+    USER = args.user
     if DRY_RUN:
         print("[dry-run] no files will be written")
 
-    print("Fetching user data...")
+    print(f"Fetching user data for {USER}...")
     user_data = fetch_user_data()
-    days = fetch_contributions()
+    days = extract_contributions(user_data)
     total, current, longest = compute_streaks(days)
     print(f"total={total} current={current} longest={longest}")
 
-    write_asset(
-        REPO_ROOT / "stats.svg", build_stats_svg(user_data, total, current, longest)
-    )
-    write_asset(
-        REPO_ROOT / "streak.svg", build_streak_svg(days, total, current, longest)
-    )
+    write_asset(REPO_ROOT / "stats.svg", build_stats_svg(user_data, total, current, longest))
+    write_asset(REPO_ROOT / "streak.svg", build_streak_svg(days, total, current, longest))
     write_asset(REPO_ROOT / "activity.svg", build_activity_svg(days))
-    write_asset(
-        REPO_ROOT / "metrics.svg", build_metrics_svg(days, total, current, longest)
-    )
+    write_asset(REPO_ROOT / "metrics.svg", build_metrics_svg(days, total, current, longest))
 
     try:
         langs = fetch_languages()
@@ -507,11 +466,6 @@ def main() -> None:
         print("[dry-run] skip README refresh block")
     else:
         update_readme_refresh_block(days)
-
-    if DRY_RUN:
-        print("[dry-run] skip README game SHA bump")
-    else:
-        update_readme_game_sha()
 
 
 if __name__ == "__main__":

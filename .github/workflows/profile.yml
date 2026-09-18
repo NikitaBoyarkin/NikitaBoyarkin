@@ -30,7 +30,7 @@ jobs:
       - name: Build self-hosted profile assets
         env:
           GH_TOKEN: ${{ secrets.STREAK_PAT }}
-          USER: NikitaBoyarkin
+          GH_USER: NikitaBoyarkin
         run: python3 scripts/build_profile.py
 
       - name: Commit profile assets
