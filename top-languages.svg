@@ -4,10 +4,10 @@
           font-family='Segoe UI, Ubuntu, sans-serif' font-size='13px' font-weight='400'>Top Languages</text>
     <g transform='rotate(-90 70 100)'>
       <circle cx='70' cy='100' r='52' fill='none' stroke='#0c0078' stroke-width='16'/>
-      <circle cx='70' cy='100' r='52' fill='none' stroke='#3572A5' stroke-width='16' stroke-dasharray='97.2 229.5' stroke-dashoffset='-0.0'><title>Python: 29.8%</title></circle>
-  <circle cx='70' cy='100' r='52' fill='none' stroke='#3178c6' stroke-width='16' stroke-dasharray='81.9 244.8' stroke-dashoffset='-97.2'><title>TypeScript: 25.1%</title></circle>
-  <circle cx='70' cy='100' r='52' fill='none' stroke='#DA5B0B' stroke-width='16' stroke-dasharray='66.1 260.6' stroke-dashoffset='-179.2'><title>Jupyter Notebook: 20.2%</title></circle>
-  <circle cx='70' cy='100' r='52' fill='none' stroke='#ff5a03' stroke-width='16' stroke-dasharray='44.3 282.4' stroke-dashoffset='-245.2'><title>Astro: 13.6%</title></circle>
+      <circle cx='70' cy='100' r='52' fill='none' stroke='#3572A5' stroke-width='16' stroke-dasharray='97.3 229.4' stroke-dashoffset='-0.0'><title>Python: 29.8%</title></circle>
+  <circle cx='70' cy='100' r='52' fill='none' stroke='#3178c6' stroke-width='16' stroke-dasharray='81.9 244.8' stroke-dashoffset='-97.3'><title>TypeScript: 25.1%</title></circle>
+  <circle cx='70' cy='100' r='52' fill='none' stroke='#DA5B0B' stroke-width='16' stroke-dasharray='66.1 260.7' stroke-dashoffset='-179.2'><title>Jupyter Notebook: 20.2%</title></circle>
+  <circle cx='70' cy='100' r='52' fill='none' stroke='#ff5a03' stroke-width='16' stroke-dasharray='44.3 282.4' stroke-dashoffset='-245.3'><title>Astro: 13.6%</title></circle>
   <circle cx='70' cy='100' r='52' fill='none' stroke='#663399' stroke-width='16' stroke-dasharray='12.4 314.3' stroke-dashoffset='-289.6'><title>CSS: 3.8%</title></circle>
   <circle cx='70' cy='100' r='52' fill='none' stroke='#f1e05a' stroke-width='16' stroke-dasharray='8.0 318.8' stroke-dashoffset='-302.0'><title>JavaScript: 2.4%</title></circle>
   <circle cx='70' cy='100' r='52' fill='none' stroke='#e34c26' stroke-width='16' stroke-dasharray='6.2 320.6' stroke-dashoffset='-310.0'><title>HTML: 1.9%</title></circle>
@@ -36,5 +36,5 @@
   <rect x='150' y='174' width='10' height='10' rx='2' fill='#fcb32c'/>
   <text x='166' y='183' fill='#f8f2da' font-family='Segoe UI, Ubuntu, sans-serif' font-size='11px'>MDX 0.6%</text>
 <text x='170.0' y='202' text-anchor='middle' fill='#c9c2a8'
-          font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px'>Last updated: 2026-09-18 12:32 UTC</text>
+          font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px'>Last updated: 2026-09-18 12:41 UTC</text>
   </svg>
