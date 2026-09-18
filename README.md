@@ -30,6 +30,7 @@ I turn ambiguous product questions into clean experiments, SQL pipelines, and de
 <p align="center">
   <img height="190" src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/stats.svg" alt="NikitaBoyarkin GitHub Stats" />
   &nbsp;
+  <img height="195" src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/streak.svg" alt="NikitaBoyarkin GitHub Streak" />
 </p>
 
 ### 🗣️ Top Languages
@@ -64,7 +65,7 @@ _Last refreshed: 2026-09-18 09:03 UTC · 342 contributions in the last 7 days_
 </p>
 
 <p align="center">
-  <img src="https://hits.sh/github.com/NikitaBoyarkin.svg?label=Profile+Views&color=fe4e02&logo=github&style=flat-square&extra_count=124" alt="Profile views" />
+  <img src="https://hits.sh/github.com/NikitaBoyarkin.svg?label=Profile+Views&color=fe4e02&logo=github&style=flat-square" alt="Profile views" />
 </p>
 
 ---
@@ -74,7 +75,7 @@ _Last refreshed: 2026-09-18 09:03 UTC · 342 contributions in the last 7 days_
 
 #### 1. <a href="https://github.com/NikitaBoyarkin/volta-banking"><img src="volta-neobank.svg" align="absmiddle" alt="Volta Neobank" /></a> — Product Analytics
 
-_End-to-end neobank analytics: funnel, A/B test, retention, segmentation. **+6.24pp KYC conversion (Z=6.35, p<0.0001), €716K/yr — 48× ROI.** CUPED + AA-test + Bonferroni._
+_End-to-end neobank analytics: funnel, A/B test, retention, segmentation. **+6.24pp KYC conversion (Z=6.35, p<0.0001).** CUPED + AA-test + Bonferroni — full methodology in the case study._
 
 [![Repo](https://img.shields.io/badge/Repo-volta--banking-0f2a2b?style=for-the-badge&logo=github&logoColor=fe4e02)](https://github.com/NikitaBoyarkin/volta-banking)
 [![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/volta/?utm_source=github&utm_medium=profile_readme&utm_campaign=featured)
@@ -85,7 +86,7 @@ _End-to-end neobank analytics: funnel, A/B test, retention, segmentation. **+6.2
 
 _Full-stack analytics platform: Streamlit + Supabase with RLS and an Edge Function. **Significant A/B result (p=0.0034) on 8,000 seeded users**, reproducible pipeline._
 
-[![Repo](https://img.shields.io/badge/Repo-supabase--product--analytics-0f2a2b?style=for-the-badge&logo=github&logoColor=fe4e02)](https://github.com/NikitaBoyarkin/supabase-product-analytics)
+[![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/supabase/?utm_source=github&utm_medium=profile_readme&utm_campaign=featured)
 
 **Stack:** Python · Streamlit · Supabase · PostgreSQL
 
@@ -282,4 +283,4 @@ _Full-stack analytics platform: Streamlit + Supabase with RLS and an Edge Functi
 
 ---
 
-<sub>Dynamic cards powered by [github-readme-stats](https://github.com/anuraghazra/github-readme-stats), [lowlighter/metrics](https://github.com/lowlighter/metrics), [streak-stats](https://github.com/DenverCoder1/github-readme-streak-stats), [activity-graph](https://github.com/ashutosh00710/github-readme-activity-graph), [snk](https://github.com/Platane/snk), [blog-post-workflow](https://github.com/gautamkrishnar/blog-post-workflow), [skill-icons](https://github.com/tandpfun/skill-icons).</sub>
+<sub>Profile cards (stats, streak, activity, contribution map, top languages) are self-hosted via `scripts/build_profile.py`. Powered by [snk](https://github.com/Platane/snk), [blog-post-workflow](https://github.com/gautamkrishnar/blog-post-workflow), [skill-icons](https://github.com/tandpfun/skill-icons), [shields.io](https://shields.io), and [jsDelivr](https://www.jsdelivr.com).</sub>

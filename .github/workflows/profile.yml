@@ -9,7 +9,10 @@ on:
     paths:
       - "scripts/build_profile.py"
       - ".github/workflows/profile.yml"
-      - "*.svg"
+
+concurrency:
+  group: profile-build
+  cancel-in-progress: true
 
 permissions:
   contents: write
@@ -33,5 +36,5 @@ jobs:
       - name: Commit profile assets
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "chore: update profile assets"
-          file_pattern: "stats.svg streak.svg activity.svg top-languages.svg README.md"
+          commit_message: "chore: update profile assets [skip ci]"
+          file_pattern: "stats.svg streak.svg activity.svg top-languages.svg metrics.svg README.md"

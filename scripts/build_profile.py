@@ -5,7 +5,12 @@ Assets generated:
 - stats.svg: total contributions, streak, public repos, followers from GraphQL
 - streak.svg: current / longest / total contributions from GitHub GraphQL
 - activity.svg: 30-day contribution activity sparkline
+- metrics.svg: slim self-hosted contribution map (replaces lowlighter/metrics)
+- top-languages.svg: aggregated language bytes donut
 - README.md: update pinned commit SHA for playable games to the latest stable commit
+
+Writes are idempotent: an asset whose content is unchanged apart from the
+rendered timestamp is left untouched, so daily runs do not churn git history.
 
 Network calls retry up to 3 times with exponential backoff. Use --dry-run to
 preview planned writes without touching files.
@@ -31,8 +36,22 @@ TOKEN = os.environ.get("GH_TOKEN", "")
 DRY_RUN = False
 
 
+# Rendered timestamps change on every run; ignore them when deciding whether an
+# asset actually changed, otherwise each run rewrites every file (CI self-loop).
+_TIMESTAMP_RE = re.compile(r"Last updated:[^<\n]*")
+
+
+def _without_timestamp(content: str) -> str:
+    return _TIMESTAMP_RE.sub("Last updated:", content)
+
+
 def write_asset(path: Path, content: str) -> None:
-    """Write an asset file, respecting --dry-run."""
+    """Write an asset file idempotently, respecting --dry-run."""
+    if path.exists() and _without_timestamp(
+        path.read_text(encoding="utf-8")
+    ) == _without_timestamp(content):
+        print(f"Unchanged {path.name} (timestamp-only diff)")
+        return
     if DRY_RUN:
         print(f"[dry-run] would write {path.name} ({len(content)} chars)")
         return
@@ -73,7 +92,9 @@ def graphql(query: str, variables: dict, retries: int = 3) -> dict:
             if attempt == retries:
                 raise
             wait = 2 ** (attempt - 1)
-            print(f"GraphQL attempt {attempt}/{retries} failed: {exc}; retrying in {wait}s")
+            print(
+                f"GraphQL attempt {attempt}/{retries} failed: {exc}; retrying in {wait}s"
+            )
             time.sleep(wait)
     raise RuntimeError(f"GraphQL exhausted retries: {last_exc}")
 
@@ -159,7 +180,7 @@ def build_streak_svg(days: list[dict], total: int, current: int, longest: int) -
           <text x='82.5' y='0' text-anchor='middle' fill='{TEXT_MUTED}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='12px' font-weight='400'>Longest Streak</text>
           <text x='82.5' y='28' text-anchor='middle' fill='{ACCENT}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='28px' font-weight='700'>{longest}</text>
         </g>
-        <text x='247.5' y='155' text-anchor='middle' fill='{TEXT_MUTED}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='11px' font-weight='400'>Last updated: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}</text>
+        <text x='247.5' y='155' text-anchor='middle' fill='{TEXT_MUTED}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='11px' font-weight='400'>Last updated: {datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")}</text>
       </g>
     </svg>
     """
@@ -207,7 +228,7 @@ def build_stats_svg(user_data: dict, total: int, current: int, longest: int) -> 
           <text x='82.5' y='0' text-anchor='middle' fill='{TEXT_MUTED}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='12px' font-weight='400'>Active Since</text>
           <text x='82.5' y='28' text-anchor='middle' fill='{ACCENT}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='28px' font-weight='700'>{active_since}</text>
         </g>
-        <text x='247.5' y='182' text-anchor='middle' fill='{TEXT_MUTED}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='11px' font-weight='400'>Last updated: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}</text>
+        <text x='247.5' y='182' text-anchor='middle' fill='{TEXT_MUTED}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='11px' font-weight='400'>Last updated: {datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")}</text>
       </g>
     </svg>
     """
@@ -241,10 +262,42 @@ def build_activity_svg(days: list[dict]) -> str:
     svg = f"""\
     <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 {W} {H}' width='{W}px' height='{H}px'>
       <rect fill='{BG}' width='{W}' height='{H}'/>
-      <text x='{W/2}' y='20' text-anchor='middle' fill='{TEXT_MUTED}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='13px' font-weight='400'>Last 30 Days Activity</text>
+      <text x='{W / 2}' y='20' text-anchor='middle' fill='{TEXT_MUTED}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='13px' font-weight='400'>Last 30 Days Activity</text>
       <polyline points='{polyline}' fill='none' stroke='{ACCENT}' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' opacity='0.8'/>
-    {circles}  <text x='{pad_left}' y='{H - 8}' fill='{TEXT_MUTED}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='10px'>{tail[0]['date']}</text>
-      <text x='{W - pad_right}' y='{H - 8}' text-anchor='end' fill='{TEXT_MUTED}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='10px'>{tail[-1]['date']}</text>
+    {circles}  <text x='{pad_left}' y='{H - 8}' fill='{TEXT_MUTED}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='10px'>{tail[0]["date"]}</text>
+      <text x='{W - pad_right}' y='{H - 8}' text-anchor='end' fill='{TEXT_MUTED}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='10px'>{tail[-1]["date"]}</text>
+    </svg>
+    """
+    return textwrap.dedent(svg).strip() + "\n"
+
+
+def build_metrics_svg(days: list[dict], total: int, current: int, longest: int) -> str:
+    """Slim self-hosted contribution map — replaces the lowlighter/metrics card.
+
+    A compact year heatmap (~371 cells) plus headline totals, small enough to
+    stay well under the <=80 KB budget and to render with zero external requests.
+    """
+    W, H = 800, 230
+    cell, gap = 11, 3
+    pad_left, pad_top = 40, 72
+    weeks = [days[i : i + 7] for i in range(0, len(days), 7)]
+    rects = ""
+    for wi, week in enumerate(weeks):
+        for di, day in enumerate(week):
+            x = pad_left + wi * (cell + gap)
+            y = pad_top + di * (cell + gap)
+            count = day["contributionCount"]
+            color = ACCENT if count > 0 else "#0c0078"
+            rects += (
+                f"    <rect x='{x}' y='{y}' width='{cell}' height='{cell}' rx='2' "
+                f"fill='{color}'><title>{day['date']}: {count} contributions</title></rect>\n"
+            )
+    svg = f"""\
+    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 {W} {H}' width='{W}px' height='{H}px'>
+      <rect fill='{BG}' width='{W}' height='{H}' rx='6'/>
+      <text x='{W / 2}' y='28' text-anchor='middle' fill='{TEXT_MUTED}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='14px' font-weight='400'>{USER}'s Contribution Map</text>
+      <text x='{pad_left}' y='52' fill='{TEXT_MAIN}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='12px'>Total {total} · Current streak {current} · Longest {longest}</text>
+    {rects}  <text x='{W / 2}' y='{H - 10}' text-anchor='middle' fill='{TEXT_MUTED}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='9px'>Last updated: {datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")}</text>
     </svg>
     """
     return textwrap.dedent(svg).strip() + "\n"
@@ -253,6 +306,7 @@ def build_activity_svg(days: list[dict]) -> str:
 def latest_commit_sha(paths: list[str]) -> str:
     """Return full SHA of the most recent commit touching any of the given paths."""
     import subprocess
+
     repo = REPO_ROOT
     cmd = ["git", "log", "-1", "--format=%H", "--", *paths]
     result = subprocess.run(cmd, cwd=repo, capture_output=True, text=True, check=True)
@@ -269,8 +323,16 @@ def update_readme_game_sha() -> bool:
     """
     readme_path = REPO_ROOT / "README.md"
     content = readme_path.read_text(encoding="utf-8")
-    game_files = ["snake.svg", "ab-test.svg", "pong.svg", "2048.svg", "funnel-drop.svg",
-                  "cohort-catch.svg", "sql-query.svg", "metric-match.svg"]
+    game_files = [
+        "snake.svg",
+        "ab-test.svg",
+        "pong.svg",
+        "2048.svg",
+        "funnel-drop.svg",
+        "cohort-catch.svg",
+        "sql-query.svg",
+        "metric-match.svg",
+    ]
     new_sha = latest_commit_sha(game_files)
     old_sha_match = re.search(r"@([a-f0-9]{7,40})/", content)
     old_sha = old_sha_match.group(1) if old_sha_match else None
@@ -279,7 +341,9 @@ def update_readme_game_sha() -> bool:
         print(f"README game SHA already up to date: {new_sha[:7]}")
         return False
     readme_path.write_text(updated, encoding="utf-8")
-    print(f"Updated README game SHA: {old_sha[:7] if old_sha else 'none'} -> {new_sha[:7]}")
+    print(
+        f"Updated README game SHA: {old_sha[:7] if old_sha else 'none'} -> {new_sha[:7]}"
+    )
     return True
 
 
@@ -322,6 +386,7 @@ def fetch_languages() -> list[tuple[str, int, str]]:
 
 def build_top_languages_svg(langs: list[tuple[str, int, str]]) -> str:
     import math
+
     W, H = 340, 210
     cx, cy, R, sw = 70, 100, 52, 16
     circumference = 2 * math.pi * R
@@ -359,7 +424,7 @@ def build_top_languages_svg(langs: list[tuple[str, int, str]]) -> str:
         <circle cx='{cx}' cy='{cy}' r='{R}' fill='none' stroke='#0c0078' stroke-width='{sw}'/>
     {slices}  </g>
     {legend}  <text x='{W / 2}' y='{H - 8}' text-anchor='middle' fill='{TEXT_MUTED}'
-            font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px'>Last updated: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}</text>
+            font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px'>Last updated: {datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")}</text>
     </svg>
     """
     return textwrap.dedent(svg).strip() + "\n"
@@ -381,7 +446,9 @@ def update_readme_refresh_block(days: list[dict]) -> bool:
         f"_Last refreshed: {now} \u00b7 {week} contributions in the last 7 days_\n"
         f"<!-- LAST-REFRESHED:END -->"
     )
-    pattern = re.compile(r"<!-- LAST-REFRESHED:START -->.*?<!-- LAST-REFRESHED:END -->", re.DOTALL)
+    pattern = re.compile(
+        r"<!-- LAST-REFRESHED:START -->.*?<!-- LAST-REFRESHED:END -->", re.DOTALL
+    )
     if pattern.search(content):
         new_content = pattern.sub(lambda _: block, content)
     else:
@@ -402,8 +469,11 @@ def update_readme_refresh_block(days: list[dict]) -> bool:
 def main() -> None:
     global DRY_RUN
     parser = argparse.ArgumentParser(description="Build self-hosted profile assets.")
-    parser.add_argument("--dry-run", action="store_true",
-                        help="print planned writes without modifying files")
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="print planned writes without modifying files",
+    )
     args = parser.parse_args()
     DRY_RUN = args.dry_run
     if DRY_RUN:
@@ -415,9 +485,16 @@ def main() -> None:
     total, current, longest = compute_streaks(days)
     print(f"total={total} current={current} longest={longest}")
 
-    write_asset(REPO_ROOT / "stats.svg", build_stats_svg(user_data, total, current, longest))
-    write_asset(REPO_ROOT / "streak.svg", build_streak_svg(days, total, current, longest))
+    write_asset(
+        REPO_ROOT / "stats.svg", build_stats_svg(user_data, total, current, longest)
+    )
+    write_asset(
+        REPO_ROOT / "streak.svg", build_streak_svg(days, total, current, longest)
+    )
     write_asset(REPO_ROOT / "activity.svg", build_activity_svg(days))
+    write_asset(
+        REPO_ROOT / "metrics.svg", build_metrics_svg(days, total, current, longest)
+    )
 
     try:
         langs = fetch_languages()

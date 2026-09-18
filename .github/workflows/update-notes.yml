@@ -21,4 +21,4 @@ jobs:
           comment_tag_name: "RECENT-POSTS-LIST"
           max_post_count: "5"
           feed_list: "https://nikitaboyarkin.github.io/Personal_Projects.github.io/rss.xml"
-          commit_message: "chore: update recent notes from RSS"
+          commit_message: "chore: update recent notes from RSS [skip ci]"
