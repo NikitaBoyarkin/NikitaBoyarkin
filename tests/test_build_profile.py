@@ -88,7 +88,7 @@ def test_top_languages_empty_does_not_crash():
     assert svg.startswith("<svg")
 
 
-# ---------- build_stats_svg / build_streak_svg / build_activity_svg ----------
+# ---------- build_stats_svg / build_activity_svg ----------
 
 
 def _user_data():
@@ -107,12 +107,7 @@ def test_build_stats_svg():
     assert "42" in svg  # public repos
     assert "17" in svg  # followers
     assert "2020" in svg  # active since
-
-
-def test_build_streak_svg():
-    svg = bp.build_streak_svg(_days([1, 2, 3]), total=6, current=3, longest=3)
-    assert svg.startswith("<svg")
-    assert "6" in svg and "3" in svg
+    assert "Current Streak" in svg and "Longest Streak" in svg  # single source for streaks
 
 
 def test_build_activity_svg():
@@ -195,10 +190,11 @@ def test_metrics_svg_is_self_contained_and_within_budget():
     # A full year of days → worst-case payload. Must stay well under the
     # 80 KB REQ-018 budget and never reference an external host.
     days = _days((i % 7) for i in range(371))
-    svg = bp.build_metrics_svg(days, total=667, current=42, longest=42)
+    svg = bp.build_metrics_svg(days)
     assert svg.startswith("<svg")
     assert "Contribution Map" in svg
-    assert "Total 667" in svg and "Longest 42" in svg
+    # Streak/total numbers live in stats.svg only — not repeated here.
+    assert "Current streak" not in svg and "Longest" not in svg
     # Zero external requests: no remote images / hrefs, only the SVG namespace.
     assert "<image" not in svg
     assert "url(http" not in svg
@@ -209,7 +205,7 @@ def test_metrics_svg_is_self_contained_and_within_budget():
 
 def test_metrics_svg_title_marks_every_day():
     days = _days([0, 1, 2, 3, 4, 5, 6])
-    svg = bp.build_metrics_svg(days, total=21, current=1, longest=1)
+    svg = bp.build_metrics_svg(days)
     # Each day is a rect with an accessible <title>.
     assert svg.count("<rect") >= len(days)
     assert svg.count("<title>") == len(days)

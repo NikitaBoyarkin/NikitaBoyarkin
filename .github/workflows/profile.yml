@@ -37,4 +37,4 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "chore: update profile assets [skip ci]"
-          file_pattern: "stats.svg streak.svg activity.svg top-languages.svg metrics.svg README.md"
+          file_pattern: "stats.svg activity.svg top-languages.svg metrics.svg README.md"

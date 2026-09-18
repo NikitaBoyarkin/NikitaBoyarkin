@@ -2,8 +2,7 @@
 """Build self-hosted profile assets for github.com/NikitaBoyarkin.
 
 Assets generated:
-- stats.svg: total contributions, streak, public repos, followers from GraphQL
-- streak.svg: current / longest / total contributions from GitHub GraphQL
+- stats.svg: contributions, current/longest streak, public repos, followers (GraphQL)
 - activity.svg: 30-day contribution activity sparkline
 - metrics.svg: slim self-hosted contribution map (replaces lowlighter/metrics)
 - top-languages.svg: aggregated language bytes donut
@@ -163,35 +162,6 @@ def compute_streaks(days: list[dict]) -> tuple[int, int, int]:
     return total, current, longest
 
 
-def build_streak_svg(days: list[dict], total: int, current: int, longest: int) -> str:
-    W, H = 495, 195
-    svg = f"""\
-    <svg xmlns='http://www.w3.org/2000/svg' style='isolation: isolate' viewBox='0 0 {W} {H}' width='{W}px' height='{H}px'>
-      <defs>
-        <clipPath id='r'><rect width='{W}' height='{H}' rx='4.5'/></clipPath>
-      </defs>
-      <g clip-path='url(#r)'>
-        <rect fill='{SURFACE}' width='{W}' height='{H}'/>
-        <text x='247.5' y='32' text-anchor='middle' fill='{TEXT_MUTED}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='14px' font-weight='400'>{USER}'s GitHub Streak</text>
-        <g transform='translate(0, 55)'>
-          <text x='82.5' y='0' text-anchor='middle' fill='{TEXT_MUTED}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='12px' font-weight='400'>Total Contributions</text>
-          <text x='82.5' y='28' text-anchor='middle' fill='{ACCENT}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='28px' font-weight='700'>{total}</text>
-        </g>
-        <g transform='translate(165, 55)'>
-          <text x='82.5' y='0' text-anchor='middle' fill='{TEXT_MUTED}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='12px' font-weight='400'>Current Streak</text>
-          <text x='82.5' y='28' text-anchor='middle' fill='{ACCENT}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='28px' font-weight='700'>{current}</text>
-        </g>
-        <g transform='translate(330, 55)'>
-          <text x='82.5' y='0' text-anchor='middle' fill='{TEXT_MUTED}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='12px' font-weight='400'>Longest Streak</text>
-          <text x='82.5' y='28' text-anchor='middle' fill='{ACCENT}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='28px' font-weight='700'>{longest}</text>
-        </g>
-        <text x='247.5' y='155' text-anchor='middle' fill='{TEXT_MUTED}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='11px' font-weight='400'>Last updated: {datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")}</text>
-      </g>
-    </svg>
-    """
-    return textwrap.dedent(svg).strip() + "\n"
-
-
 def build_stats_svg(user_data: dict, total: int, current: int, longest: int) -> str:
     user = user_data["user"]
     public_repos = user["repositories"]["totalCount"]
@@ -276,11 +246,12 @@ def build_activity_svg(days: list[dict]) -> str:
     return textwrap.dedent(svg).strip() + "\n"
 
 
-def build_metrics_svg(days: list[dict], total: int, current: int, longest: int) -> str:
+def build_metrics_svg(days: list[dict]) -> str:
     """Slim self-hosted contribution map — replaces the lowlighter/metrics card.
 
-    A compact year heatmap (~371 cells) plus headline totals, small enough to
-    stay well under the <=80 KB budget and to render with zero external requests.
+    A compact year heatmap (~371 cells), small enough to stay well under the
+    <=80 KB budget and to render with zero external requests. Headline totals
+    live in stats.svg only, so the same numbers are never repeated here.
     """
     W, H = 800, 230
     cell, gap = 11, 3
@@ -301,7 +272,6 @@ def build_metrics_svg(days: list[dict], total: int, current: int, longest: int) 
     <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 {W} {H}' width='{W}px' height='{H}px'>
       <rect fill='{BG}' width='{W}' height='{H}' rx='6'/>
       <text x='{W / 2}' y='28' text-anchor='middle' fill='{TEXT_MUTED}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='14px' font-weight='400'>{USER}'s Contribution Map</text>
-      <text x='{pad_left}' y='52' fill='{TEXT_MAIN}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='12px'>Total {total} · Current streak {current} · Longest {longest}</text>
     {rects}  <text x='{W / 2}' y='{H - 10}' text-anchor='middle' fill='{TEXT_MUTED}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='9px'>Last updated: {datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")}</text>
     </svg>
     """
@@ -451,9 +421,8 @@ def main() -> None:
     print(f"total={total} current={current} longest={longest}")
 
     write_asset(REPO_ROOT / "stats.svg", build_stats_svg(user_data, total, current, longest))
-    write_asset(REPO_ROOT / "streak.svg", build_streak_svg(days, total, current, longest))
     write_asset(REPO_ROOT / "activity.svg", build_activity_svg(days))
-    write_asset(REPO_ROOT / "metrics.svg", build_metrics_svg(days, total, current, longest))
+    write_asset(REPO_ROOT / "metrics.svg", build_metrics_svg(days))
 
     try:
         langs = fetch_languages()

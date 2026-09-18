@@ -25,12 +25,10 @@
 
 ---
 
-### 📊 GitHub Stats & Streak
+### 📊 GitHub Stats
 
 <p align="center">
-  <img height="190" src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/stats.svg" alt="NikitaBoyarkin GitHub Stats" />
-  &nbsp;
-  <img height="195" src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/streak.svg" alt="NikitaBoyarkin GitHub Streak" />
+  <img height="195" src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/stats.svg" alt="NikitaBoyarkin GitHub Stats" />
 </p>
 
 ### 🗣️ Top Languages
@@ -274,4 +272,4 @@ _Ten end-to-end SQL cases on DuckDB — funnel, N-day retention, DAU/MAU stickin
 
 ---
 
-<sub>Profile cards (stats, streak, activity, contribution map, top languages) are self-hosted via `scripts/build_profile.py`. Powered by [snk](https://github.com/Platane/snk), [blog-post-workflow](https://github.com/gautamkrishnar/blog-post-workflow), [skill-icons](https://github.com/tandpfun/skill-icons), [shields.io](https://shields.io), and [jsDelivr](https://www.jsdelivr.com).</sub>
+<sub>Profile cards (stats, activity, contribution map, top languages) are self-hosted via `scripts/build_profile.py`. Powered by [snk](https://github.com/Platane/snk), [blog-post-workflow](https://github.com/gautamkrishnar/blog-post-workflow), [skill-icons](https://github.com/tandpfun/skill-icons), [shields.io](https://shields.io), and [jsDelivr](https://www.jsdelivr.com).</sub>

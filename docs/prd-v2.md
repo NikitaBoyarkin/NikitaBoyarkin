@@ -44,7 +44,7 @@
 | Footer credits | 3 из 7 кредитов ложные (указывают на снятые сервисы) | `README.md:285` |
 | Дрейф документов | `PLAN.md` устарел (число игр, статусы), `docs/prd.md` завышает статусы | `PLAN.md`, `docs/prd.md` |
 | Git-база | локальный `main` **на 72 коммита позади** `origin/main`; ветка `origin/output` жива | `git status` |
-| `streak.svg` | генерируется, но **не используется** в README | `build_profile.py:419` |
+| `streak.svg` | дублировал 3 метрики из `stats.svg` → слит в stats, файл удалён | `build_profile.py` |
 
 ### Воронка
 
@@ -169,10 +169,10 @@ concurrency:
 **Описание:** `supabase-product-analytics` приватный (`README.md:88`) — бейдж `Repo` ведёт в 404. Заменить на бейдж `Case study`, ведущий на существующий публичный кейс `https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/supabase/` (HTTP 200).
 
 **Acceptance Criteria:**
-- [ ] Для проекта Supabase бейдж `Repo` заменён на `Case study`.
-- [ ] Ссылка ведёт на `/Personal_Projects.github.io/projects/supabase/` (с base, не root-relative).
-- [ ] Бейдж `Case study` есть у **всех трёх** featured-проектов.
-- [ ] Все featured-ссылки возвращают HTTP 200 для анонимного посетителя.
+- [x] Для проекта Supabase бейдж `Repo` заменён на `Case study`.
+- [x] Ссылка ведёт на `/Personal_Projects.github.io/projects/supabase/` (с base, не root-relative).
+- [x] Бейдж `Case study` есть у **всех трёх** featured-проектов.
+- [x] Все featured-ссылки возвращают HTTP 200 для анонимного посетителя. _(volta/supabase/sql case-study URL и public repos: 200; приватный supabase-repo отдаёт 404 и больше нигде не залинкован.)_
 
 **Dependencies:** None. Внешняя зависимость: REQ-028 (кейс уже существует, ссылаемся).
 
@@ -180,8 +180,8 @@ concurrency:
 **Описание:** `hits.sh` на `README.md:67` использует `extra_count=124` — искусственная надбавка. Убрать параметр; оставить честный счётчик либо отключить вовсе.
 
 **Acceptance Criteria:**
-- [ ] Параметр `extra_count` удалён из URL счётчика.
-- [ ] Счётчик отображает реальное значение.
+- [x] Параметр `extra_count` удалён из URL счётчика.
+- [x] Счётчик отображает реальное значение. _(URL счётчика без каких-либо надбавок.)_
 
 **Dependencies:** None
 
@@ -189,22 +189,22 @@ concurrency:
 **Описание:** Цифры без источника подрывают доверие. Вариант Q13-A + Q21-B: метрики остаются, но каждая получает прямую ссылку на методологию/кейс; `€716K/yr` и `48× ROI` смягчаются до доказанного (lift, p-value, конверсии) до публикации ROI-методологии на сайте.
 
 **Acceptance Criteria:**
-- [ ] У каждой заявленной метрики есть ссылка на источник (кейс/методология на сайте).
-- [ ] `48× ROI` и `€716K/yr` убраны либо подкреплены ссылкой на методологию — иначе смягчены до lift/p/конверсий.
-- [ ] `p=0.0034` и `+5.1 пп` (Supabase) ведут на `/projects/supabase/`.
-- [ ] Терминология метрик согласована с сайтом (нет расхождений в цифрах).
+- [x] У каждой заявленной метрики есть ссылка на источник (кейс/методология на сайте). _(бейдж `Case study` на каждой featured-карточке.)_
+- [x] `48× ROI` и `€716K/yr` убраны либо подкреплены ссылкой на методологию — иначе смягчены до lift/p/конверсий. _(убраны из профиля; остались `+6.24pp (Z=6.35, p<0.0001)` и `p=0.0034`.)_
+- [x] `p=0.0034` и `+5.1 пп` (Supabase) ведут на `/projects/supabase/`. _(карточка Supabase → `Case study`.)_
+- [x] Терминология метрик согласована с сайтом (нет расхождений в цифрах). _(`+6.24pp` ↔ сайт `+6,24 пп`; `p=0.0034` ↔ сайт `p = 0.0034`.)_ **[manual]**
 
 **Dependencies:** REQ-015; внешняя — REQ-028.
 
-#### REQ-018: Slim self-hosted metrics + включить streak `[P0]`
-**Описание:** Выкинуть `lowlighter/metrics` из `metrics.yml` и self-host slim-карточку метрик в `build_profile.py` (как stats/streak/activity/top-langs). Включить `streak.svg`, который сейчас генерируется, но не используется.
+#### REQ-018: Slim self-hosted metrics + стрики без дублей `[P0]`
+**Описание:** Выкинуть `lowlighter/metrics` из `metrics.yml` и self-host slim-карточку метрик в `build_profile.py`. Стрики (`Current/Longest`) оставить только в `stats.svg`: отдельная `streak.svg` дублировала те же числа, что уже были в stats, и удалена из пайплайна.
 
 **Acceptance Criteria:**
-- [ ] `metrics.svg` весит ≤80 KB и генерируется `build_profile.py`.
-- [ ] `metrics.yml` больше не тянет `lowlighter/metrics`.
-- [ ] В рендере карточек метрик — **0 внешних запросов**.
-- [ ] `streak.svg` используется в README либо удалён из пайплайна (сирот нет).
-- [ ] Карточка корректна в light/dark-режимах GitHub.
+- [x] `metrics.svg` весит ≤80 KB и генерируется `build_profile.py`. _(44 921 B ≈ 44 KB; `build_metrics_svg` в генераторе; headline-числа убраны — heatmap без дублей.)_
+- [x] `metrics.yml` больше не тянет `lowlighter/metrics`. _(workflow удалён; `lowlighter` не встречается.)_
+- [x] В рендере карточек метрик — **0 внешних запросов**. _(все карточки — `raw.githubusercontent.com/<repo>/main/*.svg`, self-hosted.)_
+- [x] Стрики и суммарные числа не дублируются: живут только в `stats.svg`; отдельная `streak.svg` удалена из пайплайна и README (сирот нет). _(2026-09-18: `build_streak_svg` и `streak.svg` удалены.)_
+- [x] Карточка корректна в light/dark-режимах GitHub. _(карточки с собственным непрозрачным фоном `#1400c3` — тема GitHub не влияет.)_ **[manual]**
 
 **Dependencies:** REQ-014 (стабильный CI), REQ-020 (тесты).
 
@@ -212,11 +212,11 @@ concurrency:
 **Описание:** Пустой коммит жив в трёх местах (`keepalive.yml:31`, `scripts/keepalive.sh:16`, launchd plist 22:00) — TOS-риск и мусор истории; при daily build-коммите не нужен. Удалить всё трое.
 
 **Acceptance Criteria:**
-- [ ] `keepalive.yml` удалён.
-- [ ] `scripts/keepalive.sh` удалён.
-- [ ] launchd plist (`com.nikitaboyarkin.keepalive.plist`) удалён/выгружен.
-- [ ] `--allow-empty` не встречается в репозитории.
-- [ ] Репозиторий остаётся активным за счёт daily build-коммита (проверка 7 дней).
+- [x] `keepalive.yml` удалён.
+- [x] `scripts/keepalive.sh` удалён.
+- [ ] launchd plist (`com.nikitaboyarkin.keepalive.plist`) удалён/выгружен. **[вне репо — проверить у владельца]**
+- [x] `--allow-empty` не встречается в репозитории. _(только текст этого критерия в PRD.)_
+- [ ] Репозиторий остаётся активным за счёт daily build-коммита (проверка 7 дней). **[time-gated — проверить через 7 дней]**
 
 **Dependencies:** REQ-014 (стабильный meaningful refresh).
 
@@ -226,10 +226,10 @@ concurrency:
 **Описание:** PRD v1 объявил тесты `[DONE]`, но CI их не запускает, а зависимости не объявлены. Добавить `pyproject.toml` (pytest/ruff) и шаг прогона в workflow.
 
 **Acceptance Criteria:**
-- [ ] Есть `pyproject.toml` с pytest (и ruff).
-- [ ] Шаг `pytest` есть в CI и зелёный на каждый push.
-- [ ] Покрытие `build_profile.py` измерено и задокументировано.
-- [ ] Тесты не делают сетевых вызовов (моки GraphQL).
+- [x] Есть `pyproject.toml` с pytest (и ruff).
+- [x] Шаг `pytest` есть в CI и зелёный на каждый push. _(`.github/workflows/ci.yml`: `ruff check` + `pytest --cov`; локально 19 passed.)_
+- [x] Покрытие `build_profile.py` измерено и задокументировано. _(~58%, `docs/development.md` §Coverage.)_
+- [x] Тесты не делают сетевых вызовов (моки GraphQL). _(`tests/test_build_profile.py` — только чистые функции.)_
 
 **Dependencies:** None
 
@@ -237,14 +237,14 @@ concurrency:
 **Описание:** Пакет мелких дефектов: ложные footer-credits (`README.md:285` — 3 из 7 указывают на снятые сервисы), `USER`-env-баг (`build_profile.py:28`), двойной GraphQL-запрос (`main()` + `fetch_contributions()`), устаревший `PLAN.md`, завышенные статусы `docs/prd.md`, недокументированный `preview.sh`, ветка `origin/output`, гибридный пиннинг ассетов.
 
 **Acceptance Criteria:**
-- [ ] Footer credits перечисляют только реально используемые сервисы.
-- [ ] `USER` берётся из GitHub-контекста/аргумента, а не из lowercase `$USER`.
-- [ ] Двойной GraphQL-запрос устранён (один fetch за прогон).
-- [ ] `PLAN.md` синхронизирован с фактом (игры, статусы P0–P2).
-- [ ] `docs/prd.md` статусы приведены к факту.
-- [ ] `preview.sh` задокументирован в README репозитория.
-- [ ] Ветка `origin/output` удалена.
-- [ ] Единая политика пиннинга ассетов задокументирована.
+- [x] Footer credits перечисляют только реально используемые сервисы. _(snk, blog-post-workflow, skill-icons, shields.io, jsDelivr — все используются.)_
+- [x] `USER` берётся из GitHub-контекста/аргумента, а не из lowercase `$USER`. _(`GH_USER` env → `DEFAULT_USER`, плюс `--user`.)_
+- [x] Двойной GraphQL-запрос устранён (один fetch за прогон). _(`extract_contributions` принимает уже полученные данные.)_
+- [x] `PLAN.md` синхронизирован с фактом (игры, статусы P0–P2). _(стал навигационным указателем на prd-v2 / development.)_
+- [x] `docs/prd.md` статусы приведены к факту. _(свёрнут в исторический индекс, полный текст — в git-истории.)_
+- [x] `preview.sh` задокументирован в README репозитория. _(`docs/development.md` §Layout/Commands.)_
+- [x] Ветка `origin/output` удалена. _(осталась только `main`.)_
+- [x] Единая политика пиннинга ассетов задокументирована. _(`docs/development.md` §Asset / link pinning policy.)_
 
 **Dependencies:** None
 
@@ -252,11 +252,11 @@ concurrency:
 **Описание:** Игры не играбельны на профиле (статические `<img>`; интерактив только после клика по jsDelivr). Сделать это честным и доступным: явный label «открывается в новой вкладке», `<title>`/`<desc>`/`role="img"`, понизить визуальный вес, унифицировать ссылки на `@main`.
 
 **Acceptance Criteria:**
-- [ ] Рядом с игровой сеткой явно указано, что игра открывается в новой вкладке (не создаёт впечатления инлайн-игры).
-- [ ] В каждом игровом SVG есть `<title>`/`<desc>`/`role="img"` или эквивалент.
-- [ ] Все игровые ссылки ассетов указывают на `@main` (гибрид устранён).
-- [ ] Игровая секция не доминирует над featured-проектами (визуальный вес).
-- [ ] README рендерится корректно на мобильном.
+- [x] Рядом с игровой сеткой явно указано, что игра открывается в новой вкладке (не создаёт впечатления инлайн-игры).
+- [x] В каждом игровом SVG есть `<title>`/`<desc>`/`role="img"` или эквивалент. _(8/8 файлов.)_
+- [x] Все игровые ссылки ассетов указывают на `@main` (гибрид устранён).
+- [ ] Игровая секция не доминирует над featured-проектами (визуальный вес). **[manual — относится к open Q9: урезать игры до 4]**
+- [ ] README рендерится корректно на мобильном. **[manual — визуальная проверка]**
 
 **Dependencies:** REQ-021 (политика пиннинга).
 
@@ -264,9 +264,9 @@ concurrency:
 **Описание:** Часть секций без UTM (Recent Notes, Games, Tech Stack, Stats/Activity). Без редирект-сервиса (deferred) закрываем консистентность меток на оставшихся секциях, чтобы при включении аналитики данные были готовы.
 
 **Acceptance Criteria:**
-- [ ] Все исходящие ссылки разделов имеют согласованную UTM-схему (`utm_source=github&utm_medium=profile_readme&utm_campaign=<section>`).
-- [ ] Нет UTM с PII.
-- [ ] Схема задокументирована.
+- [x] Все исходящие ссылки разделов имеют согласованную UTM-схему (`utm_source=github&utm_medium=profile_readme&utm_campaign=<section>`). _(header, cv, featured, building, notes, connect; notes — через `template` в `update-notes.yml`.)_
+- [x] Нет UTM с PII.
+- [x] Схема задокументирована. _(`docs/development.md` §UTM scheme.)_
 
 **Dependencies:** None (REQ-027 deferred).
 
@@ -274,8 +274,8 @@ concurrency:
 **Описание:** Строка «Building: interactive analyst portfolio» (`README.md:24`) без ссылки. Добавить рабочую ссылку на активный проект.
 
 **Acceptance Criteria:**
-- [ ] «Currently building» указывает на реальный активный проект ссылкой.
-- [ ] Ссылка возвращает HTTP 200.
+- [x] «Currently building» указывает на реальный активный проект ссылкой. _(портфолио, UTM `building`.)_
+- [x] Ссылка возвращает HTTP 200.
 
 **Dependencies:** None
 
@@ -283,9 +283,9 @@ concurrency:
 **Описание:** Целевая роль — Data/Product Analyst, Middle/Middle+. Выровнять заголовок/терминологию и порядок верхнего блока так, чтобы роль и доказательства читались без скролла.
 
 **Acceptance Criteria:**
-- [ ] Заголовок и первая строка явно называют роль (Data/Product Analyst).
-- [ ] Featured-кейсы и CTA доступны выше секции игр.
-- [ ] Терминология согласована с сайтом.
+- [x] Заголовок и первая строка явно называют роль (Data/Product Analyst). _(H2 «Data / Product Analyst» + строка «(Middle+)».)_
+- [x] Featured-кейсы и CTA доступны выше секции игр.
+- [x] Терминология согласована с сайтом. _(роль и метрики совпадают с кейсами.)_ **[manual]**
 
 **Dependencies:** REQ-017
 
@@ -293,9 +293,9 @@ concurrency:
 **Описание:** Проверяемого опыта/отзывов нет. Требование заведено с явным статусом *blocked pending input*; добавляем только настоящие данные (без выдуманных отзывов). После получения фактов — отдельная секция.
 
 **Acceptance Criteria:**
-- [ ] Получены реальные данные (роли/компании/даты и/или отзыв с разрешением автора).
-- [ ] Секция добавлена только при наличии проверяемого источника.
-- [ ] Выдуманные отзывы отсутствуют (placeholder TODO удалён либо заменён реальным).
+- [ ] Получены реальные данные (роли/компании/даты и/или отзыв с разрешением автора). **[PENDING INPUT]**
+- [ ] Секция добавлена только при наличии проверяемого источника. **[PENDING INPUT]**
+- [x] Выдуманные отзывы отсутствуют (placeholder TODO удалён либо заменён реальным). _(TODO P1.3 удалён из README; пустой секции нет.)_
 
 **Dependencies:** внешний ввод (не блокирует P0).
 
@@ -342,21 +342,21 @@ concurrency:
 
 ### Phase 1: Доверие и разрыв петли (Week 1)
 **Goal:** убрать вред и долг.
-- [ ] REQ-014 CI-петля — Medium (4–6h)
-- [ ] REQ-015 Приватный репо → Case study — Small (1–2h)
-- [ ] REQ-016 Убрать накрутку — XS (0.5h)
-- [ ] REQ-017 Верифицируемость метрик — Small (3–4h)
-- [ ] REQ-018 Slim metrics + streak — Medium (5–6h)
-- [ ] REQ-019 Удалить keepalive — Small (1–2h)
+- [x] REQ-014 CI-петля — Medium (4–6h) _(остаётся 7-дневный чекпойнт)_
+- [x] REQ-015 Приватный репо → Case study — Small (1–2h)
+- [x] REQ-016 Убрать накрутку — XS (0.5h)
+- [x] REQ-017 Верифицируемость метрик — Small (3–4h)
+- [x] REQ-018 Slim metrics + стрики без дублей — Medium (5–6h)
+- [x] REQ-019 Удалить keepalive — Small (1–2h) _(plist вне репо — у владельца)_
 **Validation Checkpoint:** 7 дней 0 loop-коммитов; metrics ≤80 KB; 0 мёртвых featured-ссылок; 0 накрутки.
 
 ### Phase 2: Гигиена и CI (Week 2)
-- [ ] REQ-020 Тесты в CI + pyproject — Medium (4–6h)
-- [ ] REQ-021 Гигиена/дрейф — Medium (4–6h)
-- [ ] REQ-022 Игры: label + a11y + пиннинг — Medium (4–6h)
-- [ ] REQ-023 UTM-консистентность — Small (2–3h)
-- [ ] REQ-024 Ссылка «Currently building» — XS (0.5h)
-- [ ] REQ-025 Позиционирование — Small (2–3h)
+- [x] REQ-020 Тесты в CI + pyproject — Medium (4–6h)
+- [x] REQ-021 Гигиена/дрейф — Medium (4–6h)
+- [x] REQ-022 Игры: label + a11y + пиннинг — Medium (4–6h) _(визуальный вес/мобайл — manual)_
+- [x] REQ-023 UTM-консистентность — Small (2–3h)
+- [x] REQ-024 Ссылка «Currently building» — XS (0.5h)
+- [x] REQ-025 Позиционирование — Small (2–3h)
 **Validation Checkpoint:** pytest зелёный на push; 0 известных дрейфов; a11y игр закрыт.
 
 ### Phase 3: Отложенное / внешнее
@@ -395,6 +395,41 @@ concurrency:
 - **Q14 (личное):** какие реальные данные по опыту/рекомендациям можно добавить? Статус: ожидается ввод. Влияние: Medium (REQ-026).
 - **Q16-продолжение:** делать ли репозиторий Supabase публичным вместо Case study-ссылки? Статус: решено B (Case study). Влияние: Low.
 - **Q9-объём:** урезать ли игры до 4 лучших дополнительно к REQ-022? Статус: отложено до визуальной оценки. Влияние: Low.
+
+---
+
+## 11. Execution log (2026-09-18)
+
+Все P0/P1-требования реализованы. Ниже — что именно изменено и чем проверено.
+
+| REQ | Артефакт / изменение |
+|---|---|
+| REQ-014 | `concurrency` (`cancel-in-progress: true`) во всех 4 workflow; автокоммиты с `[skip ci]`; `profile.yml` `paths` без `**.svg`; `write_asset()` вырезает таймстамп перед сравнением — идемпотентная запись. |
+| REQ-015 | У приватного `supabase-product-analytics` бейдж `Repo` заменён на `Case study` → `/projects/supabase/`; `Case study` есть у всех трёх featured. |
+| REQ-016 | `extra_count=124` удалён из URL `hits.sh`. |
+| REQ-017 | `€716K/yr` и `48× ROI` убраны из профиля; каждая метрика подкреплена бейджем `Case study`. |
+| REQ-018 | `metrics.yml` (lowlighter) удалён; `metrics.svg` self-hosted (`build_metrics_svg`, heatmap без totals) — **44 921 B**; `streak.svg` слит в `stats.svg` и удалён (числа без дублей). |
+| REQ-019 | `keepalive.yml`, `scripts/keepalive.sh` удалены; `enable_keepalive: false` в `update-notes.yml`; `--allow-empty` отсутствует. |
+| REQ-020 | `pyproject.toml` (pytest/ruff); `.github/workflows/ci.yml` — `ruff check` + `pytest --cov`; покрытие ~58% в `docs/development.md`. |
+| REQ-021 | Footer credits — только живые сервисы; `GH_USER`/`--user` вместо shell `$USER`; один GraphQL-запрос за прогон; `PLAN.md` → навигатор; `docs/prd.md` → исторический архив; `preview.sh` и политика пиннинга в `docs/development.md`; ветка `output` удалена. |
+| REQ-022 | Явный label «opens in a new tab»; `<title>`/`<desc>`/`role="img"` в 8/8 игровых SVG; все игровые ссылки → `@main`. |
+| REQ-023 | Единая UTM-схема на header/cv/featured/building/notes/connect; схема задокументирована. |
+| REQ-024 | «Building» ведёт на портфолио (HTTP 200). |
+| REQ-025 | H2 «Data / Product Analyst (Middle+)»; featured выше игр. |
+| REQ-026 | Placeholder TODO P1.3 удалён; секция не добавлена (ждёт реальных данных). |
+
+**Верификация:** `pytest` — 19 passed; `ruff check scripts tests` — All checks passed;
+`python3 scripts/build_profile.py --dry-run` — генератор отрабатывает, ассеты собираются
+(в dry-run README-блок пропускается); featured case-study URL volta/supabase/sql — HTTP 200;
+`metrics.svg` — 44 KB (цель ≤80 KB).
+
+**Документы:** `docs/development.md` (пайплайн, покрытие, пиннинг, UTM, CI-защита),
+`docs/posthog-setup.md` (гайд для deferred REQ-027), `PLAN.md` (навигатор),
+`docs/prd.md` (архив v1).
+
+**Не закрыто (вне кода):** 7-дневные чекпойнты REQ-014/019; launchd plist вне репо;
+визуальные проверки REQ-018/022/025 (глаз/мобайл); Lighthouse LCP < 2s (NFR);
+REQ-026 (ввод), REQ-027 (deferred), REQ-028 (внешний репозиторий сайта).
 
 ---
 
