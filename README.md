@@ -42,11 +42,7 @@
 ### ⚡ Activity
 
 <!-- LAST-REFRESHED:START -->
-<<<<<<< HEAD
-_Last refreshed: 2026-09-18 13:37 UTC · 373 contributions in the last 7 days_
-=======
-_Last refreshed: 2026-09-18 17:27 UTC · 126 contributions in the last 7 days_
->>>>>>> 29651d7 (feat: update SVG stats and top languages for improved aesthetics and accuracy)
+_Last refreshed: 2026-09-18 17:33 UTC · 385 contributions in the last 7 days_
 <!-- LAST-REFRESHED:END -->
 
 
