@@ -34,7 +34,7 @@
 ### 🗣️ Top Languages
 
 <p align="center">
-  <img height="210" src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/top-languages.svg" alt="Top Languages" />
+  <img src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/top-languages.svg" alt="Top Languages" />
 </p>
 
 ---

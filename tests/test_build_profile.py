@@ -63,6 +63,8 @@ def test_top_languages_svg_renders():
     assert "Top Languages" in svg
     assert "Python" in svg
     assert "57.1%" in svg  # 120000 / 210000
+    # "Python" appears in the slice <title>, the center label and the legend.
+    assert svg.count("Python") >= 3, "legend row missing"
 
 
 def test_top_languages_donut_dasharray_sums_to_circumference():
@@ -73,7 +75,7 @@ def test_top_languages_donut_dasharray_sums_to_circumference():
         ("TypeScript", 30000, "#3178C6"),
     ]
     svg = bp.build_top_languages_svg(langs)
-    R = 52
+    R = 60
     C = 2 * math.pi * R
     dasharrays = re.findall(r"stroke-dasharray='([\d.]+) ([\d.]+)'", svg)
     assert dasharrays, "no dasharray found"
@@ -86,6 +88,14 @@ def test_top_languages_empty_does_not_crash():
     # total=0 → guarded by `or 1`; should render without exception
     svg = bp.build_top_languages_svg([])
     assert svg.startswith("<svg")
+
+
+def test_top_languages_folds_long_tail_into_other():
+    langs = [(f"Lang{i}", 100 - i, "#123456") for i in range(12)]
+    svg = bp.build_top_languages_svg(langs)
+    assert "Other" in svg  # tail folded
+    assert "Lang7" in svg  # top 8 kept
+    assert "Lang8" not in svg
 
 
 # ---------- build_stats_svg / build_activity_svg ----------

@@ -404,19 +404,30 @@ def fetch_languages() -> list[tuple[str, int, str]]:
     return items
 
 
+def _truncate(text: str, limit: int) -> str:
+    return text if len(text) <= limit else text[: limit - 1] + "\u2026"
+
+
 def build_top_languages_svg(langs: list[tuple[str, int, str]]) -> str:
     import math
 
-    W, H = 340, 210
-    cx, cy, R, sw = 70, 100, 52, 16
+    W, H = 460, 224
+    cx, cy, R, sw = 104, 124, 60, 19
     circumference = 2 * math.pi * R
-    top = langs[:10]
-    total = sum(s for _, s, _ in top) or 1
+    total = sum(s for _, s, _ in langs) or 1
+
+    # Fold everything past the top 8 into a single "Other" slice so the legend
+    # stays readable and the card height is fixed.
+    rows = list(langs[:8])
+    if len(langs) > 8:
+        rows.append(("Other", sum(s for _, s, _ in langs[8:]), "#8a86b8"))
+
+    gap = 1.5 if len(rows) > 1 else 0.0
     cum = 0.0
     slices = ""
-    for name, size, color in top:
+    for name, size, color in rows:
         frac = size / total
-        dash = frac * circumference
+        dash = max(frac * circumference - gap, 0.5)
         offset = -cum * circumference
         slices += (
             f"    <circle cx='{cx}' cy='{cy}' r='{R}' fill='none' stroke='{color}' "
@@ -425,25 +436,40 @@ def build_top_languages_svg(langs: list[tuple[str, int, str]]) -> str:
             f"<title>{name}: {size / total * 100:.1f}%</title></circle>\n"
         )
         cum += frac
+
     legend = ""
-    for i, (name, size, color) in enumerate(top):
-        ly = 30 + i * 17
+    for i, (name, size, color) in enumerate(rows):
+        ly = 56 + i * 17
         pct = size / total * 100
         legend += (
-            f"    <rect x='150' y='{ly - 9}' width='10' height='10' rx='2' fill='{color}'/>\n"
-            f"    <text x='166' y='{ly}' fill='{TEXT_MAIN}' "
-            f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='11px'>"
-            f"{name} {pct:.1f}%</text>\n"
+            f"    <rect x='196' y='{ly - 9}' width='11' height='11' rx='2' fill='{color}' "
+            f"stroke='{TEXT_MAIN}' stroke-opacity='0.25' stroke-width='0.5'/>\n"
+            f"    <text x='215' y='{ly}' fill='{TEXT_MAIN}' "
+            f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='11px'>{name}</text>\n"
+            f"    <text x='{W - 18}' y='{ly}' text-anchor='end' fill='{TEXT_MUTED}' "
+            f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='11px'>{pct:.1f}%</text>\n"
         )
+
+    center = ""
+    if rows:
+        center = (
+            f"    <text x='{cx}' y='{cy - 4}' text-anchor='middle' fill='{TEXT_MAIN}' "
+            f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='13px' "
+            f"font-weight='700'>{_truncate(rows[0][0], 11)}</text>\n"
+            f"    <text x='{cx}' y='{cy + 15}' text-anchor='middle' fill='{ACCENT}' "
+            f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px' "
+            f"font-weight='700'>{rows[0][1] / total * 100:.0f}%</text>\n"
+        )
+
     svg = f"""\
     <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 {W} {H}' width='{W}px' height='{H}px'>
       <rect fill='{BG}' width='{W}' height='{H}' rx='6'/>
-      <text x='{W / 2}' y='20' text-anchor='middle' fill='{TEXT_MUTED}'
-            font-family='Segoe UI, Ubuntu, sans-serif' font-size='13px' font-weight='400'>Top Languages</text>
+      <text x='{W / 2}' y='30' text-anchor='middle' fill='{TEXT_MUTED}'
+            font-family='Segoe UI, Ubuntu, sans-serif' font-size='14px' font-weight='400'>{USER}'s Top Languages</text>
       <g transform='rotate(-90 {cx} {cy})'>
         <circle cx='{cx}' cy='{cy}' r='{R}' fill='none' stroke='#0c0078' stroke-width='{sw}'/>
     {slices}  </g>
-    {legend}  <text x='{W / 2}' y='{H - 8}' text-anchor='middle' fill='{TEXT_MUTED}'
+    {center}{legend}    <text x='{W / 2}' y='{H - 10}' text-anchor='middle' fill='{TEXT_MUTED}'
             font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px'>Last updated: {datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")}</text>
     </svg>
     """
