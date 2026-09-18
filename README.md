@@ -71,7 +71,6 @@ _Last refreshed: 2026-09-18 12:41 UTC · 362 contributions in the last 7 days_
 ---
 
 ### 🔬 Featured Projects
-<!-- TODO P1.3: add 1-2 social proof quotes from colleagues/recruiters -->
 
 #### 1. <a href="https://github.com/NikitaBoyarkin/volta-banking"><img src="volta-neobank.svg" align="absmiddle" alt="Volta Neobank" /></a> — Product Analytics
 
@@ -92,7 +91,7 @@ _Full-stack analytics platform: Streamlit + Supabase with RLS and an Edge Functi
 
 #### 3. <a href="https://github.com/NikitaBoyarkin/sql-analytics-case-study"><img src="sql-case-study.svg" align="absmiddle" alt="SQL Analytics Case Study" /></a>
 
-\*Ten end-to-end SQL cases on DuckDB — funnel, N-day retention, DAU/MAU stickiness, LTV, streaks, A/B conversion, attribution. **One command, no server, pytest-verified.\***
+_Ten end-to-end SQL cases on DuckDB — funnel, N-day retention, DAU/MAU stickiness, LTV, streaks, A/B conversion, attribution. **One command, no server, pytest-verified.**_
 
 [![Repo](https://img.shields.io/badge/Repo-sql--analytics--case--study-0f2a2b?style=for-the-badge&logo=github&logoColor=fe4e02)](https://github.com/NikitaBoyarkin/sql-analytics-case-study)
 [![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/Personal_Projects.github.io/projects/sql/?utm_source=github&utm_medium=profile_readme&utm_campaign=featured)
@@ -110,7 +109,6 @@ _Full-stack analytics platform: Streamlit + Supabase with RLS and an Edge Functi
         <img src="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/snake.svg" width="170" height="187" alt="Snake"/>
       </a>
       <br/><b>🐍 Snake</b>
-      <br/><sub style="color:#c9c2a8">classic · arrows / WASD</sub>
       <br/><br/>
       <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/snake.svg">
         <img src="https://img.shields.io/badge/Play_fullscreen-fe4e02?style=for-the-badge" alt="Play fullscreen"/>
@@ -121,7 +119,6 @@ _Full-stack analytics platform: Streamlit + Supabase with RLS and an Edge Functi
         <img src="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/ab-test.svg" width="170" height="187" alt="A/B Test"/>
       </a>
       <br/><b>🧪 A/B Test</b>
-      <br/><sub style="color:#c9c2a8">click until p &lt; 0.05</sub>
       <br/><br/>
       <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/ab-test.svg">
         <img src="https://img.shields.io/badge/Play_fullscreen-fe4e02?style=for-the-badge" alt="Play fullscreen"/>
@@ -132,7 +129,6 @@ _Full-stack analytics platform: Streamlit + Supabase with RLS and an Edge Functi
         <img src="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/pong.svg" width="170" height="187" alt="Pong"/>
       </a>
       <br/><b>🏓 Pong</b>
-      <br/><sub style="color:#c9c2a8">beat the CPU · first to 11</sub>
       <br/><br/>
       <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/pong.svg">
         <img src="https://img.shields.io/badge/Play_fullscreen-fe4e02?style=for-the-badge" alt="Play fullscreen"/>
@@ -145,7 +141,6 @@ _Full-stack analytics platform: Streamlit + Supabase with RLS and an Edge Functi
         <img src="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/2048.svg" width="170" height="187" alt="2048"/>
       </a>
       <br/><b>🔢 2048</b>
-      <br/><sub style="color:#c9c2a8">merge tiles to 2048</sub>
       <br/><br/>
       <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/2048.svg">
         <img src="https://img.shields.io/badge/Play_fullscreen-fe4e02?style=for-the-badge" alt="Play fullscreen"/>
@@ -156,7 +151,6 @@ _Full-stack analytics platform: Streamlit + Supabase with RLS and an Edge Functi
         <img src="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/funnel-drop.svg" width="170" height="187" alt="Funnel Drop"/>
       </a>
       <br/><b>🔻 Funnel Drop</b>
-      <br/><sub style="color:#c9c2a8">catch users through the funnel</sub>
       <br/><br/>
       <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/funnel-drop.svg">
         <img src="https://img.shields.io/badge/Play_fullscreen-fe4e02?style=for-the-badge" alt="Play fullscreen"/>
@@ -167,7 +161,6 @@ _Full-stack analytics platform: Streamlit + Supabase with RLS and an Edge Functi
         <img src="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/cohort-catch.svg" width="170" height="187" alt="Cohort Catch"/>
       </a>
       <br/><b>📊 Cohort Catch</b>
-      <br/><sub style="color:#c9c2a8">catch returning users</sub>
       <br/><br/>
       <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/cohort-catch.svg">
         <img src="https://img.shields.io/badge/Play_fullscreen-fe4e02?style=for-the-badge" alt="Play fullscreen"/>
@@ -180,7 +173,6 @@ _Full-stack analytics platform: Streamlit + Supabase with RLS and an Edge Functi
         <img src="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/sql-query.svg" width="170" height="187" alt="SQL Query"/>
       </a>
       <br/><b>🧩 SQL Query</b>
-      <br/><sub style="color:#c9c2a8">fill the blank</sub>
       <br/><br/>
       <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/sql-query.svg">
         <img src="https://img.shields.io/badge/Play_fullscreen-fe4e02?style=for-the-badge" alt="Play fullscreen"/>
@@ -191,7 +183,6 @@ _Full-stack analytics platform: Streamlit + Supabase with RLS and an Edge Functi
         <img src="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/metric-match.svg" width="170" height="187" alt="Metric Match"/>
       </a>
       <br/><b>🃏 Metric Match</b>
-      <br/><sub style="color:#c9c2a8">match metric to formula</sub>
       <br/><br/>
       <a href="https://cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/metric-match.svg">
         <img src="https://img.shields.io/badge/Play_fullscreen-fe4e02?style=for-the-badge" alt="Play fullscreen"/>
