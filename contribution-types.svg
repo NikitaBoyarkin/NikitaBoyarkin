@@ -1,0 +1,21 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 495 195' width='495px' height='195px'>
+    <rect fill='#1400c3' width='495' height='195' rx='6'/>
+    <text x='247.5' y='30' text-anchor='middle' fill='#c9c2a8' font-family='Segoe UI, Ubuntu, sans-serif' font-size='14px' font-weight='400'>NikitaBoyarkin's Contribution Types</text>
+      <text x='24' y='66' fill='#f8f2da' font-family='Segoe UI, Ubuntu, sans-serif' font-size='11px'>Commits</text>
+  <rect x='150' y='51' width='270' height='14' rx='3' fill='#0c0078'/>
+  <rect x='150' y='51' width='270.0' height='14' rx='3' fill='#fe4e02'><title>Commits: 664</title></rect>
+  <text x='430' y='66' fill='#fe4e02' font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px' font-weight='700'>664</text>
+  <text x='24' y='96' fill='#f8f2da' font-family='Segoe UI, Ubuntu, sans-serif' font-size='11px'>Pull Requests</text>
+  <rect x='150' y='81' width='270' height='14' rx='3' fill='#0c0078'/>
+  <rect x='150' y='81' width='0.0' height='14' rx='3' fill='#fe4e02'><title>Pull Requests: 0</title></rect>
+  <text x='430' y='96' fill='#fe4e02' font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px' font-weight='700'>0</text>
+  <text x='24' y='126' fill='#f8f2da' font-family='Segoe UI, Ubuntu, sans-serif' font-size='11px'>Issues</text>
+  <rect x='150' y='111' width='270' height='14' rx='3' fill='#0c0078'/>
+  <rect x='150' y='111' width='0.0' height='14' rx='3' fill='#fe4e02'><title>Issues: 0</title></rect>
+  <text x='430' y='126' fill='#fe4e02' font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px' font-weight='700'>0</text>
+  <text x='24' y='156' fill='#f8f2da' font-family='Segoe UI, Ubuntu, sans-serif' font-size='11px'>Code Reviews</text>
+  <rect x='150' y='141' width='270' height='14' rx='3' fill='#0c0078'/>
+  <rect x='150' y='141' width='0.8' height='14' rx='3' fill='#fe4e02'><title>Code Reviews: 2</title></rect>
+  <text x='430' y='156' fill='#fe4e02' font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px' font-weight='700'>2</text>
+<text x='247.5' y='185' text-anchor='middle' fill='#c9c2a8' font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px'>Last updated: 2026-09-18 13:11 UTC</text>
+  </svg>

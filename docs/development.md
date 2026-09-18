@@ -8,7 +8,7 @@ The rendered artifact is `README.md`; everything here is for whoever maintains i
 | Path | What |
 |---|---|
 | `README.md` | The profile (rendered on github.com/NikitaBoyarkin). |
-| `scripts/build_profile.py` | Generates `stats/activity/metrics/top-languages.svg` + the README "Last refreshed" block. |
+| `scripts/build_profile.py` | Generates `stats/activity/metrics/contribution-types/monthly-activity/top-languages.svg` + the README "Last refreshed" block. |
 | `scripts/preview.sh` | Renders `README.md` locally as GitHub-flavored markdown and opens it in the browser (`scripts/preview.sh`). |
 | `tests/test_build_profile.py` | Pure-function tests for the generator (no network). |
 | `.github/workflows/ci.yml` | Lint + tests on every push/PR. |
@@ -32,13 +32,13 @@ scripts/preview.sh                # local README preview
 
 ## Coverage
 
-`scripts/build_profile.py` is covered by `tests/test_build_profile.py` at **~58%**
+`scripts/build_profile.py` is covered by `tests/test_build_profile.py` at **~68%**
 (network fetch, `main()`, and the CLI path are intentionally not covered — tests
 must stay offline). CI prints the number with `pytest --cov=build_profile`.
 
 ## Asset / link pinning policy
 
-- **Self-hosted cards** (`stats`, `activity`, `metrics`, `top-languages`)
+- **Self-hosted cards** (`stats`, `activity`, `metrics`, `contribution-types`, `monthly-activity`, `top-languages`)
   are referenced from the repo's own `main` via `raw.githubusercontent.com` — no
   third-party render service, zero external requests at render time.
 - **Contribution snake** is committed to `main` and referenced from `main`.

@@ -5,6 +5,8 @@ Assets generated:
 - stats.svg: contributions, current/longest streak, public repos, followers (GraphQL)
 - activity.svg: 30-day contribution activity sparkline
 - metrics.svg: slim self-hosted contribution map (replaces lowlighter/metrics)
+- contribution-types.svg: commits / PRs / issues / reviews breakdown
+- monthly-activity.svg: contributions aggregated by month
 - top-languages.svg: aggregated language bytes donut
 - README.md: refresh the 'Last refreshed' marker block
 
@@ -116,6 +118,10 @@ def fetch_user_data() -> dict:
           totalCount
         }
         contributionsCollection(from: $from, to: $to) {
+          totalCommitContributions
+          totalPullRequestContributions
+          totalIssueContributions
+          totalPullRequestReviewContributions
           contributionCalendar {
             totalContributions
             weeks { contributionDays { date contributionCount } }
@@ -141,6 +147,17 @@ def extract_contributions(user_data: dict) -> list[dict]:
     days = [d for w in calendar["weeks"] for d in w["contributionDays"]]
     today_iso = datetime.now(timezone.utc).date().isoformat()
     return [d for d in days if d["date"] <= today_iso]
+
+
+def extract_contribution_types(user_data: dict) -> list[tuple[str, int]]:
+    """Contribution breakdown by type (commits / PRs / issues / reviews)."""
+    c = user_data["user"]["contributionsCollection"]
+    return [
+        ("Commits", c["totalCommitContributions"]),
+        ("Pull Requests", c["totalPullRequestContributions"]),
+        ("Issues", c["totalIssueContributions"]),
+        ("Code Reviews", c["totalPullRequestReviewContributions"]),
+    ]
 
 
 def compute_streaks(days: list[dict]) -> tuple[int, int, int]:
@@ -241,6 +258,78 @@ def build_activity_svg(days: list[dict]) -> str:
       <polyline points='{polyline}' fill='none' stroke='{ACCENT}' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' opacity='0.8'/>
     {circles}  <text x='{pad_left}' y='{H - 8}' fill='{TEXT_MUTED}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='10px'>{tail[0]["date"]}</text>
       <text x='{W - pad_right}' y='{H - 8}' text-anchor='end' fill='{TEXT_MUTED}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='10px'>{tail[-1]["date"]}</text>
+    </svg>
+    """
+    return textwrap.dedent(svg).strip() + "\n"
+
+
+def build_contribution_types_svg(items: list[tuple[str, int]]) -> str:
+    """Horizontal bars: how the year's contributions break down by type."""
+    W, H = 495, 195
+    bar_x, bar_w, bar_h = 150, 270, 14
+    row_y0, step = 62, 30
+    max_val = max((v for _, v in items), default=0) or 1
+    rows = ""
+    for i, (label, value) in enumerate(items):
+        y = row_y0 + i * step
+        w = (value / max_val) * bar_w
+        rows += (
+            f"    <text x='24' y='{y + 4}' fill='{TEXT_MAIN}' "
+            f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='11px'>{label}</text>\n"
+            f"    <rect x='{bar_x}' y='{y - bar_h + 3}' width='{bar_w}' height='{bar_h}' "
+            f"rx='3' fill='#0c0078'/>\n"
+            f"    <rect x='{bar_x}' y='{y - bar_h + 3}' width='{w:.1f}' height='{bar_h}' "
+            f"rx='3' fill='{ACCENT}'><title>{label}: {value}</title></rect>\n"
+            f"    <text x='{bar_x + bar_w + 10}' y='{y + 4}' fill='{ACCENT}' "
+            f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px' font-weight='700'>{value}</text>\n"
+        )
+    svg = f"""\
+    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 {W} {H}' width='{W}px' height='{H}px'>
+      <rect fill='{BG}' width='{W}' height='{H}' rx='6'/>
+      <text x='{W / 2}' y='30' text-anchor='middle' fill='{TEXT_MUTED}' font-family='Segoe UI, Ubuntu, sans-serif' font-size='14px' font-weight='400'>{USER}'s Contribution Types</text>
+    {rows}  <text x='{W / 2}' y='{H - 10}' text-anchor='middle' fill='{TEXT_MUTED}' font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px'>Last updated: {datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")}</text>
+    </svg>
+    """
+    return textwrap.dedent(svg).strip() + "\n"
+
+
+def build_monthly_activity_svg(days: list[dict]) -> str:
+    """Vertical bars: contributions aggregated by month (last 12 months)."""
+    totals: dict[str, int] = {}
+    for d in days:
+        totals[d["date"][:7]] = totals.get(d["date"][:7], 0) + d["contributionCount"]
+    months = sorted(totals)[-12:]
+    W, H = 800, 190
+    pad_left, pad_right, pad_top, pad_bottom = 60, 20, 50, 40
+    chart_w, chart_h = W - pad_left - pad_right, H - pad_top - pad_bottom
+    n = len(months) or 1
+    max_val = max((totals[m] for m in months), default=0) or 1
+    gap = chart_w / n
+    bar_w = gap * 0.6
+    bars = ""
+    for i, m in enumerate(months):
+        value = totals[m]
+        h = (value / max_val) * chart_h
+        x = pad_left + i * gap + (gap - bar_w) / 2
+        y = pad_top + chart_h - h
+        label = datetime.strptime(m + "-01", "%Y-%m-%d").strftime("%b")
+        bars += (
+            f"    <rect x='{x:.1f}' y='{y:.1f}' width='{bar_w:.1f}' height='{h:.1f}' rx='2' "
+            f"fill='{ACCENT}'><title>{m}: {value} contributions</title></rect>\n"
+            f"    <text x='{x + bar_w / 2:.1f}' y='{pad_top + chart_h + 16}' text-anchor='middle' "
+            f"fill='{TEXT_MUTED}' font-family='Segoe UI, Ubuntu, sans-serif' font-size='10px'>{label}</text>\n"
+            f"    <text x='{x + bar_w / 2:.1f}' y='{y - 5:.1f}' text-anchor='middle' "
+            f"fill='{TEXT_MAIN}' font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px'>{value}</text>\n"
+        )
+    baseline = (
+        f"    <line x1='{pad_left}' y1='{pad_top + chart_h}' x2='{W - pad_right}' "
+        f"y2='{pad_top + chart_h}' stroke='#0c0078' stroke-width='1'/>\n"
+    )
+    svg = f"""\
+    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 {W} {H}' width='{W}px' height='{H}px'>
+      <rect fill='{BG}' width='{W}' height='{H}' rx='6'/>
+      <text x='{W / 2}' y='28' text-anchor='middle' fill='{TEXT_MUTED}' font-family='Segoe UI, Ubuntu, sans-serif' font-size='14px' font-weight='400'>{USER}'s Monthly Contributions (last 12 months)</text>
+    {baseline}{bars}  <text x='{W / 2}' y='{H - 8}' text-anchor='middle' fill='{TEXT_MUTED}' font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px'>Last updated: {datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")}</text>
     </svg>
     """
     return textwrap.dedent(svg).strip() + "\n"
@@ -423,6 +512,11 @@ def main() -> None:
     write_asset(REPO_ROOT / "stats.svg", build_stats_svg(user_data, total, current, longest))
     write_asset(REPO_ROOT / "activity.svg", build_activity_svg(days))
     write_asset(REPO_ROOT / "metrics.svg", build_metrics_svg(days))
+    write_asset(
+        REPO_ROOT / "contribution-types.svg",
+        build_contribution_types_svg(extract_contribution_types(user_data)),
+    )
+    write_asset(REPO_ROOT / "monthly-activity.svg", build_monthly_activity_svg(days))
 
     try:
         langs = fetch_languages()

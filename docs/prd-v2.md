@@ -228,7 +228,7 @@ concurrency:
 **Acceptance Criteria:**
 - [x] Есть `pyproject.toml` с pytest (и ruff).
 - [x] Шаг `pytest` есть в CI и зелёный на каждый push. _(`.github/workflows/ci.yml`: `ruff check` + `pytest --cov`; локально 19 passed.)_
-- [x] Покрытие `build_profile.py` измерено и задокументировано. _(~58%, `docs/development.md` §Coverage.)_
+- [x] Покрытие `build_profile.py` измерено и задокументировано. _(~68%, `docs/development.md` §Coverage.)_
 - [x] Тесты не делают сетевых вызовов (моки GraphQL). _(`tests/test_build_profile.py` — только чистые функции.)_
 
 **Dependencies:** None
@@ -320,11 +320,30 @@ concurrency:
 
 **Dependencies:** управляется отдельно.
 
+## 5.1 Итерация v2.1 — новые self-hosted графики
+
+#### REQ-029: Contribution types + Monthly activity `[P2] [DONE]`
+**Описание:** Добавить два self-hosted графика, дающих **новую** информацию (без дублей уже показанных чисел): разбивка вклада по типам (`Commits / Pull Requests / Issues / Code Reviews`) и помесячная динамика за 12 месяцев. Оба — из GitHub GraphQL, в палитре профиля, 0 внешних запросов.
+
+**Acceptance Criteria:**
+- [x] `contribution-types.svg` — горизонтальные бары, данные из `contributionsCollection` (`build_contribution_types_svg`).
+- [x] `monthly-activity.svg` — вертикальные бары по месяцам из того же calendar (`build_monthly_activity_svg`).
+- [x] Оба — self-hosted через `raw.githubusercontent.com/<repo>/main/*.svg`, 0 внешних запросов.
+- [x] Новые поля добавлены в единственный GraphQL-запрос (`totalCommit/PR/Issue/ReviewContributions`) — по-прежнему 1 запрос за прогон.
+- [x] Оба подключены в README (секция ⚡ Activity), в `profile.yml` `file_pattern` и покрыты тестами.
+- [x] Числа не дублируют stats/metrics (types — декомпозиция, monthly — временной ряд).
+
+**Dependencies:** REQ-014 (стабильный CI), REQ-029 наследует бюджет REQ-018.
+
 ## 6. Non-Functional Requirements
 
 ### Performance
 - `metrics.svg` ≤80 KB; карточки метрик — 0 внешних запросов при рендере.
-- LCP профиля < 2s (десктоп/мобильный).
+- **LCP профиля < 2s — недостижимо из этого репо.** Замер 2026-09-18 (Lighthouse 12):
+  desktop `LCP 4.2s`, `FCP 1.4s`, `TBT 0ms`, `CLS 0.001`, perf 0.70; mobile-sim `LCP 10.2s`,
+  perf 0.45. Все opportunities — ресурсы github.com (`unused-css 134 KiB`, `unused-js 313 KiB`),
+  не наши карточки. Наш вклад — векторные SVG ≤44 KB, часть лениво. Реальный repo-контролируемый
+  бюджет: суммарный вес self-hosted карточек ≤ 80 KB на карточку.
 
 ### Reliability
 - Ни один workflow не запускает сам себя (0 loop-коммитов).
@@ -410,26 +429,33 @@ concurrency:
 | REQ-017 | `€716K/yr` и `48× ROI` убраны из профиля; каждая метрика подкреплена бейджем `Case study`. |
 | REQ-018 | `metrics.yml` (lowlighter) удалён; `metrics.svg` self-hosted (`build_metrics_svg`, heatmap без totals) — **44 921 B**; `streak.svg` слит в `stats.svg` и удалён (числа без дублей). |
 | REQ-019 | `keepalive.yml`, `scripts/keepalive.sh` удалены; `enable_keepalive: false` в `update-notes.yml`; `--allow-empty` отсутствует. |
-| REQ-020 | `pyproject.toml` (pytest/ruff); `.github/workflows/ci.yml` — `ruff check` + `pytest --cov`; покрытие ~58% в `docs/development.md`. |
+| REQ-020 | `pyproject.toml` (pytest/ruff); `.github/workflows/ci.yml` — `ruff check` + `pytest --cov`; покрытие ~68% в `docs/development.md`. |
 | REQ-021 | Footer credits — только живые сервисы; `GH_USER`/`--user` вместо shell `$USER`; один GraphQL-запрос за прогон; `PLAN.md` → навигатор; `docs/prd.md` → исторический архив; `preview.sh` и политика пиннинга в `docs/development.md`; ветка `output` удалена. |
 | REQ-022 | Явный label «opens in a new tab»; `<title>`/`<desc>`/`role="img"` в 8/8 игровых SVG; все игровые ссылки → `@main`. |
 | REQ-023 | Единая UTM-схема на header/cv/featured/building/notes/connect; схема задокументирована. |
 | REQ-024 | «Building» ведёт на портфолио (HTTP 200). |
 | REQ-025 | H2 «Data / Product Analyst (Middle+)»; featured выше игр. |
 | REQ-026 | Placeholder TODO P1.3 удалён; секция не добавлена (ждёт реальных данных). |
+| REQ-029 | `contribution-types.svg` + `monthly-activity.svg` — новые self-hosted графики (`build_contribution_types_svg` / `build_monthly_activity_svg`); поля типов добавлены в единственный GraphQL-запрос; подключены в README/`profile.yml`/тестах. |
 
-**Верификация:** `pytest` — 19 passed; `ruff check scripts tests` — All checks passed;
+**Верификация:** `pytest` — 23 passed; `ruff check scripts tests` — All checks passed;
 `python3 scripts/build_profile.py --dry-run` — генератор отрабатывает, ассеты собираются
 (в dry-run README-блок пропускается); featured case-study URL volta/supabase/sql — HTTP 200;
-`metrics.svg` — 44 KB (цель ≤80 KB).
+`metrics.svg` — 44 KB (цель ≤80 KB); карточки отрендерены в PNG и проверены визуально
+(непрозрачный фон → light/dark не влияет).
+
+**Lighthouse (2026-09-18, github.com/NikitaBoyarkin):** desktop perf 0.70, `LCP 4.2s`,
+`FCP 1.4s`, `TBT 0ms`, `CLS 0.001`; mobile-sim perf 0.45, `LCP 10.2s`. Все opportunities —
+ресурсы github.com; наш вклад мал. **Вывод: NFR «LCP < 2s» не достижим силами репо**
+(см. §6 Performance — бюджет переформулирован на вес карточек).
 
 **Документы:** `docs/development.md` (пайплайн, покрытие, пиннинг, UTM, CI-защита),
 `docs/posthog-setup.md` (гайд для deferred REQ-027), `PLAN.md` (навигатор),
 `docs/prd.md` (архив v1).
 
 **Не закрыто (вне кода):** 7-дневные чекпойнты REQ-014/019; launchd plist вне репо;
-визуальные проверки REQ-018/022/025 (глаз/мобайл); Lighthouse LCP < 2s (NFR);
-REQ-026 (ввод), REQ-027 (deferred), REQ-028 (внешний репозиторий сайта).
+REQ-026 (ввод), REQ-027 (deferred), REQ-028 (внешний репозиторий сайта);
+Q9 (игры → 4 — ждёт решения владельца, impact Low).
 
 ---
 

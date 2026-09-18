@@ -51,6 +51,14 @@ _Last refreshed: 2026-09-18 12:58 UTC · 368 contributions in the last 7 days_
 </p>
 
 <p align="center">
+  <img src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/monthly-activity.svg" alt="Monthly contributions" />
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/contribution-types.svg" alt="Contribution types" />
+</p>
+
+<p align="center">
   <img src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/activity.svg" alt="NikitaBoyarkin Activity Graph" />
 </p>
 
@@ -272,4 +280,4 @@ _Ten end-to-end SQL cases on DuckDB — funnel, N-day retention, DAU/MAU stickin
 
 ---
 
-<sub>Profile cards (stats, activity, contribution map, top languages) are self-hosted via `scripts/build_profile.py`. Powered by [snk](https://github.com/Platane/snk), [blog-post-workflow](https://github.com/gautamkrishnar/blog-post-workflow), [skill-icons](https://github.com/tandpfun/skill-icons), [shields.io](https://shields.io), and [jsDelivr](https://www.jsdelivr.com).</sub>
+<sub>Profile cards (stats, activity, contribution map, contribution types, monthly activity, top languages) are self-hosted via `scripts/build_profile.py`. Powered by [snk](https://github.com/Platane/snk), [blog-post-workflow](https://github.com/gautamkrishnar/blog-post-workflow), [skill-icons](https://github.com/tandpfun/skill-icons), [shields.io](https://shields.io), and [jsDelivr](https://www.jsdelivr.com).</sub>

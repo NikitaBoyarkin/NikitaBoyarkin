@@ -122,6 +122,60 @@ def test_build_activity_svg_all_zero():
     assert svg.startswith("<svg")  # max_val guarded to 1
 
 
+# ---------- contribution types / monthly activity ----------
+
+
+def _contrib_user_data():
+    return {
+        "user": {
+            "contributionsCollection": {
+                "totalCommitContributions": 500,
+                "totalPullRequestContributions": 40,
+                "totalIssueContributions": 10,
+                "totalPullRequestReviewContributions": 5,
+            }
+        }
+    }
+
+
+def test_extract_contribution_types():
+    types = bp.extract_contribution_types(_contrib_user_data())
+    assert types == [
+        ("Commits", 500),
+        ("Pull Requests", 40),
+        ("Issues", 10),
+        ("Code Reviews", 5),
+    ]
+
+
+def test_build_contribution_types_svg():
+    svg = bp.build_contribution_types_svg(bp.extract_contribution_types(_contrib_user_data()))
+    assert svg.startswith("<svg")
+    assert "Commits" in svg and "500" in svg and "Code Reviews" in svg
+
+
+def test_contribution_types_zero_does_not_crash():
+    svg = bp.build_contribution_types_svg([("Commits", 0), ("Issues", 0)])
+    assert svg.startswith("<svg")  # max guarded to 1
+
+
+def test_build_monthly_activity_svg():
+    svg = bp.build_monthly_activity_svg(_days([1, 2, 3, 4, 5, 6, 7]))
+    assert svg.startswith("<svg")
+    assert "Monthly Contributions" in svg
+    assert "Jan" in svg  # 2026-01 from _days()
+
+
+def test_monthly_activity_splits_months():
+    days = [
+        {"date": "2026-01-15", "contributionCount": 3},
+        {"date": "2026-02-10", "contributionCount": 7},
+    ]
+    svg = bp.build_monthly_activity_svg(days)
+    assert "Jan" in svg and "Feb" in svg
+    assert "<title>2026-02: 7 contributions</title>" in svg
+
+
 # ---------- update_readme_refresh_block ----------
 
 
