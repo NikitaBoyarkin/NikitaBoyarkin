@@ -218,11 +218,7 @@ _Ten end-to-end SQL cases on DuckDB — funnel, N-day retention, DAU/MAU stickin
 ### 📝 Recent Notes
 
 <!-- RECENT-POSTS-LIST:START -->
-- [Кейсы с собеседований: как диагностировать просадку метрики](https://nikitaboyarkin.github.io/posts/analyst-interview-cases/)
-- [Проактивность аналитика за рамками роли](https://nikitaboyarkin.github.io/posts/analyst-proactivity/)
-- [Churn + uplift: кому дать скидку &lpar;причинный таргетинг&rpar;](https://nikitaboyarkin.github.io/posts/churn-uplift-discount/)
-- [EDA-шаблон с кодом: разведочный анализ по-продуктовому](https://nikitaboyarkin.github.io/posts/eda-python-template/)
-- [Feature Impact: как измерить влияние фичи, когда A/B невозможен](https://nikitaboyarkin.github.io/posts/feature-impact-analysis/)
+- [Кейсы с собеседований: как диагностировать просадку метрики](https://nikitaboyarkin.github.io/posts/analyst-interview-cases/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)- [Проактивность аналитика за рамками роли](https://nikitaboyarkin.github.io/posts/analyst-proactivity/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)- [Churn + uplift: кому дать скидку &lpar;причинный таргетинг&rpar;](https://nikitaboyarkin.github.io/posts/churn-uplift-discount/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)- [EDA-шаблон с кодом: разведочный анализ по-продуктовому](https://nikitaboyarkin.github.io/posts/eda-python-template/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)- [Feature Impact: как измерить влияние фичи, когда A/B невозможен](https://nikitaboyarkin.github.io/posts/feature-impact-analysis/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)
 <!-- RECENT-POSTS-LIST:END -->
 
 > Auto-updated daily from the [site RSS](https://nikitaboyarkin.github.io/rss.xml) via GitHub Actions.
