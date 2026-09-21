@@ -4,15 +4,15 @@
           font-family='Segoe UI, Ubuntu, sans-serif' font-size='14px' font-weight='400'>NikitaBoyarkin's Top Languages</text>
     <g transform='rotate(-90 104 124)'>
       <circle cx='104' cy='124' r='60' fill='none' stroke='#f8f2da' stroke-opacity='0.14' stroke-width='19'/>
-      <circle cx='104' cy='124' r='60' fill='none' stroke='#3572A5' stroke-opacity='1.0' stroke-width='19' stroke-dasharray='124.2 252.8' stroke-dashoffset='-0.0'><title>Python: 33.3%</title></circle>
-  <circle cx='104' cy='124' r='60' fill='none' stroke='#3178c6' stroke-opacity='1.0' stroke-width='19' stroke-dasharray='85.7 291.3' stroke-dashoffset='-125.7'><title>TypeScript: 23.1%</title></circle>
-  <circle cx='104' cy='124' r='60' fill='none' stroke='#DA5B0B' stroke-opacity='1.0' stroke-width='19' stroke-dasharray='66.2 310.8' stroke-dashoffset='-212.9'><title>Jupyter Notebook: 18.0%</title></circle>
-  <circle cx='104' cy='124' r='60' fill='none' stroke='#ff5a03' stroke-opacity='1.0' stroke-width='19' stroke-dasharray='44.2 332.8' stroke-dashoffset='-280.6'><title>Astro: 12.1%</title></circle>
-  <circle cx='104' cy='124' r='60' fill='none' stroke='#f1e05a' stroke-opacity='1.0' stroke-width='19' stroke-dasharray='15.0 362.0' stroke-dashoffset='-326.4'><title>JavaScript: 4.4%</title></circle>
-  <circle cx='104' cy='124' r='60' fill='none' stroke='#663399' stroke-opacity='1.0' stroke-width='19' stroke-dasharray='11.7 365.3' stroke-dashoffset='-342.9'><title>CSS: 3.5%</title></circle>
-  <circle cx='104' cy='124' r='60' fill='none' stroke='#e34c26' stroke-opacity='1.0' stroke-width='19' stroke-dasharray='7.2 369.8' stroke-dashoffset='-356.0'><title>HTML: 2.3%</title></circle>
-  <circle cx='104' cy='124' r='60' fill='none' stroke='#c6538c' stroke-opacity='1.0' stroke-width='19' stroke-dasharray='3.5 373.5' stroke-dashoffset='-364.7'><title>SCSS: 1.3%</title></circle>
-  <circle cx='104' cy='124' r='60' fill='none' stroke='#f8f2da' stroke-opacity='0.45' stroke-width='19' stroke-dasharray='5.8 371.2' stroke-dashoffset='-369.7'><title>Other: 1.9%</title></circle>
+      <circle cx='104' cy='124' r='60' fill='none' stroke='#3572A5' stroke-opacity='1.0' stroke-width='19' stroke-dasharray='123.9 253.1' stroke-dashoffset='-0.0'><title>Python: 33.3%</title></circle>
+  <circle cx='104' cy='124' r='60' fill='none' stroke='#3178c6' stroke-opacity='1.0' stroke-width='19' stroke-dasharray='86.7 290.3' stroke-dashoffset='-125.4'><title>TypeScript: 23.4%</title></circle>
+  <circle cx='104' cy='124' r='60' fill='none' stroke='#DA5B0B' stroke-opacity='1.0' stroke-width='19' stroke-dasharray='66.1 310.9' stroke-dashoffset='-213.6'><title>Jupyter Notebook: 17.9%</title></circle>
+  <circle cx='104' cy='124' r='60' fill='none' stroke='#ff5a03' stroke-opacity='1.0' stroke-width='19' stroke-dasharray='44.0 333.0' stroke-dashoffset='-281.1'><title>Astro: 12.1%</title></circle>
+  <circle cx='104' cy='124' r='60' fill='none' stroke='#f1e05a' stroke-opacity='1.0' stroke-width='19' stroke-dasharray='14.9 362.1' stroke-dashoffset='-326.6'><title>JavaScript: 4.4%</title></circle>
+  <circle cx='104' cy='124' r='60' fill='none' stroke='#663399' stroke-opacity='1.0' stroke-width='19' stroke-dasharray='11.5 365.5' stroke-dashoffset='-343.1'><title>CSS: 3.5%</title></circle>
+  <circle cx='104' cy='124' r='60' fill='none' stroke='#e34c26' stroke-opacity='1.0' stroke-width='19' stroke-dasharray='7.2 369.8' stroke-dashoffset='-356.1'><title>HTML: 2.3%</title></circle>
+  <circle cx='104' cy='124' r='60' fill='none' stroke='#c6538c' stroke-opacity='1.0' stroke-width='19' stroke-dasharray='3.5 373.5' stroke-dashoffset='-364.8'><title>SCSS: 1.3%</title></circle>
+  <circle cx='104' cy='124' r='60' fill='none' stroke='#f8f2da' stroke-opacity='0.45' stroke-width='19' stroke-dasharray='5.7 371.3' stroke-dashoffset='-369.8'><title>Other: 1.9%</title></circle>
 </g>
       <text x='104' y='120' text-anchor='middle' fill='#f8f2da' font-family='Segoe UI, Ubuntu, sans-serif' font-size='13px' font-weight='700'>Python</text>
   <text x='104' y='139' text-anchor='middle' fill='#fe4e02' font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px' font-weight='700'>33%</text>
@@ -21,10 +21,10 @@
   <text x='442' y='56' text-anchor='end' fill='#f8f2da' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='11px'>33.3%</text>
   <rect x='196' y='64' width='11' height='11' rx='2' fill='#3178c6' fill-opacity='1.0' stroke='#f8f2da' stroke-opacity='0.25' stroke-width='0.5'/>
   <text x='215' y='73' fill='#f8f2da' font-family='Segoe UI, Ubuntu, sans-serif' font-size='11px'>TypeScript</text>
-  <text x='442' y='73' text-anchor='end' fill='#f8f2da' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='11px'>23.1%</text>
+  <text x='442' y='73' text-anchor='end' fill='#f8f2da' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='11px'>23.4%</text>
   <rect x='196' y='81' width='11' height='11' rx='2' fill='#DA5B0B' fill-opacity='1.0' stroke='#f8f2da' stroke-opacity='0.25' stroke-width='0.5'/>
   <text x='215' y='90' fill='#f8f2da' font-family='Segoe UI, Ubuntu, sans-serif' font-size='11px'>Jupyter Notebook</text>
-  <text x='442' y='90' text-anchor='end' fill='#f8f2da' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='11px'>18.0%</text>
+  <text x='442' y='90' text-anchor='end' fill='#f8f2da' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='11px'>17.9%</text>
   <rect x='196' y='98' width='11' height='11' rx='2' fill='#ff5a03' fill-opacity='1.0' stroke='#f8f2da' stroke-opacity='0.25' stroke-width='0.5'/>
   <text x='215' y='107' fill='#f8f2da' font-family='Segoe UI, Ubuntu, sans-serif' font-size='11px'>Astro</text>
   <text x='442' y='107' text-anchor='end' fill='#f8f2da' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='11px'>12.1%</text>
@@ -44,5 +44,5 @@
   <text x='215' y='192' fill='#f8f2da' font-family='Segoe UI, Ubuntu, sans-serif' font-size='11px'>Other</text>
   <text x='442' y='192' text-anchor='end' fill='#f8f2da' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='11px'>1.9%</text>
   <text x='230.0' y='214' text-anchor='middle' fill='#f8f2da' fill-opacity='0.62'
-          font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px'>Last updated: 2026-09-20 09:18 UTC</text>
+          font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px'>Last updated: 2026-09-21 09:59 UTC</text>
   </svg>
