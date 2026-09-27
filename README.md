@@ -80,7 +80,7 @@ _Last refreshed: 2026-09-27 10:03 UTC · 189 contributions in the last 7 days_
 
 #### 1. <a href="https://github.com/NikitaBoyarkin/volta-banking"><img src="volta-neobank.svg" align="absmiddle" alt="Volta Neobank" /></a> — Product Analytics
 
-_End-to-end neobank analytics: funnel, A/B test, retention, segmentation. **+6.24pp KYC conversion (Z=6.35, p<0.0001).** CUPED + AA-test + Bonferroni — full methodology in the case study._
+_End-to-end neobank analytics: funnel, A/B test, retention, segmentation. **+5.72pp KYC conversion (Z=5.82, p<0.0001).** CUPED + AA-test + Bonferroni — full methodology in the case study._
 
 [![Repo](https://img.shields.io/badge/Repo-volta--banking-0f2a2b?style=for-the-badge&logo=github&logoColor=fe4e02)](https://github.com/NikitaBoyarkin/volta-banking)
 [![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/projects/volta/?utm_source=github&utm_medium=profile_readme&utm_campaign=featured)

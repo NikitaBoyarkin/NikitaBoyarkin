@@ -6,7 +6,10 @@ Run: python3 -m pytest tests/test_build_profile.py -v
 import math
 import re
 import sys
+import xml.etree.ElementTree as ET
 from pathlib import Path
+
+import pytest
 
 # scripts/ is not a package — import via sys.path, mirroring the vault pattern.
 SCRIPTS = Path(__file__).resolve().parent.parent / "scripts"
@@ -273,3 +276,118 @@ def test_metrics_svg_title_marks_every_day():
     # Each day is a rect with an accessible <title>.
     assert svg.count("<rect") >= len(days)
     assert svg.count("<title>") == len(days)
+
+
+# ---------- F2: empty contribution history ----------
+
+
+def test_build_activity_svg_empty_days_does_not_crash():
+    # Regression: an empty calendar reached `tail[0]` / `tail[-1]` and raised
+    # IndexError; both endpoints are now guarded with `if tail else ""`.
+    svg = bp.build_activity_svg([])
+    assert "<svg" in svg
+    ET.fromstring(svg)  # still well-formed XML
+    assert not re.search(r"\d{4}-\d{2}-\d{2}", svg)  # no date labels
+    assert "<circle" not in svg  # no data points
+
+
+# ---------- F3: top-languages failure is no longer swallowed ----------
+
+
+def _full_user_data():
+    # build_stats_svg and extract_contribution_types both run inside main(),
+    # so the stub payload needs the fields each of them reads.
+    return {
+        "user": {
+            "createdAt": "2020-03-15T10:00:00Z",
+            "repositories": {"totalCount": 42},
+            "followers": {"totalCount": 17},
+            "contributionsCollection": {
+                "totalCommitContributions": 500,
+                "totalPullRequestContributions": 40,
+                "totalIssueContributions": 10,
+                "totalPullRequestReviewContributions": 5,
+            },
+        }
+    }
+
+
+def _raising(exc):
+    def _raise():
+        raise exc
+
+    return _raise
+
+
+def _stub_main(monkeypatch, languages_exc):
+    """Stub every IO/network dependency of main(); return the logging recorder."""
+    logged: list = []
+    monkeypatch.setattr(sys, "argv", ["build_profile.py"])
+    monkeypatch.setattr(bp, "fetch_user_data", _full_user_data)
+    monkeypatch.setattr(bp, "extract_contributions", lambda data: [])
+    monkeypatch.setattr(bp, "compute_streaks", lambda days: (0, 0, 0))
+    monkeypatch.setattr(bp, "write_asset", lambda path, content: None)
+    monkeypatch.setattr(bp, "update_readme_refresh_block", lambda days: False)
+    monkeypatch.setattr(bp, "fetch_languages", _raising(languages_exc))
+    monkeypatch.setattr(bp.logging, "exception", lambda *a, **k: logged.append(a))
+    return logged
+
+
+def test_main_reraises_language_failure_but_not_non_network_errors(monkeypatch):
+    # Regression: `except Exception` + `print("... skipped ...")` turned a dead
+    # top-languages card into a green CI run.
+    logged = _stub_main(monkeypatch, RuntimeError("boom"))
+    with pytest.raises(RuntimeError, match="boom"):
+        bp.main()
+    assert logged, "logging.exception must run before the re-raise"
+
+    # Narrowing proof: a non-network error never enters the handler at all, so
+    # it escapes unlogged. `except Exception: raise` would have logged it.
+    logged.clear()
+    monkeypatch.setattr(bp, "fetch_languages", _raising(ValueError("not a network error")))
+    with pytest.raises(ValueError, match="not a network error"):
+        bp.main()
+    assert logged == [], "ValueError must escape the narrowed except clause unlogged"
+
+
+# ---------- F4: untrusted values are XML-escaped ----------
+
+
+def test_untrusted_values_are_xml_escaped(monkeypatch):
+    # Language names and linguist colors come from the GitHub API; a raw quote
+    # in a color used to escape its SVG attribute and break well-formedness.
+    svg = bp.build_top_languages_svg([("<&>", 10, "#fe4e02'><script>")])
+    ET.fromstring(svg)
+    assert "<script>" not in svg
+    assert "&lt;" in svg
+
+    monkeypatch.setattr(bp, "USER", "a<b&c")
+    stats = bp.build_stats_svg(_full_user_data(), total=1, current=1, longest=1)
+    ET.fromstring(stats)
+    assert "a<b&c" not in stats
+    assert "&lt;" in stats
+
+    types = bp.build_contribution_types_svg([("x<y", 3)])
+    ET.fromstring(types)
+    assert "x<y" not in types
+    assert "&lt;" in types
+
+
+def test_monthly_activity_escapes_untrusted_date(monkeypatch):
+    # A day whose date carries markup must not reach the SVG as raw text.
+    monkeypatch.setattr(bp, "USER", "a<b")
+    svg = bp.build_monthly_activity_svg([{"date": "2026-01-<script>", "contributionCount": 3}])
+    ET.fromstring(svg)
+    assert "<script>" not in svg
+    assert "&lt;" in svg  # from the escaped login in the card title
+
+
+# ---------- F5: month labels are locale-independent ----------
+
+
+def test_monthly_activity_month_label_is_locale_independent():
+    # Regression: strftime("%b") under LC_TIME=ru_RU rendered "янв" into an
+    # otherwise English card. No locale is set here — the code must not need one.
+    svg = bp.build_monthly_activity_svg([{"date": "2026-01-15", "contributionCount": 1}])
+    assert ">Jan<" in svg  # label is rendered as `>{label}</text>`
+    assert "янв" not in svg

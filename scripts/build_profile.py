@@ -21,14 +21,17 @@ from __future__ import annotations
 
 import argparse
 import json
+import logging
 import os
 import re
 import textwrap
 import time
 import urllib.error
 import urllib.request
+import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
+from xml.sax.saxutils import escape
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 # GitHub login is a config value, never the OS user: `$USER` on macOS/Linux is
@@ -50,6 +53,21 @@ def _without_timestamp(content: str) -> str:
     return _TIMESTAMP_RE.sub("Last updated:", content)
 
 
+def _esc(value: object) -> str:
+    """XML-escape a value for both text nodes and single-quoted attributes.
+
+    Language names, the GitHub login and linguist colors come from outside this
+    process; raw interpolation produced non-well-formed SVG, and a color carrying
+    a quote could escape its attribute.
+    """
+    return escape(str(value), {'"': "&quot;", "'": "&apos;"})
+
+
+# Fixed English month labels: strftime("%b") is locale-dependent, so a dev machine
+# with LC_TIME=ru_RU rendered Cyrillic months into an otherwise English card.
+_MONTHS = ("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
+
+
 def write_asset(path: Path, content: str) -> None:
     """Write an asset file idempotently, respecting --dry-run."""
     if path.exists() and _without_timestamp(path.read_text(encoding="utf-8")) == _without_timestamp(
@@ -57,6 +75,9 @@ def write_asset(path: Path, content: str) -> None:
     ):
         print(f"Unchanged {path.name} (timestamp-only diff)")
         return
+    if path.suffix == ".svg":
+        # Fail loudly here rather than commit a card GitHub renders as a broken image.
+        ET.fromstring(content)
     if DRY_RUN:
         print(f"[dry-run] would write {path.name} ({len(content)} chars)")
         return
@@ -202,7 +223,7 @@ def build_stats_svg(user_data: dict, total: int, current: int, longest: int) -> 
       </defs>
       <g clip-path='url(#rs)'>
         <rect fill='{SURFACE}' width='{W}' height='{H}'/>
-        <text x='247.5' y='32' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='14px' font-weight='400'>{USER}'s GitHub Stats</text>
+        <text x='247.5' y='32' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='14px' font-weight='400'>{_esc(USER)}'s GitHub Stats</text>
         <g transform='translate(0, 55)'>
           <text x='82.5' y='0' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='12px' font-weight='400'>Contributions</text>
           <text x='82.5' y='28' text-anchor='middle' fill='{ACCENT}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='28px' font-weight='700'>{total}</text>
@@ -256,15 +277,15 @@ def build_activity_svg(days: list[dict]) -> str:
 
     circles = ""
     for x, y, count, day in points:
-        circles += f"    <circle cx='{x:.1f}' cy='{y:.1f}' r='3' fill='{ACCENT}'><title>{day}: {count} contributions</title></circle>\n"
+        circles += f"    <circle cx='{x:.1f}' cy='{y:.1f}' r='3' fill='{ACCENT}'><title>{_esc(day)}: {count} contributions</title></circle>\n"
 
     svg = f"""\
     <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 {W} {H}' width='{W}px' height='{H}px'>
       <rect fill='{BG}' width='{W}' height='{H}'/>
       <text x='{W / 2}' y='20' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='13px' font-weight='400'>Last 30 Days Activity</text>
       <polyline points='{polyline}' fill='none' stroke='{ACCENT}' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' opacity='0.8'/>
-    {circles}  <text x='{pad_left}' y='{H - 8}' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='10px'>{tail[0]["date"]}</text>
-      <text x='{W - pad_right}' y='{H - 8}' text-anchor='end' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='10px'>{tail[-1]["date"]}</text>
+    {circles}  <text x='{pad_left}' y='{H - 8}' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='10px'>{_esc(tail[0]["date"]) if tail else ""}</text>
+      <text x='{W - pad_right}' y='{H - 8}' text-anchor='end' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='10px'>{_esc(tail[-1]["date"]) if tail else ""}</text>
     </svg>
     """
     return textwrap.dedent(svg).strip() + "\n"
@@ -282,18 +303,18 @@ def build_contribution_types_svg(items: list[tuple[str, int]]) -> str:
         w = (value / max_val) * bar_w
         rows += (
             f"    <text x='24' y='{y + 4}' fill='{TEXT_MAIN}' "
-            f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='11px'>{label}</text>\n"
+            f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='11px'>{_esc(label)}</text>\n"
             f"    <rect x='{bar_x}' y='{y - bar_h + 3}' width='{bar_w}' height='{bar_h}' "
             f"rx='3' fill='{TEXT_MAIN}' fill-opacity='{FAINT_OP}'/>\n"
             f"    <rect x='{bar_x}' y='{y - bar_h + 3}' width='{w:.1f}' height='{bar_h}' "
-            f"rx='3' fill='{ACCENT}'><title>{label}: {value}</title></rect>\n"
+            f"rx='3' fill='{ACCENT}'><title>{_esc(label)}: {value}</title></rect>\n"
             f"    <text x='{bar_x + bar_w + 10}' y='{y + 4}' fill='{ACCENT}' "
             f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px' font-weight='700'>{value}</text>\n"
         )
     svg = f"""\
     <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 {W} {H}' width='{W}px' height='{H}px'>
       <rect fill='{BG}' width='{W}' height='{H}' rx='6'/>
-      <text x='{W / 2}' y='30' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='Segoe UI, Ubuntu, sans-serif' font-size='14px' font-weight='400'>{USER}'s Contribution Types</text>
+      <text x='{W / 2}' y='30' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='Segoe UI, Ubuntu, sans-serif' font-size='14px' font-weight='400'>{_esc(USER)}'s Contribution Types</text>
     {rows}  <text x='{W / 2}' y='{H - 10}' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px'>Last updated: {datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")}</text>
     </svg>
     """
@@ -319,10 +340,10 @@ def build_monthly_activity_svg(days: list[dict]) -> str:
         h = (value / max_val) * chart_h
         x = pad_left + i * gap + (gap - bar_w) / 2
         y = pad_top + chart_h - h
-        label = datetime.strptime(m + "-01", "%Y-%m-%d").strftime("%b")
+        label = _MONTHS[int(m[5:7]) - 1]
         bars += (
             f"    <rect x='{x:.1f}' y='{y:.1f}' width='{bar_w:.1f}' height='{h:.1f}' rx='2' "
-            f"fill='{ACCENT}'><title>{m}: {value} contributions</title></rect>\n"
+            f"fill='{ACCENT}'><title>{_esc(m)}: {value} contributions</title></rect>\n"
             f"    <text x='{x + bar_w / 2:.1f}' y='{pad_top + chart_h + 16}' text-anchor='middle' "
             f"fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='Segoe UI, Ubuntu, sans-serif' font-size='10px'>{label}</text>\n"
             f"    <text x='{x + bar_w / 2:.1f}' y='{y - 5:.1f}' text-anchor='middle' "
@@ -335,7 +356,7 @@ def build_monthly_activity_svg(days: list[dict]) -> str:
     svg = f"""\
     <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 {W} {H}' width='{W}px' height='{H}px'>
       <rect fill='{BG}' width='{W}' height='{H}' rx='6'/>
-      <text x='{W / 2}' y='28' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='Segoe UI, Ubuntu, sans-serif' font-size='14px' font-weight='400'>{USER}'s Monthly Contributions (last 12 months)</text>
+      <text x='{W / 2}' y='28' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='Segoe UI, Ubuntu, sans-serif' font-size='14px' font-weight='400'>{_esc(USER)}'s Monthly Contributions (last 12 months)</text>
     {baseline}{bars}  <text x='{W / 2}' y='{H - 8}' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px'>Last updated: {datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")}</text>
     </svg>
     """
@@ -368,12 +389,12 @@ def build_metrics_svg(days: list[dict]) -> str:
                 fill = f"fill='{TEXT_MAIN}' fill-opacity='{FAINT_OP}'"
             rects += (
                 f"    <rect x='{x}' y='{y}' width='{cell}' height='{cell}' rx='2' "
-                f"{fill}><title>{day['date']}: {count} contributions</title></rect>\n"
+                f"{fill}><title>{_esc(day['date'])}: {count} contributions</title></rect>\n"
             )
     svg = f"""\
     <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 {W} {H}' width='{W}px' height='{H}px'>
       <rect fill='{BG}' width='{W}' height='{H}' rx='6'/>
-      <text x='{W / 2}' y='28' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='14px' font-weight='400'>{USER}'s Contribution Map</text>
+      <text x='{W / 2}' y='28' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='14px' font-weight='400'>{_esc(USER)}'s Contribution Map</text>
     {rects}  <text x='{W / 2}' y='{H - 10}' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='9px'>Last updated: {datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")}</text>
     </svg>
     """
@@ -444,11 +465,11 @@ def build_top_languages_svg(langs: list[tuple[str, int, str]]) -> str:
         dash = max(frac * circumference - gap, 0.5)
         offset = -cum * circumference
         slices += (
-            f"    <circle cx='{cx}' cy='{cy}' r='{R}' fill='none' stroke='{color}' "
+            f"    <circle cx='{cx}' cy='{cy}' r='{R}' fill='none' stroke='{_esc(color)}' "
             f"stroke-opacity='{alpha}' "
             f"stroke-width='{sw}' stroke-dasharray='{dash:.1f} {circumference - dash:.1f}' "
             f"stroke-dashoffset='{offset:.1f}'>"
-            f"<title>{name}: {size / total * 100:.1f}%</title></circle>\n"
+            f"<title>{_esc(name)}: {size / total * 100:.1f}%</title></circle>\n"
         )
         cum += frac
 
@@ -457,11 +478,11 @@ def build_top_languages_svg(langs: list[tuple[str, int, str]]) -> str:
         ly = 56 + i * 17
         pct = size / total * 100
         legend += (
-            f"    <rect x='196' y='{ly - 9}' width='11' height='11' rx='2' fill='{color}' "
+            f"    <rect x='196' y='{ly - 9}' width='11' height='11' rx='2' fill='{_esc(color)}' "
             f"fill-opacity='{alpha}' "
             f"stroke='{TEXT_MAIN}' stroke-opacity='0.25' stroke-width='0.5'/>\n"
             f"    <text x='215' y='{ly}' fill='{TEXT_MAIN}' "
-            f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='11px'>{name}</text>\n"
+            f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='11px'>{_esc(name)}</text>\n"
             f"    <text x='{W - 18}' y='{ly}' text-anchor='end' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' "
             f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='11px'>{pct:.1f}%</text>\n"
         )
@@ -471,7 +492,7 @@ def build_top_languages_svg(langs: list[tuple[str, int, str]]) -> str:
         center = (
             f"    <text x='{cx}' y='{cy - 4}' text-anchor='middle' fill='{TEXT_MAIN}' "
             f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='13px' "
-            f"font-weight='700'>{_truncate(rows[0][0], 11)}</text>\n"
+            f"font-weight='700'>{_esc(_truncate(rows[0][0], 11))}</text>\n"
             f"    <text x='{cx}' y='{cy + 15}' text-anchor='middle' fill='{ACCENT}' "
             f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px' "
             f"font-weight='700'>{rows[0][1] / total * 100:.0f}%</text>\n"
@@ -481,7 +502,7 @@ def build_top_languages_svg(langs: list[tuple[str, int, str]]) -> str:
     <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 {W} {H}' width='{W}px' height='{H}px'>
       <rect fill='{BG}' width='{W}' height='{H}' rx='6'/>
       <text x='{W / 2}' y='30' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}'
-            font-family='Segoe UI, Ubuntu, sans-serif' font-size='14px' font-weight='400'>{USER}'s Top Languages</text>
+            font-family='Segoe UI, Ubuntu, sans-serif' font-size='14px' font-weight='400'>{_esc(USER)}'s Top Languages</text>
       <g transform='rotate(-90 {cx} {cy})'>
         <circle cx='{cx}' cy='{cy}' r='{R}' fill='none' stroke='{TEXT_MAIN}' stroke-opacity='{FAINT_OP}' stroke-width='{sw}'/>
     {slices}  </g>
@@ -564,8 +585,10 @@ def main() -> None:
         langs = fetch_languages()
         write_asset(REPO_ROOT / "top-languages.svg", build_top_languages_svg(langs))
         print(f"top-languages: {len(langs)} languages")
-    except Exception as exc:
-        print(f"top-languages.svg skipped: {exc}")
+    except (RuntimeError, urllib.error.URLError, TimeoutError):
+        # A silent skip left a stale card behind on a green CI run.
+        logging.exception("top-languages.svg could not be generated")
+        raise
 
     if DRY_RUN:
         print("[dry-run] skip README refresh block")

@@ -29,5 +29,5 @@ jobs:
           # REQ-019: no dummy/keepalive commits — daily build already keeps the repo active.
           enable_keepalive: "false"
           # REQ-023: consistent UTM scheme for outbound section links.
-          template: "- [$title]($url?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)"
+          template: "- [$title]($url?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)\n"
           tag_post_pre_newline: "true"
