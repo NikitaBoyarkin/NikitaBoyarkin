@@ -86,18 +86,18 @@ def write_asset(path: Path, content: str) -> None:
 
 
 # Palette — hekcode brand, 60 / 30 / 10:
-#   #1400c3  deep blue  → background / surfaces
+#   #f8f2da  cream      → background / surfaces
 #   #fe4e02  orange     → primary data / actions
-#   #f8f2da  cream      → text / highlights
+#   #1400c3  deep blue  → text / highlights
 # Every secondary tone is an opacity on one of these three tokens, never a new
 # hex value, so the rendered cards stay exactly 3 colors.
-BG = "#1400c3"
-SURFACE = "#1400c3"
+BG = "#f8f2da"
+SURFACE = "#f8f2da"
 ACCENT = "#fe4e02"
-TEXT_MAIN = "#f8f2da"
-MUTED_OP = "0.62"  # secondary text — cream @62% over blue
-FAINT_OP = "0.14"  # gridlines, baselines, empty tracks/tiles — cream @14%
-GHOST_OP = "0.45"  # neutral "Other" slice — cream @45%
+TEXT_MAIN = "#1400c3"
+MUTED_OP = "0.62"  # secondary text — blue @62% over cream
+FAINT_OP = "0.14"  # gridlines, baselines, empty tracks/tiles — blue @14%
+GHOST_OP = "0.45"  # neutral "Other" slice — blue @45%
 
 
 def graphql(query: str, variables: dict, retries: int = 3) -> dict:
@@ -615,7 +615,10 @@ def build_analytics_evidence_svg() -> str:
         # and MODERATE at 0.62 lands near 2.9:1 against its own chip — under WCAG AA.
         if conf == "HIGH":
             pill = f"fill='{ACCENT}'"
-            label_fill, label_op, label = BG, "1", "HIGH"
+            # Label is the dark token, not BG: on an inverted (cream) card BG is the
+            # light colour, and cream on #fe4e02 would be 3.0:1 — blue keeps the 3.5:1
+            # the card had before the palette flip.
+            label_fill, label_op, label = TEXT_MAIN, "1", "HIGH"
         elif conf == "MODERATE":
             pill = f"fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}'"
             label_fill, label_op, label = BG, "1", "MODERATE"

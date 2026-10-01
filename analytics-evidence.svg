@@ -1,49 +1,49 @@
 <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 458' width='800px' height='458px'
        role='img' aria-label='Analytics evidence: Experiment design &amp; A/B, Variance reduction (CUPED), Multiple testing &amp; sequential, Calibration-first testing, Causal inference, Uplift targeting, SQL depth, Data engineering, Bayesian A/B. Each linked row points to the public repository that produced the result.'>
     <title>Analytics evidence: Experiment design &amp; A/B, Variance reduction (CUPED), Multiple testing &amp; sequential, Calibration-first testing, Causal inference, Uplift targeting, SQL depth, Data engineering, Bayesian A/B</title>
-    <rect fill='#1400c3' width='800' height='458' rx='6'/>
-    <text x='24' y='30' fill='#f8f2da' font-family='Segoe UI, Ubuntu, sans-serif'
+    <rect fill='#f8f2da' width='800' height='458' rx='6'/>
+    <text x='24' y='30' fill='#1400c3' font-family='Segoe UI, Ubuntu, sans-serif'
           font-size='13px' font-weight='700' letter-spacing='1.2'>NikitaBoyarkin — ANALYTICS EVIDENCE</text>
-    <text x='24' y='46' fill='#f8f2da' fill-opacity='0.62'
+    <text x='24' y='46' fill='#1400c3' fill-opacity='0.62'
           font-family='Segoe UI, Ubuntu, sans-serif' font-size='10px'>method · verified result · source repository — no unlinked claims</text>
     <line x1='24' y1='54' x2='776' y2='54'
-          stroke='#f8f2da' stroke-opacity='0.14' stroke-width='1'/>
-      <text x='24' y='78' fill='#f8f2da' font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px' font-weight='600'>Experiment design &amp; A/B</text>
-  <text x='24' y='93' fill='#f8f2da' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='10px'>volta-banking · +5.72pp KYC lift · p&lt;0.0001 · no SRM</text>
+          stroke='#1400c3' stroke-opacity='0.14' stroke-width='1'/>
+      <text x='24' y='78' fill='#1400c3' font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px' font-weight='600'>Experiment design &amp; A/B</text>
+  <text x='24' y='93' fill='#1400c3' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='10px'>volta-banking · +5.72pp KYC lift · p&lt;0.0001 · no SRM</text>
   <rect x='700' y='72' width='76' height='16' rx='8' fill='#fe4e02'/>
   <text x='738.0' y='84' text-anchor='middle' fill='#1400c3' fill-opacity='1' font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px' font-weight='700'>HIGH</text>
-  <text x='24' y='120' fill='#f8f2da' font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px' font-weight='600'>Variance reduction (CUPED)</text>
-  <text x='24' y='135' fill='#f8f2da' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='10px'>causal-uplift · SE ×0.742 — 10k → 5.5k users per arm</text>
+  <text x='24' y='120' fill='#1400c3' font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px' font-weight='600'>Variance reduction (CUPED)</text>
+  <text x='24' y='135' fill='#1400c3' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='10px'>causal-uplift · SE ×0.742 — 10k → 5.5k users per arm</text>
   <rect x='700' y='114' width='76' height='16' rx='8' fill='#fe4e02'/>
   <text x='738.0' y='126' text-anchor='middle' fill='#1400c3' fill-opacity='1' font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px' font-weight='700'>HIGH</text>
-  <text x='24' y='162' fill='#f8f2da' font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px' font-weight='600'>Multiple testing &amp; sequential</text>
-  <text x='24' y='177' fill='#f8f2da' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='10px'>volta-banking · Bonferroni · Holm · BH · O&apos;Brien-Fleming · HTE q-values</text>
+  <text x='24' y='162' fill='#1400c3' font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px' font-weight='600'>Multiple testing &amp; sequential</text>
+  <text x='24' y='177' fill='#1400c3' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='10px'>volta-banking · Bonferroni · Holm · BH · O&apos;Brien-Fleming · HTE q-values</text>
   <rect x='700' y='156' width='76' height='16' rx='8' fill='#fe4e02'/>
   <text x='738.0' y='168' text-anchor='middle' fill='#1400c3' fill-opacity='1' font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px' font-weight='700'>HIGH</text>
-  <text x='24' y='204' fill='#f8f2da' font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px' font-weight='600'>Calibration-first testing</text>
-  <text x='24' y='219' fill='#f8f2da' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='10px'>ab_test · Type I · power · coverage · FWER re-run as test assertions</text>
+  <text x='24' y='204' fill='#1400c3' font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px' font-weight='600'>Calibration-first testing</text>
+  <text x='24' y='219' fill='#1400c3' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='10px'>ab_test · Type I · power · coverage · FWER re-run as test assertions</text>
   <rect x='700' y='198' width='76' height='16' rx='8' fill='#fe4e02'/>
   <text x='738.0' y='210' text-anchor='middle' fill='#1400c3' fill-opacity='1' font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px' font-weight='700'>HIGH</text>
-  <text x='24' y='246' fill='#f8f2da' font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px' font-weight='600'>Causal inference</text>
-  <text x='24' y='261' fill='#f8f2da' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='10px'>volta-banking · DiD ATT +9.2pp · parallel trends ✓ · placebo null</text>
-  <rect x='700' y='240' width='76' height='16' rx='8' fill='#f8f2da' fill-opacity='0.62'/>
-  <text x='738.0' y='252' text-anchor='middle' fill='#1400c3' fill-opacity='1' font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px' font-weight='700'>MODERATE</text>
-  <text x='24' y='288' fill='#f8f2da' font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px' font-weight='600'>Uplift targeting</text>
-  <text x='24' y='303' fill='#f8f2da' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='10px'>causal-uplift · n=6k: curve metrics noise-dominated (oracle 2.25σ); signal in ranking + segment split</text>
-  <rect x='700' y='282' width='76' height='16' rx='8' fill='#f8f2da' fill-opacity='0.62'/>
-  <text x='738.0' y='294' text-anchor='middle' fill='#1400c3' fill-opacity='1' font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px' font-weight='700'>MODERATE</text>
-  <text x='24' y='330' fill='#f8f2da' font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px' font-weight='600'>SQL depth</text>
-  <text x='24' y='345' fill='#f8f2da' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='10px'>sql-analytics-case-study · 25 DuckDB cases · QUALIFY · PIVOT · recursive CTE · z-test in SQL</text>
+  <text x='24' y='246' fill='#1400c3' font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px' font-weight='600'>Causal inference</text>
+  <text x='24' y='261' fill='#1400c3' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='10px'>volta-banking · DiD ATT +9.2pp · parallel trends ✓ · placebo null</text>
+  <rect x='700' y='240' width='76' height='16' rx='8' fill='#1400c3' fill-opacity='0.62'/>
+  <text x='738.0' y='252' text-anchor='middle' fill='#f8f2da' fill-opacity='1' font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px' font-weight='700'>MODERATE</text>
+  <text x='24' y='288' fill='#1400c3' font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px' font-weight='600'>Uplift targeting</text>
+  <text x='24' y='303' fill='#1400c3' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='10px'>causal-uplift · n=6k: curve metrics noise-dominated (oracle 2.25σ); signal in ranking + segment split</text>
+  <rect x='700' y='282' width='76' height='16' rx='8' fill='#1400c3' fill-opacity='0.62'/>
+  <text x='738.0' y='294' text-anchor='middle' fill='#f8f2da' fill-opacity='1' font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px' font-weight='700'>MODERATE</text>
+  <text x='24' y='330' fill='#1400c3' font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px' font-weight='600'>SQL depth</text>
+  <text x='24' y='345' fill='#1400c3' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='10px'>sql-analytics-case-study · 25 DuckDB cases · QUALIFY · PIVOT · recursive CTE · z-test in SQL</text>
   <rect x='700' y='324' width='76' height='16' rx='8' fill='#fe4e02'/>
   <text x='738.0' y='336' text-anchor='middle' fill='#1400c3' fill-opacity='1' font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px' font-weight='700'>HIGH</text>
-  <text x='24' y='372' fill='#f8f2da' font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px' font-weight='600'>Data engineering</text>
-  <text x='24' y='387' fill='#f8f2da' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='10px'>airflow · Airflow 3 · DQ validation · alerts · run metrics · idempotent</text>
+  <text x='24' y='372' fill='#1400c3' font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px' font-weight='600'>Data engineering</text>
+  <text x='24' y='387' fill='#1400c3' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='10px'>airflow · Airflow 3 · DQ validation · alerts · run metrics · idempotent</text>
   <rect x='700' y='366' width='76' height='16' rx='8' fill='#fe4e02'/>
   <text x='738.0' y='378' text-anchor='middle' fill='#1400c3' fill-opacity='1' font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px' font-weight='700'>HIGH</text>
-  <text x='24' y='414' fill='#f8f2da' font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px' font-weight='600'>Bayesian A/B</text>
-  <text x='24' y='429' fill='#f8f2da' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='10px'>learning — no published case yet</text>
-  <rect x='700' y='408' width='76' height='16' rx='8' fill='none' stroke='#f8f2da' stroke-opacity='0.62'/>
-  <text x='738.0' y='420' text-anchor='middle' fill='#f8f2da' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px' font-weight='700'>GAP</text>
-<text x='400.0' y='450' text-anchor='middle' fill='#f8f2da' fill-opacity='0.62'
-          font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px'>Sources verified in CI · last updated: 2026-10-01 19:39 UTC</text>
+  <text x='24' y='414' fill='#1400c3' font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px' font-weight='600'>Bayesian A/B</text>
+  <text x='24' y='429' fill='#1400c3' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='10px'>learning — no published case yet</text>
+  <rect x='700' y='408' width='76' height='16' rx='8' fill='none' stroke='#1400c3' stroke-opacity='0.62'/>
+  <text x='738.0' y='420' text-anchor='middle' fill='#1400c3' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px' font-weight='700'>GAP</text>
+<text x='400.0' y='450' text-anchor='middle' fill='#1400c3' fill-opacity='0.62'
+          font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px'>Sources verified in CI · last updated: 2026-10-01 19:44 UTC</text>
   </svg>
