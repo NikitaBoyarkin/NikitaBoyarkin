@@ -391,3 +391,100 @@ def test_monthly_activity_month_label_is_locale_independent():
     svg = bp.build_monthly_activity_svg([{"date": "2026-01-15", "contributionCount": 1}])
     assert ">Jan<" in svg  # label is rendered as `>{label}</text>`
     assert "янв" not in svg
+
+
+# --- analytics-evidence ledger ------------------------------------------------
+
+ALLOWED_EVIDENCE_HOSTS = {"github.com", "nikitaboyarkin.github.io"}
+
+
+def test_analytics_evidence_rows_are_complete():
+    assert bp.ANALYTICS_EVIDENCE, "ledger is empty"
+    for row in bp.ANALYTICS_EVIDENCE:
+        assert row["method"].strip()
+        assert row["evidence"].strip()
+        assert row["confidence"] in {"HIGH", "MODERATE", "GAP"}
+
+
+def test_analytics_evidence_methods_are_unique():
+    methods = [row["method"] for row in bp.ANALYTICS_EVIDENCE]
+    assert len(methods) == len(set(methods))
+
+
+def test_analytics_evidence_urls_are_https_on_allowlisted_hosts():
+    import urllib.parse
+
+    for row in bp.ANALYTICS_EVIDENCE:
+        if not row["url"]:
+            # A row without a source is a declared gap, not an unproven claim.
+            assert row["confidence"] == "GAP"
+            continue
+        parsed = urllib.parse.urlparse(row["url"])
+        assert parsed.scheme == "https", row["url"]
+        assert parsed.hostname in ALLOWED_EVIDENCE_HOSTS, row["url"]
+
+
+def test_analytics_evidence_fits_the_card():
+    proven = [row for row in bp.ANALYTICS_EVIDENCE if row["url"]]
+    gaps = [row for row in bp.ANALYTICS_EVIDENCE if not row["url"]]
+    assert len(proven) <= 8, "card height is fixed; more rows overflow the viewBox"
+    assert len(gaps) <= 1, "keep the gap list to one row, not a second section"
+
+
+def test_evidence_sources_are_distinct_and_ordered():
+    urls = bp.evidence_sources()
+    assert urls == list(dict.fromkeys(urls)), "sources must be de-duplicated in ledger order"
+    covered = {row["url"] for row in bp.ANALYTICS_EVIDENCE if row["url"]}
+    assert set(urls) == covered
+
+
+def test_analytics_evidence_svg_is_well_formed_and_accessible():
+    svg = bp.build_analytics_evidence_svg()
+    root = ET.fromstring(svg)
+    assert root.attrib["role"] == "img"
+    assert root.attrib["aria-label"].strip()
+    assert root.find("{http://www.w3.org/2000/svg}title") is not None
+
+
+def test_analytics_evidence_svg_names_every_method():
+    svg = bp.build_analytics_evidence_svg()
+    for row in bp.ANALYTICS_EVIDENCE:
+        assert bp._esc(row["method"]) in svg, row["method"]
+
+
+def test_analytics_evidence_svg_is_within_budget():
+    svg = bp.build_analytics_evidence_svg()
+    assert len(svg.encode("utf-8")) < 20_000
+
+
+def test_analytics_evidence_svg_escapes_untrusted_values(monkeypatch):
+    hostile = (
+        {
+            "method": "A&B <script>",
+            "evidence": '"quoted" & <tag>',
+            "confidence": "HIGH",
+            "source": "x",
+            "url": "https://github.com/NikitaBoyarkin/x",
+        },
+    )
+    monkeypatch.setattr(bp, "ANALYTICS_EVIDENCE", hostile)
+    svg = bp.build_analytics_evidence_svg()
+    assert "&amp;" in svg and "&lt;script&gt;" in svg
+    assert "<script>" not in svg
+    ET.fromstring(svg)
+
+
+def test_chip_labels_clear_the_aa_contrast_floor():
+    """A chip label drawn translucent over a translucent pill blends twice.
+
+    GHOST_OP cream on this card is ~3.6:1, and MODERATE-over-MODERATE ~2.9:1 — both
+    miss WCAG AA's 4.5:1 for small text. Every chip label must stay >= MUTED_OP (~5.8:1).
+    """
+    root = ET.fromstring(bp.build_analytics_evidence_svg())
+    svg_text = "{http://www.w3.org/2000/svg}text"
+    labels = {"HIGH", "MODERATE", "GAP"}
+    chips = [el for el in root.iter(svg_text) if (el.text or "") in labels]
+    assert len(chips) == len(bp.ANALYTICS_EVIDENCE)
+    for el in chips:
+        op = float(el.attrib.get("fill-opacity", "1"))
+        assert op >= float(bp.MUTED_OP), f"{el.text} chip at opacity {op} fails AA"

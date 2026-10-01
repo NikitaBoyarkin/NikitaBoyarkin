@@ -32,3 +32,24 @@ jobs:
 
       - name: Test
         run: pytest --cov=build_profile --cov-report=term-missing
+
+  links:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Every analytics-evidence source link must resolve
+        run: |
+          set -euo pipefail
+          links=$(python3 scripts/build_profile.py --print-links)
+          test -n "$links" || { echo "ledger has no source links"; exit 1; }
+          for url in $links; do
+            echo "checking $url"
+            curl -fsSL --retry 2 --max-time 20 -o /dev/null "$url"
+          done

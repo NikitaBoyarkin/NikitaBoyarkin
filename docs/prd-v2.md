@@ -335,6 +335,28 @@ concurrency:
 
 **Dependencies:** REQ-014 (стабильный CI), REQ-029 наследует бюджет REQ-018.
 
+## 5.2 Итерация v2.2 — Analytics Evidence
+
+#### REQ-030: Полоса доказательств `analytics-evidence.svg` `[P2] [DONE]`
+**Описание:** Профиль показывал голые GitHub-статы — числа без provenance. Позиционирование
+(«CUPED, AA-tests, Bonferroni, Bayesian A/B») лежало текстом, ничем не подкреплённое в один клик.
+Добавлена self-hosted полоса `метод → проверенный результат → источник` с честной строкой-пробелом.
+Фрейминг взят у референса `devlewicki` (GitSocialSpace «Developer Passport»: claim → evidence →
+confidence + открытые пробелы), наполнение — аналитической методологией, а не инженерной гигиеной:
+для найма аналитика весит методология и воспроизводимость, а не Docker/K8s-обвязка.
+
+**Acceptance Criteria:**
+- [x] `ANALYTICS_EVIDENCE` — authored-ledger (8 методов + 1 строка-пробел), **не** вычисление из GitHub API: `+5.72pp, p<0.0001` живёт в кейсе, метаданные репозитория его не содержат.
+- [x] Каждая цифра сверена с исходным репозиторием до публикации (`volta-banking`, `causal-uplift`, `ab_test`, `sql-analytics-case-study`, `airflow`).
+- [x] `build_analytics_evidence_svg()` — `role='img'` + `aria-label` + `<title>`; палитра — только 3 существующих токена, новых hex нет.
+- [x] Строка «Bayesian A/B» без ссылки — declared gap, а не выдуманный claim.
+- [x] Подключено в README (над `### 📊 GitHub Stats`), в `profile.yml` `file_pattern`, в тестах.
+- [x] **Ссылка жива:** CI-job `links` — `python3 scripts/build_profile.py --print-links` → `curl -fsSL` по каждому URL; локально 5/5 → HTTP 200.
+- [x] **Дрейф закрыт:** README писал «Ten end-to-end SQL cases», репозиторий содержит 25 + 1 на реальных данных (UCI Online Retail II) — ровно тот класс дыры, против которого писался REQ-017.
+- [x] ROI намеренно не включён: REQ-017 убрал `€716K/48×` как непроверяемый; карточка держит методологию, не деньги.
+
+**Dependencies:** REQ-017 (непроверяемые числа), REQ-018 (бюджет карточек), REQ-020 (тесты офлайн), REQ-029 (идиома карточки).
+
 ## 6. Non-Functional Requirements
 
 ### Performance
@@ -437,6 +459,7 @@ concurrency:
 | REQ-025 | H2 «Data / Product Analyst (Middle+)»; featured выше игр. |
 | REQ-026 | Placeholder TODO P1.3 удалён; секция не добавлена (ждёт реальных данных). |
 | REQ-029 | `contribution-types.svg` + `monthly-activity.svg` — новые self-hosted графики (`build_contribution_types_svg` / `build_monthly_activity_svg`); поля типов добавлены в единственный GraphQL-запрос; подключены в README/`profile.yml`/тестах. |
+| REQ-030 | `analytics-evidence.svg` — authored-ledger доказательств (`ANALYTICS_EVIDENCE` + `build_analytics_evidence_svg`), 8 методов + строка-пробел; CI-job `links` HTTP-проверяет каждый источник; закрыт дрейф SQL-кейсов (10 → 25 + 1). |
 
 **Верификация:** `pytest` — 23 passed; `ruff check scripts tests` — All checks passed;
 `python3 scripts/build_profile.py --dry-run` — генератор отрабатывает, ассеты собираются

@@ -513,6 +513,151 @@ def build_top_languages_svg(langs: list[tuple[str, int, str]]) -> str:
     return textwrap.dedent(svg).strip() + "\n"
 
 
+# Analytics evidence ledger — authored, not derived.
+#
+# These are methodological results, not repository metadata: "+5.72pp, p<0.0001"
+# lives in a case study, not in the GitHub API, so it cannot be recomputed the way
+# a contribution count can. The table below is therefore the source of truth, and
+# what keeps it honest is not the renderer but the CI job that HTTP-checks every
+# url (see .github/workflows/ci.yml) — a rotting link turns the build red. The
+# "Bayesian A/B" row carries no url on purpose: a declared gap is cheaper to trust
+# than a padded row.
+ANALYTICS_EVIDENCE: tuple[dict[str, str], ...] = (
+    {
+        "method": "Experiment design & A/B",
+        "evidence": "+5.72pp KYC lift · p<0.0001 · no SRM",
+        "confidence": "HIGH",
+        "source": "volta-banking",
+        "url": "https://github.com/NikitaBoyarkin/volta-banking",
+    },
+    {
+        "method": "Variance reduction (CUPED)",
+        "evidence": "SE ×0.742 — 10k → 5.5k users per arm",
+        "confidence": "HIGH",
+        "source": "causal-uplift",
+        "url": "https://github.com/NikitaBoyarkin/causal-uplift",
+    },
+    {
+        "method": "Multiple testing & sequential",
+        "evidence": "Bonferroni · Holm · BH · O'Brien-Fleming · HTE q-values",
+        "confidence": "HIGH",
+        "source": "volta-banking",
+        "url": "https://github.com/NikitaBoyarkin/volta-banking",
+    },
+    {
+        "method": "Calibration-first testing",
+        "evidence": "Type I · power · coverage · FWER re-run as test assertions",
+        "confidence": "HIGH",
+        "source": "ab_test",
+        "url": "https://github.com/NikitaBoyarkin/ab_test",
+    },
+    {
+        "method": "Causal inference",
+        "evidence": "DiD ATT +9.2pp · parallel trends ✓ · placebo null",
+        "confidence": "MODERATE",
+        "source": "volta-banking",
+        "url": "https://github.com/NikitaBoyarkin/volta-banking",
+    },
+    {
+        "method": "Uplift targeting",
+        "evidence": "n=6k: curve metrics noise-dominated (oracle 2.25σ); signal in ranking + segment split",
+        "confidence": "MODERATE",
+        "source": "causal-uplift",
+        "url": "https://github.com/NikitaBoyarkin/causal-uplift",
+    },
+    {
+        "method": "SQL depth",
+        "evidence": "25 DuckDB cases · QUALIFY · PIVOT · recursive CTE · z-test in SQL",
+        "confidence": "HIGH",
+        "source": "sql-analytics-case-study",
+        "url": "https://github.com/NikitaBoyarkin/sql-analytics-case-study",
+    },
+    {
+        "method": "Data engineering",
+        "evidence": "Airflow 3 · DQ validation · alerts · run metrics · idempotent",
+        "confidence": "HIGH",
+        "source": "airflow",
+        "url": "https://github.com/NikitaBoyarkin/airflow",
+    },
+    {
+        "method": "Bayesian A/B",
+        "evidence": "learning — no published case yet",
+        "confidence": "GAP",
+        "source": "",
+        "url": "",
+    },
+)
+
+
+def evidence_sources() -> list[str]:
+    """Distinct source URLs, in ledger order — the CI link-liveness job's input."""
+    return list(dict.fromkeys(row["url"] for row in ANALYTICS_EVIDENCE if row["url"]))
+
+
+def build_analytics_evidence_svg() -> str:
+    """Evidence band: method -> verified result -> source, with honest gaps.
+
+    Every row that carries a number also carries the repository that produced it,
+    so a reader can check it in one click instead of taking the profile's word.
+    """
+    W = 800
+    header_h, row_h, footer_h = 58, 42, 22
+    chip_w = 76
+    H = header_h + row_h * len(ANALYTICS_EVIDENCE) + footer_h
+    rows = ""
+    for i, row in enumerate(ANALYTICS_EVIDENCE):
+        y = header_h + i * row_h
+        conf = row["confidence"]
+        source = row["source"]
+        detail = f"{source} · {row['evidence']}" if source else row["evidence"]
+        # Three visual weights, still only the three brand tokens. Opacity goes on the
+        # pill only: a label drawn translucent *over* a translucent pill blends twice,
+        # and MODERATE at 0.62 lands near 2.9:1 against its own chip — under WCAG AA.
+        if conf == "HIGH":
+            pill = f"fill='{ACCENT}'"
+            label_fill, label_op, label = BG, "1", "HIGH"
+        elif conf == "MODERATE":
+            pill = f"fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}'"
+            label_fill, label_op, label = BG, "1", "MODERATE"
+        else:
+            # A gap is an absence, not a weaker verdict, so it reads as an outline
+            # rather than a dimmer filled pill. Cream at GHOST_OP would be ~3.6:1, so
+            # the outline and its label both stay at MUTED_OP (~5.8:1).
+            pill = f"fill='none' stroke='{TEXT_MAIN}' stroke-opacity='{MUTED_OP}'"
+            label_fill, label_op, label = TEXT_MAIN, MUTED_OP, "GAP"
+        rows += (
+            f"    <text x='24' y='{y + 20}' fill='{TEXT_MAIN}' "
+            f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px' font-weight='600'>"
+            f"{_esc(row['method'])}</text>\n"
+            f"    <text x='24' y='{y + 35}' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' "
+            f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='10px'>{_esc(detail)}</text>\n"
+            f"    <rect x='{W - 24 - chip_w}' y='{y + 14}' width='{chip_w}' height='16' rx='8' "
+            f"{pill}/>\n"
+            f"    <text x='{W - 24 - chip_w / 2}' y='{y + 26}' text-anchor='middle' "
+            f"fill='{label_fill}' fill-opacity='{label_op}' "
+            f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px' font-weight='700'>"
+            f"{label}</text>\n"
+        )
+    methods = ", ".join(_esc(row["method"]) for row in ANALYTICS_EVIDENCE)
+    summary = f"Analytics evidence: {methods}"
+    svg = f"""\
+    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 {W} {H}' width='{W}px' height='{H}px'
+         role='img' aria-label='{summary}. Each linked row points to the public repository that produced the result.'>
+      <title>{summary}</title>
+      <rect fill='{BG}' width='{W}' height='{H}' rx='6'/>
+      <text x='24' y='30' fill='{TEXT_MAIN}' font-family='Segoe UI, Ubuntu, sans-serif'
+            font-size='13px' font-weight='700' letter-spacing='1.2'>{_esc(USER)} — ANALYTICS EVIDENCE</text>
+      <text x='24' y='46' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}'
+            font-family='Segoe UI, Ubuntu, sans-serif' font-size='10px'>method · verified result · source repository — no unlinked claims</text>
+      <line x1='24' y1='{header_h - 4}' x2='{W - 24}' y2='{header_h - 4}'
+            stroke='{TEXT_MAIN}' stroke-opacity='{FAINT_OP}' stroke-width='1'/>
+    {rows}  <text x='{W / 2}' y='{H - 8}' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}'
+            font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px'>Sources verified in CI · last updated: {datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")}</text>
+    </svg>
+    """
+    return textwrap.dedent(svg).strip() + "\n"
+
+
 def update_readme_refresh_block(days: list[dict]) -> bool:
     """Refresh the 'Last refreshed' marker block in README.
 
@@ -560,7 +705,16 @@ def main() -> None:
         default=USER,
         help=f"GitHub login to render (default: {DEFAULT_USER})",
     )
+    parser.add_argument(
+        "--print-links",
+        action="store_true",
+        help="print one evidence source URL per line and exit (CI link-liveness check)",
+    )
     args = parser.parse_args()
+    if args.print_links:
+        for url in evidence_sources():
+            print(url)
+        return
     DRY_RUN = args.dry_run
     USER = args.user
     if DRY_RUN:
@@ -580,6 +734,7 @@ def main() -> None:
         build_contribution_types_svg(extract_contribution_types(user_data)),
     )
     write_asset(REPO_ROOT / "monthly-activity.svg", build_monthly_activity_svg(days))
+    write_asset(REPO_ROOT / "analytics-evidence.svg", build_analytics_evidence_svg())
 
     try:
         langs = fetch_languages()

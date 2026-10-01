@@ -25,6 +25,16 @@
 
 ---
 
+### 🔬 Analytics Evidence
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/analytics-evidence.svg" alt="Analytics evidence: each analytical method linked to the repository that produced it, with a confidence rating" />
+</p>
+
+<sub>Sources: <a href="https://github.com/NikitaBoyarkin/volta-banking">volta-banking</a> · <a href="https://github.com/NikitaBoyarkin/causal-uplift">causal-uplift</a> · <a href="https://github.com/NikitaBoyarkin/ab_test">ab_test</a> · <a href="https://github.com/NikitaBoyarkin/sql-analytics-case-study">sql-analytics-case-study</a> · <a href="https://github.com/NikitaBoyarkin/airflow">airflow</a> — every link is HTTP-checked in CI.</sub>
+
+---
+
 ### 📊 GitHub Stats
 
 <p align="center">
@@ -97,7 +107,7 @@ _Full-stack analytics platform: Streamlit + Supabase with RLS and an Edge Functi
 
 #### 3. <a href="https://github.com/NikitaBoyarkin/sql-analytics-case-study"><img src="sql-case-study.svg" align="absmiddle" alt="SQL Analytics Case Study" /></a>
 
-_Ten end-to-end SQL cases on DuckDB — funnel, N-day retention, DAU/MAU stickiness, LTV, streaks, A/B conversion, attribution. **One command, no server, pytest-verified.**_
+_Twenty-five end-to-end SQL cases on DuckDB — funnel, N-day retention, DAU/MAU stickiness, LTV, streaks, A/B conversion, attribution — plus one case on real UCI Online Retail II data. **One command, no server, pytest-verified.**_
 
 [![Repo](https://img.shields.io/badge/Repo-sql--analytics--case--study-0f2a2b?style=for-the-badge&logo=github&logoColor=fe4e02)](https://github.com/NikitaBoyarkin/sql-analytics-case-study)
 [![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/projects/sql/?utm_source=github&utm_medium=profile_readme&utm_campaign=featured)
