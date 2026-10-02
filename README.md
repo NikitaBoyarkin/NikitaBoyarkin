@@ -2,9 +2,7 @@
   <img src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/hero.svg" width="100%" alt="Nikita Boyarkin — Data / Product Analyst. Ambiguous product questions turned into clean experiments, SQL pipelines, and decisions." />
 </p>
 
-## Hi, I'm Nikita 👋 — Data / Product Analyst
-
-**Data / Product Analyst (Middle+).** I turn ambiguous product questions into clean experiments, SQL pipelines, and decisions backed by data.
+## Hi, I'm Nikita 👋 — Data / Product Analyst (Middle+)
 
 - **Product experimentation** — A/B test design, sample-size planning, guardrail metrics, reproducible reporting. CUPED, AA-tests, Bonferroni, Bayesian A/B.
 - **User lifecycle analytics** — cohort retention, funnel analysis, RFM segmentation.
@@ -31,7 +29,9 @@
   <img src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/analytics-evidence.svg" alt="Analytics evidence: each analytical method linked to the repository that produced it, with a confidence rating" />
 </p>
 
+<!-- EVIDENCE-SOURCES:START -->
 <sub>Sources: <a href="https://github.com/NikitaBoyarkin/volta-banking">volta-banking</a> · <a href="https://github.com/NikitaBoyarkin/causal-uplift">causal-uplift</a> · <a href="https://github.com/NikitaBoyarkin/ab_test">ab_test</a> · <a href="https://github.com/NikitaBoyarkin/sql-analytics-case-study">sql-analytics-case-study</a> · <a href="https://github.com/NikitaBoyarkin/airflow">airflow</a> — every link is HTTP-checked in CI.</sub>
+<!-- EVIDENCE-SOURCES:END -->
 
 ---
 
@@ -90,7 +90,7 @@ _Last refreshed: 2026-10-02 17:26 UTC · 149 contributions in the last 7 days_
 
 #### 1. <a href="https://github.com/NikitaBoyarkin/volta-banking"><img src="volta-neobank.svg" align="absmiddle" alt="Volta Neobank" /></a> — Product Analytics
 
-_End-to-end neobank analytics: funnel, A/B test, retention, segmentation. **+5.72pp KYC conversion (Z=5.82, p<0.0001).** CUPED + AA-test + Bonferroni — full methodology in the case study._
+_End-to-end neobank analytics: funnel, A/B test, retention, segmentation. **+5.72pp KYC conversion** — statistics and methodology live in the evidence ledger above and the case study._
 
 [![Repo](https://img.shields.io/badge/Repo-volta--banking-0f2a2b?style=for-the-badge&logo=github&logoColor=fe4e02)](https://github.com/NikitaBoyarkin/volta-banking)
 [![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/projects/volta/?utm_source=github&utm_medium=profile_readme&utm_campaign=featured)

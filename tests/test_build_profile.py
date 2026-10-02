@@ -415,18 +415,18 @@ def test_analytics_evidence_urls_are_https_on_allowlisted_hosts():
     import urllib.parse
 
     for row in bp.ANALYTICS_EVIDENCE:
-        if not row["url"]:
+        if not row["repo"]:
             # A row without a source is a declared gap, not an unproven claim.
             assert row["confidence"] == "GAP"
             continue
-        parsed = urllib.parse.urlparse(row["url"])
+        parsed = urllib.parse.urlparse(bp.evidence_url(row["repo"]))
         assert parsed.scheme == "https", row["url"]
         assert parsed.hostname in ALLOWED_EVIDENCE_HOSTS, row["url"]
 
 
 def test_analytics_evidence_fits_the_card():
-    proven = [row for row in bp.ANALYTICS_EVIDENCE if row["url"]]
-    gaps = [row for row in bp.ANALYTICS_EVIDENCE if not row["url"]]
+    proven = [row for row in bp.ANALYTICS_EVIDENCE if row["repo"]]
+    gaps = [row for row in bp.ANALYTICS_EVIDENCE if not row["repo"]]
     assert len(proven) <= 8, "card height is fixed; more rows overflow the viewBox"
     assert len(gaps) <= 1, "keep the gap list to one row, not a second section"
 
@@ -434,7 +434,7 @@ def test_analytics_evidence_fits_the_card():
 def test_evidence_sources_are_distinct_and_ordered():
     urls = bp.evidence_sources()
     assert urls == list(dict.fromkeys(urls)), "sources must be de-duplicated in ledger order"
-    covered = {row["url"] for row in bp.ANALYTICS_EVIDENCE if row["url"]}
+    covered = {bp.evidence_url(row["repo"]) for row in bp.ANALYTICS_EVIDENCE if row["repo"]}
     assert set(urls) == covered
 
 
@@ -463,8 +463,7 @@ def test_analytics_evidence_svg_escapes_untrusted_values(monkeypatch):
             "method": "A&B <script>",
             "evidence": '"quoted" & <tag>',
             "confidence": "HIGH",
-            "source": "x",
-            "url": "https://github.com/NikitaBoyarkin/x",
+            "repo": "x",
         },
     )
     monkeypatch.setattr(bp, "ANALYTICS_EVIDENCE", hostile)
@@ -573,3 +572,127 @@ def test_refresh_block_writes_normalized_notes(tmp_path, monkeypatch):
     written = readme.read_text()
     assert "- [A](https://a)\n- [B](https://b)" in written
     assert "- [A](https://a)- [B](https://b)" not in written
+
+
+# ---------- evidence reconciliation ----------
+
+_ALL_PUBLIC = {"volta-banking", "causal-uplift", "ab_test", "sql-analytics-case-study", "airflow"}
+
+
+def test_reconcile_keeps_rows_whose_repo_is_public():
+    rows, warnings = bp.reconcile_evidence(_ALL_PUBLIC)
+    assert warnings == []
+    assert rows == list(bp.ANALYTICS_EVIDENCE)
+    assert rows is not bp.ANALYTICS_EVIDENCE  # a fresh list, not the ledger itself
+
+
+def test_reconcile_withdraws_rows_whose_repo_vanished():
+    rows, warnings = bp.reconcile_evidence({"volta-banking"})
+    # The row that was already a declared gap (repo == "") is neither kept nor withdrawn.
+    expected = [r for r in bp.ANALYTICS_EVIDENCE if r["repo"] and r["repo"] != "volta-banking"]
+    withdrawn = [r for r in rows if "no longer public" in r["evidence"]]
+    assert len(withdrawn) == len(expected) == 5
+    for row in withdrawn:
+        assert row["confidence"] == "GAP"
+        assert row["repo"] == "", "a withdrawn claim must not keep its link"
+        assert bp.evidence_url(row["repo"]) == ""
+    assert warnings and all("is not public" in w for w in warnings)
+
+
+def test_reconcile_with_empty_repo_list_keeps_every_row():
+    """An empty list is missing data, not evidence that every repo is gone."""
+    rows, warnings = bp.reconcile_evidence(set())
+    assert rows == list(bp.ANALYTICS_EVIDENCE)
+    assert len(warnings) == 1
+
+
+def test_reconcile_does_not_mutate_the_ledger():
+    before = [dict(r) for r in bp.ANALYTICS_EVIDENCE]
+    bp.reconcile_evidence(set())
+    bp.reconcile_evidence({"volta-banking"})
+    assert [dict(r) for r in bp.ANALYTICS_EVIDENCE] == before
+
+
+def test_public_repo_names_reads_the_repository_nodes():
+    data = {"user": {"repositories": {"totalCount": 2, "nodes": [{"name": "a"}, {"name": "b"}]}}}
+    assert bp.public_repo_names(data) == {"a", "b"}
+    # Payload without nodes (older query shape) must not raise.
+    assert bp.public_repo_names({"user": {"repositories": {"totalCount": 2}}}) == set()
+
+
+# ---------- generated README evidence-sources line ----------
+
+
+def test_evidence_sources_line_lists_each_repo_once_with_its_url():
+    line = bp.build_evidence_sources_line()
+    assert line.startswith("<sub>Sources: ") and line.endswith("</sub>")
+    for repo in dict.fromkeys(r["repo"] for r in bp.ANALYTICS_EVIDENCE if r["repo"]):
+        assert f'<a href="{bp.evidence_url(repo)}">{repo}</a>' in line
+    assert line.count("volta-banking</a>") == 1, "repo used by 3 rows must appear once"
+
+
+def test_sync_evidence_sources_block_rewrites_and_is_idempotent():
+    doc = "x\n<!-- EVIDENCE-SOURCES:START -->\n<sub>stale</sub>\n<!-- EVIDENCE-SOURCES:END -->\ny\n"
+    out = bp.sync_evidence_sources_block(doc)
+    assert "stale" not in out
+    assert bp.build_evidence_sources_line() in out
+    assert bp.sync_evidence_sources_block(out) == out
+
+
+def test_sync_evidence_sources_block_without_marker_is_untouched():
+    doc = "x\n<sub>Sources: hand typed</sub>\n"
+    assert bp.sync_evidence_sources_block(doc) == doc
+
+
+def _repo_readme() -> str:
+    return (Path(__file__).resolve().parent.parent / "README.md").read_text(encoding="utf-8")
+
+
+def test_readme_evidence_sources_block_is_in_sync():
+    """README drift is impossible: CI compares the block against the ledger."""
+    match = re.search(
+        r"<!-- EVIDENCE-SOURCES:START -->\n(.*?)\n<!-- EVIDENCE-SOURCES:END -->",
+        _repo_readme(),
+        re.DOTALL,
+    )
+    assert match, "EVIDENCE-SOURCES marker missing from README"
+    assert match.group(1) == bp.build_evidence_sources_line()
+
+
+def test_readme_stats_card_height_matches_the_svg():
+    """The card is rendered by an explicit height= in the README."""
+    match = re.search(r'height="(\d+)"\s+src="[^"]*stats\.svg"', _repo_readme())
+    assert match, "stats card tag not found in README"
+    svg = bp.build_stats_svg(_full_user_data(), total=1, current=1, longest=1)
+    assert float(match.group(1)) == float(re.search(r"height='(\d+)px'", svg).group(1))
+
+
+# ---------- readability floor for every card ----------
+
+MIN_CARD_FONT_PX = 11
+
+
+def _all_cards() -> dict:
+    days = _days((i % 7) for i in range(371))
+    return {
+        "hero": bp.build_hero_svg(),
+        "stats": bp.build_stats_svg(_full_user_data(), total=100, current=5, longest=12),
+        "activity": bp.build_activity_svg(days),
+        "metrics": bp.build_metrics_svg(days),
+        "contribution-types": bp.build_contribution_types_svg([("Commits", 500), ("Issues", 3)]),
+        "monthly-activity": bp.build_monthly_activity_svg(days),
+        "top-languages": bp.build_top_languages_svg([("Python", 120000, "#3776AB")]),
+        "analytics-evidence": bp.build_analytics_evidence_svg(),
+    }
+
+
+def test_no_card_renders_text_below_the_readability_floor():
+    """Cards are <img>s rendered at ~1:1, so one SVG px is one screen px.
+
+    The original cards went down to 9px footers and 10px body text. The floor is
+    bound here so a later edit cannot quietly shrink the cards back.
+    """
+    for name, svg in _all_cards().items():
+        sizes = [float(s) for s in re.findall(r"font-size='([\d.]+)px'", svg)]
+        assert sizes, f"{name} renders no sized text"
+        assert min(sizes) >= MIN_CARD_FONT_PX, f"{name} renders {min(sizes)}px text"

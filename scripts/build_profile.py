@@ -203,8 +203,11 @@ def fetch_user_data() -> dict:
         followers {
           totalCount
         }
-        repositories(isFork: false, privacy: PUBLIC, first: 0) {
+        repositories(isFork: false, privacy: PUBLIC, first: 100, ownerAffiliations: OWNER) {
           totalCount
+          nodes {
+            name
+          }
         }
         contributionsCollection(from: $from, to: $to) {
           totalCommitContributions
@@ -268,6 +271,12 @@ def compute_streaks(days: list[dict]) -> tuple[int, int, int]:
     return total, current, longest
 
 
+def public_repo_names(user_data: dict) -> set[str]:
+    """Names of the owner's public non-fork repos — input to evidence reconciliation."""
+    nodes = user_data["user"]["repositories"].get("nodes") or []
+    return {n["name"] for n in nodes if n}
+
+
 def build_stats_svg(user_data: dict, total: int, current: int, longest: int) -> str:
     user = user_data["user"]
     public_repos = user["repositories"]["totalCount"]
@@ -284,32 +293,32 @@ def build_stats_svg(user_data: dict, total: int, current: int, longest: int) -> 
       </defs>
       <g clip-path='url(#rs)'>
         <rect fill='{SURFACE}' width='{W}' height='{H}'/>
-        <text x='247.5' y='32' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='14px' font-weight='400'>{_esc(USER)}'s GitHub Stats</text>
+        <text x='247.5' y='32' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='16px' font-weight='400'>{_esc(USER)}'s GitHub Stats</text>
         <g transform='translate(0, 55)'>
-          <text x='82.5' y='0' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='12px' font-weight='400'>Contributions</text>
-          <text x='82.5' y='28' text-anchor='middle' fill='{ACCENT}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='28px' font-weight='700'>{total}</text>
+          <text x='82.5' y='0' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='13px' font-weight='400'>Contributions</text>
+          <text x='82.5' y='28' text-anchor='middle' fill='{ACCENT}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='30px' font-weight='700'>{total}</text>
         </g>
         <g transform='translate(165, 55)'>
-          <text x='82.5' y='0' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='12px' font-weight='400'>Public Repos</text>
-          <text x='82.5' y='28' text-anchor='middle' fill='{ACCENT}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='28px' font-weight='700'>{public_repos}</text>
+          <text x='82.5' y='0' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='13px' font-weight='400'>Public Repos</text>
+          <text x='82.5' y='28' text-anchor='middle' fill='{ACCENT}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='30px' font-weight='700'>{public_repos}</text>
         </g>
         <g transform='translate(330, 55)'>
-          <text x='82.5' y='0' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='12px' font-weight='400'>Followers</text>
-          <text x='82.5' y='28' text-anchor='middle' fill='{ACCENT}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='28px' font-weight='700'>{followers}</text>
+          <text x='82.5' y='0' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='13px' font-weight='400'>Followers</text>
+          <text x='82.5' y='28' text-anchor='middle' fill='{ACCENT}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='30px' font-weight='700'>{followers}</text>
         </g>
         <g transform='translate(0, 118)'>
-          <text x='82.5' y='0' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='12px' font-weight='400'>Current Streak</text>
-          <text x='82.5' y='28' text-anchor='middle' fill='{ACCENT}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='28px' font-weight='700'>{current}</text>
+          <text x='82.5' y='0' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='13px' font-weight='400'>Current Streak</text>
+          <text x='82.5' y='28' text-anchor='middle' fill='{ACCENT}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='30px' font-weight='700'>{current}</text>
         </g>
         <g transform='translate(165, 118)'>
-          <text x='82.5' y='0' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='12px' font-weight='400'>Longest Streak</text>
-          <text x='82.5' y='28' text-anchor='middle' fill='{ACCENT}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='28px' font-weight='700'>{longest}</text>
+          <text x='82.5' y='0' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='13px' font-weight='400'>Longest Streak</text>
+          <text x='82.5' y='28' text-anchor='middle' fill='{ACCENT}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='30px' font-weight='700'>{longest}</text>
         </g>
         <g transform='translate(330, 118)'>
-          <text x='82.5' y='0' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='12px' font-weight='400'>Active Since</text>
-          <text x='82.5' y='28' text-anchor='middle' fill='{ACCENT}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='28px' font-weight='700'>{active_since}</text>
+          <text x='82.5' y='0' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='13px' font-weight='400'>Active Since</text>
+          <text x='82.5' y='28' text-anchor='middle' fill='{ACCENT}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='30px' font-weight='700'>{active_since}</text>
         </g>
-        <text x='247.5' y='182' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='11px' font-weight='400'>Last updated: {datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")}</text>
+        <text x='247.5' y='182' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='12px' font-weight='400'>Last updated: {datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")}</text>
       </g>
     </svg>
     """
@@ -343,10 +352,10 @@ def build_activity_svg(days: list[dict]) -> str:
     svg = f"""\
     <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 {W} {H}' width='{W}px' height='{H}px'>
       <rect fill='{BG}' width='{W}' height='{H}'/>
-      <text x='{W / 2}' y='20' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='13px' font-weight='400'>Last 30 Days Activity</text>
+      <text x='{W / 2}' y='20' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='15px' font-weight='400'>Last 30 Days Activity</text>
       <polyline points='{polyline}' fill='none' stroke='{ACCENT}' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' opacity='0.8'/>
-    {circles}  <text x='{pad_left}' y='{H - 8}' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='10px'>{_esc(tail[0]["date"]) if tail else ""}</text>
-      <text x='{W - pad_right}' y='{H - 8}' text-anchor='end' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='10px'>{_esc(tail[-1]["date"]) if tail else ""}</text>
+    {circles}  <text x='{pad_left}' y='{H - 8}' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='12px'>{_esc(tail[0]["date"]) if tail else ""}</text>
+      <text x='{W - pad_right}' y='{H - 8}' text-anchor='end' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='12px'>{_esc(tail[-1]["date"]) if tail else ""}</text>
     </svg>
     """
     return textwrap.dedent(svg).strip() + "\n"
@@ -364,19 +373,19 @@ def build_contribution_types_svg(items: list[tuple[str, int]]) -> str:
         w = (value / max_val) * bar_w
         rows += (
             f"    <text x='24' y='{y + 4}' fill='{TEXT_MAIN}' "
-            f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='11px'>{_esc(label)}</text>\n"
+            f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='13px'>{_esc(label)}</text>\n"
             f"    <rect x='{bar_x}' y='{y - bar_h + 3}' width='{bar_w}' height='{bar_h}' "
             f"rx='3' fill='{TEXT_MAIN}' fill-opacity='{FAINT_OP}'/>\n"
             f"    <rect x='{bar_x}' y='{y - bar_h + 3}' width='{w:.1f}' height='{bar_h}' "
             f"rx='3' fill='{ACCENT}'><title>{_esc(label)}: {value}</title></rect>\n"
             f"    <text x='{bar_x + bar_w + 10}' y='{y + 4}' fill='{ACCENT}' "
-            f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px' font-weight='700'>{value}</text>\n"
+            f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='14px' font-weight='700'>{value}</text>\n"
         )
     svg = f"""\
     <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 {W} {H}' width='{W}px' height='{H}px'>
       <rect fill='{BG}' width='{W}' height='{H}' rx='6'/>
-      <text x='{W / 2}' y='30' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='Segoe UI, Ubuntu, sans-serif' font-size='14px' font-weight='400'>{_esc(USER)}'s Contribution Types</text>
-    {rows}  <text x='{W / 2}' y='{H - 10}' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px'>Last updated: {datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")}</text>
+      <text x='{W / 2}' y='30' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='Segoe UI, Ubuntu, sans-serif' font-size='16px' font-weight='400'>{_esc(USER)}'s Contribution Types</text>
+    {rows}  <text x='{W / 2}' y='{H - 10}' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='Segoe UI, Ubuntu, sans-serif' font-size='11px'>Last updated: {datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")}</text>
     </svg>
     """
     return textwrap.dedent(svg).strip() + "\n"
@@ -388,8 +397,8 @@ def build_monthly_activity_svg(days: list[dict]) -> str:
     for d in days:
         totals[d["date"][:7]] = totals.get(d["date"][:7], 0) + d["contributionCount"]
     months = sorted(totals)[-12:]
-    W, H = 800, 190
-    pad_left, pad_right, pad_top, pad_bottom = 60, 20, 50, 40
+    W, H = 800, 198
+    pad_left, pad_right, pad_top, pad_bottom = 60, 20, 58, 40
     chart_w, chart_h = W - pad_left - pad_right, H - pad_top - pad_bottom
     n = len(months) or 1
     max_val = max((totals[m] for m in months), default=0) or 1
@@ -406,9 +415,9 @@ def build_monthly_activity_svg(days: list[dict]) -> str:
             f"    <rect x='{x:.1f}' y='{y:.1f}' width='{bar_w:.1f}' height='{h:.1f}' rx='2' "
             f"fill='{ACCENT}'><title>{_esc(m)}: {value} contributions</title></rect>\n"
             f"    <text x='{x + bar_w / 2:.1f}' y='{pad_top + chart_h + 16}' text-anchor='middle' "
-            f"fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='Segoe UI, Ubuntu, sans-serif' font-size='10px'>{label}</text>\n"
+            f"fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px'>{label}</text>\n"
             f"    <text x='{x + bar_w / 2:.1f}' y='{y - 5:.1f}' text-anchor='middle' "
-            f"fill='{TEXT_MAIN}' font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px'>{value}</text>\n"
+            f"fill='{TEXT_MAIN}' font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px'>{value}</text>\n"
         )
     baseline = (
         f"    <line x1='{pad_left}' y1='{pad_top + chart_h}' x2='{W - pad_right}' "
@@ -417,8 +426,8 @@ def build_monthly_activity_svg(days: list[dict]) -> str:
     svg = f"""\
     <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 {W} {H}' width='{W}px' height='{H}px'>
       <rect fill='{BG}' width='{W}' height='{H}' rx='6'/>
-      <text x='{W / 2}' y='28' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='Segoe UI, Ubuntu, sans-serif' font-size='14px' font-weight='400'>{_esc(USER)}'s Monthly Contributions (last 12 months)</text>
-    {baseline}{bars}  <text x='{W / 2}' y='{H - 8}' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px'>Last updated: {datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")}</text>
+      <text x='{W / 2}' y='28' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='Segoe UI, Ubuntu, sans-serif' font-size='16px' font-weight='400'>{_esc(USER)}'s Monthly Contributions (last 12 months)</text>
+    {baseline}{bars}  <text x='{W / 2}' y='{H - 8}' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='Segoe UI, Ubuntu, sans-serif' font-size='11px'>Last updated: {datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")}</text>
     </svg>
     """
     return textwrap.dedent(svg).strip() + "\n"
@@ -455,8 +464,8 @@ def build_metrics_svg(days: list[dict]) -> str:
     svg = f"""\
     <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 {W} {H}' width='{W}px' height='{H}px'>
       <rect fill='{BG}' width='{W}' height='{H}' rx='6'/>
-      <text x='{W / 2}' y='28' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='14px' font-weight='400'>{_esc(USER)}'s Contribution Map</text>
-    {rects}  <text x='{W / 2}' y='{H - 10}' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='9px'>Last updated: {datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")}</text>
+      <text x='{W / 2}' y='28' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='16px' font-weight='400'>{_esc(USER)}'s Contribution Map</text>
+    {rects}  <text x='{W / 2}' y='{H - 10}' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='11px'>Last updated: {datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")}</text>
     </svg>
     """
     return textwrap.dedent(svg).strip() + "\n"
@@ -506,8 +515,8 @@ def _truncate(text: str, limit: int) -> str:
 def build_top_languages_svg(langs: list[tuple[str, int, str]]) -> str:
     import math
 
-    W, H = 460, 224
-    cx, cy, R, sw = 104, 124, 60, 19
+    W, H = 460, 258
+    cx, cy, R, sw = 104, 132, 60, 19
     circumference = 2 * math.pi * R
     total = sum(s for _, s, _ in langs) or 1
 
@@ -536,26 +545,26 @@ def build_top_languages_svg(langs: list[tuple[str, int, str]]) -> str:
 
     legend = ""
     for i, (name, size, color, alpha) in enumerate(rows):
-        ly = 56 + i * 17
+        ly = 56 + i * 19
         pct = size / total * 100
         legend += (
-            f"    <rect x='196' y='{ly - 9}' width='11' height='11' rx='2' fill='{_esc(color)}' "
+            f"    <rect x='196' y='{ly - 10}' width='12' height='12' rx='2' fill='{_esc(color)}' "
             f"fill-opacity='{alpha}' "
             f"stroke='{TEXT_MAIN}' stroke-opacity='0.25' stroke-width='0.5'/>\n"
             f"    <text x='215' y='{ly}' fill='{TEXT_MAIN}' "
-            f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='11px'>{_esc(name)}</text>\n"
+            f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='13px'>{_esc(name)}</text>\n"
             f"    <text x='{W - 18}' y='{ly}' text-anchor='end' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' "
-            f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='11px'>{pct:.1f}%</text>\n"
+            f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='13px'>{pct:.1f}%</text>\n"
         )
 
     center = ""
     if rows:
         center = (
             f"    <text x='{cx}' y='{cy - 4}' text-anchor='middle' fill='{TEXT_MAIN}' "
-            f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='13px' "
+            f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='14px' "
             f"font-weight='700'>{_esc(_truncate(rows[0][0], 11))}</text>\n"
             f"    <text x='{cx}' y='{cy + 15}' text-anchor='middle' fill='{ACCENT}' "
-            f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px' "
+            f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='13px' "
             f"font-weight='700'>{rows[0][1] / total * 100:.0f}%</text>\n"
         )
 
@@ -563,12 +572,12 @@ def build_top_languages_svg(langs: list[tuple[str, int, str]]) -> str:
     <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 {W} {H}' width='{W}px' height='{H}px'>
       <rect fill='{BG}' width='{W}' height='{H}' rx='6'/>
       <text x='{W / 2}' y='30' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}'
-            font-family='Segoe UI, Ubuntu, sans-serif' font-size='14px' font-weight='400'>{_esc(USER)}'s Top Languages</text>
+            font-family='Segoe UI, Ubuntu, sans-serif' font-size='16px' font-weight='400'>{_esc(USER)}'s Top Languages</text>
       <g transform='rotate(-90 {cx} {cy})'>
         <circle cx='{cx}' cy='{cy}' r='{R}' fill='none' stroke='{TEXT_MAIN}' stroke-opacity='{FAINT_OP}' stroke-width='{sw}'/>
     {slices}  </g>
     {center}{legend}    <text x='{W / 2}' y='{H - 10}' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}'
-            font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px'>Last updated: {datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")}</text>
+            font-family='Segoe UI, Ubuntu, sans-serif' font-size='11px'>Last updated: {datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")}</text>
     </svg>
     """
     return textwrap.dedent(svg).strip() + "\n"
@@ -576,101 +585,152 @@ def build_top_languages_svg(langs: list[tuple[str, int, str]]) -> str:
 
 # Analytics evidence ledger — authored, not derived.
 #
-# These are methodological results, not repository metadata: "+5.72pp, p<0.0001"
+# The *results* are methodological, not repository metadata: "+5.72pp, p<0.0001"
 # lives in a case study, not in the GitHub API, so it cannot be recomputed the way
-# a contribution count can. The table below is therefore the source of truth, and
-# what keeps it honest is not the renderer but the CI job that HTTP-checks every
-# url (see .github/workflows/ci.yml) — a rotting link turns the build red. The
-# "Bayesian A/B" row carries no url on purpose: a declared gap is cheaper to trust
-# than a padded row.
+# a contribution count can. Everything mechanical around them is derived, though:
+# the row carries a repo *name* and the URL is built from it (evidence_url), so a
+# renamed repo cannot leave a hand-typed URL behind; reconcile_evidence then drops
+# each name against the live public-repo list, so a deleted or newly-private repo
+# withdraws its own row instead of shipping a dead link; and the README's plain-text
+# sources line is generated from this same ledger, so card and text cannot drift.
+# The CI link-liveness job (.github/workflows/ci.yml) still HTTP-checks every URL.
+# The "Bayesian A/B" row carries no repo on purpose: a declared gap is cheaper to
+# trust than a padded row.
 ANALYTICS_EVIDENCE: tuple[dict[str, str], ...] = (
     {
         "method": "Experiment design & A/B",
         "evidence": "+5.72pp KYC lift · p<0.0001 · no SRM",
         "confidence": "HIGH",
-        "source": "volta-banking",
-        "url": "https://github.com/NikitaBoyarkin/volta-banking",
+        "repo": "volta-banking",
     },
     {
         "method": "Variance reduction (CUPED)",
         "evidence": "SE ×0.742 — 10k → 5.5k users per arm",
         "confidence": "HIGH",
-        "source": "causal-uplift",
-        "url": "https://github.com/NikitaBoyarkin/causal-uplift",
+        "repo": "causal-uplift",
     },
     {
         "method": "Multiple testing & sequential",
         "evidence": "Bonferroni · Holm · BH · O'Brien-Fleming · HTE q-values",
         "confidence": "HIGH",
-        "source": "volta-banking",
-        "url": "https://github.com/NikitaBoyarkin/volta-banking",
+        "repo": "volta-banking",
     },
     {
         "method": "Calibration-first testing",
         "evidence": "Type I · power · coverage · FWER re-run as test assertions",
         "confidence": "HIGH",
-        "source": "ab_test",
-        "url": "https://github.com/NikitaBoyarkin/ab_test",
+        "repo": "ab_test",
     },
     {
         "method": "Causal inference",
         "evidence": "DiD ATT +9.2pp · parallel trends ✓ · placebo null",
         "confidence": "MODERATE",
-        "source": "volta-banking",
-        "url": "https://github.com/NikitaBoyarkin/volta-banking",
+        "repo": "volta-banking",
     },
     {
         "method": "Uplift targeting",
         "evidence": "n=6k: curve metrics noise-dominated (oracle 2.25σ); signal in ranking + segment split",
         "confidence": "MODERATE",
-        "source": "causal-uplift",
-        "url": "https://github.com/NikitaBoyarkin/causal-uplift",
+        "repo": "causal-uplift",
     },
     {
         "method": "SQL depth",
         "evidence": "25 DuckDB cases · QUALIFY · PIVOT · recursive CTE · z-test in SQL",
         "confidence": "HIGH",
-        "source": "sql-analytics-case-study",
-        "url": "https://github.com/NikitaBoyarkin/sql-analytics-case-study",
+        "repo": "sql-analytics-case-study",
     },
     {
         "method": "Data engineering",
         "evidence": "Airflow 3 · DQ validation · alerts · run metrics · idempotent",
         "confidence": "HIGH",
-        "source": "airflow",
-        "url": "https://github.com/NikitaBoyarkin/airflow",
+        "repo": "airflow",
     },
     {
         "method": "Bayesian A/B",
         "evidence": "learning — no published case yet",
         "confidence": "GAP",
-        "source": "",
-        "url": "",
+        "repo": "",
     },
 )
 
 
-def evidence_sources() -> list[str]:
+def evidence_url(repo: str) -> str:
+    """Source URL for a ledger row's repo name. An empty repo is a declared gap."""
+    return f"https://github.com/{USER}/{repo}" if repo else ""
+
+
+def reconcile_evidence(
+    public_repos: set[str], rows: tuple[dict[str, str], ...] | None = None
+) -> tuple[list[dict[str, str]], list[str]]:
+    """Withdraw ledger rows whose source repo is no longer public.
+
+    The ledger is authored, so nothing recomputes its claims — but the repo each
+    claim points at can be renamed, deleted or made private, and the row would keep
+    pointing at it. Such a row is rewritten as a declared gap that names the repo,
+    never as a still-linked claim: an unverifiable number is exactly the padded
+    claim the ledger exists to avoid.
+
+    An empty `public_repos` means the API returned nothing to check against, which
+    is not evidence of absence — every row is kept rather than mass-withdrawn.
+    """
+    rows = ANALYTICS_EVIDENCE if rows is None else rows
+    if not public_repos:
+        return list(rows), ["public repo list unavailable — evidence rows not reconciled"]
+    reconciled: list[dict[str, str]] = []
+    warnings: list[str] = []
+    for row in rows:
+        repo = row["repo"]
+        if repo and repo not in public_repos:
+            warnings.append(f"evidence source {repo!r} is not public — row withdrawn")
+            reconciled.append(
+                {
+                    "method": row["method"],
+                    "evidence": f"source repo {repo} is no longer public — claim withdrawn",
+                    "confidence": "GAP",
+                    "repo": "",
+                }
+            )
+        else:
+            reconciled.append(dict(row))
+    return reconciled, warnings
+
+
+def evidence_sources(rows: tuple[dict[str, str], ...] | None = None) -> list[str]:
     """Distinct source URLs, in ledger order — the CI link-liveness job's input."""
-    return list(dict.fromkeys(row["url"] for row in ANALYTICS_EVIDENCE if row["url"]))
+    rows = ANALYTICS_EVIDENCE if rows is None else rows
+    return list(dict.fromkeys(evidence_url(row["repo"]) for row in rows if row["repo"]))
 
 
-def build_analytics_evidence_svg() -> str:
+def build_evidence_sources_line(rows: tuple[dict[str, str], ...] | None = None) -> str:
+    """Plain-text mirror of the evidence card.
+
+    The card is an `<img>`: its text is neither selectable nor indexable by GitHub.
+    This line is both, and it is generated from the same ledger, so the card and the
+    text can never disagree about which repositories back the claims.
+    """
+    rows = ANALYTICS_EVIDENCE if rows is None else rows
+    repos = list(dict.fromkeys(row["repo"] for row in rows if row["repo"]))
+    links = " · ".join(f'<a href="{_esc(evidence_url(r))}">{_esc(r)}</a>' for r in repos)
+    return f"<sub>Sources: {links} — every link is HTTP-checked in CI.</sub>"
+
+
+def build_analytics_evidence_svg(rows: tuple[dict[str, str], ...] | None = None) -> str:
     """Evidence band: method -> verified result -> source, with honest gaps.
 
     Every row that carries a number also carries the repository that produced it,
     so a reader can check it in one click instead of taking the profile's word.
     """
+    rows = ANALYTICS_EVIDENCE if rows is None else rows
     W = 800
-    header_h, row_h, footer_h = 58, 42, 22
-    chip_w = 76
-    H = header_h + row_h * len(ANALYTICS_EVIDENCE) + footer_h
-    rows = ""
-    for i, row in enumerate(ANALYTICS_EVIDENCE):
+    header_h, row_h, footer_h = 62, 50, 24
+    chip_w = 88
+    H = header_h + row_h * len(rows) + footer_h
+    body = ""
+    for i, row in enumerate(rows):
         y = header_h + i * row_h
         conf = row["confidence"]
-        source = row["source"]
-        detail = f"{source} · {row['evidence']}" if source else row["evidence"]
+        repo = row["repo"]
+        detail = f"{repo} · {row['evidence']}" if repo else row["evidence"]
         # Three visual weights, still only the three brand tokens. Opacity goes on the
         # pill only: a label drawn translucent *over* a translucent pill blends twice,
         # and MODERATE at 0.62 lands near 2.9:1 against its own chip — under WCAG AA.
@@ -689,34 +749,34 @@ def build_analytics_evidence_svg() -> str:
             # the outline and its label both stay at MUTED_OP (~5.8:1).
             pill = f"fill='none' stroke='{TEXT_MAIN}' stroke-opacity='{MUTED_OP}'"
             label_fill, label_op, label = TEXT_MAIN, MUTED_OP, "GAP"
-        rows += (
-            f"    <text x='24' y='{y + 20}' fill='{TEXT_MAIN}' "
-            f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px' font-weight='600'>"
+        body += (
+            f"    <text x='24' y='{y + 21}' fill='{TEXT_MAIN}' "
+            f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='14px' font-weight='600'>"
             f"{_esc(row['method'])}</text>\n"
-            f"    <text x='24' y='{y + 35}' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' "
-            f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='10px'>{_esc(detail)}</text>\n"
-            f"    <rect x='{W - 24 - chip_w}' y='{y + 14}' width='{chip_w}' height='16' rx='8' "
+            f"    <text x='24' y='{y + 41}' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' "
+            f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px'>{_esc(detail)}</text>\n"
+            f"    <rect x='{W - 24 - chip_w}' y='{y + 16}' width='{chip_w}' height='18' rx='9' "
             f"{pill}/>\n"
-            f"    <text x='{W - 24 - chip_w / 2}' y='{y + 26}' text-anchor='middle' "
+            f"    <text x='{W - 24 - chip_w / 2}' y='{y + 29}' text-anchor='middle' "
             f"fill='{label_fill}' fill-opacity='{label_op}' "
-            f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px' font-weight='700'>"
+            f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='11px' font-weight='700'>"
             f"{label}</text>\n"
         )
-    methods = ", ".join(_esc(row["method"]) for row in ANALYTICS_EVIDENCE)
+    methods = ", ".join(_esc(row["method"]) for row in rows)
     summary = f"Analytics evidence: {methods}"
     svg = f"""\
     <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 {W} {H}' width='{W}px' height='{H}px'
          role='img' aria-label='{summary}. Each linked row points to the public repository that produced the result.'>
       <title>{summary}</title>
       <rect fill='{BG}' width='{W}' height='{H}' rx='6'/>
-      <text x='24' y='30' fill='{TEXT_MAIN}' font-family='Segoe UI, Ubuntu, sans-serif'
-            font-size='13px' font-weight='700' letter-spacing='1.2'>{_esc(USER)} — ANALYTICS EVIDENCE</text>
-      <text x='24' y='46' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}'
-            font-family='Segoe UI, Ubuntu, sans-serif' font-size='10px'>method · verified result · source repository — no unlinked claims</text>
+      <text x='24' y='32' fill='{TEXT_MAIN}' font-family='Segoe UI, Ubuntu, sans-serif'
+            font-size='15px' font-weight='700' letter-spacing='1.2'>{_esc(USER)} — ANALYTICS EVIDENCE</text>
+      <text x='24' y='49' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}'
+            font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px'>method · verified result · source repository — no unlinked claims</text>
       <line x1='24' y1='{header_h - 4}' x2='{W - 24}' y2='{header_h - 4}'
             stroke='{TEXT_MAIN}' stroke-opacity='{FAINT_OP}' stroke-width='1'/>
-    {rows}  <text x='{W / 2}' y='{H - 8}' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}'
-            font-family='Segoe UI, Ubuntu, sans-serif' font-size='9px'>Sources verified in CI · last updated: {datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")}</text>
+    {body}  <text x='{W / 2}' y='{H - 8}' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}'
+            font-family='Segoe UI, Ubuntu, sans-serif' font-size='11px'>Sources verified in CI · last updated: {datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")}</text>
     </svg>
     """
     return textwrap.dedent(svg).strip() + "\n"
@@ -747,7 +807,33 @@ def normalize_notes_block(content: str) -> str:
     return _NOTES_BLOCK_RE.sub(rebuild, content)
 
 
-def update_readme_refresh_block(days: list[dict]) -> bool:
+_EVIDENCE_SOURCES_RE = re.compile(
+    r"<!-- EVIDENCE-SOURCES:START -->.*?<!-- EVIDENCE-SOURCES:END -->", re.DOTALL
+)
+
+
+def sync_evidence_sources_block(
+    content: str, rows: tuple[dict[str, str], ...] | None = None
+) -> str:
+    """Regenerate the README's plain-text sources line from the ledger.
+
+    Hand-typed, it drifted from the card the moment a row changed; generated from
+    the same ledger the card renders, the two cannot disagree. A missing marker is
+    left alone rather than appended — placement in the README is a human decision.
+    """
+    if not _EVIDENCE_SOURCES_RE.search(content):
+        return content
+    block = (
+        "<!-- EVIDENCE-SOURCES:START -->\n"
+        f"{build_evidence_sources_line(rows)}\n"
+        "<!-- EVIDENCE-SOURCES:END -->"
+    )
+    return _EVIDENCE_SOURCES_RE.sub(lambda _: block, content)
+
+
+def update_readme_refresh_block(
+    days: list[dict], evidence_rows: tuple[dict[str, str], ...] | None = None
+) -> bool:
     """Refresh the 'Last refreshed' marker block in README.
 
     The timestamp changes every run, so the README always carries a diff and
@@ -773,13 +859,15 @@ def update_readme_refresh_block(days: list[dict]) -> bool:
             f"### \u26a1 Activity\n\n{block}\n\n",
             1,
         )
-    # Same write, second repair: the RSS job leaves the notes list on one line.
+    # One write, three repairs: the RSS job leaves the notes list on one line, and
+    # the evidence sources line is generated rather than hand-typed.
     new_content = normalize_notes_block(new_content)
+    new_content = sync_evidence_sources_block(new_content, evidence_rows)
     if new_content == content:
         print("README already up to date")
         return False
     readme_path.write_text(new_content, encoding="utf-8")
-    print(f"Refreshed README refresh block + notes list: {now} ({week} contribs/7d)")
+    print(f"Refreshed README (refresh block + notes + evidence sources): {now} ({week} c/7d)")
     return True
 
 
@@ -817,6 +905,10 @@ def main() -> None:
     total, current, longest = compute_streaks(days)
     print(f"total={total} current={current} longest={longest}")
 
+    evidence_rows, evidence_warnings = reconcile_evidence(public_repo_names(user_data))
+    for warning in evidence_warnings:
+        print(f"WARNING: {warning}")
+
     write_asset(REPO_ROOT / "hero.svg", build_hero_svg())
     write_asset(REPO_ROOT / "stats.svg", build_stats_svg(user_data, total, current, longest))
     write_asset(REPO_ROOT / "activity.svg", build_activity_svg(days))
@@ -826,7 +918,7 @@ def main() -> None:
         build_contribution_types_svg(extract_contribution_types(user_data)),
     )
     write_asset(REPO_ROOT / "monthly-activity.svg", build_monthly_activity_svg(days))
-    write_asset(REPO_ROOT / "analytics-evidence.svg", build_analytics_evidence_svg())
+    write_asset(REPO_ROOT / "analytics-evidence.svg", build_analytics_evidence_svg(evidence_rows))
 
     try:
         langs = fetch_languages()
@@ -840,7 +932,7 @@ def main() -> None:
     if DRY_RUN:
         print("[dry-run] skip README refresh block")
     else:
-        update_readme_refresh_block(days)
+        update_readme_refresh_block(days, evidence_rows)
 
 
 if __name__ == "__main__":
