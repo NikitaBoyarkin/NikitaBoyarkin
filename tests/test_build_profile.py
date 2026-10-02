@@ -488,3 +488,88 @@ def test_chip_labels_clear_the_aa_contrast_floor():
     for el in chips:
         op = float(el.attrib.get("fill-opacity", "1"))
         assert op >= float(bp.MUTED_OP), f"{el.text} chip at opacity {op} fails AA"
+
+
+# ---------- build_hero_svg ----------
+
+
+def test_hero_svg_is_well_formed_and_accessible():
+    svg = bp.build_hero_svg()
+    root = ET.fromstring(svg)
+    assert root.get("role") == "img"
+    assert root.get("aria-label"), "hero needs an aria-label"
+    titles = list(root.iter("{http://www.w3.org/2000/svg}title"))
+    assert titles and bp.HERO_NAME in titles[0].text
+    assert bp.HERO_NAME in svg and bp.HERO_ROLE in svg
+
+
+def test_hero_svg_is_vector_only_and_within_budget():
+    """Self-hosted and raster-free — the reference header is ~200 KB of base64 GIF."""
+    svg = bp.build_hero_svg()
+    assert "base64" not in svg
+    assert "<image" not in svg
+    assert len(svg.encode()) < 6000, f"hero is {len(svg.encode())} B"
+
+
+def test_hero_svg_uses_only_brand_tokens():
+    svg = bp.build_hero_svg()
+    allowed = {bp.BG, bp.ACCENT, bp.TEXT_MAIN}
+    assert set(re.findall(r"#[0-9a-fA-F]{6}", svg)) <= allowed
+
+
+# ---------- normalize_notes_block ----------
+
+
+def _notes_block(items):
+    return (
+        "### Recent Notes\n\n"
+        "<!-- RECENT-POSTS-LIST:START -->\n"
+        f"{items}\n"
+        "<!-- RECENT-POSTS-LIST:END -->\n"
+    )
+
+
+def _notes_body(content):
+    return content.split("<!-- RECENT-POSTS-LIST:START -->")[1].split(
+        "<!-- RECENT-POSTS-LIST:END -->"
+    )[0]
+
+
+def test_notes_block_splits_glued_items():
+    glued = _notes_block("- [A](https://a)- [B](https://b)- [C](https://c)")
+    out = bp.normalize_notes_block(glued)
+    assert _notes_body(out).strip().splitlines() == [
+        "- [A](https://a)",
+        "- [B](https://b)",
+        "- [C](https://c)",
+    ]
+
+
+def test_notes_block_is_idempotent():
+    once = bp.normalize_notes_block(_notes_block("- [A](https://a)- [B](https://b)"))
+    assert bp.normalize_notes_block(once) == once
+
+
+def test_notes_block_without_marker_is_untouched():
+    content = "### Recent Notes\n\n- [A](https://a)- [B](https://b)\n"
+    assert bp.normalize_notes_block(content) == content
+
+
+def test_notes_block_keeps_utm_urls_intact():
+    url = "https://x.dev/posts/a/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes"
+    assert f"- [A]({url})" in bp.normalize_notes_block(_notes_block(f"- [A]({url})"))
+
+
+def test_refresh_block_writes_normalized_notes(tmp_path, monkeypatch):
+    """The daily README write is also the repair pass for the glued RSS list."""
+    readme = tmp_path / "README.md"
+    readme.write_text(
+        "### ⚡ Activity\n\n"
+        "<!-- LAST-REFRESHED:START -->\n_old_\n<!-- LAST-REFRESHED:END -->\n\n"
+        + _notes_block("- [A](https://a)- [B](https://b)")
+    )
+    monkeypatch.setattr(bp, "REPO_ROOT", tmp_path)
+    assert bp.update_readme_refresh_block(_days([1] * 7)) is True
+    written = readme.read_text()
+    assert "- [A](https://a)\n- [B](https://b)" in written
+    assert "- [A](https://a)- [B](https://b)" not in written

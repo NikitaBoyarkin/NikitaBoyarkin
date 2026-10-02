@@ -2,6 +2,7 @@
 """Build self-hosted profile assets for github.com/NikitaBoyarkin.
 
 Assets generated:
+- hero.svg: branded header band — name, role, one-line pitch, A/B motif
 - stats.svg: contributions, current/longest streak, public repos, followers (GraphQL)
 - activity.svg: 30-day contribution activity sparkline
 - metrics.svg: slim self-hosted contribution map (replaces lowlighter/metrics)
@@ -98,6 +99,66 @@ TEXT_MAIN = "#1400c3"
 MUTED_OP = "0.62"  # secondary text — blue @62% over cream
 FAINT_OP = "0.14"  # gridlines, baselines, empty tracks/tiles — blue @14%
 GHOST_OP = "0.45"  # neutral "Other" slice — blue @45%
+
+
+# Hero copy, kept as data so the README header and its test assert the same words.
+HERO_NAME = "NIKITA BOYARKIN"
+HERO_ROLE = "DATA / PRODUCT ANALYST"
+HERO_TAGLINE = (
+    "Ambiguous product questions →",
+    "clean experiments, SQL pipelines, decisions.",
+)
+HERO_STRIP = "SQL · Python · Experimentation · CUPED · Retention"
+
+
+def build_hero_svg() -> str:
+    """Branded header band: name, role, one-line pitch, schematic A/B motif.
+
+    Vector-only and self-hosted. The reference profile opens with an 820x250
+    banner that is ~200 KB of base64 GIF; this one carries the same job — name
+    and positioning readable before any scroll — in ~2 KB and no raster.
+
+    The motif is a bare A/B pair with a "+lift" caption rather than a figure:
+    a real number here would be an unlinked claim in the header, which is what
+    ANALYTICS_EVIDENCE exists to avoid.
+    """
+    W, H = 800, 220
+    alt = f"{HERO_NAME} — {HERO_ROLE}. {HERO_TAGLINE[0]} {HERO_TAGLINE[1]}"
+    desc = (
+        "Header banner: name, role, a one-line positioning statement, and a "
+        "schematic A/B lift motif."
+    )
+    tagline = "".join(
+        f"      <text x='40' y='{142 + i * 19}' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' "
+        f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='13px'>{_esc(line)}</text>\n"
+        for i, line in enumerate(HERO_TAGLINE)
+    )
+    svg = f"""\
+    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 {W} {H}' width='{W}' height='{H}'
+         role='img' aria-label='{_esc(alt)}'>
+      <title>{_esc(alt)}</title>
+      <desc>{_esc(desc)}</desc>
+      <rect fill='{BG}' width='{W}' height='{H}' rx='8'/>
+      <text x='40' y='66' fill='{TEXT_MAIN}' font-family='Segoe UI, Ubuntu, sans-serif'
+            font-size='34px' font-weight='800' letter-spacing='1.5'>{_esc(HERO_NAME)}</text>
+      <text x='40' y='96' fill='{ACCENT}' font-family='Segoe UI, Ubuntu, sans-serif'
+            font-size='14px' font-weight='700' letter-spacing='2.6'>{_esc(HERO_ROLE)}</text>
+      <line x1='40' y1='116' x2='360' y2='116' stroke='{TEXT_MAIN}' stroke-opacity='{FAINT_OP}' stroke-width='1'/>
+{tagline}      <text x='40' y='192' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}'
+            font-family='Segoe UI, Ubuntu, sans-serif' font-size='11px' font-weight='600'>{_esc(HERO_STRIP)}</text>
+      <line x1='490' y1='40' x2='490' y2='180' stroke='{TEXT_MAIN}' stroke-opacity='{FAINT_OP}' stroke-width='1'/>
+      <text x='647' y='56' text-anchor='middle' fill='{ACCENT}'
+            font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px' font-weight='700'>+lift</text>
+      <rect x='584' y='112' width='50' height='58' rx='3' fill='{TEXT_MAIN}' fill-opacity='0.26'/>
+      <rect x='660' y='84' width='50' height='86' rx='3' fill='{ACCENT}'/>
+      <line x1='550' y1='170' x2='744' y2='170' stroke='{TEXT_MAIN}' stroke-opacity='{FAINT_OP}' stroke-width='1'/>
+      <text x='609' y='188' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}'
+            font-family='Segoe UI, Ubuntu, sans-serif' font-size='11px' font-weight='600'>A</text>
+      <text x='685' y='188' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}'
+            font-family='Segoe UI, Ubuntu, sans-serif' font-size='11px' font-weight='600'>B</text>
+    </svg>
+    """
+    return textwrap.dedent(svg).strip() + "\n"
 
 
 def graphql(query: str, variables: dict, retries: int = 3) -> dict:
@@ -661,6 +722,31 @@ def build_analytics_evidence_svg() -> str:
     return textwrap.dedent(svg).strip() + "\n"
 
 
+_NOTES_BLOCK_RE = re.compile(
+    r"(<!-- RECENT-POSTS-LIST:START -->)(.*?)(<!-- RECENT-POSTS-LIST:END -->)",
+    re.DOTALL,
+)
+_NOTES_ITEM_RE = re.compile(r"-\s*\[(.*?)\]\((.*?)\)")
+
+
+def normalize_notes_block(content: str) -> str:
+    """Put one Recent-Notes item per line.
+
+    blog-post-workflow applies its `template` per entry but joins the results
+    with no separator, so all five posts land on a single line and GitHub renders
+    the section as one run-on paragraph instead of a list.
+    """
+
+    def rebuild(match: re.Match) -> str:
+        items = _NOTES_ITEM_RE.findall(match.group(2))
+        if not items:
+            return match.group(0)
+        body = "\n".join(f"- [{title}]({url})" for title, url in items)
+        return f"{match.group(1)}\n{body}\n{match.group(3)}"
+
+    return _NOTES_BLOCK_RE.sub(rebuild, content)
+
+
 def update_readme_refresh_block(days: list[dict]) -> bool:
     """Refresh the 'Last refreshed' marker block in README.
 
@@ -687,11 +773,13 @@ def update_readme_refresh_block(days: list[dict]) -> bool:
             f"### \u26a1 Activity\n\n{block}\n\n",
             1,
         )
+    # Same write, second repair: the RSS job leaves the notes list on one line.
+    new_content = normalize_notes_block(new_content)
     if new_content == content:
-        print("Refresh block already up to date")
+        print("README already up to date")
         return False
     readme_path.write_text(new_content, encoding="utf-8")
-    print(f"Refreshed README 'Last refreshed' block: {now} ({week} contribs/7d)")
+    print(f"Refreshed README refresh block + notes list: {now} ({week} contribs/7d)")
     return True
 
 
@@ -729,6 +817,7 @@ def main() -> None:
     total, current, longest = compute_streaks(days)
     print(f"total={total} current={current} longest={longest}")
 
+    write_asset(REPO_ROOT / "hero.svg", build_hero_svg())
     write_asset(REPO_ROOT / "stats.svg", build_stats_svg(user_data, total, current, longest))
     write_asset(REPO_ROOT / "activity.svg", build_activity_svg(days))
     write_asset(REPO_ROOT / "metrics.svg", build_metrics_svg(days))
