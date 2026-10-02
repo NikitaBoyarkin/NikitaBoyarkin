@@ -1,8 +1,4 @@
 <p align="center">
-  <img src="https://github.com/NikitaBoyarkin.png" width="140" height="140" alt="NikitaBoyarkin" style="border-radius:50%" />
-</p>
-
-<p align="center">
   <img src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/hero.svg" width="100%" alt="Nikita Boyarkin — Data / Product Analyst. Ambiguous product questions turned into clean experiments, SQL pipelines, and decisions." />
 </p>
 
