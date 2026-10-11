@@ -2,7 +2,7 @@
   <img src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/hero.svg" width="100%" alt="Nikita Boyarkin — Data / Product Analyst. Ambiguous product questions turned into clean experiments, SQL pipelines, and decisions." />
 </p>
 
-## Hi, I'm Nikita 👋 — Data / Product Analyst (Middle+)
+## Hi, I'm Nikita 👋 — Data / Product Analyst (Junior)
 
 - **Product experimentation** — A/B test design, sample-size planning, guardrail metrics, reproducible reporting. CUPED, AA-tests, Bonferroni, Bayesian A/B.
 - **User lifecycle analytics** — cohort retention, funnel analysis, RFM segmentation.
@@ -113,6 +113,14 @@ _Twenty-five end-to-end SQL cases on DuckDB — funnel, N-day retention, DAU/MAU
 [![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/projects/sql/?utm_source=github&utm_medium=profile_readme&utm_campaign=featured)
 
 **Stack:** SQL · DuckDB · pytest
+
+#### 4. <a href="https://github.com/NikitaBoyarkin/rag-eval-harness">RAG Evaluation Harness</a>
+
+_A retrieval-augmented generation pipeline with a real offline eval harness. **recall@5 and MRR = 1.00, faithfulness 1.00** on 20 labeled questions — retrieval and generation scored separately, runs with zero API keys._
+
+[![Repo](https://img.shields.io/badge/Repo-rag--eval--harness-0f2a2b?style=for-the-badge&logo=github&logoColor=fe4e02)](https://github.com/NikitaBoyarkin/rag-eval-harness)
+
+**Stack:** Python · scikit-learn · TF-IDF · pytest
 
 ---
 
