@@ -2,6 +2,43 @@
   <img src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/hero.svg" width="100%" alt="Nikita Boyarkin — Data / Product Analyst. Ambiguous product questions turned into clean experiments, SQL pipelines, and decisions." />
 </p>
 
+> A self-hosted analyst profile: 10 playable SVG mini-games, CI-checked headline numbers — +5.72 pp KYC conversion, €656K/yr on the Volta flagship.
+
+## Navigation
+
+- 🌐 [Portfolio site](https://nikitaboyarkin.github.io)
+- 🏦 [Flagship: Volta neobank](https://github.com/NikitaBoyarkin/volta-banking)
+- 🧪 Related: [A/B Testing Toolkit](https://github.com/NikitaBoyarkin/ab_test) · [Causal / Uplift](https://github.com/NikitaBoyarkin/causal-uplift) · [SQL Analytics Case Study](https://github.com/NikitaBoyarkin/sql-analytics-case-study) · [RAG Evaluation Harness](https://github.com/NikitaBoyarkin/rag-eval-harness)
+
+**On this page:** [Situation](#situation) · [Task](#task) · [Actions](#actions) · [Result](#result) · [Featured Projects](#-featured-projects) · [Connect](#-connect)
+
+## Situation
+
+The work lived across many repositories — experiments, SQL, retention,
+segmentation — each with its own numbers and no single reachable page tying a
+method to the result it produced.
+
+## Task
+
+Turn that body of work into a profile a recruiter can navigate in one scroll:
+headline cases with real numbers, a public case study per project, and a
+portfolio site that demonstrates the analytics rather than describing it.
+
+## Actions
+
+Published the work end-to-end. Projects are grouped into Experiments / Analytics
+/ Product / Engineering, the Volta flagship carries 23 linked sub-cases, and the
+portfolio site at https://nikitaboyarkin.github.io renders every case study. In
+the site, headline numbers are frozen in `src/lib/metrics.ts` and CI-checked;
+profile cards, stats and the SVG games are self-hosted via
+`scripts/build_profile.py`.
+
+## Result
+
+A public portfolio site plus a self-hosted profile: 10 playable SVG mini-games,
+the Volta flagship at +5.72 pp KYC conversion and €656K/yr, and an analytics
+evidence map linking each method to the repository that produced it.
+
 ## Hi, I'm Nikita 👋 — Data / Product Analyst (Junior)
 
 - **Product experimentation** — A/B test design, sample-size planning, guardrail metrics, reproducible reporting. CUPED, AA-tests, Bonferroni, Bayesian A/B.
@@ -123,6 +160,73 @@ _A retrieval-augmented generation pipeline with a real offline eval harness. **r
 **Stack:** Python · scikit-learn · TF-IDF · pytest
 
 ---
+
+<!-- ALL-PROJECTS:START -->
+### 🗂️ All Projects
+
+#### 🧪 Experiments
+
+- **A/B Testing Methodology Toolkit** — 18 модулей A/B-методологии, каждый откалиброван симуляцией: A/A-тест держит Type I error на уровне α, power-кривые показывают реальную мощность. · [Repo](https://github.com/NikitaBoyarkin/ab_test) · [Case study](https://nikitaboyarkin.github.io/projects/ab/)
+- **Browser Mini-Games — Analytics Arcade** — 10 играбельных мини-игр в self-contained SVG: 7 аналитических (A/B до p<0.05, funnel drop, cohort catch, retention day) и 3 аркадных. Один файл — вся игра, без сборки. · [Repo](https://github.com/NikitaBoyarkin/browser-mini-games) · [Case study](https://nikitaboyarkin.github.io/projects/games/)
+- **Causal / Uplift — CUPED and Individual Treatment Effects** — CUPED срезал стандартную ошибку на 26%: та же мощность достигается на 5,5k пользователей на руку вместо 10k. Uplift-метрики на n=6000 шумят: QINI и AUUC не отличают oracle от случайного. · [Repo](https://github.com/NikitaBoyarkin/causal-uplift) · [Case study](https://nikitaboyarkin.github.io/projects/causal/)
+- **Volta Neobank — Product Analytics** — Нашёл узкое место в онбординге необанка и закрыл A/B-тестом: +5,72 пп конверсии KYC и €656K в год. 22 проекта: воронка → A/B → retention → сегментация → Market & Jobs → RAT v2 → causal. · [Repo](https://github.com/NikitaBoyarkin/volta-banking) · [Case study](https://nikitaboyarkin.github.io/projects/volta/)
+
+#### 📊 Analytics
+
+- **Churn Prediction — Leakage-Free Retention Model** — Leakage-free churn-модель: recall@top-10% = 0.53 и lift 3,07× при ROC-AUC 0.904 на хронологическом сплите — без утечки будущей активности в признаки. · [Repo](https://github.com/NikitaBoyarkin/churn-prediction) · [Case study](https://nikitaboyarkin.github.io/projects/churn/)
+- **Cohort Analysis Dashboard** — Треугольная когортная матрица удержания и LTV на синтетических данных: ARPU и LTV по когортам с поправкой на observation age, выгрузка в Tableau (CSV + Hyper). · [Repo](https://github.com/NikitaBoyarkin/tableau_cohort_analysis) · [Case study](https://nikitaboyarkin.github.io/projects/cohort/)
+- **LinkedIn Content Analytics** — Аналитика моих постов в LinkedIn: один парсер, четыре рендера. Форматы сравниваются с доверительными интервалами — и шум называется шумом, а не рейтингом. · [Repo](https://github.com/NikitaBoyarkin/linkedin-nikita-boyarkin) · [Case study](https://nikitaboyarkin.github.io/projects/linkedin/)
+- **ML Fundamentals — scikit-learn Pipeline** — Пайплайн scikit-learn без утечки данных: импутация пропусков, кодирование категорий, детерминированный сплит и масштабирование — в одном ColumnTransformer, обученном только на трейне. · [Repo](https://github.com/NikitaBoyarkin/ml) · [Case study](https://nikitaboyarkin.github.io/projects/ml/)
+- **Python Analytics Playground** — Покрытие pytest ≥80% у модульного Python-тулкита для аналитики: загрузка, чистка, EDA и визуализация собраны в один переиспользуемый пайплайн — база для каждого нового анализа. · [Repo](https://github.com/NikitaBoyarkin/python) · [Case study](https://nikitaboyarkin.github.io/projects/python/)
+- **RAG Evaluation Harness — retrieval and generation metrics** — RAG-пайплайн с офлайн-харнессом оценки: recall@5 и MRR = 1.00 на 20 размеченных вопросах, faithfulness 1.00, correctness 0.37. TF-IDF-ретрив, работает без API-ключей. · [Repo](https://github.com/NikitaBoyarkin/rag-eval-harness) · [Case study](https://nikitaboyarkin.github.io/projects/rag/)
+- **RFM Analysis of Bank Clients** — Разбил клиентскую базу банка на 4 RFM-сегмента и показал, что малая доля high-value приносит основную выручку. Маркетинг перешёл от массовых рассылок к сегментированным сценариям. · [Repo](https://github.com/NikitaBoyarkin/rfm-analysis-of-bank-clients) · [Case study](https://nikitaboyarkin.github.io/projects/rfm/)
+- **Sales Calls Analytics Dashboard** — Streamlit-дашборд ИИ-обзвона на 16 891 синтетическом звонке: 4-шаговая воронка (приветствие → оффер → встреча → квалификация), разбор утечки по типам и drill-down в транскрипты. · [Repo](https://github.com/NikitaBoyarkin/sales-calls-dashboard) · [Case study](https://nikitaboyarkin.github.io/projects/sales-calls/)
+- **SERP Rank Lab** — Лаборатория аналитики выдачи метапоиска: позиционное смещение правит IPW, NDCG и revenue per search расходятся, а всегда-валидный mSPRT держит false-positive rate ниже фиксированного горизонта. · [Repo](https://github.com/NikitaBoyarkin/serp-rank-lab) · [Case study](https://nikitaboyarkin.github.io/projects/serp-rank/)
+- **SQL Analytics Case Study** — 26 SQL-кейсов: 25 на синтетике (~183k событий) + 1 real-data на UCI Online Retail II. Воронка, retention, LTV, атрибуция, аномалии, dbt-слой на DuckDB, живой отчёт на GitHub Pages. · [Repo](https://github.com/NikitaBoyarkin/sql-analytics-case-study) · [Case study](https://nikitaboyarkin.github.io/projects/sql/)
+
+#### 📦 Product
+
+- **Product Analytics + A/B on Supabase** — Full-stack аналитика на Supabase: A/B-эксперимент дал +5,1 пп (p = 0.0034, chi-square), а Streamlit-дашборд читает живые данные через Row Level Security и SQL-вьюхи. · [Repo](https://github.com/NikitaBoyarkin/supabase-product-analytics) · [Case study](https://nikitaboyarkin.github.io/projects/supabase/)
+- **Product Analytics Dashboard (Streamlit)** — Продуктовый дашборд на синтетическом SaaS-датасете (8 000 пользователей): AARRR-воронка, cohort retention, выручка (MRR, ARPU, churn) и сегментация — 5 страниц на Streamlit. · [Repo](https://github.com/NikitaBoyarkin/streamlit-app) · [Case study](https://nikitaboyarkin.github.io/projects/streamlit/)
+- **TaskFlow — PostHog Product Analytics Pipeline** — 7 анализов из типизированного каталога событий: SaaS-продукт инструментирован PostHog end-to-end — воронка, retention, A/B, revenue/LTV и time-to-convert, а не демо на готовом CSV. · [Repo](https://github.com/NikitaBoyarkin/posthog-saas-analytics) · [Case study](https://nikitaboyarkin.github.io/projects/posthog/)
+
+#### 🛠️ Engineering
+
+- **Airflow DAG Platform** — Платформа отчётов на Apache Airflow 3: каждый отчёт — версионируемый DAG по шаблону fetch → validate → write → record_metrics, с DQ-валидацией, алертами и метриками запусков. · [Repo](https://github.com/NikitaBoyarkin/airflow) · [Case study](https://nikitaboyarkin.github.io/projects/airflow/)
+- **Digital Garden — EQ in IT** — Заметки связаны в сеть, а не в ленту: цифровой сад про эмоциональный интеллект в IT на Quartz v4 — бэклинки и граф превращают накопление заметок в навигируемую структуру. · [Repo](https://github.com/NikitaBoyarkin/digital_garden) · [Case study](https://nikitaboyarkin.github.io/projects/garden/)
+- **Reporting Automation Telegram Bot** — Telegram-бот заменил ручную подготовку недельного отчёта на cron: 1–2 часа работы вручную превратились в отчёт по расписанию с KPI-таблицей и спарклайнами. · [Case study](https://nikitaboyarkin.github.io/projects/bot/) · _private_
+- **Scrolly English Speaking** — Scrollytelling-гайд по spoken English для рабочих разговоров (A2–B1): MDX-нарратив и D3-визуализации, где контент и визуализации разделены. Astro 6, деплой на GitHub Pages. · [Repo](https://github.com/NikitaBoyarkin/scrolly-english-speaking) · [Case study](https://nikitaboyarkin.github.io/projects/scrolly/)
+- **This Portfolio Site** — Сайт, который вы читаете: Astro 7, TypeScript и Markdown-коллекции, статическая сборка, тёмная/светлая тема, RSS, sitemap, JSON-LD и деплой на GitHub Pages. · [Repo](https://github.com/NikitaBoyarkin/NikitaBoyarkin.github.io) · [Case study](https://nikitaboyarkin.github.io/projects/site/)
+
+<details>
+<summary><b>🏦 Volta Neobank — 23 case studies</b></summary>
+
+- **Volta — Анализ воронки** — Воронка онбординга необанка: KYC — узкое место с 56,6% step conversion, регистрация теряет больше всех в абсолюте (2 682). Разбивка по каналам и платформам. · [Repo](https://github.com/NikitaBoyarkin/case-funnel) · [Case study](https://nikitaboyarkin.github.io/projects/volta/funnel/)
+- **Volta — A/B-тест прогресс-бара KYC** — Progress-bar в KYC дал +5,72 п.п. конверсии (Z=5,82, p<0,0001) при MDE +5 п.п. CUPED, AA-тест и Bonferroni защищают вывод; +€656K/год при 44× ROI. · [Repo](https://github.com/NikitaBoyarkin/case-ab) · [Case study](https://nikitaboyarkin.github.io/projects/volta/ab/)
+- **Volta — Retention и когорты** — Когортные треугольники показали ступенчатый сдвиг после KYC-фикса: M1 +11,8 п.п., M3 +9,2 п.п. и +€227K/год LTV. LTV Premium в 4,3× выше Free. · [Repo](https://github.com/NikitaBoyarkin/case-retention) · [Case study](https://nikitaboyarkin.github.io/projects/volta/retention/)
+- **Volta — Сегментация пользователей** — KMeans с data-driven K=4: Power 12% дают 41% выручки, 68% — 92%. Сценарии миграции между сегментами стоят до +€310K/год. · [Repo](https://github.com/NikitaBoyarkin/case-segmentation) · [Case study](https://nikitaboyarkin.github.io/projects/volta/segmentation/)
+- **Volta — Прогноз оттока** — Random Forest даёт +0,03 ROC-AUC над логистической регрессией; топ-драйвер оттока — частота ошибок устройства (23,7%), а не баланс или активность. · [Repo](https://github.com/NikitaBoyarkin/case-churn) · [Case study](https://nikitaboyarkin.github.io/projects/volta/churn/)
+- **Volta — RFM-анализ** — R/F/M-скоринг 1–5 делит базу на жизненные сегменты от Champions до Lost; recentness и monetary расходятся — «частые, но дешёвые» и «редкие, но крупные». · [Repo](https://github.com/NikitaBoyarkin/case-rfm) · [Case study](https://nikitaboyarkin.github.io/projects/volta/rfm/)
+- **Volta — Моделирование CLV** — Три метода оценки пожизненной ценности: исторический, retention-кривая и Gamma-Gamma. Порядок Power > Growth > Casual > Dormant устойчив ко всем методам. · [Repo](https://github.com/NikitaBoyarkin/case-clv) · [Case study](https://nikitaboyarkin.github.io/projects/volta/clv/)
+- **Volta — Маркетинговая атрибуция** — First-touch, last-touch, linear и Shapley-атрибуция. Shapley (data-driven) перераспределяет бюджет и ведёт реферал; вывод устойчив к выбору модели. · [Repo](https://github.com/NikitaBoyarkin/case-attribution) · [Case study](https://nikitaboyarkin.github.io/projects/volta/attribution/)
+- **Volta — Поиск аномалий** — Isolation Forest — лучший F1 (50,4%): ловит аномалии суммы, ночных часов и частоты. Z-score точен, но осторожен; сравнение трёх детекторов шло против ground truth. · [Repo](https://github.com/NikitaBoyarkin/case-anomalies) · [Case study](https://nikitaboyarkin.github.io/projects/volta/anomalies/)
+- **Volta — Анализ трат** — Разбивка трат по категориям и каналам: bills (25,8%) и travel (20,2%) дают почти половину оборота, groceries — самая частая категория. · [Repo](https://github.com/NikitaBoyarkin/case-spend) · [Case study](https://nikitaboyarkin.github.io/projects/volta/spend/)
+- **Volta — Поддержка и отток** — Отток растёт с числом тикетов: 37,1% при нуле обращений против 81,1% при 3+. Поддержка — измеримый retention-рычаг, а не только cost-центр. · [Repo](https://github.com/NikitaBoyarkin/case-support-churn) · [Case study](https://nikitaboyarkin.github.io/projects/volta/support-churn/)
+- **Volta — Тренды NPS** — Месячный NPS держится около нуля; сильнейшие драйверы — app quality (+30,3) и product (+29,4), главный источник недовольства — fees (−59,4). · [Repo](https://github.com/NikitaBoyarkin/case-nps) · [Case study](https://nikitaboyarkin.github.io/projects/volta/nps/)
+- **Volta — JTBD × когорты** — Job-сегменты и поведенческие когорты не независимы (chi² p<0,001): Dormant концентрируется в Цифровых новичках 45+ (39,4%) против Семейных бюджетов (15,1%). · [Repo](https://github.com/NikitaBoyarkin/case-jtbd) · [Case study](https://nikitaboyarkin.github.io/projects/volta/jtbd/)
+- **Volta — Юнит-экономика путешественников** — Путешественники теряют €0,45 на каждых €100 FX-операции; безубыточность требует снизить FX-cost с 1,00% до 0,55%, иначе убыток растёт с объёмом. · [Repo](https://github.com/NikitaBoyarkin/case-unit-economics) · [Case study](https://nikitaboyarkin.github.io/projects/volta/unit-economics/)
+- **Volta — Premium-апселл** — Конверсия Free→Premium концентрируется в якоре (17,3%) и статус-сикерах (41,2%); у Цифровых новичков 45+ всего 1,8% — ценность не переносится. · [Repo](https://github.com/NikitaBoyarkin/case-premium-upsell) · [Case study](https://nikitaboyarkin.github.io/projects/volta/premium-upsell/)
+- **Volta — Глубокий разбор KYC 45+** — HTE-разрез A/B по возрасту: 35–44 +11,0 п.п. и 18–24 +5,3 п.п., но 45+ +1,4 п.п. (ns). Реферал (доверие) конвертит 45+ лучше всех — трение в доверии, не в UX. · [Repo](https://github.com/NikitaBoyarkin/case-kyc-45) · [Case study](https://nikitaboyarkin.github.io/projects/volta/kyc-45/)
+- **Volta — Реферальные сегменты** — Реферальная воронка по JTBD-сегментам: якорь 29,6% против Цифровых новичков 45+ 4,8% и семейных 8,6%. Разрыв открывается на accept, а не на KYC. · [Repo](https://github.com/NikitaBoyarkin/case-referral) · [Case study](https://nikitaboyarkin.github.io/projects/volta/referral/)
+- **Volta — Assisted CAC vs LTV** — Окупается ли trust-трек 45+: LTV/CAC 45+ = 0,66 при гейте ≥3; assisted CAC €120 в ~3× дороже реферала и не окупается (payback 50 мес). · [Repo](https://github.com/NikitaBoyarkin/case-assisted-cac) · [Case study](https://nikitaboyarkin.github.io/projects/volta/assisted-cac/)
+- **Volta — Feasibility FX-сорсинга** — Гейт 0,55% достижим только на SOM-масштабе (~€332M/мес, 122× от текущего) — cold-start, а не «невозможно». Лучшее предложение — Interbank Prime 0,745%. · [Repo](https://github.com/NikitaBoyarkin/case-fx-sourcing) · [Case study](https://nikitaboyarkin.github.io/projects/volta/fx-sourcing/)
+- **Volta — Сегментные premium-офферы** — A/B: сегментный оффер поднимает gap-сегменты (+3,3 п.п. 45+, +4,2 п.п. семейные, +3,8 п.п. путешественники) — значимо после Holm, но якорь почти не двигается. · [Repo](https://github.com/NikitaBoyarkin/case-premium-offers) · [Case study](https://nikitaboyarkin.github.io/projects/volta/premium-offers/)
+- **Volta — CAC запуска якоря при масштабе** — LTV/CAC ≥3 держится только до ~70K пользователей; на SOM падает до 1,76× и payback 17 мес. Ограничение — ёмкость дешёвых каналов, а не бюджет. · [Repo](https://github.com/NikitaBoyarkin/case-anchor-cac) · [Case study](https://nikitaboyarkin.github.io/projects/volta/anchor-cac/)
+- **Volta — Win-back дормантов 45+** — Трёхармный win-back: human +5,34 п.п. и light-touch +2,77 п.п. против control. Light-touch окупается на 30–90d (ROI 2,54 / 1,26), human ROI 0,40 — kill как массовый канал. · [Repo](https://github.com/NikitaBoyarkin/case-dormant-winback) · [Case study](https://nikitaboyarkin.github.io/projects/volta/dormant-winback/)
+- **Volta — Причинная валидация KYC (DiD)** — DiD-проверка: фикс KYC причинно поднял M3-удержание на +9,09 п.п. (95% ДИ [+6,21; +11,96]) — pre-trends плоские, placebo ≈ 0, max |SMD| 0,157 < 0,2. · [Repo](https://github.com/NikitaBoyarkin/case-causal-kyc) · [Case study](https://nikitaboyarkin.github.io/projects/volta/causal-kyc/)
+
+</details>
+<!-- ALL-PROJECTS:END -->
 
 ### 🎮 Playable Games
 
