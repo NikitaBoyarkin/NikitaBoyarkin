@@ -775,6 +775,31 @@ def test_build_projects_block_repo_and_case_links():
     assert f"[Case study]({href})" in block
 
 
+def test_build_projects_block_prefers_en_text():
+    project = _project("RU Title", "analytics", description="RU desc")
+    project["title_en"] = "EN Title"
+    project["description_en"] = "EN desc"
+    block = bp.build_projects_block(_registry(projects=[project]))
+    assert "EN Title" in block and "EN desc" in block
+    assert "RU Title" not in block and "RU desc" not in block
+
+
+def test_build_projects_block_falls_back_to_ru_text():
+    # An older RU-only registry (no *_en keys) must still render its bullets.
+    project = _project("RU Title", "analytics", description="RU desc")
+    block = bp.build_projects_block(_registry(projects=[project]))
+    assert "RU Title" in block and "RU desc" in block
+
+
+def test_build_projects_block_volta_prefers_en_text():
+    case = _case("Volta RU", description="RU desc")
+    case["title_en"] = "Volta EN"
+    case["description_en"] = "EN desc"
+    block = bp.build_projects_block(_registry(volta_cases=[case]))
+    assert "Volta EN" in block and "EN desc" in block
+    assert "Volta RU" not in block and "RU desc" not in block
+
+
 def test_build_projects_block_private_without_repo():
     block = bp.build_projects_block(
         _registry(projects=[_project("Closed", "engineering", github=None, private=True)])

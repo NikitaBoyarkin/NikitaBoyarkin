@@ -129,8 +129,8 @@ def build_hero_svg() -> str:
         "schematic A/B lift motif."
     )
     tagline = "".join(
-        f"      <text x='40' y='{142 + i * 19}' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' "
-        f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='13px'>{_esc(line)}</text>\n"
+        f"      <text x='40' y='{146 + i * 22}' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' "
+        f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='15px'>{_esc(line)}</text>\n"
         for i, line in enumerate(HERO_TAGLINE)
     )
     svg = f"""\
@@ -139,13 +139,13 @@ def build_hero_svg() -> str:
       <title>{_esc(alt)}</title>
       <desc>{_esc(desc)}</desc>
       <rect fill='{BG}' width='{W}' height='{H}' rx='8'/>
-      <text x='40' y='66' fill='{TEXT_MAIN}' font-family='Segoe UI, Ubuntu, sans-serif'
+      <text x='40' y='64' fill='{TEXT_MAIN}' font-family='Segoe UI, Ubuntu, sans-serif'
             font-size='34px' font-weight='800' letter-spacing='1.5'>{_esc(HERO_NAME)}</text>
-      <text x='40' y='96' fill='{ACCENT}' font-family='Segoe UI, Ubuntu, sans-serif'
-            font-size='14px' font-weight='700' letter-spacing='2.6'>{_esc(HERO_ROLE)}</text>
-      <line x1='40' y1='116' x2='360' y2='116' stroke='{TEXT_MAIN}' stroke-opacity='{FAINT_OP}' stroke-width='1'/>
-{tagline}      <text x='40' y='192' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}'
-            font-family='Segoe UI, Ubuntu, sans-serif' font-size='11px' font-weight='600'>{_esc(HERO_STRIP)}</text>
+      <text x='40' y='99' fill='{ACCENT}' font-family='Segoe UI, Ubuntu, sans-serif'
+            font-size='16px' font-weight='700' letter-spacing='2.6'>{_esc(HERO_ROLE)}</text>
+      <line x1='40' y1='117' x2='360' y2='117' stroke='{TEXT_MAIN}' stroke-opacity='{FAINT_OP}' stroke-width='1'/>
+{tagline}      <text x='40' y='199' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}'
+            font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px' font-weight='600'>{_esc(HERO_STRIP)}</text>
       <line x1='490' y1='40' x2='490' y2='180' stroke='{TEXT_MAIN}' stroke-opacity='{FAINT_OP}' stroke-width='1'/>
       <text x='647' y='56' text-anchor='middle' fill='{ACCENT}'
             font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px' font-weight='700'>+lift</text>
@@ -153,9 +153,9 @@ def build_hero_svg() -> str:
       <rect x='660' y='84' width='50' height='86' rx='3' fill='{ACCENT}'/>
       <line x1='550' y1='170' x2='744' y2='170' stroke='{TEXT_MAIN}' stroke-opacity='{FAINT_OP}' stroke-width='1'/>
       <text x='609' y='188' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}'
-            font-family='Segoe UI, Ubuntu, sans-serif' font-size='11px' font-weight='600'>A</text>
+            font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px' font-weight='600'>A</text>
       <text x='685' y='188' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}'
-            font-family='Segoe UI, Ubuntu, sans-serif' font-size='11px' font-weight='600'>B</text>
+            font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px' font-weight='600'>B</text>
     </svg>
     """
     return textwrap.dedent(svg).strip() + "\n"
@@ -891,9 +891,19 @@ def _clean_text(value: object) -> str:
     return " ".join(str(value or "").split())
 
 
+def _pick(record: dict, en_key: str, ru_key: str) -> str:
+    """Prefer the EN field, fall back to the RU one.
+
+    The site registry is bilingual (`title`/`title_en`, `description`/`description_en`);
+    the profile renders EN to match the rest of the README. The fallback keeps an
+    older RU-only registry rendering instead of producing empty bullets.
+    """
+    return _clean_text(record.get(en_key)) or _clean_text(record.get(ru_key))
+
+
 def _project_bullet(project: dict) -> str:
-    title = _clean_text(project.get("title"))
-    description = _clean_text(project.get("description"))
+    title = _pick(project, "title_en", "title")
+    description = _pick(project, "description_en", "description")
     href = _clean_text(project.get("href"))
     github = _clean_text(project.get("github"))
     line = f"- **{title}** — {description}" if description else f"- **{title}**"
@@ -907,8 +917,8 @@ def _project_bullet(project: dict) -> str:
 
 
 def _volta_bullet(case: dict) -> str:
-    title = _clean_text(case.get("title"))
-    description = _clean_text(case.get("description"))
+    title = _pick(case, "title_en", "title")
+    description = _pick(case, "description_en", "description")
     github = _clean_text(case.get("github"))
     href = _clean_text(case.get("href"))
     line = f"- **{title}** — {description}" if description else f"- **{title}**"
