@@ -2,44 +2,9 @@
   <img src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/hero.svg" width="100%" alt="Nikita Boyarkin — Data / Product Analyst. Ambiguous product questions turned into clean experiments, SQL pipelines, and decisions." />
 </p>
 
-> A self-hosted analyst profile: 10 playable SVG mini-games, CI-checked headline numbers — +5.72 pp KYC conversion, €656K/yr on the Volta flagship.
+## Nikita Boyarkin — Data / Product Analyst
 
-## Navigation
-
-- 🌐 [Portfolio site](https://nikitaboyarkin.github.io)
-- 🏦 [Flagship: Volta neobank](https://github.com/NikitaBoyarkin/volta-banking)
-- 🧪 Related: [A/B Testing Toolkit](https://github.com/NikitaBoyarkin/ab_test) · [Causal / Uplift](https://github.com/NikitaBoyarkin/causal-uplift) · [SQL Analytics Case Study](https://github.com/NikitaBoyarkin/sql-analytics-case-study) · [RAG Evaluation Harness](https://github.com/NikitaBoyarkin/rag-eval-harness)
-
-**On this page:** [Situation](#situation) · [Task](#task) · [Actions](#actions) · [Result](#result) · [Featured Projects](#-featured-projects) · [Connect](#-connect)
-
-## Situation
-
-The work lived across many repositories — experiments, SQL, retention,
-segmentation — each with its own numbers and no single reachable page tying a
-method to the result it produced.
-
-## Task
-
-Turn that body of work into a profile a recruiter can navigate in one scroll:
-headline cases with real numbers, a public case study per project, and a
-portfolio site that demonstrates the analytics rather than describing it.
-
-## Actions
-
-Published the work end-to-end. Projects are grouped into Experiments / Analytics
-/ Product / Engineering, the Volta flagship carries 23 linked sub-cases, and the
-portfolio site at https://nikitaboyarkin.github.io renders every case study. In
-the site, headline numbers are frozen in `src/lib/metrics.ts` and CI-checked;
-profile cards, stats and the SVG games are self-hosted via
-`scripts/build_profile.py`.
-
-## Result
-
-A public portfolio site plus a self-hosted profile: 10 playable SVG mini-games,
-the Volta flagship at +5.72 pp KYC conversion and €656K/yr, and an analytics
-evidence map linking each method to the repository that produced it.
-
-## Hi, I'm Nikita 👋 — Data / Product Analyst (Junior)
+A self-hosted analyst portfolio: 10 playable SVG mini-games and CI-checked headline numbers — **+5.72 pp KYC conversion** and **€656K/yr** on the Volta flagship.
 
 - **Product experimentation** — A/B test design, sample-size planning, guardrail metrics, reproducible reporting. CUPED, AA-tests, Bonferroni, Bayesian A/B.
 - **User lifecycle analytics** — cohort retention, funnel analysis, RFM segmentation.
@@ -48,6 +13,16 @@ evidence map linking each method to the repository that produced it.
 📦 **Portfolio:** <a href="https://nikitaboyarkin.github.io/?utm_source=github&utm_medium=profile_readme&utm_campaign=header"><img src="portfolio.svg" align="absmiddle" alt="Portfolio" /></a>  
 🔗 **Links:** <a href="https://linktr.ee/lofinibo?utm_source=github&utm_medium=profile_readme&utm_campaign=header"><img src="links.svg" align="absmiddle" alt="Links" /></a>  
 📄 **Download CV:** <a href="https://nikitaboyarkin.github.io/CV-Nikita-Boyarkin.pdf?utm_source=github&utm_medium=profile_readme&utm_campaign=cv"><img src="cv.svg" align="absmiddle" alt="Download CV" /></a>
+
+---
+
+### 🧭 Navigation
+
+- 🌐 [Portfolio site](https://nikitaboyarkin.github.io)
+- 🏦 [Flagship: Volta neobank](https://github.com/NikitaBoyarkin/volta-banking)
+- 🧪 Related: [A/B Testing Toolkit](https://github.com/NikitaBoyarkin/ab_test) · [Causal / Uplift](https://github.com/NikitaBoyarkin/causal-uplift) · [SQL Analytics Case Study](https://github.com/NikitaBoyarkin/sql-analytics-case-study) · [RAG Evaluation Harness](https://github.com/NikitaBoyarkin/rag-eval-harness)
+
+**On this page:** [Featured Projects](#-featured-projects) · [Analytics Evidence](#-analytics-evidence) · [All Projects](#-all-projects) · [Playable Games](#-playable-games) · [Activity](#-activity) · [Recent Notes](#-recent-notes) · [Connect](#-connect)
 
 ---
 
@@ -60,74 +35,11 @@ evidence map linking each method to the repository that produced it.
 
 ---
 
-### 🔬 Analytics Evidence
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/analytics-evidence.svg" alt="Analytics evidence: each analytical method linked to the repository that produced it, with a confidence rating" />
-</p>
-
-<!-- EVIDENCE-SOURCES:START -->
-<sub>Sources: <a href="https://github.com/NikitaBoyarkin/volta-banking">volta-banking</a> · <a href="https://github.com/NikitaBoyarkin/causal-uplift">causal-uplift</a> · <a href="https://github.com/NikitaBoyarkin/ab_test">ab_test</a> · <a href="https://github.com/NikitaBoyarkin/sql-analytics-case-study">sql-analytics-case-study</a> · <a href="https://github.com/NikitaBoyarkin/airflow">airflow</a> — every link is HTTP-checked in CI.</sub>
-<!-- EVIDENCE-SOURCES:END -->
-
----
-
-### 📊 GitHub Stats
-
-<p align="center">
-  <img height="195" src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/stats.svg" alt="NikitaBoyarkin GitHub Stats" />
-</p>
-
-### 🗣️ Top Languages
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/top-languages.svg" alt="Top Languages" />
-</p>
-
----
-
-### ⚡ Activity
-
-<!-- LAST-REFRESHED:START -->
-_Last refreshed: 2026-10-12 17:17 UTC · 405 contributions in the last 7 days_
-<!-- LAST-REFRESHED:END -->
-
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/metrics.svg" alt="GitHub Metrics" />
-</p>
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/monthly-activity.svg" alt="Monthly contributions" />
-</p>
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/contribution-types.svg" alt="Contribution types" />
-</p>
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/activity.svg" alt="NikitaBoyarkin Activity Graph" />
-</p>
-
-
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/github-contribution-grid-snake-dark.svg" />
-    <img src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/github-contribution-grid-snake.svg" alt="Contribution snake" />
-  </picture>
-</p>
-
-<p align="center">
-  <img src="https://hits.sh/github.com/NikitaBoyarkin.svg?label=Profile+Views&color=fe4e02&logo=github&style=flat-square" alt="Profile views" />
-</p>
-
----
-
-### 🔬 Featured Projects
+### ⭐ Featured Projects
 
 #### 1. <a href="https://github.com/NikitaBoyarkin/volta-banking"><img src="volta-neobank.svg" align="absmiddle" alt="Volta Neobank" /></a> — Product Analytics
 
-_End-to-end neobank analytics: funnel, A/B test, retention, segmentation. **+5.72pp KYC conversion** — statistics and methodology live in the evidence ledger above and the case study._
+_End-to-end neobank analytics: funnel, A/B test, retention, segmentation. **+5.72pp KYC conversion** — statistics and methodology live in the evidence ledger and the case study._
 
 [![Repo](https://img.shields.io/badge/Repo-volta--banking-0f2a2b?style=for-the-badge&logo=github&logoColor=fe4e02)](https://github.com/NikitaBoyarkin/volta-banking)
 [![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/projects/volta/?utm_source=github&utm_medium=profile_readme&utm_campaign=featured)
@@ -158,6 +70,18 @@ _A retrieval-augmented generation pipeline with a real offline eval harness. **r
 [![Repo](https://img.shields.io/badge/Repo-rag--eval--harness-0f2a2b?style=for-the-badge&logo=github&logoColor=fe4e02)](https://github.com/NikitaBoyarkin/rag-eval-harness)
 
 **Stack:** Python · scikit-learn · TF-IDF · pytest
+
+---
+
+### 🔬 Analytics Evidence
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/analytics-evidence.svg" alt="Analytics evidence: each analytical method linked to the repository that produced it, with a confidence rating" />
+</p>
+
+<!-- EVIDENCE-SOURCES:START -->
+<sub>Sources: <a href="https://github.com/NikitaBoyarkin/volta-banking">volta-banking</a> · <a href="https://github.com/NikitaBoyarkin/causal-uplift">causal-uplift</a> · <a href="https://github.com/NikitaBoyarkin/ab_test">ab_test</a> · <a href="https://github.com/NikitaBoyarkin/sql-analytics-case-study">sql-analytics-case-study</a> · <a href="https://github.com/NikitaBoyarkin/airflow">airflow</a> — every link is HTTP-checked in CI.</sub>
+<!-- EVIDENCE-SOURCES:END -->
 
 ---
 
@@ -227,6 +151,8 @@ _A retrieval-augmented generation pipeline with a real offline eval harness. **r
 
 </details>
 <!-- ALL-PROJECTS:END -->
+
+---
 
 ### 🎮 Playable Games
 
@@ -320,9 +246,9 @@ _A retrieval-augmented generation pipeline with a real offline eval harness. **r
   </tr>
 </table>
 
-> Click a card to play the game full screen — opens in a new tab.
+> Click a card to play the game full screen — it opens in a new tab.
 
-### 🕹️ How to Play
+#### 🕹️ How to Play
 
 | Game | Controls | Goal |
 |---|---|---|
@@ -334,6 +260,54 @@ _A retrieval-augmented generation pipeline with a real offline eval harness. **r
 | 📊 Cohort Catch | ←/→ or move the mouse | Catch Returning users (green), avoid Churned (grey) |
 | 🧩 SQL Query | Click an option (or keys 1-4) | Pick the token that fills the SQL blank |
 | 🃏 Metric Match | Click two cards | Match each metric to its formula |
+
+---
+
+### ⚡ Activity
+
+<!-- LAST-REFRESHED:START -->
+_Last refreshed: 2026-10-11 10:51 UTC · 247 contributions in the last 7 days_
+<!-- LAST-REFRESHED:END -->
+
+<details>
+<summary><b>📊 Stats, streaks, contribution map, languages and monthly trend</b></summary>
+
+<p align="center">
+  <img height="195" src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/stats.svg" alt="NikitaBoyarkin GitHub Stats" />
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/top-languages.svg" alt="Top Languages" />
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/metrics.svg" alt="GitHub contribution map" />
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/monthly-activity.svg" alt="Monthly contributions" />
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/contribution-types.svg" alt="Contribution types" />
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/activity.svg" alt="NikitaBoyarkin 30-day activity graph" />
+</p>
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/github-contribution-grid-snake-dark.svg" />
+    <img src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/github-contribution-grid-snake.svg" alt="Contribution snake" />
+  </picture>
+</p>
+
+</details>
+
+<p align="center">
+  <img src="https://hits.sh/github.com/NikitaBoyarkin.svg?label=Profile+Views&color=fe4e02&logo=github&style=flat-square" alt="Profile views" />
+</p>
 
 ---
 
@@ -401,5 +375,18 @@ _A retrieval-augmented generation pipeline with a real offline eval harness. **r
 [![Email](https://img.shields.io/badge/Email-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:boyarkin_yandex@mail.ru)
 
 ---
+
+<details>
+<summary><b>🧩 How this profile is built — situation, task, actions, result</b></summary>
+
+**Situation.** The work lived across many repositories — experiments, SQL, retention, segmentation — each with its own numbers and no single reachable page tying a method to the result it produced.
+
+**Task.** Turn that body of work into a profile a recruiter can navigate in one scroll: headline cases with real numbers, a public case study per project, and a portfolio site that demonstrates the analytics rather than describing it.
+
+**Actions.** Published the work end-to-end. Projects are grouped into Experiments / Analytics / Product / Engineering, the Volta flagship carries 23 linked sub-cases, and the portfolio site at https://nikitaboyarkin.github.io renders every case study. In the site, headline numbers are frozen in `src/lib/metrics.ts` and CI-checked; profile cards, stats and the SVG games are self-hosted via `scripts/build_profile.py`.
+
+**Result.** A public portfolio site plus a self-hosted profile: 10 playable SVG mini-games, the Volta flagship at +5.72 pp KYC conversion and €656K/yr, and an analytics evidence map linking each method to the repository that produced it.
+
+</details>
 
 <sub>Profile cards (stats, activity, contribution map, contribution types, monthly activity, top languages) are self-hosted via `scripts/build_profile.py`. Powered by [snk](https://github.com/Platane/snk), [blog-post-workflow](https://github.com/gautamkrishnar/blog-post-workflow), [skill-icons](https://github.com/tandpfun/skill-icons), [shields.io](https://shields.io), and [jsDelivr](https://www.jsdelivr.com).</sub>
