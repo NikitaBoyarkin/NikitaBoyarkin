@@ -954,12 +954,15 @@ def _project_bullet(project: dict) -> str:
     description = _pick(project, "description_en", "description")
     href = _clean_text(project.get("href"))
     github = _clean_text(project.get("github"))
+    is_private = bool(project.get("private"))
     line = f"- **{title}** — {description}" if description else f"- **{title}**"
-    if github:
+    # A private repo 404s for anonymous readers, so advertising its URL here (and
+    # in the CI liveness list) is a dead link, not a pointer — mark it private.
+    if github and not is_private:
         line += f" · [Repo]({github})"
     if href:
         line += f" · [Case study]({href})"
-    if not github and project.get("private"):
+    if is_private:
         line += " · _private_"
     return line
 
@@ -1026,17 +1029,24 @@ def _portfolio_summary(registry: dict) -> str:
 
 
 def projects_links(registry: dict) -> list[str]:
-    """Distinct github/case-study URLs across the registry, first-seen order.
+    """Distinct public github/case-study URLs across the registry, first-seen order.
 
-    Input to the CI link-liveness check: every URL the All Projects block can
-    render, deduped, so a dead link is reported once rather than per occurrence.
+    Input to the CI link-liveness check: every publicly reachable URL the All
+    Projects block can render, deduped, so a dead link is reported once rather
+    than per occurrence. A private project's ``github`` is skipped — it 404s for
+    anonymous requests — while its public ``href`` case study is still checked.
     """
     records = [project for _, project in _projects_in_track_order(registry)]
     records.extend(case for case in (registry.get("volta_cases") or []) if isinstance(case, dict))
     links: list[str] = []
     seen: set[str] = set()
     for record in records:
+        private = bool(record.get("private"))
         for key in ("github", "href"):
+            # A private repo's URL is only reachable by its owner; anonymous CI
+            # and readers get a 404, so keep it out of the liveness check.
+            if key == "github" and private:
+                continue
             value = _clean_text(record.get(key))
             if value and value not in seen:
                 seen.add(value)

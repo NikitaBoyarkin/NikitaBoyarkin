@@ -810,6 +810,16 @@ def test_build_projects_block_private_without_repo():
     assert "_private_" in block
 
 
+def test_build_projects_block_private_with_repo_omits_dead_repo_link():
+    github = "https://github.com/NikitaBoyarkin/secret"
+    block = bp.build_projects_block(
+        _registry(projects=[_project("Closed", "analytics", github=github, private=True)])
+    )
+    assert f"[Repo]({github})" not in block
+    assert "[Case study](" in block
+    assert "_private_" in block
+
+
 def test_build_projects_block_volta_details():
     github = "https://github.com/NikitaBoyarkin/volta"
     block = bp.build_projects_block(
@@ -996,6 +1006,17 @@ def test_projects_links_collects_github_and_href_distinct_in_order():
         ]
     )
     assert bp.projects_links(reg) == [a, b]
+
+
+def test_projects_links_skips_private_repo_but_keeps_case_study():
+    secret = "https://github.com/NikitaBoyarkin/secret"
+    case = "https://example.test/private-case"
+    reg = _registry(
+        projects=[_project("Closed", "analytics", github=secret, href=case, private=True)]
+    )
+    links = bp.projects_links(reg)
+    assert secret not in links
+    assert case in links
 
 
 def test_projects_links_covers_track_lists_and_volta():
