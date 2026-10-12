@@ -901,3 +901,146 @@ def test_fetch_projects_registry_raises_on_error(monkeypatch):
     monkeypatch.setattr(bp.urllib.request, "urlopen", _fail)
     with pytest.raises(RuntimeError):
         bp.fetch_projects_registry("https://example.test/projects.json")
+
+
+# ---------- all-projects visualization + automation ----------
+
+
+def test_projects_svg_constants():
+    assert bp.PROJECTS_SVG_NAME == "projects.svg"
+    assert bp.PROJECTS_SVG_URL == (
+        "https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/projects.svg"
+    )
+
+
+def test_projects_registry_url_uses_default_branch():
+    # Regression: the default branch of the site repo is `master`, not `main`.
+    assert "/master/" in bp.PROJECTS_REGISTRY_URL
+
+
+def test_track_counts_counts_projects_per_track():
+    counts = bp._track_counts(
+        _registry(
+            projects=[
+                _project("Exp A", "experiments"),
+                _project("Exp B", "experiments"),
+                _project("Ana A", "analytics"),
+            ]
+        )
+    )
+    assert set(counts) <= set(bp.TRACK_ORDER)
+    assert counts["experiments"] == 2
+    assert counts["analytics"] == 1
+    assert sum(counts.values()) == 3
+
+
+def test_portfolio_summary_format():
+    reg = _registry(
+        projects=[_project("A", "experiments"), _project("B", "analytics")],
+        volta_cases=[_case("V1"), _case("V2"), _case("V3")],
+    )
+    assert (
+        bp._portfolio_summary(reg)
+        == "**2 projects** across **2 tracks** · **3 Volta case studies**"
+    )
+
+
+def test_projects_svg_is_self_contained_and_accessible():
+    svg = bp.build_projects_svg(_registry(projects=[_project("Demo", "analytics")]))
+    assert svg.startswith("<svg")
+    assert 'role="img"' in svg
+    assert "aria-label" in svg
+    assert "<title>" in svg
+    assert svg.strip().endswith("</svg>")
+    assert "<script" not in svg
+    assert "http" not in svg
+    ET.fromstring(svg)
+
+
+def test_projects_svg_empty_registry_is_valid():
+    svg = bp.build_projects_svg({})
+    assert svg.startswith("<svg")
+    assert svg.strip().endswith("</svg>")
+    assert "<script" not in svg
+    ET.fromstring(svg)
+
+
+def test_projects_svg_is_deterministic():
+    reg = _registry(
+        projects=[_project("A", "experiments"), _project("B", "analytics")],
+        volta_cases=[_case("V")],
+    )
+    assert bp.build_projects_svg(reg) == bp.build_projects_svg(reg)
+
+
+def test_projects_svg_escapes_untrusted_text():
+    svg = bp.build_projects_svg(
+        _registry(
+            projects=[_project("A<script>&", "analytics", description="<b>&")],
+        )
+    )
+    ET.fromstring(svg)
+    assert "<script>" not in svg
+    assert "&lt;" in svg
+
+
+def test_projects_links_collects_github_and_href_distinct_in_order():
+    a = "https://github.com/NikitaBoyarkin/a"
+    b = "https://example.test/case-b"
+    reg = _registry(
+        projects=[
+            _project("P1", "analytics", github=a, href=b),
+            _project("P2", "analytics", github=a, href=None),
+            _project("P3", "engineering", github=None, href=None),
+        ]
+    )
+    assert bp.projects_links(reg) == [a, b]
+
+
+def test_projects_links_covers_track_lists_and_volta():
+    p = "https://github.com/NikitaBoyarkin/p"
+    t = "https://github.com/NikitaBoyarkin/t"
+    v = "https://github.com/NikitaBoyarkin/v"
+    reg = {
+        "projects": [_project("P", "analytics", github=p)],
+        "experiments": [_project("T", "experiments", github=t)],
+        "volta_cases": [_case("V", github=v), _case("NoRepo", github=None)],
+    }
+    links = bp.projects_links(reg)
+    assert {p, t, v} <= set(links)
+    assert "" not in links
+    assert len(links) == len(set(links))
+
+
+def test_build_projects_block_embeds_svg_and_summary_after_heading():
+    reg = _registry(
+        projects=[_project("Exp", "experiments"), _project("Ana", "analytics")],
+        volta_cases=[_case("V")],
+    )
+    block = bp.build_projects_block(reg)
+    assert block.startswith("### 🗂️ All Projects")
+    assert "<img" in block
+    assert bp.PROJECTS_SVG_URL in block
+    summary = bp._portfolio_summary(reg)
+    assert summary in block
+    heading = block.index("### 🗂️ All Projects")
+    assert heading < block.index(bp.PROJECTS_SVG_URL)
+    assert heading < block.index(summary) < block.index(_heading("experiments"))
+
+
+def test_build_projects_block_track_order_unchanged_with_embed():
+    block = bp.build_projects_block(
+        _registry(
+            projects=[
+                _project("A", "experiments"),
+                _project("B", "analytics"),
+                _project("C", "engineering"),
+            ]
+        )
+    )
+    positions = [
+        block.index(_heading("experiments")),
+        block.index(_heading("analytics")),
+        block.index(_heading("engineering")),
+    ]
+    assert positions == sorted(positions)

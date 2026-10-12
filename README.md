@@ -88,6 +88,12 @@ _A retrieval-augmented generation pipeline with a real offline eval harness. **r
 <!-- ALL-PROJECTS:START -->
 ### 🗂️ All Projects
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/projects.svg" width="100%" alt="Portfolio overview: 22 projects across 4 tracks plus 23 Volta Neobank case studies" />
+</p>
+
+**22 projects** across **4 tracks** · **23 Volta case studies**
+
 #### 🧪 Experiments
 
 - **A/B Testing Methodology Toolkit** — 18 A/B methodology modules, each calibrated by simulation: an A/A null check holds Type I error at α, and power curves show the effect size each method can actually detect. · [Repo](https://github.com/NikitaBoyarkin/ab_test) · [Case study](https://nikitaboyarkin.github.io/projects/ab/)

@@ -8,7 +8,7 @@ The rendered artifact is `README.md`; everything here is for whoever maintains i
 | Path | What |
 |---|---|
 | `README.md` | The profile (rendered on github.com/NikitaBoyarkin). |
-| `scripts/build_profile.py` | Generates `stats/activity/metrics/contribution-types/monthly-activity/top-languages.svg` + the README "Last refreshed" block. |
+| `scripts/build_profile.py` | Generates `stats/activity/metrics/contribution-types/monthly-activity/top-languages/projects.svg` + the README "Last refreshed" block. The All Projects block is derived from the projects registry, read from `NikitaBoyarkin.github.io` at `master` (`public/projects.json`). |
 | `scripts/preview.sh` | Renders `README.md` locally as GitHub-flavored markdown and opens it in the browser (`scripts/preview.sh`). |
 | `tests/test_build_profile.py` | Pure-function tests for the generator (no network). |
 | `.github/workflows/ci.yml` | Lint + tests on every push/PR. |
@@ -23,6 +23,7 @@ python3 -m pytest                 # tests (pure functions, no network)
 ruff check scripts tests          # lint
 GH_USER=NikitaBoyarkin GH_TOKEN=$(gh auth token) python3 scripts/build_profile.py --dry-run
 GH_USER=NikitaBoyarkin GH_TOKEN=$(gh auth token) python3 scripts/build_profile.py
+GH_USER=NikitaBoyarkin python3 scripts/build_profile.py --print-project-links  # one project/repo/case-study URL per line
 scripts/preview.sh                # local README preview
 ```
 
@@ -38,7 +39,7 @@ must stay offline). CI prints the number with `pytest --cov=build_profile`.
 
 ## Asset / link pinning policy
 
-- **Self-hosted cards** (`stats`, `activity`, `metrics`, `contribution-types`, `monthly-activity`, `top-languages`)
+- **Self-hosted cards** (`stats`, `activity`, `metrics`, `contribution-types`, `monthly-activity`, `top-languages`, `projects`)
   are referenced from the repo's own `main` via `raw.githubusercontent.com` — no
   third-party render service, zero external requests at render time.
 - **Contribution snake** is committed to `main` and referenced from `main`.
@@ -90,3 +91,7 @@ itself:
   rendered timestamp differs, so a no-op day produces at most the meaningful
   "Last refreshed" README commit.
 - `enable_keepalive: false` on the RSS workflow (no dummy empty commits).
+- `projects.svg` is committed by `profile.yml` alongside the other generated assets.
+- A project-links liveness job runs `build_profile.py --print-project-links` and
+  checks every URL, so a stale registry or dead link surfaces in CI instead of
+  silently dropping out of the README.

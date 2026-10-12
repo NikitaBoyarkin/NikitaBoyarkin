@@ -53,3 +53,24 @@ jobs:
             echo "checking $url"
             curl -fsSL --retry 2 --max-time 20 -o /dev/null "$url"
           done
+
+  project-links:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Every project link must resolve
+        run: |
+          set -euo pipefail
+          links=$(python3 scripts/build_profile.py --print-project-links)
+          test -n "$links" || { echo "ledger has no project links"; exit 1; }
+          for url in $links; do
+            echo "checking $url"
+            curl -fsSL --retry 2 --max-time 20 -o /dev/null "$url"
+          done

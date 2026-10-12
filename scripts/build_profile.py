@@ -25,6 +25,7 @@ import json
 import logging
 import os
 import re
+import sys
 import textwrap
 import time
 import urllib.error
@@ -836,7 +837,12 @@ def sync_evidence_sources_block(
 # about which projects exist. The site owns the list; this only formats it.
 PROJECTS_REGISTRY_URL = (
     "https://raw.githubusercontent.com/NikitaBoyarkin/"
-    "NikitaBoyarkin.github.io/main/public/projects.json"
+    "NikitaBoyarkin.github.io/master/public/projects.json"
+)
+
+PROJECTS_SVG_NAME = "projects.svg"
+PROJECTS_SVG_URL = (
+    "https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/projects.svg"
 )
 
 ALL_PROJECTS_START = "<!-- ALL-PROJECTS:START -->"
@@ -849,6 +855,15 @@ TRACK_LABELS = {
     "analytics": "📊 Analytics",
     "product": "📦 Product",
     "engineering": "🛠️ Engineering",
+}
+
+# ASCII-only labels for the SVG: emoji are dropped because a screen reader reads
+# them verbatim ("test tube Experiments"), and the vector card has no emoji font.
+TRACK_PLAIN_LABELS = {
+    "experiments": "Experiments",
+    "analytics": "Analytics",
+    "product": "Product",
+    "engineering": "Engineering",
 }
 
 
@@ -929,6 +944,162 @@ def _volta_bullet(case: dict) -> str:
     return line
 
 
+def _projects_in_track_order(registry: dict) -> list[tuple[str, dict]]:
+    """Resolve the registry into (track, project) pairs, in render order.
+
+    Mirrors ``build_projects_block``: per-track lists contribute their dict
+    entries first, then the flat ``projects`` array is routed by its ``track``.
+    """
+    by_track: dict[str, list[dict]] = {track: [] for track in TRACK_ORDER}
+    for track in TRACK_ORDER:
+        items = registry.get(track)
+        if isinstance(items, list):
+            by_track[track].extend(project for project in items if isinstance(project, dict))
+    for project in registry.get("projects") or []:
+        if isinstance(project, dict) and project.get("track") in by_track:
+            by_track[project["track"]].append(project)
+    return [(track, project) for track in TRACK_ORDER for project in by_track[track]]
+
+
+def _track_counts(registry: dict) -> dict[str, int]:
+    """Projects per track, resolved exactly as ``build_projects_block`` does.
+
+    A per-track list contributes its raw ``len`` (the site contract guarantees
+    dict entries); the flat ``projects`` array contributes one per entry whose
+    ``track`` is known. Unknown tracks are ignored; every ``TRACK_ORDER`` key is
+    present and defaults to 0.
+    """
+    counts: dict[str, int] = {track: 0 for track in TRACK_ORDER}
+    for track in TRACK_ORDER:
+        items = registry.get(track)
+        if isinstance(items, list):
+            counts[track] += len(items)
+    for project in registry.get("projects") or []:
+        if isinstance(project, dict) and project.get("track") in counts:
+            counts[project["track"]] += 1
+    return counts
+
+
+def _portfolio_summary(registry: dict) -> str:
+    """One-line markdown roll-up: projects, active tracks, Volta case studies."""
+    counts = _track_counts(registry)
+    total = sum(counts.values())
+    tracks = sum(1 for count in counts.values() if count > 0)
+    summary = f"**{total} projects** across **{tracks} tracks**"
+    volta = len(registry.get("volta_cases") or [])
+    if volta > 0:
+        summary += f" · **{volta} Volta case studies**"
+    return summary
+
+
+def projects_links(registry: dict) -> list[str]:
+    """Distinct github/case-study URLs across the registry, first-seen order.
+
+    Input to the CI link-liveness check: every URL the All Projects block can
+    render, deduped, so a dead link is reported once rather than per occurrence.
+    """
+    records = [project for _, project in _projects_in_track_order(registry)]
+    records.extend(case for case in (registry.get("volta_cases") or []) if isinstance(case, dict))
+    links: list[str] = []
+    seen: set[str] = set()
+    for record in records:
+        for key in ("github", "href"):
+            value = _clean_text(record.get(key))
+            if value and value not in seen:
+                seen.add(value)
+                links.append(value)
+    return links
+
+
+def build_projects_svg(registry: dict) -> str:
+    """Stacked-track overview card for the All Projects section.
+
+    Self-contained and vector-only, like the other cards. It is deliberately the
+    dark inverse of the cream README cards: it opens the projects section, so it
+    reads as that section's header band instead of another body tile. Only the
+    three brand tokens appear — tracks are told apart by accent opacity alone.
+    The accessible name enumerates the project titles, so a screen reader hears
+    the portfolio rather than a bare count.
+    """
+    counts = _track_counts(registry)
+    total = sum(counts.values())
+    active = [(track, counts[track]) for track in TRACK_ORDER if counts[track] > 0]
+    volta = len(registry.get("volta_cases") or [])
+    titles = [
+        title
+        for title in (
+            _pick(project, "title_en", "title") for _, project in _projects_in_track_order(registry)
+        )
+        if title
+    ]
+
+    W, H = 800, 150
+    bar_x, bar_y, bar_w, bar_h = 20, 84, 760, 30
+    # Contract names the field #1400c3 (module TEXT_MAIN) and the ink #f8f2da
+    # (module BG) — i.e. the card inverts the cream cards on purpose.
+    card_bg, card_ink, card_accent = TEXT_MAIN, BG, ACCENT
+    tones = ("1", "0.82", "0.64", "0.46")
+
+    if total > 0:
+        header = f"{total} projects · {len(active)} tracks"
+        if volta > 0:
+            header += f" · {volta} Volta case studies"
+    else:
+        header = "0 projects"
+
+    if total > 0:
+        segments = ""
+        cursor = float(bar_x)
+        for i, (track, count) in enumerate(active):
+            seg_w = bar_w * count / total
+            segments += (
+                f"    <rect x='{cursor:.1f}' y='{bar_y}' width='{seg_w:.1f}' "
+                f"height='{bar_h}' fill='{card_accent}' fill-opacity='{tones[i % len(tones)]}'>"
+                f"<title>{_esc(TRACK_PLAIN_LABELS[track])}: {count}</title></rect>\n"
+            )
+            cursor += seg_w
+    else:
+        segments = (
+            f"    <rect x='{bar_x}' y='{bar_y}' width='{bar_w}' height='{bar_h}' rx='4' "
+            f"fill='{card_ink}' fill-opacity='{FAINT_OP}'/>\n"
+        )
+
+    if active:
+        legend = ""
+        for i, (track, count) in enumerate(active):
+            lx = bar_x + i * 190
+            legend += (
+                f"    <rect x='{lx}' y='122' width='11' height='11' rx='2' "
+                f"fill='{card_accent}' fill-opacity='{tones[i % len(tones)]}'/>\n"
+                f"    <text x='{lx + 17}' y='131' fill='{card_ink}' fill-opacity='{MUTED_OP}' "
+                f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='13px'>"
+                f"{_esc(TRACK_PLAIN_LABELS[track])}: {count}</text>\n"
+            )
+    else:
+        legend = (
+            f"    <text x='{bar_x}' y='131' fill='{card_ink}' fill-opacity='{MUTED_OP}' "
+            f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='13px'>No projects yet</text>\n"
+        )
+
+    alt = f"Portfolio overview: {total} projects across {len(active)} tracks"
+    if volta > 0:
+        alt += f" plus {volta} Volta Neobank case studies"
+    if titles:
+        alt += " — " + ", ".join(titles)
+
+    svg = f"""\
+    <svg viewBox='0 0 {W} {H}' width='100%' role="img" aria-label='{_esc(alt)}'>
+      <title>{_esc(alt)}</title>
+      <rect fill='{card_bg}' width='{W}' height='{H}' rx='8'/>
+      <text x='24' y='37' fill='{card_ink}' font-family='Segoe UI, Ubuntu, sans-serif'
+            font-size='16px' font-weight='700' letter-spacing='0.3'>{_esc(header)}</text>
+    {segments}  {legend}    <rect x='{bar_x}' y='{bar_y}' width='{bar_w}' height='{bar_h}'
+          rx='4' fill='none' stroke='{card_ink}' stroke-opacity='{FAINT_OP}' stroke-width='1'/>
+    </svg>
+    """
+    return textwrap.dedent(svg).strip()
+
+
 def build_projects_block(registry: dict) -> str:
     """Render the marker-inner markdown for the 'All Projects' section.
 
@@ -947,6 +1118,20 @@ def build_projects_block(registry: dict) -> str:
             by_track[project["track"]].append(project)
 
     lines: list[str] = ["### 🗂️ All Projects", ""]
+    counts = _track_counts(registry)
+    total = sum(counts.values())
+    track_total = sum(1 for count in counts.values() if count > 0)
+    volta_total = len(registry.get("volta_cases") or [])
+    lines.append('<p align="center">')
+    lines.append(
+        f'  <img src="{PROJECTS_SVG_URL}" width="100%" '
+        f'alt="Portfolio overview: {total} projects across {track_total} tracks '
+        f'plus {volta_total} Volta Neobank case studies" />'
+    )
+    lines.append("</p>")
+    lines.append("")
+    lines.append(_portfolio_summary(registry))
+    lines.append("")
     for track in TRACK_ORDER:
         items = by_track[track]
         if not items:
@@ -1056,6 +1241,11 @@ def main() -> None:
         help="print one evidence source URL per line and exit (CI link-liveness check)",
     )
     parser.add_argument(
+        "--print-project-links",
+        action="store_true",
+        help="print one project URL per line and exit (CI link-liveness check)",
+    )
+    parser.add_argument(
         "--registry",
         default=PROJECTS_REGISTRY_URL,
         help="path or URL to the projects registry JSON (default: live site)",
@@ -1063,6 +1253,17 @@ def main() -> None:
     args = parser.parse_args()
     if args.print_links:
         for url in evidence_sources():
+            print(url)
+        return
+    if args.print_project_links:
+        # Registry-only path: no GraphQL, no token — so CI can check project
+        # links even when the reads quota is exhausted.
+        try:
+            registry = load_projects_registry(args.registry)
+        except (RuntimeError, urllib.error.URLError, TimeoutError, OSError, ValueError) as exc:
+            print(f"could not load projects registry: {exc}", file=sys.stderr)
+            raise SystemExit(1) from exc
+        for url in projects_links(registry):
             print(url)
         return
     DRY_RUN = args.dry_run
@@ -1108,6 +1309,7 @@ def main() -> None:
         projects_block: str | None = None
         try:
             registry = load_projects_registry(args.registry)
+            write_asset(REPO_ROOT / PROJECTS_SVG_NAME, build_projects_svg(registry))
             projects_block = build_projects_block(registry)
         except (RuntimeError, urllib.error.URLError, TimeoutError, OSError, ValueError) as exc:
             logging.warning("projects registry unavailable; README block left untouched: %s", exc)
