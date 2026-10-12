@@ -831,8 +831,161 @@ def sync_evidence_sources_block(
     return _EVIDENCE_SOURCES_RE.sub(lambda _: block, content)
 
 
+# Project registry — the portfolio site publishes every project as JSON, and the
+# profile renders that same registry so the README and the site can never disagree
+# about which projects exist. The site owns the list; this only formats it.
+PROJECTS_REGISTRY_URL = (
+    "https://raw.githubusercontent.com/NikitaBoyarkin/"
+    "NikitaBoyarkin.github.io/main/public/projects.json"
+)
+
+ALL_PROJECTS_START = "<!-- ALL-PROJECTS:START -->"
+ALL_PROJECTS_END = "<!-- ALL-PROJECTS:END -->"
+
+# Site tracks rendered in this order; unknown tracks are ignored, not guessed.
+TRACK_ORDER = ("experiments", "analytics", "product", "engineering")
+TRACK_LABELS = {
+    "experiments": "🧪 Experiments",
+    "analytics": "📊 Analytics",
+    "product": "📦 Product",
+    "engineering": "🛠️ Engineering",
+}
+
+
+def fetch_projects_registry(url: str = PROJECTS_REGISTRY_URL, retries: int = 3) -> dict:
+    """GET the project registry JSON, retrying transient network failures.
+
+    Mirrors the ``graphql()`` backoff idiom. Any failure — network, non-200, or
+    malformed JSON — surfaces as ``RuntimeError`` so the caller can leave the
+    README untouched instead of shipping a half-rendered block.
+    """
+    last_exc: Exception | None = None
+    for attempt in range(1, retries + 1):
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": "build_profile"})
+            with urllib.request.urlopen(req, timeout=60) as resp:
+                status = getattr(resp, "status", 200)
+                if status != 200:
+                    raise RuntimeError(f"registry returned HTTP {status}")
+                return json.loads(resp.read().decode("utf-8"))
+        except (urllib.error.URLError, TimeoutError, OSError, json.JSONDecodeError) as exc:
+            last_exc = exc
+            if attempt == retries:
+                break
+            wait = 2 ** (attempt - 1)
+            print(f"registry attempt {attempt}/{retries} failed: {exc}; retrying in {wait}s")
+            time.sleep(wait)
+    raise RuntimeError(f"could not fetch projects registry: {last_exc}")
+
+
+def load_projects_registry(source: str = PROJECTS_REGISTRY_URL) -> dict:
+    """Read the registry from a local path when it exists, else fetch it as a URL."""
+    path = Path(source)
+    if path.exists():
+        return json.loads(path.read_text(encoding="utf-8"))
+    return fetch_projects_registry(source)
+
+
+def _clean_text(value: object) -> str:
+    """Collapse runs of whitespace/newlines so a description stays one markdown line."""
+    return " ".join(str(value or "").split())
+
+
+def _project_bullet(project: dict) -> str:
+    title = _clean_text(project.get("title"))
+    description = _clean_text(project.get("description"))
+    href = _clean_text(project.get("href"))
+    github = _clean_text(project.get("github"))
+    line = f"- **{title}** — {description}" if description else f"- **{title}**"
+    if github:
+        line += f" · [Repo]({github})"
+    if href:
+        line += f" · [Case study]({href})"
+    if not github and project.get("private"):
+        line += " · _private_"
+    return line
+
+
+def _volta_bullet(case: dict) -> str:
+    title = _clean_text(case.get("title"))
+    description = _clean_text(case.get("description"))
+    github = _clean_text(case.get("github"))
+    href = _clean_text(case.get("href"))
+    line = f"- **{title}** — {description}" if description else f"- **{title}**"
+    if github:
+        line += f" · [Repo]({github})"
+    if href:
+        line += f" · [Case study]({href})"
+    return line
+
+
+def build_projects_block(registry: dict) -> str:
+    """Render the marker-inner markdown for the 'All Projects' section.
+
+    Two registry shapes are accepted: a single ``projects`` array whose entries
+    carry a ``track`` field (the frozen site contract), and one list per track
+    keyed by name. Tracks render in ``TRACK_ORDER`` (empty tracks skipped); the
+    ``volta_cases`` list folds into a collapsible block.
+    """
+    by_track: dict[str, list[dict]] = {track: [] for track in TRACK_ORDER}
+    for track in TRACK_ORDER:
+        items = registry.get(track)
+        if isinstance(items, list):
+            by_track[track].extend(project for project in items if isinstance(project, dict))
+    for project in registry.get("projects") or []:
+        if isinstance(project, dict) and project.get("track") in by_track:
+            by_track[project["track"]].append(project)
+
+    lines: list[str] = ["### 🗂️ All Projects", ""]
+    for track in TRACK_ORDER:
+        items = by_track[track]
+        if not items:
+            continue
+        lines.append(f"#### {TRACK_LABELS[track]}")
+        lines.append("")
+        lines.extend(_project_bullet(project) for project in items)
+        lines.append("")
+
+    volta = registry.get("volta_cases") or []
+    if volta:
+        lines.append("<details>")
+        lines.append(f"<summary><b>🏦 Volta Neobank — {len(volta)} case studies</b></summary>")
+        lines.append("")
+        lines.extend(_volta_bullet(case) for case in volta)
+        lines.append("")
+        lines.append("</details>")
+
+    return "\n".join(lines).rstrip("\n") + "\n"
+
+
+_ALL_PROJECTS_RE = re.compile(
+    rf"{re.escape(ALL_PROJECTS_START)}.*?{re.escape(ALL_PROJECTS_END)}",
+    re.DOTALL,
+)
+
+
+def sync_projects_block(content: str, block: str) -> str:
+    """Place a generated projects block into README content, idempotently.
+
+    Existing markers are replaced in place; otherwise the block is inserted just
+    above the Playable Games section, or appended at EOF as a last resort.
+    """
+    body = block.strip("\n")
+    replacement = f"{ALL_PROJECTS_START}\n{body}\n{ALL_PROJECTS_END}"
+    if _ALL_PROJECTS_RE.search(content):
+        return _ALL_PROJECTS_RE.sub(lambda _: replacement, content)
+    games_heading = "### 🎮 Playable Games"
+    if games_heading in content:
+        return content.replace(games_heading, f"{replacement}\n\n{games_heading}", 1)
+    if content.endswith("\n"):
+        return content + "\n" + replacement + "\n"
+    return content + "\n\n" + replacement + "\n"
+
+
 def update_readme_refresh_block(
-    days: list[dict], evidence_rows: tuple[dict[str, str], ...] | None = None
+    days: list[dict],
+    evidence_rows: tuple[dict[str, str], ...] | None = None,
+    projects_block: str | None = None,
 ) -> bool:
     """Refresh the 'Last refreshed' marker block in README.
 
@@ -859,15 +1012,18 @@ def update_readme_refresh_block(
             f"### \u26a1 Activity\n\n{block}\n\n",
             1,
         )
-    # One write, three repairs: the RSS job leaves the notes list on one line, and
-    # the evidence sources line is generated rather than hand-typed.
+    # One write, several repairs: the RSS job leaves the notes list on one line,
+    # the evidence sources line is generated rather than hand-typed, and the
+    # All Projects section is rendered from the site registry.
     new_content = normalize_notes_block(new_content)
     new_content = sync_evidence_sources_block(new_content, evidence_rows)
+    if projects_block is not None:
+        new_content = sync_projects_block(new_content, projects_block)
     if new_content == content:
         print("README already up to date")
         return False
     readme_path.write_text(new_content, encoding="utf-8")
-    print(f"Refreshed README (refresh block + notes + evidence sources): {now} ({week} c/7d)")
+    print(f"Refreshed README (refresh + notes + evidence sources + projects): {now} ({week} c/7d)")
     return True
 
 
@@ -888,6 +1044,11 @@ def main() -> None:
         "--print-links",
         action="store_true",
         help="print one evidence source URL per line and exit (CI link-liveness check)",
+    )
+    parser.add_argument(
+        "--registry",
+        default=PROJECTS_REGISTRY_URL,
+        help="path or URL to the projects registry JSON (default: live site)",
     )
     args = parser.parse_args()
     if args.print_links:
@@ -932,7 +1093,15 @@ def main() -> None:
     if DRY_RUN:
         print("[dry-run] skip README refresh block")
     else:
-        update_readme_refresh_block(days, evidence_rows)
+        # A profile rebuild must not fail because the site registry is briefly
+        # unreachable: fetch the block, but on any failure leave README as-is.
+        projects_block: str | None = None
+        try:
+            registry = load_projects_registry(args.registry)
+            projects_block = build_projects_block(registry)
+        except (RuntimeError, urllib.error.URLError, TimeoutError, OSError, ValueError) as exc:
+            logging.warning("projects registry unavailable; README block left untouched: %s", exc)
+        update_readme_refresh_block(days, evidence_rows, projects_block)
 
 
 if __name__ == "__main__":

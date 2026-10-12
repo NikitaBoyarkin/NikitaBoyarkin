@@ -696,3 +696,183 @@ def test_no_card_renders_text_below_the_readability_floor():
         sizes = [float(s) for s in re.findall(r"font-size='([\d.]+)px'", svg)]
         assert sizes, f"{name} renders no sized text"
         assert min(sizes) >= MIN_CARD_FONT_PX, f"{name} renders {min(sizes)}px text"
+
+
+# ---------- all-projects registry ----------
+
+# Frozen registry shape: a "projects" list (each project carries its "track")
+# plus a "volta_cases" list. Fixtures carry exactly that key set; each project
+# carries exactly track/title/description/href/github/private.
+
+_START = "<!-- ALL-PROJECTS:START -->"
+_END = "<!-- ALL-PROJECTS:END -->"
+
+
+def _project(
+    title,
+    track,
+    *,
+    description="desc",
+    href="https://example.test/case",
+    github=None,
+    private=False,
+):
+    return {
+        "track": track,
+        "title": title,
+        "description": description,
+        "href": href,
+        "github": github,
+        "private": private,
+    }
+
+
+def _case(title, *, description="desc", github=None):
+    return {"title": title, "description": description, "github": github}
+
+
+def _registry(*, projects=(), volta_cases=()):
+    return {"projects": list(projects), "volta_cases": list(volta_cases)}
+
+
+def _heading(track):
+    return f"#### {bp.TRACK_LABELS[track]}"
+
+
+def test_build_projects_block_groups_by_track():
+    # 2 experiments + 1 analytics + 1 engineering; product intentionally empty.
+    block = bp.build_projects_block(
+        _registry(
+            projects=[
+                _project("Exp A", "experiments"),
+                _project("Exp B", "experiments"),
+                _project("Ana A", "analytics"),
+                _project("Eng A", "engineering"),
+            ]
+        )
+    )
+    assert block.startswith("### 🗂️ All Projects")
+    assert "Exp A" in block and "Exp B" in block and "Ana A" in block and "Eng A" in block
+    assert _heading("experiments") in block
+    assert _heading("analytics") in block
+    assert _heading("engineering") in block
+    assert _heading("product") not in block  # empty track omitted
+    positions = [
+        block.index(_heading("experiments")),
+        block.index(_heading("analytics")),
+        block.index(_heading("engineering")),
+    ]
+    assert positions == sorted(positions), "headings must follow TRACK_ORDER"
+
+
+def test_build_projects_block_repo_and_case_links():
+    github = "https://github.com/NikitaBoyarkin/demo"
+    href = "https://nikitaboyarkin.github.io/demo/case.html"
+    block = bp.build_projects_block(
+        _registry(projects=[_project("Demo", "analytics", github=github, href=href)])
+    )
+    assert f"[Repo]({github})" in block
+    assert f"[Case study]({href})" in block
+
+
+def test_build_projects_block_private_without_repo():
+    block = bp.build_projects_block(
+        _registry(projects=[_project("Closed", "engineering", github=None, private=True)])
+    )
+    assert "[Repo](" not in block
+    assert "[Case study](" in block
+    assert "_private_" in block
+
+
+def test_build_projects_block_volta_details():
+    github = "https://github.com/NikitaBoyarkin/volta"
+    block = bp.build_projects_block(
+        _registry(
+            volta_cases=[
+                _case("Volta One", github=github),
+                _case("Volta Two", github=None),
+            ]
+        )
+    )
+    assert "<details>" in block
+    assert "2 case studies" in block
+    details = block[block.index("<details>") :]
+    assert "Volta One" in details and "Volta Two" in details
+    one = next(line for line in details.splitlines() if "Volta One" in line)
+    two = next(line for line in details.splitlines() if "Volta Two" in line)
+    assert f"[Repo]({github})" in one
+    assert "[Repo](" not in two  # null github → no repo link on that bullet
+
+
+def test_build_projects_block_no_volta_omits_details():
+    block = bp.build_projects_block(_registry(projects=[_project("X", "experiments")]))
+    assert "<details>" not in block
+
+
+def test_sync_projects_block_replaces_existing():
+    doc = f"pre\n{_START}\nOLD\n{_END}\npost\n"
+    block = "### 🗂️ All Projects\n\n- **New**"
+    out = bp.sync_projects_block(doc, block)
+    assert out.count(_START) == 1
+    assert out.count(_END) == 1
+    assert "OLD" not in out
+    assert block in out
+    assert "pre" in out and "post" in out
+
+
+def test_sync_projects_block_inserts_before_games():
+    games = "### 🎮 Playable Games"
+    out = bp.sync_projects_block(f"body\n\n{games}\nmore\n", "BLOCK")
+    assert out.index(_START) < out.index(games)
+
+
+def test_sync_projects_block_appends_when_no_anchor():
+    out = bp.sync_projects_block("just some body text\n", "BLOCK")
+    assert "just some body text" in out
+    assert out.rstrip().endswith(_END)
+
+
+def test_sync_projects_block_is_idempotent():
+    doc = "body\n\n### 🎮 Playable Games\n"
+    once = bp.sync_projects_block(doc, "BLOCK")
+    assert bp.sync_projects_block(once, "BLOCK") == once
+
+
+class _FakeResponse:
+    def __init__(self, payload):
+        self._payload = payload
+
+    def read(self):
+        return self._payload
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *exc):
+        return False
+
+
+def test_fetch_projects_registry_parses_json(monkeypatch):
+    # Narrowest patchable symbol: build_profile does a module-scope
+    # `import urllib.request` (line 31) and calls urlopen on it, so the call site
+    # is bp.urllib.request.urlopen — not a wrapper helper.
+    import json
+
+    payload = {"experiments": [{"title": "X"}], "volta_cases": []}
+    monkeypatch.setattr(
+        bp.urllib.request,
+        "urlopen",
+        lambda *a, **k: _FakeResponse(json.dumps(payload).encode()),
+    )
+    assert bp.fetch_projects_registry("https://example.test/projects.json") == payload
+
+
+def test_fetch_projects_registry_raises_on_error(monkeypatch):
+    import urllib.error
+
+    def _fail(*a, **k):
+        raise urllib.error.URLError("network down")
+
+    monkeypatch.setattr(bp.urllib.request, "urlopen", _fail)
+    with pytest.raises(RuntimeError):
+        bp.fetch_projects_registry("https://example.test/projects.json")
