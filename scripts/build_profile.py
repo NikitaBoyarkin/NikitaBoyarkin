@@ -82,7 +82,12 @@ def write_asset(path: Path, content: str) -> None:
         return
     if path.suffix == ".svg":
         # Fail loudly here rather than commit a card GitHub renders as a broken image.
-        ET.fromstring(content)
+        # ElementTree parses a root element in *no* namespace without complaint, so
+        # this gate once waved through a namespace-less card; assert the document is
+        # actually an SVG one, not merely well-formed XML.
+        root = ET.fromstring(content)
+        if root.tag != f"{{{SVG_NS}}}svg":
+            raise ValueError(f"{path.name}: root element is {root.tag!r}, not an SVG document")
     if DRY_RUN:
         print(f"[dry-run] would write {path.name} ({len(content)} chars)")
         return
@@ -103,6 +108,10 @@ TEXT_MAIN = "#1400c3"
 MUTED_OP = "0.62"  # secondary text — blue @62% over cream
 FAINT_OP = "0.14"  # gridlines, baselines, empty tracks/tiles — blue @14%
 GHOST_OP = "0.45"  # neutral "Other" slice — blue @45%
+
+# Browsers parse a served .svg as XML: a root element outside this namespace is
+# not an SVG document, and the card renders as a broken image whose alt text leaks.
+SVG_NS = "http://www.w3.org/2000/svg"
 
 
 # Hero copy, kept as data so the README header and its test assert the same words.
@@ -1141,7 +1150,8 @@ def build_projects_svg(registry: dict) -> str:
         alt += " — " + ", ".join(titles)
 
     svg = f"""\
-    <svg viewBox='0 0 {W} {H}' width='100%' role="img" aria-label='{_esc(alt)}'>
+    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 {W} {H}' width='{W}' height='{H}'
+         role="img" aria-label='{_esc(alt)}'>
       <title>{_esc(alt)}</title>
       <rect fill='{card_bg}' width='{W}' height='{H}' rx='8'/>
       <text x='24' y='37' fill='{card_ink}' font-family='Segoe UI, Ubuntu, sans-serif'

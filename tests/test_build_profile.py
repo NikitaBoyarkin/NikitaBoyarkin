@@ -964,8 +964,34 @@ def test_projects_svg_is_self_contained_and_accessible():
     assert "<title>" in svg
     assert svg.strip().endswith("</svg>")
     assert "<script" not in svg
-    assert "http" not in svg
+    # Self-contained: no remote resource is referenced. "http" appears exactly once
+    # — the xmlns declaration, without which the card is not an SVG document at all.
+    assert "<image" not in svg
+    assert "url(http" not in svg
+    assert 'href="http' not in svg
+    assert svg.count("http") == 1
     ET.fromstring(svg)
+
+
+def test_projects_svg_root_is_a_namespaced_svg_with_intrinsic_size():
+    # Regression: the root was emitted as `<svg viewBox=... width='100%'>` — no
+    # xmlns, no height. Served as image/svg+xml that is not an SVG document, so
+    # Chrome paints an unstyled XML tree, the <img> breaks and its alt text leaks
+    # onto the profile. ElementTree parsed it fine, so the write gate waved it
+    # through. Keep both: the namespace, and the size the <img> scales from.
+    svg = bp.build_projects_svg(_registry(projects=[_project("Demo", "analytics")]))
+    root = ET.fromstring(svg)
+    assert root.tag == "{http://www.w3.org/2000/svg}svg"
+    assert root.get("width") and root.get("height")
+
+
+def test_write_asset_rejects_svg_that_is_not_an_svg_document(tmp_path):
+    # The gate that should have stopped the namespace-less card: a root element in
+    # no namespace is well-formed XML but renders as a broken image.
+    target = tmp_path / "card.svg"
+    with pytest.raises(ValueError):
+        bp.write_asset(target, "<svg viewBox='0 0 10 10'/>")
+    assert not target.exists()
 
 
 def test_projects_svg_empty_registry_is_valid():
@@ -1066,6 +1092,94 @@ def test_build_projects_block_track_order_unchanged_with_embed():
         block.index(_heading("engineering")),
     ]
     assert positions == sorted(positions)
+
+
+def _tables(block):
+    """Contiguous runs of GFM table lines, each as a list of lines."""
+    tables, current = [], []
+    for line in block.splitlines():
+        if line.startswith("|"):
+            current.append(line)
+        elif current:
+            tables.append(current)
+            current = []
+    if current:
+        tables.append(current)
+    return tables
+
+
+def _cells(line):
+    """Cell texts of one table row, split on unescaped pipes."""
+    return [cell for cell in re.split(r"(?<!\\)\|", line)[1:-1]]
+
+
+def test_build_projects_block_renders_well_formed_tables():
+    """A ragged row makes GitHub drop the whole table back to plain text."""
+    block = bp.build_projects_block(
+        _registry(
+            projects=[
+                _project("Exp", "experiments"),
+                _project("Ana", "analytics", github="https://github.com/u/r"),
+                _project("Priv", "product", github="https://github.com/u/s", private=True),
+                _project("Eng", "engineering"),
+            ],
+            volta_cases=[_case("V1", github="https://github.com/u/v"), _case("V2")],
+        )
+    )
+    tables = _tables(block)
+    assert len(tables) == 5, "one table per populated track plus the Volta table"
+    for table in tables:
+        widths = {len(_cells(line)) for line in table}
+        assert widths == {3}, f"ragged table: {widths}"
+        assert [c.strip() for c in _cells(table[1])] == ["---"] * 3, "row 2 must be the separator"
+        assert [c.strip() for c in _cells(table[0])] == [
+            "Project",
+            "What it demonstrates",
+            "Links",
+        ]
+
+
+def test_build_projects_block_escapes_pipes_in_cells():
+    """A raw pipe in a description splits the row and kills the table."""
+    block = bp.build_projects_block(
+        _registry(projects=[_project("A|B", "analytics", description="left|right")])
+    )
+    assert "left\\|right" in block and "A\\|B" in block
+    assert {len(_cells(line)) for line in _tables(block)[0]} == {3}
+
+
+def test_build_projects_block_links_sit_in_their_own_column():
+    github = "https://github.com/NikitaBoyarkin/demo"
+    href = "https://example.test/case"
+    block = bp.build_projects_block(
+        _registry(projects=[_project("Demo", "analytics", github=github, href=href)])
+    )
+    row = next(line for line in _tables(block)[0] if "Demo" in line)
+    cells = [cell.strip() for cell in _cells(row)]
+    assert cells[0] == "**Demo**"
+    assert cells[2] == f"[Repo]({github}) · [Case study]({href})"
+
+
+def test_build_projects_block_headings_carry_the_track_count():
+    block = bp.build_projects_block(
+        _registry(
+            projects=[
+                _project("A", "experiments"),
+                _project("B", "experiments"),
+                _project("C", "analytics"),
+            ]
+        )
+    )
+    assert f"{_heading('experiments')} · 2" in block
+    assert f"{_heading('analytics')} · 1" in block
+
+
+def test_build_projects_block_has_no_leftover_bullets():
+    """The section is table-rendered; a '- **' bullet means a partial migration."""
+    block = bp.build_projects_block(
+        _registry(projects=[_project("A", "experiments")], volta_cases=[_case("V")])
+    )
+    assert "\n- **" not in block
 
 
 # ---------- graphql retry / build resilience ----------
