@@ -6,6 +6,7 @@ Run: python3 -m pytest tests/test_build_profile.py -v
 import math
 import re
 import sys
+import urllib.error
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
@@ -1044,3 +1045,71 @@ def test_build_projects_block_track_order_unchanged_with_embed():
         block.index(_heading("engineering")),
     ]
     assert positions == sorted(positions)
+
+
+# ---------- graphql retry / build resilience ----------
+
+
+def _http_error(code):
+    return urllib.error.HTTPError("https://api.github.com/graphql", code, "err", {}, None)
+
+
+def test_graphql_retries_transient_5xx_then_raises_unavailable(monkeypatch):
+    # A scheduled build died on a burst of 504/502s that outlasted 3 quick tries.
+    monkeypatch.setattr(bp, "TOKEN", "x")
+    monkeypatch.setattr(bp.time, "sleep", lambda *a, **k: None)
+    calls = []
+
+    def boom(*a, **k):
+        calls.append(1)
+        raise _http_error(502)
+
+    monkeypatch.setattr(bp.urllib.request, "urlopen", boom)
+    with pytest.raises(bp.GitHubUnavailable):
+        bp.graphql("q", {}, retries=4)
+    assert len(calls) == 4, "every attempt must retry a transient status"
+
+
+def test_graphql_fails_fast_on_permanent_4xx(monkeypatch):
+    # A bad token (401) will not heal: no retries, the error surfaces immediately.
+    monkeypatch.setattr(bp, "TOKEN", "x")
+    monkeypatch.setattr(bp.time, "sleep", lambda *a, **k: None)
+    calls = []
+
+    def boom(*a, **k):
+        calls.append(1)
+        raise _http_error(401)
+
+    monkeypatch.setattr(bp.urllib.request, "urlopen", boom)
+    with pytest.raises(urllib.error.HTTPError):
+        bp.graphql("q", {}, retries=4)
+    assert len(calls) == 1, "a permanent 4xx must not be retried"
+
+
+def test_graphql_recovers_after_a_transient_failure(monkeypatch):
+    monkeypatch.setattr(bp, "TOKEN", "x")
+    monkeypatch.setattr(bp.time, "sleep", lambda *a, **k: None)
+    state = {"n": 0}
+
+    def flaky(*a, **k):
+        state["n"] += 1
+        if state["n"] == 1:
+            raise _http_error(503)
+        return _FakeResponse(b'{"data": {"ok": true}}')
+
+    monkeypatch.setattr(bp.urllib.request, "urlopen", flaky)
+    assert bp.graphql("q", {}) == {"ok": True}
+    assert state["n"] == 2
+
+
+def test_main_is_soft_when_github_api_is_unavailable(monkeypatch, capsys):
+    # Transient-only: the scheduled refresh must exit 0 and touch nothing, but
+    # warn loudly. (A permanent error still propagates — see the language test.)
+    monkeypatch.setattr(sys, "argv", ["build_profile.py"])
+    monkeypatch.setattr(bp, "fetch_user_data", _raising(bp.GitHubUnavailable("502")))
+    touched = []
+    monkeypatch.setattr(bp, "write_asset", lambda path, content: touched.append(path))
+    monkeypatch.setattr(bp, "update_readme_refresh_block", lambda *a, **k: touched.append("readme"))
+    bp.main()
+    assert touched == [], "no files may be written when the API is down"
+    assert "::warning::" in capsys.readouterr().out

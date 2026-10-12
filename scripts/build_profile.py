@@ -14,8 +14,10 @@ Assets generated:
 Writes are idempotent: an asset whose content is unchanged apart from the
 rendered timestamp is left untouched, so daily runs do not churn git history.
 
-Network calls retry up to 3 times with exponential backoff. Use --dry-run to
-preview planned writes without touching files.
+Network calls retry transient GitHub failures (5xx / 429 / timeout) with capped
+exponential backoff; a persistent outage is logged and skipped rather than
+failing the scheduled refresh. Use --dry-run to preview planned writes without
+touching files.
 """
 
 from __future__ import annotations
@@ -24,6 +26,7 @@ import argparse
 import json
 import logging
 import os
+import random
 import re
 import sys
 import textwrap
@@ -162,7 +165,28 @@ def build_hero_svg() -> str:
     return textwrap.dedent(svg).strip() + "\n"
 
 
-def graphql(query: str, variables: dict, retries: int = 3) -> dict:
+class GitHubUnavailable(RuntimeError):
+    """The GitHub API stayed unreachable (5xx / timeout) after every retry.
+
+    Distinct from a plain ``RuntimeError`` so a caller can treat a transient
+    upstream outage differently from a real config error (bad token, bad query).
+    """
+
+
+# HTTP statuses worth retrying: edge/gateway failures and rate limits.
+_TRANSIENT_HTTP = frozenset({408, 429, 500, 502, 503, 504})
+
+
+def graphql(query: str, variables: dict, retries: int = 6) -> dict:
+    """POST a GraphQL query, retrying transient GitHub failures with backoff.
+
+    A 5xx / 429 / timeout is transient: the request is retried up to ``retries``
+    times with capped exponential backoff plus jitter (honouring ``Retry-After``
+    when the API sends it). A 4xx other than 429 is permanent — a bad token or a
+    bad query will not heal — so it fails fast. When every attempt is transient,
+    ``GitHubUnavailable`` is raised so the caller can tell an upstream outage
+    apart from a real config error.
+    """
     if not TOKEN:
         raise RuntimeError("GH_TOKEN is not set")
     payload = json.dumps({"query": query, "variables": variables}).encode()
@@ -182,14 +206,23 @@ def graphql(query: str, variables: dict, retries: int = 3) -> dict:
             if "errors" in data:
                 raise RuntimeError("GraphQL errors: " + json.dumps(data["errors"]))
             return data["data"]
+        except urllib.error.HTTPError as exc:
+            if exc.code not in _TRANSIENT_HTTP:
+                raise
+            last_exc = exc
         except (urllib.error.URLError, TimeoutError) as exc:
             last_exc = exc
-            if attempt == retries:
-                raise
-            wait = 2 ** (attempt - 1)
-            print(f"GraphQL attempt {attempt}/{retries} failed: {exc}; retrying in {wait}s")
-            time.sleep(wait)
-    raise RuntimeError(f"GraphQL exhausted retries: {last_exc}")
+        if attempt == retries:
+            break
+        wait = min(2 ** (attempt - 1), 30)
+        headers = getattr(last_exc, "headers", None)
+        retry_after = headers.get("Retry-After") if headers else None
+        if retry_after and str(retry_after).isdigit():
+            wait = max(wait, int(retry_after))
+        wait += random.uniform(0, 1)
+        print(f"GraphQL attempt {attempt}/{retries} failed: {last_exc}; retrying in {wait:.1f}s")
+        time.sleep(wait)
+    raise GitHubUnavailable(f"GitHub API unreachable after {retries} attempts: {last_exc}")
 
 
 def fetch_user_data() -> dict:
@@ -1272,7 +1305,16 @@ def main() -> None:
         print("[dry-run] no files will be written")
 
     print(f"Fetching user data for {USER}...")
-    user_data = fetch_user_data()
+    try:
+        user_data = fetch_user_data()
+    except GitHubUnavailable as exc:
+        # Transient-only, mirroring the projects-registry policy below: a
+        # scheduled refresh must not go red (or churn files) because GitHub's API
+        # had a bad minute. A bad token or GraphQL error is NOT caught here and
+        # still exits non-zero; the ::warning:: keeps the skip visible in the
+        # Actions summary instead of a silent stale profile.
+        print(f"::warning::GitHub API unavailable; profile assets left untouched: {exc}")
+        return
     days = extract_contributions(user_data)
     total, current, longest = compute_streaks(days)
     print(f"total={total} current={current} longest={longest}")
