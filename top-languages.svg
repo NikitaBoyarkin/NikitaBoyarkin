@@ -4,10 +4,10 @@
           font-family='Segoe UI, Ubuntu, sans-serif' font-size='16px' font-weight='400'>NikitaBoyarkin's Top Languages</text>
     <g transform='rotate(-90 104 132)'>
       <circle cx='104' cy='132' r='60' fill='none' stroke='#1400c3' stroke-opacity='0.14' stroke-width='19'/>
-      <circle cx='104' cy='132' r='60' fill='none' stroke='#3572A5' stroke-opacity='1.0' stroke-width='19' stroke-dasharray='143.7 233.3' stroke-dashoffset='-0.0'><title>Python: 38.5%</title></circle>
-  <circle cx='104' cy='132' r='60' fill='none' stroke='#DA5B0B' stroke-opacity='1.0' stroke-width='19' stroke-dasharray='65.0 312.0' stroke-dashoffset='-145.2'><title>Jupyter Notebook: 17.6%</title></circle>
-  <circle cx='104' cy='132' r='60' fill='none' stroke='#3178c6' stroke-opacity='1.0' stroke-width='19' stroke-dasharray='58.2 318.8' stroke-dashoffset='-211.7'><title>TypeScript: 15.8%</title></circle>
-  <circle cx='104' cy='132' r='60' fill='none' stroke='#e34c26' stroke-opacity='1.0' stroke-width='19' stroke-dasharray='42.7 334.3' stroke-dashoffset='-271.4'><title>HTML: 11.7%</title></circle>
+      <circle cx='104' cy='132' r='60' fill='none' stroke='#3572A5' stroke-opacity='1.0' stroke-width='19' stroke-dasharray='143.8 233.2' stroke-dashoffset='-0.0'><title>Python: 38.5%</title></circle>
+  <circle cx='104' cy='132' r='60' fill='none' stroke='#DA5B0B' stroke-opacity='1.0' stroke-width='19' stroke-dasharray='64.9 312.0' stroke-dashoffset='-145.3'><title>Jupyter Notebook: 17.6%</title></circle>
+  <circle cx='104' cy='132' r='60' fill='none' stroke='#3178c6' stroke-opacity='1.0' stroke-width='19' stroke-dasharray='58.2 318.8' stroke-dashoffset='-211.8'><title>TypeScript: 15.8%</title></circle>
+  <circle cx='104' cy='132' r='60' fill='none' stroke='#e34c26' stroke-opacity='1.0' stroke-width='19' stroke-dasharray='42.7 334.3' stroke-dashoffset='-271.5'><title>HTML: 11.7%</title></circle>
   <circle cx='104' cy='132' r='60' fill='none' stroke='#ff5a03' stroke-opacity='1.0' stroke-width='19' stroke-dasharray='28.4 348.6' stroke-dashoffset='-315.6'><title>Astro: 7.9%</title></circle>
   <circle cx='104' cy='132' r='60' fill='none' stroke='#f1e05a' stroke-opacity='1.0' stroke-width='19' stroke-dasharray='11.6 365.4' stroke-dashoffset='-345.5'><title>JavaScript: 3.5%</title></circle>
   <circle cx='104' cy='132' r='60' fill='none' stroke='#663399' stroke-opacity='1.0' stroke-width='19' stroke-dasharray='9.2 367.8' stroke-dashoffset='-358.6'><title>CSS: 2.8%</title></circle>
@@ -44,5 +44,5 @@
   <text x='215' y='208' fill='#1400c3' font-family='Segoe UI, Ubuntu, sans-serif' font-size='13px'>Other</text>
   <text x='442' y='208' text-anchor='end' fill='#1400c3' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='13px'>1.4%</text>
   <text x='230.0' y='248' text-anchor='middle' fill='#1400c3' fill-opacity='0.62'
-          font-family='Segoe UI, Ubuntu, sans-serif' font-size='11px'>Last updated: 2026-10-12 18:01 UTC</text>
+          font-family='Segoe UI, Ubuntu, sans-serif' font-size='11px'>Last updated: 2026-10-12 18:08 UTC</text>
   </svg>
