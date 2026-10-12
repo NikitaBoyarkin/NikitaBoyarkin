@@ -1195,9 +1195,9 @@ def build_projects_block(registry: dict) -> str:
         items = by_track[track]
         if not items:
             continue
-        lines.append(f"#### {TRACK_LABELS[track]}")
+        lines.append(f"#### {TRACK_LABELS[track]} · {len(items)}")
         lines.append("")
-        lines.extend(_project_bullet(project) for project in items)
+        lines.extend(_table([_table_row(project) for project in items]))
         lines.append("")
 
     volta = registry.get("volta_cases") or []
@@ -1205,7 +1205,7 @@ def build_projects_block(registry: dict) -> str:
         lines.append("<details>")
         lines.append(f"<summary><b>🏦 Volta Neobank — {len(volta)} case studies</b></summary>")
         lines.append("")
-        lines.extend(_volta_bullet(case) for case in volta)
+        lines.extend(_table([_table_row(case) for case in volta]))
         lines.append("")
         lines.append("</details>")
 
