@@ -949,35 +949,45 @@ def _pick(record: dict, en_key: str, ru_key: str) -> str:
     return _clean_text(record.get(en_key)) or _clean_text(record.get(ru_key))
 
 
-def _project_bullet(project: dict) -> str:
-    title = _pick(project, "title_en", "title")
-    description = _pick(project, "description_en", "description")
-    href = _clean_text(project.get("href"))
-    github = _clean_text(project.get("github"))
-    is_private = bool(project.get("private"))
-    line = f"- **{title}** — {description}" if description else f"- **{title}**"
+def _md_cell(value: object) -> str:
+    """One GFM table cell: whitespace collapsed, a literal pipe escaped.
+
+    A raw ``|`` inside a cell splits the row, and one over-wide row silently
+    makes GitHub drop the entire table back to plain text — so an escape here is
+    what keeps the rendered list a list.
+    """
+    return _clean_text(value).replace("|", "\\|")
+
+
+def _links_cell(record: dict) -> str:
+    """Repo / case-study links for one row, or a declared gap when there are none."""
+    github = _clean_text(record.get("github"))
+    href = _clean_text(record.get("href"))
+    parts: list[str] = []
     # A private repo 404s for anonymous readers, so advertising its URL here (and
     # in the CI liveness list) is a dead link, not a pointer — mark it private.
-    if github and not is_private:
-        line += f" · [Repo]({github})"
+    if github and not record.get("private"):
+        parts.append(f"[Repo]({github})")
     if href:
-        line += f" · [Case study]({href})"
-    if is_private:
-        line += " · _private_"
-    return line
+        parts.append(f"[Case study]({href})")
+    if record.get("private"):
+        parts.append("_private_")
+    return " · ".join(parts) if parts else "—"
 
 
-def _volta_bullet(case: dict) -> str:
-    title = _pick(case, "title_en", "title")
-    description = _pick(case, "description_en", "description")
-    github = _clean_text(case.get("github"))
-    href = _clean_text(case.get("href"))
-    line = f"- **{title}** — {description}" if description else f"- **{title}**"
-    if github:
-        line += f" · [Repo]({github})"
-    if href:
-        line += f" · [Case study]({href})"
-    return line
+def _table(rows: list[tuple[str, str, str]]) -> list[str]:
+    """Render (title, description, links) rows as a three-column GFM table."""
+    lines = ["| Project | What it demonstrates | Links |", "| --- | --- | --- |"]
+    lines.extend(f"| **{title}** | {description} | {links} |" for title, description, links in rows)
+    return lines
+
+
+def _table_row(record: dict) -> tuple[str, str, str]:
+    return (
+        _md_cell(_pick(record, "title_en", "title")),
+        _md_cell(_pick(record, "description_en", "description")),
+        _links_cell(record),
+    )
 
 
 def _projects_in_track_order(registry: dict) -> list[tuple[str, dict]]:
@@ -1150,6 +1160,12 @@ def build_projects_block(registry: dict) -> str:
     carry a ``track`` field (the frozen site contract), and one list per track
     keyed by name. Tracks render in ``TRACK_ORDER`` (empty tracks skipped); the
     ``volta_cases`` list folds into a collapsible block.
+
+    Each track is a table rather than a bullet wall: a description runs to ~180
+    characters, so as bullets the links ended up at a ragged right edge after
+    three wrapped lines and could not be scanned for. In a table the project
+    names and the Repo / Case study affordances each sit in their own column, so
+    "which of these has a public repo" is a single glance down one strip.
     """
     by_track: dict[str, list[dict]] = {track: [] for track in TRACK_ORDER}
     for track in TRACK_ORDER:

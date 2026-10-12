@@ -4,6 +4,13 @@ version = "0.0.0"
 description = "Self-hosted GitHub profile assets for github.com/NikitaBoyarkin"
 requires-python = ">=3.10"
 
+[dependency-groups]
+dev = [
+    "pytest>=8",
+    "pytest-cov>=5",
+    "ruff>=0.6",
+]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-q"

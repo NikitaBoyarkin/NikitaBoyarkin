@@ -19,11 +19,12 @@ The rendered artifact is `README.md`; everything here is for whoever maintains i
 ## Commands
 
 ```bash
-python3 -m pytest                 # tests (pure functions, no network)
-ruff check scripts tests          # lint
-GH_USER=NikitaBoyarkin GH_TOKEN=$(gh auth token) python3 scripts/build_profile.py --dry-run
-GH_USER=NikitaBoyarkin GH_TOKEN=$(gh auth token) python3 scripts/build_profile.py
-GH_USER=NikitaBoyarkin python3 scripts/build_profile.py --print-project-links  # one project/repo/case-study URL per line
+uv sync --all-groups              # dev deps: pytest, pytest-cov, ruff (see [dependency-groups])
+uv run pytest                     # tests (pure functions, no network)
+uv run ruff check scripts tests   # lint
+GH_USER=NikitaBoyarkin GH_TOKEN=$(gh auth token) uv run python scripts/build_profile.py --dry-run
+GH_USER=NikitaBoyarkin GH_TOKEN=$(gh auth token) uv run python scripts/build_profile.py
+GH_USER=NikitaBoyarkin uv run python scripts/build_profile.py --print-project-links  # one project/repo/case-study URL per line
 scripts/preview.sh                # local README preview
 ```
 
@@ -33,9 +34,9 @@ scripts/preview.sh                # local README preview
 
 ## Coverage
 
-`scripts/build_profile.py` is covered by `tests/test_build_profile.py` at **~68%**
+`scripts/build_profile.py` is covered by `tests/test_build_profile.py` at **~87%**
 (network fetch, `main()`, and the CLI path are intentionally not covered — tests
-must stay offline). CI prints the number with `pytest --cov=build_profile`.
+must stay offline). CI prints the number with `uv run pytest --cov=build_profile`.
 
 ## Asset / link pinning policy
 
