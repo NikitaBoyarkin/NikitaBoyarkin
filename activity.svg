@@ -1,37 +1,37 @@
 <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 140' width='800px' height='140px'>
     <rect fill='#f8f2da' width='800' height='140'/>
     <text x='400.0' y='20' text-anchor='middle' fill='#1400c3' fill-opacity='0.62' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='15px' font-weight='400'>Last 30 Days Activity</text>
-    <polyline points='40.0,79.2 65.5,95.4 91.0,88.0 116.6,78.6 142.1,73.4 167.6,68.7 193.1,60.3 218.6,85.4 244.1,96.4 269.7,99.0 295.2,91.7 320.7,98.0 346.2,94.3 371.7,86.5 397.2,86.5 422.8,92.2 448.3,107.4 473.8,107.9 499.3,102.2 524.8,91.2 550.3,97.5 575.9,83.9 601.4,99.0 626.9,90.1 652.4,88.6 677.9,101.1 703.4,77.1 729.0,75.5 754.5,69.7 780.0,30.0' fill='none' stroke='#fe4e02' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' opacity='0.8'/>
-      <circle cx='40.0' cy='79.2' r='3' fill='#fe4e02'><title>2026-09-13: 59 contributions</title></circle>
-  <circle cx='65.5' cy='95.4' r='3' fill='#fe4e02'><title>2026-09-14: 28 contributions</title></circle>
-  <circle cx='91.0' cy='88.0' r='3' fill='#fe4e02'><title>2026-09-15: 42 contributions</title></circle>
-  <circle cx='116.6' cy='78.6' r='3' fill='#fe4e02'><title>2026-09-16: 60 contributions</title></circle>
-  <circle cx='142.1' cy='73.4' r='3' fill='#fe4e02'><title>2026-09-17: 70 contributions</title></circle>
-  <circle cx='167.6' cy='68.7' r='3' fill='#fe4e02'><title>2026-09-18: 79 contributions</title></circle>
-  <circle cx='193.1' cy='60.3' r='3' fill='#fe4e02'><title>2026-09-19: 95 contributions</title></circle>
-  <circle cx='218.6' cy='85.4' r='3' fill='#fe4e02'><title>2026-09-20: 47 contributions</title></circle>
-  <circle cx='244.1' cy='96.4' r='3' fill='#fe4e02'><title>2026-09-21: 26 contributions</title></circle>
-  <circle cx='269.7' cy='99.0' r='3' fill='#fe4e02'><title>2026-09-22: 21 contributions</title></circle>
-  <circle cx='295.2' cy='91.7' r='3' fill='#fe4e02'><title>2026-09-23: 35 contributions</title></circle>
-  <circle cx='320.7' cy='98.0' r='3' fill='#fe4e02'><title>2026-09-24: 23 contributions</title></circle>
-  <circle cx='346.2' cy='94.3' r='3' fill='#fe4e02'><title>2026-09-25: 30 contributions</title></circle>
-  <circle cx='371.7' cy='86.5' r='3' fill='#fe4e02'><title>2026-09-26: 45 contributions</title></circle>
-  <circle cx='397.2' cy='86.5' r='3' fill='#fe4e02'><title>2026-09-27: 45 contributions</title></circle>
-  <circle cx='422.8' cy='92.2' r='3' fill='#fe4e02'><title>2026-09-28: 34 contributions</title></circle>
-  <circle cx='448.3' cy='107.4' r='3' fill='#fe4e02'><title>2026-09-29: 5 contributions</title></circle>
-  <circle cx='473.8' cy='107.9' r='3' fill='#fe4e02'><title>2026-09-30: 4 contributions</title></circle>
-  <circle cx='499.3' cy='102.2' r='3' fill='#fe4e02'><title>2026-10-01: 15 contributions</title></circle>
-  <circle cx='524.8' cy='91.2' r='3' fill='#fe4e02'><title>2026-10-02: 36 contributions</title></circle>
-  <circle cx='550.3' cy='97.5' r='3' fill='#fe4e02'><title>2026-10-03: 24 contributions</title></circle>
-  <circle cx='575.9' cy='83.9' r='3' fill='#fe4e02'><title>2026-10-04: 50 contributions</title></circle>
-  <circle cx='601.4' cy='99.0' r='3' fill='#fe4e02'><title>2026-10-05: 21 contributions</title></circle>
-  <circle cx='626.9' cy='90.1' r='3' fill='#fe4e02'><title>2026-10-06: 38 contributions</title></circle>
-  <circle cx='652.4' cy='88.6' r='3' fill='#fe4e02'><title>2026-10-07: 41 contributions</title></circle>
-  <circle cx='677.9' cy='101.1' r='3' fill='#fe4e02'><title>2026-10-08: 17 contributions</title></circle>
-  <circle cx='703.4' cy='77.1' r='3' fill='#fe4e02'><title>2026-10-09: 63 contributions</title></circle>
-  <circle cx='729.0' cy='75.5' r='3' fill='#fe4e02'><title>2026-10-10: 66 contributions</title></circle>
-  <circle cx='754.5' cy='69.7' r='3' fill='#fe4e02'><title>2026-10-11: 77 contributions</title></circle>
-  <circle cx='780.0' cy='30.0' r='3' fill='#fe4e02'><title>2026-10-12: 153 contributions</title></circle>
-<text x='40' y='132' fill='#1400c3' fill-opacity='0.62' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='12px'>2026-09-13</text>
-    <text x='780' y='132' text-anchor='end' fill='#1400c3' fill-opacity='0.62' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='12px'>2026-10-12</text>
+    <polyline points='40.0,96.0 65.5,89.0 91.0,80.0 116.6,75.0 142.1,70.5 167.6,62.5 193.1,86.5 218.6,97.0 244.1,99.5 269.7,92.5 295.2,98.5 320.7,95.0 346.2,87.5 371.7,87.5 397.2,93.0 422.8,107.5 448.3,108.0 473.8,102.5 499.3,92.0 524.8,98.0 550.3,85.0 575.9,99.5 601.4,91.0 626.9,89.5 652.4,101.5 677.9,78.5 703.4,77.0 729.0,71.5 754.5,30.0 780.0,102.5' fill='none' stroke='#fe4e02' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' opacity='0.8'/>
+      <circle cx='40.0' cy='96.0' r='3' fill='#fe4e02'><title>2026-09-14: 28 contributions</title></circle>
+  <circle cx='65.5' cy='89.0' r='3' fill='#fe4e02'><title>2026-09-15: 42 contributions</title></circle>
+  <circle cx='91.0' cy='80.0' r='3' fill='#fe4e02'><title>2026-09-16: 60 contributions</title></circle>
+  <circle cx='116.6' cy='75.0' r='3' fill='#fe4e02'><title>2026-09-17: 70 contributions</title></circle>
+  <circle cx='142.1' cy='70.5' r='3' fill='#fe4e02'><title>2026-09-18: 79 contributions</title></circle>
+  <circle cx='167.6' cy='62.5' r='3' fill='#fe4e02'><title>2026-09-19: 95 contributions</title></circle>
+  <circle cx='193.1' cy='86.5' r='3' fill='#fe4e02'><title>2026-09-20: 47 contributions</title></circle>
+  <circle cx='218.6' cy='97.0' r='3' fill='#fe4e02'><title>2026-09-21: 26 contributions</title></circle>
+  <circle cx='244.1' cy='99.5' r='3' fill='#fe4e02'><title>2026-09-22: 21 contributions</title></circle>
+  <circle cx='269.7' cy='92.5' r='3' fill='#fe4e02'><title>2026-09-23: 35 contributions</title></circle>
+  <circle cx='295.2' cy='98.5' r='3' fill='#fe4e02'><title>2026-09-24: 23 contributions</title></circle>
+  <circle cx='320.7' cy='95.0' r='3' fill='#fe4e02'><title>2026-09-25: 30 contributions</title></circle>
+  <circle cx='346.2' cy='87.5' r='3' fill='#fe4e02'><title>2026-09-26: 45 contributions</title></circle>
+  <circle cx='371.7' cy='87.5' r='3' fill='#fe4e02'><title>2026-09-27: 45 contributions</title></circle>
+  <circle cx='397.2' cy='93.0' r='3' fill='#fe4e02'><title>2026-09-28: 34 contributions</title></circle>
+  <circle cx='422.8' cy='107.5' r='3' fill='#fe4e02'><title>2026-09-29: 5 contributions</title></circle>
+  <circle cx='448.3' cy='108.0' r='3' fill='#fe4e02'><title>2026-09-30: 4 contributions</title></circle>
+  <circle cx='473.8' cy='102.5' r='3' fill='#fe4e02'><title>2026-10-01: 15 contributions</title></circle>
+  <circle cx='499.3' cy='92.0' r='3' fill='#fe4e02'><title>2026-10-02: 36 contributions</title></circle>
+  <circle cx='524.8' cy='98.0' r='3' fill='#fe4e02'><title>2026-10-03: 24 contributions</title></circle>
+  <circle cx='550.3' cy='85.0' r='3' fill='#fe4e02'><title>2026-10-04: 50 contributions</title></circle>
+  <circle cx='575.9' cy='99.5' r='3' fill='#fe4e02'><title>2026-10-05: 21 contributions</title></circle>
+  <circle cx='601.4' cy='91.0' r='3' fill='#fe4e02'><title>2026-10-06: 38 contributions</title></circle>
+  <circle cx='626.9' cy='89.5' r='3' fill='#fe4e02'><title>2026-10-07: 41 contributions</title></circle>
+  <circle cx='652.4' cy='101.5' r='3' fill='#fe4e02'><title>2026-10-08: 17 contributions</title></circle>
+  <circle cx='677.9' cy='78.5' r='3' fill='#fe4e02'><title>2026-10-09: 63 contributions</title></circle>
+  <circle cx='703.4' cy='77.0' r='3' fill='#fe4e02'><title>2026-10-10: 66 contributions</title></circle>
+  <circle cx='729.0' cy='71.5' r='3' fill='#fe4e02'><title>2026-10-11: 77 contributions</title></circle>
+  <circle cx='754.5' cy='30.0' r='3' fill='#fe4e02'><title>2026-10-12: 160 contributions</title></circle>
+  <circle cx='780.0' cy='102.5' r='3' fill='#fe4e02'><title>2026-10-13: 15 contributions</title></circle>
+<text x='40' y='132' fill='#1400c3' fill-opacity='0.62' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='12px'>2026-09-14</text>
+    <text x='780' y='132' text-anchor='end' fill='#1400c3' fill-opacity='0.62' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='12px'>2026-10-13</text>
   </svg>
