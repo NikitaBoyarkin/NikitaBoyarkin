@@ -4,7 +4,7 @@
 
 ## Nikita Boyarkin — Data / Product Analyst
 
-A self-hosted analyst portfolio: 10 playable SVG mini-games and CI-checked headline numbers — **+5.72 pp KYC conversion** and **€656K/yr** on the Volta flagship.
+A self-hosted analyst portfolio: 10 playable SVG mini-games and CI-checked headline numbers — **+5.72 pp KYC conversion** and **€208.5K over 12 months** on the Volta flagship.
 
 - **Product experimentation** — A/B test design, sample-size planning, guardrail metrics, reproducible reporting. CUPED, AA-tests, Bonferroni, Bayesian A/B.
 - **User lifecycle analytics** — cohort retention, funnel analysis, RFM segmentation.
@@ -406,7 +406,7 @@ _Last refreshed: 2026-10-26 10:11 UTC · 287 contributions in the last 7 days_
 
 **Actions.** Published the work end-to-end. Projects are grouped into Experiments / Analytics / Product / Engineering, the Volta flagship carries 23 linked sub-cases, and the portfolio site at https://nikitaboyarkin.github.io renders every case study. In the site, headline numbers are frozen in `src/lib/metrics.ts` and CI-checked; profile cards, stats and the SVG games are self-hosted via `scripts/build_profile.py`.
 
-**Result.** A public portfolio site plus a self-hosted profile: 10 playable SVG mini-games, the Volta flagship at +5.72 pp KYC conversion and €656K/yr, and an analytics evidence map linking each method to the repository that produced it.
+**Result.** A public portfolio site plus a self-hosted profile: 10 playable SVG mini-games, the Volta flagship at +5.72 pp KYC conversion and €208.5K over 12 months, and an analytics evidence map linking each method to the repository that produced it.
 
 </details>
 
