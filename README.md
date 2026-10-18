@@ -112,7 +112,7 @@ _A retrieval-augmented generation pipeline with a real offline eval harness. **r
 | **LinkedIn Content Analytics** | Analytics on my own LinkedIn posts: one parser, four renderers. Formats are compared with confidence intervals — and noise is called noise, not a ranking. | [Case study](https://nikitaboyarkin.github.io/projects/linkedin/) · _private_ |
 | **ML Fundamentals — scikit-learn Pipeline** | A leak-free scikit-learn pipeline: missing-data imputation, categorical encoding, a deterministic split and feature scaling, all in one ColumnTransformer fit on the training split only. | [Repo](https://github.com/NikitaBoyarkin/ml) · [Case study](https://nikitaboyarkin.github.io/projects/ml/) |
 | **Python Analytics Playground** | ≥80% pytest coverage on a module-based Python analytics toolkit: loading, cleaning, EDA and visualization assembled into one reusable pipeline — the base I copy into every new analysis. | [Repo](https://github.com/NikitaBoyarkin/python) · [Case study](https://nikitaboyarkin.github.io/projects/python/) |
-| **RAG Evaluation Harness — retrieval and generation metrics** | A RAG pipeline with a real offline evaluation harness: recall@5 and MRR = 1.00 over 20 labeled questions, faithfulness 1.00, correctness 0.37. TF-IDF retrieval, runs with zero API keys. | [Repo](https://github.com/NikitaBoyarkin/rag-eval-harness) · [Case study](https://nikitaboyarkin.github.io/projects/rag/) |
+| **RAG Evaluation Harness — retrieval and generation metrics** | RAG pipeline with a real offline harness: recall@5 and MRR = 1.00 on 20 questions, correctness 0.37. TF-IDF retrieval, no API keys; faithfulness ≡1.00 — an extractive invariant, not a measurement. | [Repo](https://github.com/NikitaBoyarkin/rag-eval-harness) · [Case study](https://nikitaboyarkin.github.io/projects/rag/) |
 | **RFM Analysis of Bank Clients** | Segmented a bank's clients into 6 RFM segments: the top 20% hold 38.2% of revenue (Gini 0.324). Synthetic dataset — 1,983 clients, 9,492 transactions. | [Repo](https://github.com/NikitaBoyarkin/rfm-analysis-of-bank-clients) · [Case study](https://nikitaboyarkin.github.io/projects/rfm/) |
 | **Sales Calls Analytics Dashboard** | A Streamlit dashboard for AI sales calls on 16,891 synthetic calls: a 4-step funnel (greeting → offer → meeting → qualification), leak breakdown by type, and transcript drill-down. | [Repo](https://github.com/NikitaBoyarkin/sales-calls-dashboard) · [Case study](https://nikitaboyarkin.github.io/projects/sales-calls/) |
 | **SERP Rank Lab** | Metasearch SERP analytics lab: inverse-propensity weighting corrects position bias, NDCG and revenue per search disagree, and always-valid mSPRT holds the false-positive rate under repeated looks. | [Repo](https://github.com/NikitaBoyarkin/serp-rank-lab) · [Case study](https://nikitaboyarkin.github.io/projects/serp-rank/) |
@@ -282,7 +282,7 @@ _A retrieval-augmented generation pipeline with a real offline eval harness. **r
 ### ⚡ Activity
 
 <!-- LAST-REFRESHED:START -->
-_Last refreshed: 2026-10-17 08:36 UTC · 346 contributions in the last 7 days_
+_Last refreshed: 2026-10-18 08:52 UTC · 338 contributions in the last 7 days_
 <!-- LAST-REFRESHED:END -->
 
 <details>
@@ -330,7 +330,11 @@ _Last refreshed: 2026-10-17 08:36 UTC · 346 contributions in the last 7 days_
 ### 📝 Recent Notes
 
 <!-- RECENT-POSTS-LIST:START -->
-- [Кейсы с собеседований: как диагностировать просадку метрики](https://nikitaboyarkin.github.io/posts/analyst-interview-cases/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)- [Проактивность аналитика за рамками роли](https://nikitaboyarkin.github.io/posts/analyst-proactivity/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)- [Churn + uplift: кому дать скидку &lpar;причинный таргетинг&rpar;](https://nikitaboyarkin.github.io/posts/churn-uplift-discount/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)- [EDA-шаблон с кодом: разведочный анализ по-продуктовому](https://nikitaboyarkin.github.io/posts/eda-python-template/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)- [Feature Impact: как измерить влияние фичи, когда A/B невозможен](https://nikitaboyarkin.github.io/posts/feature-impact-analysis/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)
+- [Кейсы с собеседований: как диагностировать просадку метрики](https://nikitaboyarkin.github.io/posts/analyst-interview-cases/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)
+- [Проактивность аналитика за рамками роли](https://nikitaboyarkin.github.io/posts/analyst-proactivity/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)
+- [Churn + uplift: кому дать скидку &lpar;причинный таргетинг&rpar;](https://nikitaboyarkin.github.io/posts/churn-uplift-discount/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)
+- [EDA-шаблон с кодом: разведочный анализ по-продуктовому](https://nikitaboyarkin.github.io/posts/eda-python-template/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)
+- [Feature Impact: как измерить влияние фичи, когда A/B невозможен](https://nikitaboyarkin.github.io/posts/feature-impact-analysis/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)
 <!-- RECENT-POSTS-LIST:END -->
 
 > Auto-updated daily from the [site RSS](https://nikitaboyarkin.github.io/rss.xml) via GitHub Actions.
