@@ -89,10 +89,10 @@ _A retrieval-augmented generation pipeline with a real offline eval harness. **r
 ### 🗂️ All Projects
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/projects.svg" width="100%" alt="Portfolio overview: 23 projects across 4 tracks plus 23 Volta Neobank case studies" />
+  <img src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/projects.svg" width="100%" alt="Portfolio overview: 24 projects across 4 tracks plus 23 Volta Neobank case studies" />
 </p>
 
-**23 projects** across **4 tracks** · **23 Volta case studies**
+**24 projects** across **4 tracks** · **23 Volta case studies**
 
 #### 🧪 Experiments · 4
 
@@ -103,12 +103,13 @@ _A retrieval-augmented generation pipeline with a real offline eval harness. **r
 | **Causal / Uplift — CUPED and Individual Treatment Effects** | CUPED cut the standard error by 26% — same power on 5.5k users per arm instead of 10k. On a synthetic experiment with known HTE, uplift at n=6000 is noise: QINI and AUUC cannot separate an oracle. | [Repo](https://github.com/NikitaBoyarkin/causal-uplift) · [Case study](https://nikitaboyarkin.github.io/projects/causal/) |
 | **Volta Neobank — Product Analytics** | Fixed a neobank's onboarding bottleneck with an A/B test: +5.72pp KYC conversion, €208.5K in 12 mo at 13.9× ROI. 23 projects: funnel → A/B → retention → segmentation → Market & Jobs → RAT v2 → causal. | [Repo](https://github.com/NikitaBoyarkin/volta-banking) · [Case study](https://nikitaboyarkin.github.io/projects/volta/) |
 
-#### 📊 Analytics · 11
+#### 📊 Analytics · 12
 
 | Project | What it demonstrates | Links |
 | --- | --- | --- |
 | **Churn Prediction — Leakage-Free Retention Model** | A leakage-free churn model: recall@top-10% 0.544, 5.44x lift at 0.916 ROC-AUC on a chronological split; 1.75x on the at-risk subgroup, where 69.7% of the cohort is a near-guaranteed negative. | [Repo](https://github.com/NikitaBoyarkin/churn-prediction) · [Case study](https://nikitaboyarkin.github.io/projects/churn/) |
 | **Cohort Analysis Dashboard** | A triangular cohort retention and LTV matrix on synthetic data: per-cohort ARPU and LTV with an observation-age caveat, plus a Tableau-ready CSV and Hyper export. | [Repo](https://github.com/NikitaBoyarkin/tableau_cohort_analysis) · [Case study](https://nikitaboyarkin.github.io/projects/cohort/) |
+| **Delivery Control Tower** | A 550,710-row day × city × channel × category aggregate: DuckDB star schema, rolling-origin order forecast, delivery bottlenecks, 14 window SQL queries and an offline dashboard for three roles. | [Case study](https://nikitaboyarkin.github.io/projects/delivery/) |
 | **LinkedIn Content Analytics** | Analytics on my own LinkedIn posts: one parser, four renderers. Formats are compared with confidence intervals — and noise is called noise, not a ranking. | [Case study](https://nikitaboyarkin.github.io/projects/linkedin/) · _private_ |
 | **ML Fundamentals — scikit-learn Pipeline** | A leak-free scikit-learn pipeline: missing-data imputation, categorical encoding, a deterministic split and feature scaling, all in one ColumnTransformer fit on the training split only. | [Repo](https://github.com/NikitaBoyarkin/ml) · [Case study](https://nikitaboyarkin.github.io/projects/ml/) |
 | **Promo Margin Lab — what a promo rouble actually earns** | Promo returns +70.5 m RUB of revenue and −17.6 m RUB of profit: 95.3% of waves lose money, breakeven depth is 2.0–20.5%, and the optimiser earns it for 487 k RUB, not 1.27 m. | [Repo](https://github.com/NikitaBoyarkin/promo-margin-lab) · [Case study](https://nikitaboyarkin.github.io/projects/promo/) |
@@ -283,7 +284,7 @@ _A retrieval-augmented generation pipeline with a real offline eval harness. **r
 ### ⚡ Activity
 
 <!-- LAST-REFRESHED:START -->
-_Last refreshed: 2026-10-24 08:54 UTC · 210 contributions in the last 7 days_
+_Last refreshed: 2026-10-25 09:11 UTC · 221 contributions in the last 7 days_
 <!-- LAST-REFRESHED:END -->
 
 <details>
@@ -331,7 +332,11 @@ _Last refreshed: 2026-10-24 08:54 UTC · 210 contributions in the last 7 days_
 ### 📝 Recent Notes
 
 <!-- RECENT-POSTS-LIST:START -->
-- [Кейс Volta: воронка, A/B и retention на синтетике необанка](https://nikitaboyarkin.github.io/posts/volta-neobank-case-study/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)- [Кейсы с собеседований: как диагностировать просадку метрики](https://nikitaboyarkin.github.io/posts/analyst-interview-cases/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)- [Проактивность аналитика за рамками роли](https://nikitaboyarkin.github.io/posts/analyst-proactivity/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)- [Churn + uplift: кому дать скидку &lpar;причинный таргетинг&rpar;](https://nikitaboyarkin.github.io/posts/churn-uplift-discount/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)- [EDA-шаблон с кодом: разведочный анализ по-продуктовому](https://nikitaboyarkin.github.io/posts/eda-python-template/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)
+- [Кейс Volta: воронка, A/B и retention на синтетике необанка](https://nikitaboyarkin.github.io/posts/volta-neobank-case-study/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)
+- [Кейсы с собеседований: как диагностировать просадку метрики](https://nikitaboyarkin.github.io/posts/analyst-interview-cases/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)
+- [Проактивность аналитика за рамками роли](https://nikitaboyarkin.github.io/posts/analyst-proactivity/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)
+- [Churn + uplift: кому дать скидку &lpar;причинный таргетинг&rpar;](https://nikitaboyarkin.github.io/posts/churn-uplift-discount/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)
+- [EDA-шаблон с кодом: разведочный анализ по-продуктовому](https://nikitaboyarkin.github.io/posts/eda-python-template/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)
 <!-- RECENT-POSTS-LIST:END -->
 
 > Auto-updated daily from the [site RSS](https://nikitaboyarkin.github.io/rss.xml) via GitHub Actions.
