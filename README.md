@@ -360,38 +360,62 @@ _Last refreshed: 2026-10-26 21:12 UTC · 331 contributions in the last 7 days_
   <img src="https://skillicons.dev/icons?i=python,scikitlearn,postgres,sqlite,docker,git&theme=dark&perline=6" alt="Core stack" />
 </p>
 
-**Languages & Libraries**
+**Languages**
 
 ![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white)
+![SQL](https://img.shields.io/badge/SQL-003B57?logo=sqlite&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)
+
+**Data & Machine Learning**
+
 ![Pandas](https://img.shields.io/badge/Pandas-150458?logo=pandas&logoColor=white)
 ![NumPy](https://img.shields.io/badge/NumPy-013243?logo=numpy&logoColor=white)
 ![SciPy](https://img.shields.io/badge/SciPy-6B7B8A?logo=scipy&logoColor=white)
 ![Statsmodels](https://img.shields.io/badge/Statsmodels-7B1FA2?logo=statsmodels&logoColor=white)
 ![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?logo=scikitlearn&logoColor=white)
+![LightGBM](https://img.shields.io/badge/LightGBM-2C8EBB)
+![PySpark](https://img.shields.io/badge/PySpark-E25A1C?logo=apachespark&logoColor=white)
 ![Matplotlib](https://img.shields.io/badge/Matplotlib-11557c?logo=matplotlib&logoColor=white)
-![Seaborn](https://img.shields.io/badge/Seaborn-3776AB?logo=python&logoColor=white)
+![Seaborn](https://img.shields.io/badge/Seaborn-4C72B0?logo=python&logoColor=white)
+![Plotly](https://img.shields.io/badge/Plotly-3F4F75?logo=plotly&logoColor=white)
 ![Jupyter](https://img.shields.io/badge/Jupyter-F37626?logo=jupyter&logoColor=white)
+![openpyxl](https://img.shields.io/badge/openpyxl-1D6F42)
 
-**Databases & Warehouses**
+**Storage & Pipelines**
 
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=white)
-![ClickHouse](https://img.shields.io/badge/ClickHouse-FFCC01?logo=clickhouse&logoColor=black)
+![SQLite](https://img.shields.io/badge/SQLite-003B57?logo=sqlite&logoColor=white)
 ![DuckDB](https://img.shields.io/badge/DuckDB-FFF000?logo=duckdb&logoColor=black)
 ![Supabase](https://img.shields.io/badge/Supabase-3FCF8E?logo=supabase&logoColor=white)
-![SQL](https://img.shields.io/badge/SQL-003B57?logo=sqlite&logoColor=white)
+![dbt](https://img.shields.io/badge/dbt-FF694B)
+![Apache Airflow](https://img.shields.io/badge/Apache_Airflow-017CEE?logo=apacheairflow&logoColor=white)
 
-**Visualization & BI**
+**BI & Product Analytics**
 
 ![Tableau](https://img.shields.io/badge/Tableau-E97627?logo=tableau&logoColor=white)
 ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?logo=streamlit&logoColor=white)
+![Apache Superset](https://img.shields.io/badge/Apache_Superset-20A7C9?logo=apachesuperset&logoColor=white)
+![PostHog](https://img.shields.io/badge/PostHog-F9BD2B?logo=posthog&logoColor=black)
 
-**Orchestration & Dev Tools**
+**Shipping & Quality**
 
-![aiogram](https://img.shields.io/badge/aiogram-2A9B5C?logo=telegram&logoColor=white)
-![pytest](https://img.shields.io/badge/pytest-0A9EDC?logo=pytest&logoColor=white)
 ![uv](https://img.shields.io/badge/uv-de5ff9?logoColor=white)
+![pytest](https://img.shields.io/badge/pytest-0A9EDC?logo=pytest&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
 ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?logo=githubactions&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white)
+![aiogram](https://img.shields.io/badge/aiogram-2A9B5C?logo=telegram&logoColor=white)
+![Playwright](https://img.shields.io/badge/Playwright-2EAD33)
+
+**Web & Publishing**
+
+![Astro](https://img.shields.io/badge/Astro-BC52EE?logo=astro&logoColor=white)
+![D3](https://img.shields.io/badge/D3-F9A03C?logo=d3&logoColor=white)
+![Quartz](https://img.shields.io/badge/Quartz_v4-2E5C6E?logoColor=white)
+![Obsidian](https://img.shields.io/badge/Obsidian-7C3AED?logo=obsidian&logoColor=white)
+
+<sub>Exploring next: ClickHouse · Bayesian A/B testing · real-time pipelines — every other badge above ships in one of the 27 projects.</sub>
 
 ---
 
