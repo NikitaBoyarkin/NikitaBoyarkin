@@ -808,13 +808,40 @@ def _project_line(index: int, record: dict, *, with_result: bool = True) -> str:
     return " ".join(parts)
 
 
-# Featured-style cards. Only three projects ship a self-hosted logo card; every
-# other project gets a text link in the same heading slot, so the card shape
-# (linked title — track) stays identical down the catalogue.
+# Featured-style cards. Every project ships a self-hosted SVG in the heading
+# slot instead of linked text: an <a> holding only an <img> escapes GitHub's
+# forced underline. The three original logo cards keep their artwork; the rest
+# are crisp wordmarks rendered by github-crisp-links at 16px/#FE4E02.
+# A slug missing here falls back to a plain text link, so a new project still
+# renders before its SVG exists.
 LOGO_BY_SLUG = {
-    "volta": "volta-neobank.svg",
-    "supabase": "supabase-analytics.svg",
+    "ab": "ab-title.svg",
+    "airflow": "airflow-title.svg",
+    "bot": "bot-title.svg",
+    "causal": "causal-title.svg",
+    "churn": "churn-title.svg",
+    "cohort": "cohort-title.svg",
+    "crm-experiment-lab": "crm-experiment-lab-title.svg",
+    "delivery": "delivery-title.svg",
+    "games": "games-title.svg",
+    "garden": "garden-title.svg",
+    "gmv-drop-rca": "gmv-drop-rca-title.svg",
+    "linkedin": "linkedin-title.svg",
+    "ml": "ml-title.svg",
+    "posthog": "posthog-title.svg",
+    "product-ab-funnel": "product-ab-funnel-title.svg",
+    "promo": "promo-title.svg",
+    "python": "python-title.svg",
+    "rag": "rag-title.svg",
+    "rfm": "rfm-title.svg",
+    "sales-calls": "sales-calls-title.svg",
+    "scrolly": "scrolly-title.svg",
+    "serp-rank": "serp-rank-title.svg",
+    "site": "site-title.svg",
     "sql": "sql-case-study.svg",
+    "streamlit": "streamlit-title.svg",
+    "supabase": "supabase-analytics.svg",
+    "volta": "volta-neobank.svg",
 }
 
 REPO_BADGE = (
