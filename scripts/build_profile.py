@@ -822,9 +822,8 @@ def _project_line(index: int, record: dict, *, with_result: bool = True) -> str:
     return " ".join(parts)
 
 
-# Volta appendix cards. Same crisp-wordmark technique as the catalogue titles,
-# but on the cream-and-blue palette (F8F2D8 rectangle, 1400C3 text) so the 23
-# sub-cases read as a set instead of cloning the flagship's orange wordmark.
+# Volta appendix cards. Same crisp card as the catalogue titles, keyed by case
+# slug, so the 23 sub-cases carry wordmarks without a heading/badge block.
 # A slug missing here falls back to the bold text link, so a new case renders
 # before its SVG exists.
 VOLTA_CARD_BY_SLUG = {
@@ -865,8 +864,9 @@ def _volta_card(record: dict) -> str:
 
 # Featured-style cards. Every project ships a self-hosted SVG in the heading
 # slot instead of linked text: an <a> holding only an <img> escapes GitHub's
-# forced underline. The three original logo cards keep their artwork; the rest
-# are crisp wordmarks rendered by github-crisp-links at 16px/#FE4E02.
+# forced underline. Every wordmark is rendered by github-crisp-links as a card
+# — 15px text on a cream rectangle (F8F2D8) with blue glyphs (1400C3) — so the
+# catalogue and the Volta appendix share one palette.
 # A slug missing here falls back to a plain text link, so a new project still
 # renders before its SVG exists.
 LOGO_BY_SLUG = {

@@ -1169,6 +1169,16 @@ def test_volta_cards_use_the_cream_and_blue_palette():
         assert 'fill="#1400C3"' in svg, f"{name}: no blue text"
 
 
+def test_catalogue_wordmarks_use_the_cream_and_blue_palette():
+    root = Path(bp.__file__).resolve().parent.parent
+    for slug, name in bp.LOGO_BY_SLUG.items():
+        path = root / name
+        assert path.exists(), f"{slug}: {name} is missing"
+        svg = path.read_text(encoding="utf-8")
+        assert 'fill="#F8F2D8"' in svg, f"{slug}: no cream card background"
+        assert 'fill="#1400C3"' in svg, f"{slug}: no blue text"
+
+
 def test_build_projects_block_renders_no_tables():
     """The section is a list; a '| ...' row means a partial migration."""
     block = bp.build_projects_block(
