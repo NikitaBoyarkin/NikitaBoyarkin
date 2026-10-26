@@ -995,7 +995,8 @@ def test_build_projects_block_card_carries_track_badges_and_stack():
     assert f"]({github})" in card
     assert "img.shields.io/badge/Case_study-fe4e02" in card
     assert f"]({href})" in card
-    assert "**Stack:** Python · SQL · pytest · uv" in card
+    assert "**Stack:** ![Python](https://img.shields.io/badge/Python-3776AB" in card
+    assert "&logo=python&logoColor=white)" in card
     assert "dbt" not in card, "tools are capped so the title stays the scan anchor"
 
 

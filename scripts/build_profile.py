@@ -759,6 +759,84 @@ _NUMBER_RE = re.compile(r"\d+(?:[.,]\d+)?")
 # the row past a line and the title stops being the scan anchor.
 TOOL_LIMIT = 4
 
+# Registry tool names are free text ("pandas / NumPy", "uv + ruff", "Docker /
+# Fly.io"), so a badge is matched by the first alias contained in the name.
+# Ordered longest-first: "postgres" must win over "sql", "scikit-learn" over
+# anything shorter. A tool with no Simple Icons mark still gets a badge — the
+# label carries the meaning, the missing logo is not an error.
+TOOL_ICONS = (
+    ("scikit-learn", "scikitlearn", "F7931E"),
+    ("google sheets", "googlesheets", "34A853"),
+    ("statsmodels", "scipy", "8CAAE6"),
+    ("matplotlib", "matplotlib", "11557C"),
+    ("seaborn", "matplotlib", "11557C"),
+    ("supabase", "supabase", "3FCF8E"),
+    ("postgres", "postgresql", "4169E1"),
+    ("jupyter", "jupyter", "F37626"),
+    ("playwright", "playwright", "2EAD33"),
+    ("bootstrap", "bootstrap", "7952B3"),
+    ("tableau", "tableau", "E97627"),
+    ("superset", "apachesuperset", "20A6C9"),
+    ("streamlit", "streamlit", "FF4B4B"),
+    ("typescript", "typescript", "3178C6"),
+    ("javascript", "javascript", "F7DF1E"),
+    ("tailwind", "tailwindcss", "06B6D4"),
+    ("lightgbm", "scikitlearn", "F7931E"),
+    ("pyspark", "apachespark", "E25A1C"),
+    ("airflow", "apacheairflow", "017CEE"),
+    ("posthog", "posthog", "000000"),
+    ("fastapi", "fastapi", "009688"),
+    ("pandas", "pandas", "150458"),
+    ("openpyxl", "microsoftexcel", "217346"),
+    ("obsidian", "obsidian", "7C3AED"),
+    ("markdown", "markdown", "000000"),
+    ("pyyaml", "yaml", "CB171E"),
+    ("sqlite", "sqlite", "003B57"),
+    ("duckdb", "duckdb", "FFF000"),
+    ("numpy", "numpy", "013243"),
+    ("scipy", "scipy", "8CAAE6"),
+    ("docker", "docker", "2496ED"),
+    ("pytest", "pytest", "0A9EDC"),
+    ("quartz", "obsidian", "7C3AED"),
+    ("aiogram", "telegram", "26A5E4"),
+    ("python", "python", "3776AB"),
+    ("astro", "astro", "BC52EE"),
+    ("plotly", "plotly", "3F4F75"),
+    ("sql", "postgresql", "4169E1"),
+    ("css", "css", "663399"),
+    ("mdx", "mdx", "1B1F24"),
+    ("svg", "svg", "FFB13B"),
+    ("dbt", "dbt", "FF694A"),
+    ("ruff", "python", "3776AB"),
+    ("mypy", "python", "3776AB"),
+    ("uv", "python", "3776AB"),
+    ("fly", "flydotio", "24175B"),
+    ("d3", "d3", "F9A03C"),
+)
+
+TOOL_BADGE = "https://img.shields.io/badge/{label}-{color}?style=flat-square{logo}"
+TOOL_LOGO = "&logo={slug}&logoColor=white"
+
+
+def _tool_badge(tool: str) -> str:
+    """One flat-square badge: brand icon + the tool name as the label.
+
+    Unknown tools keep the label and drop the logo, so a registry addition
+    renders without editing this table.
+    """
+    needle = tool.lower()
+    slug, color = "", "6E7681"
+    for alias, icon_slug, icon_color in TOOL_ICONS:
+        if alias in needle:
+            slug, color = icon_slug, icon_color
+            break
+    # "Supabase (Postgres + RLS + Edge Functions)" as a badge label is a
+    # paragraph; the icon carries the identity, the head of the name is enough.
+    shown = tool.split(" (")[0] if len(tool) > 24 else tool
+    label = urllib.parse.quote(_badge_escape(shown), safe="")
+    logo = TOOL_LOGO.format(slug=slug) if slug else ""
+    return f"![{shown}]({TOOL_BADGE.format(label=label, color=color, logo=logo)})"
+
 
 def _row_text(record: dict) -> str:
     """The blurb for one project: its description, plus the result when it adds numbers.
@@ -981,7 +1059,8 @@ def _project_card(index: int, record: dict) -> list[str]:
 
     tools = [_clean_text(tool) for tool in record.get("tools") or [] if _clean_text(tool)]
     if tools:
-        lines.extend(["**Stack:** " + " · ".join(tools[:TOOL_LIMIT]), ""])
+        badges = " ".join(_tool_badge(tool) for tool in tools[:TOOL_LIMIT])
+        lines.extend([f"**Stack:** {badges}", ""])
     return lines
 
 

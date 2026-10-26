@@ -29,7 +29,7 @@
 [![Stars](https://img.shields.io/github/stars/NikitaBoyarkin/ab_test?style=for-the-badge&logo=github&color=fe4e02)](https://github.com/NikitaBoyarkin/ab_test)
 [![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/projects/ab/)
 
-**Stack:** Python · NumPy / SciPy · pytest · uv
+**Stack:** ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white) ![NumPy / SciPy](https://img.shields.io/badge/NumPy_%2F_SciPy-013243?style=flat-square&logo=numpy&logoColor=white) ![pytest](https://img.shields.io/badge/pytest-0A9EDC?style=flat-square&logo=pytest&logoColor=white) ![uv](https://img.shields.io/badge/uv-3776AB?style=flat-square&logo=python&logoColor=white)
 
 #### 2. <a href="https://nikitaboyarkin.github.io/projects/games/"><img src="games-title.svg" align="absmiddle" alt="Browser Mini-Games — Analytics Arcade" /></a> — Experiments
 
@@ -37,7 +37,7 @@
 [![Stars](https://img.shields.io/github/stars/NikitaBoyarkin/browser-mini-games?style=for-the-badge&logo=github&color=fe4e02)](https://github.com/NikitaBoyarkin/browser-mini-games)
 [![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/projects/games/)
 
-**Stack:** SVG · JavaScript · Astro · Playwright
+**Stack:** ![SVG](https://img.shields.io/badge/SVG-FFB13B?style=flat-square&logo=svg&logoColor=white) ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=white) ![Astro](https://img.shields.io/badge/Astro-BC52EE?style=flat-square&logo=astro&logoColor=white) ![Playwright](https://img.shields.io/badge/Playwright-2EAD33?style=flat-square&logo=playwright&logoColor=white)
 
 #### 3. <a href="https://nikitaboyarkin.github.io/projects/causal/"><img src="causal-title.svg" align="absmiddle" alt="Causal / Uplift — CUPED and Individual Treatment Effects" /></a> — Experiments
 
@@ -45,7 +45,7 @@
 [![Stars](https://img.shields.io/github/stars/NikitaBoyarkin/causal-uplift?style=for-the-badge&logo=github&color=fe4e02)](https://github.com/NikitaBoyarkin/causal-uplift)
 [![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/projects/causal/)
 
-**Stack:** Python · LightGBM · scikit-learn · pandas / NumPy
+**Stack:** ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white) ![LightGBM](https://img.shields.io/badge/LightGBM-F7931E?style=flat-square&logo=scikitlearn&logoColor=white) ![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=flat-square&logo=scikitlearn&logoColor=white) ![pandas / NumPy](https://img.shields.io/badge/pandas_%2F_NumPy-150458?style=flat-square&logo=pandas&logoColor=white)
 
 #### 4. <a href="https://nikitaboyarkin.github.io/projects/crm-experiment-lab/"><img src="crm-experiment-lab-title.svg" align="absmiddle" alt="CRM Experiment Lab — Segment-Stage Randomization, GCG and Net Effect" /></a> — Experiments
 
@@ -53,13 +53,13 @@
 [![Stars](https://img.shields.io/github/stars/NikitaBoyarkin/crm-experiment-lab?style=for-the-badge&logo=github&color=fe4e02)](https://github.com/NikitaBoyarkin/crm-experiment-lab)
 [![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/projects/crm-experiment-lab/)
 
-**Stack:** Python · pandas / NumPy · SciPy · statsmodels
+**Stack:** ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white) ![pandas / NumPy](https://img.shields.io/badge/pandas_%2F_NumPy-150458?style=flat-square&logo=pandas&logoColor=white) ![SciPy](https://img.shields.io/badge/SciPy-8CAAE6?style=flat-square&logo=scipy&logoColor=white) ![statsmodels](https://img.shields.io/badge/statsmodels-8CAAE6?style=flat-square&logo=scipy&logoColor=white)
 
 #### 5. <a href="https://nikitaboyarkin.github.io/projects/bot/"><img src="bot-title.svg" align="absmiddle" alt="Data Analyst Telegram Bot" /></a> — Experiments
 
 [![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/projects/bot/) · _private_
 
-**Stack:** Python · aiogram · pandas · SciPy / statsmodels
+**Stack:** ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white) ![aiogram](https://img.shields.io/badge/aiogram-26A5E4?style=flat-square&logo=telegram&logoColor=white) ![pandas](https://img.shields.io/badge/pandas-150458?style=flat-square&logo=pandas&logoColor=white) ![SciPy / statsmodels](https://img.shields.io/badge/SciPy_%2F_statsmodels-8CAAE6?style=flat-square&logo=scipy&logoColor=white)
 
 #### 6. <a href="https://nikitaboyarkin.github.io/projects/volta/"><img src="volta-neobank.svg" align="absmiddle" alt="Volta Neobank — Product Analytics" /></a> — Experiments
 
@@ -67,7 +67,7 @@
 [![Stars](https://img.shields.io/github/stars/NikitaBoyarkin/volta-banking?style=for-the-badge&logo=github&color=fe4e02)](https://github.com/NikitaBoyarkin/volta-banking)
 [![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/projects/volta/)
 
-**Stack:** Python · pandas / NumPy · SciPy / Statsmodels · scikit-learn
+**Stack:** ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white) ![pandas / NumPy](https://img.shields.io/badge/pandas_%2F_NumPy-150458?style=flat-square&logo=pandas&logoColor=white) ![SciPy / Statsmodels](https://img.shields.io/badge/SciPy_%2F_Statsmodels-8CAAE6?style=flat-square&logo=scipy&logoColor=white) ![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=flat-square&logo=scikitlearn&logoColor=white)
 
 #### 7. <a href="https://nikitaboyarkin.github.io/projects/churn/"><img src="churn-title.svg" align="absmiddle" alt="Churn Prediction — Leakage-Free Retention Model" /></a> — Analytics
 
@@ -75,7 +75,7 @@
 [![Stars](https://img.shields.io/github/stars/NikitaBoyarkin/churn-prediction?style=for-the-badge&logo=github&color=fe4e02)](https://github.com/NikitaBoyarkin/churn-prediction)
 [![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/projects/churn/)
 
-**Stack:** Python · LightGBM · scikit-learn · pandas / NumPy
+**Stack:** ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white) ![LightGBM](https://img.shields.io/badge/LightGBM-F7931E?style=flat-square&logo=scikitlearn&logoColor=white) ![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=flat-square&logo=scikitlearn&logoColor=white) ![pandas / NumPy](https://img.shields.io/badge/pandas_%2F_NumPy-150458?style=flat-square&logo=pandas&logoColor=white)
 
 #### 8. <a href="https://nikitaboyarkin.github.io/projects/cohort/"><img src="cohort-title.svg" align="absmiddle" alt="Cohort Analysis Dashboard" /></a> — Analytics
 
@@ -83,25 +83,25 @@
 [![Stars](https://img.shields.io/github/stars/NikitaBoyarkin/tableau_cohort_analysis?style=for-the-badge&logo=github&color=fe4e02)](https://github.com/NikitaBoyarkin/tableau_cohort_analysis)
 [![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/projects/cohort/)
 
-**Stack:** Python · pandas · matplotlib / seaborn · Jupyter Notebook
+**Stack:** ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white) ![pandas](https://img.shields.io/badge/pandas-150458?style=flat-square&logo=pandas&logoColor=white) ![matplotlib / seaborn](https://img.shields.io/badge/matplotlib_%2F_seaborn-11557C?style=flat-square&logo=matplotlib&logoColor=white) ![Jupyter Notebook](https://img.shields.io/badge/Jupyter_Notebook-F37626?style=flat-square&logo=jupyter&logoColor=white)
 
 #### 9. <a href="https://nikitaboyarkin.github.io/projects/delivery/"><img src="delivery-title.svg" align="absmiddle" alt="Delivery Control Tower" /></a> — Analytics
 
 [![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/projects/delivery/)
 
-**Stack:** python · sql · duckdb · superset
+**Stack:** ![python](https://img.shields.io/badge/python-3776AB?style=flat-square&logo=python&logoColor=white) ![sql](https://img.shields.io/badge/sql-4169E1?style=flat-square&logo=postgresql&logoColor=white) ![duckdb](https://img.shields.io/badge/duckdb-FFF000?style=flat-square&logo=duckdb&logoColor=white) ![superset](https://img.shields.io/badge/superset-20A6C9?style=flat-square&logo=apachesuperset&logoColor=white)
 
 #### 10. <a href="https://nikitaboyarkin.github.io/projects/gmv-drop-rca/"><img src="gmv-drop-rca-title.svg" align="absmiddle" alt="GMV Drop RCA — root cause on real data" /></a> — Analytics
 
 [![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/projects/gmv-drop-rca/)
 
-**Stack:** Python · pandas · DuckDB · Plotly
+**Stack:** ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white) ![pandas](https://img.shields.io/badge/pandas-150458?style=flat-square&logo=pandas&logoColor=white) ![DuckDB](https://img.shields.io/badge/DuckDB-FFF000?style=flat-square&logo=duckdb&logoColor=white) ![Plotly](https://img.shields.io/badge/Plotly-3F4F75?style=flat-square&logo=plotly&logoColor=white)
 
 #### 11. <a href="https://nikitaboyarkin.github.io/projects/linkedin/"><img src="linkedin-title.svg" align="absmiddle" alt="LinkedIn Content Analytics" /></a> — Analytics
 
 [![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/projects/linkedin/) · _private_
 
-**Stack:** Python · openpyxl · uv · bootstrap
+**Stack:** ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white) ![openpyxl](https://img.shields.io/badge/openpyxl-217346?style=flat-square&logo=microsoftexcel&logoColor=white) ![uv](https://img.shields.io/badge/uv-3776AB?style=flat-square&logo=python&logoColor=white) ![bootstrap](https://img.shields.io/badge/bootstrap-7952B3?style=flat-square&logo=bootstrap&logoColor=white)
 
 #### 12. <a href="https://nikitaboyarkin.github.io/projects/ml/"><img src="ml-title.svg" align="absmiddle" alt="ML Fundamentals — scikit-learn Pipeline" /></a> — Analytics
 
@@ -109,7 +109,7 @@
 [![Stars](https://img.shields.io/github/stars/NikitaBoyarkin/ml?style=for-the-badge&logo=github&color=fe4e02)](https://github.com/NikitaBoyarkin/ml)
 [![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/projects/ml/)
 
-**Stack:** Python · scikit-learn · pandas · matplotlib
+**Stack:** ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white) ![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=flat-square&logo=scikitlearn&logoColor=white) ![pandas](https://img.shields.io/badge/pandas-150458?style=flat-square&logo=pandas&logoColor=white) ![matplotlib](https://img.shields.io/badge/matplotlib-11557C?style=flat-square&logo=matplotlib&logoColor=white)
 
 #### 13. <a href="https://nikitaboyarkin.github.io/projects/product-ab-funnel/"><img src="product-ab-funnel-title.svg" align="absmiddle" alt="Product A/B &amp; Funnel Analytics — Conversion versus Retention" /></a> — Analytics
 
@@ -117,7 +117,7 @@
 [![Stars](https://img.shields.io/github/stars/NikitaBoyarkin/product-ab-funnel-analytics?style=for-the-badge&logo=github&color=fe4e02)](https://github.com/NikitaBoyarkin/product-ab-funnel-analytics)
 [![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/projects/product-ab-funnel/)
 
-**Stack:** Python · pandas / NumPy · DuckDB · SciPy
+**Stack:** ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white) ![pandas / NumPy](https://img.shields.io/badge/pandas_%2F_NumPy-150458?style=flat-square&logo=pandas&logoColor=white) ![DuckDB](https://img.shields.io/badge/DuckDB-FFF000?style=flat-square&logo=duckdb&logoColor=white) ![SciPy](https://img.shields.io/badge/SciPy-8CAAE6?style=flat-square&logo=scipy&logoColor=white)
 
 #### 14. <a href="https://nikitaboyarkin.github.io/projects/promo/"><img src="promo-title.svg" align="absmiddle" alt="Promo Margin Lab — what a promo rouble actually earns" /></a> — Analytics
 
@@ -125,7 +125,7 @@
 [![Stars](https://img.shields.io/github/stars/NikitaBoyarkin/promo-margin-lab?style=for-the-badge&logo=github&color=fe4e02)](https://github.com/NikitaBoyarkin/promo-margin-lab)
 [![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/projects/promo/)
 
-**Stack:** Python · pandas · scikit-learn · PySpark
+**Stack:** ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white) ![pandas](https://img.shields.io/badge/pandas-150458?style=flat-square&logo=pandas&logoColor=white) ![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=flat-square&logo=scikitlearn&logoColor=white) ![PySpark](https://img.shields.io/badge/PySpark-E25A1C?style=flat-square&logo=apachespark&logoColor=white)
 
 #### 15. <a href="https://nikitaboyarkin.github.io/projects/python/"><img src="python-title.svg" align="absmiddle" alt="Python Analytics Playground" /></a> — Analytics
 
@@ -133,7 +133,7 @@
 [![Stars](https://img.shields.io/github/stars/NikitaBoyarkin/python?style=for-the-badge&logo=github&color=fe4e02)](https://github.com/NikitaBoyarkin/python)
 [![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/projects/python/)
 
-**Stack:** Python · pandas / NumPy · Matplotlib · pytest
+**Stack:** ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white) ![pandas / NumPy](https://img.shields.io/badge/pandas_%2F_NumPy-150458?style=flat-square&logo=pandas&logoColor=white) ![Matplotlib](https://img.shields.io/badge/Matplotlib-11557C?style=flat-square&logo=matplotlib&logoColor=white) ![pytest](https://img.shields.io/badge/pytest-0A9EDC?style=flat-square&logo=pytest&logoColor=white)
 
 #### 16. <a href="https://nikitaboyarkin.github.io/projects/rag/"><img src="rag-title.svg" align="absmiddle" alt="RAG Evaluation Harness — retrieval and generation metrics" /></a> — Analytics
 
@@ -141,7 +141,7 @@
 [![Stars](https://img.shields.io/github/stars/NikitaBoyarkin/rag-eval-harness?style=for-the-badge&logo=github&color=fe4e02)](https://github.com/NikitaBoyarkin/rag-eval-harness)
 [![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/projects/rag/)
 
-**Stack:** Python · scikit-learn · pandas / NumPy · TF-IDF
+**Stack:** ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white) ![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=flat-square&logo=scikitlearn&logoColor=white) ![pandas / NumPy](https://img.shields.io/badge/pandas_%2F_NumPy-150458?style=flat-square&logo=pandas&logoColor=white) ![TF-IDF](https://img.shields.io/badge/TF--IDF-6E7681?style=flat-square)
 
 #### 17. <a href="https://nikitaboyarkin.github.io/projects/rfm/"><img src="rfm-title.svg" align="absmiddle" alt="RFM Analysis of Bank Clients" /></a> — Analytics
 
@@ -149,7 +149,7 @@
 [![Stars](https://img.shields.io/github/stars/NikitaBoyarkin/rfm-analysis-of-bank-clients?style=for-the-badge&logo=github&color=fe4e02)](https://github.com/NikitaBoyarkin/rfm-analysis-of-bank-clients)
 [![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/projects/rfm/)
 
-**Stack:** Python · SQL · Tableau
+**Stack:** ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white) ![SQL](https://img.shields.io/badge/SQL-4169E1?style=flat-square&logo=postgresql&logoColor=white) ![Tableau](https://img.shields.io/badge/Tableau-E97627?style=flat-square&logo=tableau&logoColor=white)
 
 #### 18. <a href="https://nikitaboyarkin.github.io/projects/sales-calls/"><img src="sales-calls-title.svg" align="absmiddle" alt="Sales Calls Analytics Dashboard" /></a> — Analytics
 
@@ -157,7 +157,7 @@
 [![Stars](https://img.shields.io/github/stars/NikitaBoyarkin/sales-calls-dashboard?style=for-the-badge&logo=github&color=fe4e02)](https://github.com/NikitaBoyarkin/sales-calls-dashboard)
 [![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/projects/sales-calls/)
 
-**Stack:** Python · Streamlit · pandas
+**Stack:** ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white) ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=flat-square&logo=streamlit&logoColor=white) ![pandas](https://img.shields.io/badge/pandas-150458?style=flat-square&logo=pandas&logoColor=white)
 
 #### 19. <a href="https://nikitaboyarkin.github.io/projects/serp-rank/"><img src="serp-rank-title.svg" align="absmiddle" alt="SERP Rank Lab" /></a> — Analytics
 
@@ -165,7 +165,7 @@
 [![Stars](https://img.shields.io/github/stars/NikitaBoyarkin/serp-rank-lab?style=for-the-badge&logo=github&color=fe4e02)](https://github.com/NikitaBoyarkin/serp-rank-lab)
 [![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/projects/serp-rank/)
 
-**Stack:** Python · DuckDB · Streamlit · NumPy / SciPy
+**Stack:** ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white) ![DuckDB](https://img.shields.io/badge/DuckDB-FFF000?style=flat-square&logo=duckdb&logoColor=white) ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=flat-square&logo=streamlit&logoColor=white) ![NumPy / SciPy](https://img.shields.io/badge/NumPy_%2F_SciPy-013243?style=flat-square&logo=numpy&logoColor=white)
 
 #### 20. <a href="https://nikitaboyarkin.github.io/projects/sql/"><img src="sql-case-study.svg" align="absmiddle" alt="SQL Analytics Case Study" /></a> — Analytics
 
@@ -173,7 +173,7 @@
 [![Stars](https://img.shields.io/github/stars/NikitaBoyarkin/sql-analytics-case-study?style=for-the-badge&logo=github&color=fe4e02)](https://github.com/NikitaBoyarkin/sql-analytics-case-study)
 [![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/projects/sql/)
 
-**Stack:** SQL · dbt · DuckDB · Python
+**Stack:** ![SQL](https://img.shields.io/badge/SQL-4169E1?style=flat-square&logo=postgresql&logoColor=white) ![dbt](https://img.shields.io/badge/dbt-FF694A?style=flat-square&logo=dbt&logoColor=white) ![DuckDB](https://img.shields.io/badge/DuckDB-FFF000?style=flat-square&logo=duckdb&logoColor=white) ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
 
 #### 21. <a href="https://nikitaboyarkin.github.io/projects/supabase/"><img src="supabase-analytics.svg" align="absmiddle" alt="Product Analytics + A/B on Supabase" /></a> — Product
 
@@ -181,19 +181,19 @@
 [![Stars](https://img.shields.io/github/stars/NikitaBoyarkin/supabase-product-analytics?style=for-the-badge&logo=github&color=fe4e02)](https://github.com/NikitaBoyarkin/supabase-product-analytics)
 [![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/projects/supabase/)
 
-**Stack:** Python · Streamlit · Supabase (Postgres + RLS + Edge Functions) · SQL
+**Stack:** ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white) ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=flat-square&logo=streamlit&logoColor=white) ![Supabase](https://img.shields.io/badge/Supabase-3FCF8E?style=flat-square&logo=supabase&logoColor=white) ![SQL](https://img.shields.io/badge/SQL-4169E1?style=flat-square&logo=postgresql&logoColor=white)
 
 #### 22. <a href="https://nikitaboyarkin.github.io/projects/streamlit/"><img src="streamlit-title.svg" align="absmiddle" alt="Product Analytics Dashboard (Streamlit)" /></a> — Product
 
 [![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/projects/streamlit/) · _private_
 
-**Stack:** Python · Streamlit · pandas / NumPy
+**Stack:** ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white) ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=flat-square&logo=streamlit&logoColor=white) ![pandas / NumPy](https://img.shields.io/badge/pandas_%2F_NumPy-150458?style=flat-square&logo=pandas&logoColor=white)
 
 #### 23. <a href="https://nikitaboyarkin.github.io/projects/posthog/"><img src="posthog-title.svg" align="absmiddle" alt="TaskFlow — PostHog Product Analytics Pipeline" /></a> — Product
 
 [![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/projects/posthog/) · _private_
 
-**Stack:** Python · PostHog · FastAPI · Streamlit
+**Stack:** ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white) ![PostHog](https://img.shields.io/badge/PostHog-000000?style=flat-square&logo=posthog&logoColor=white) ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white) ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=flat-square&logo=streamlit&logoColor=white)
 
 #### 24. <a href="https://nikitaboyarkin.github.io/projects/airflow/"><img src="airflow-title.svg" align="absmiddle" alt="Airflow DAG Platform" /></a> — Engineering
 
@@ -201,7 +201,7 @@
 [![Stars](https://img.shields.io/github/stars/NikitaBoyarkin/airflow?style=for-the-badge&logo=github&color=fe4e02)](https://github.com/NikitaBoyarkin/airflow)
 [![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/projects/airflow/)
 
-**Stack:** Python · Apache Airflow 3 · PostgreSQL · Docker Compose
+**Stack:** ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white) ![Apache Airflow 3](https://img.shields.io/badge/Apache_Airflow_3-017CEE?style=flat-square&logo=apacheairflow&logoColor=white) ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=postgresql&logoColor=white) ![Docker Compose](https://img.shields.io/badge/Docker_Compose-2496ED?style=flat-square&logo=docker&logoColor=white)
 
 #### 25. <a href="https://nikitaboyarkin.github.io/projects/garden/"><img src="garden-title.svg" align="absmiddle" alt="Digital Garden — EQ in IT" /></a> — Engineering
 
@@ -209,7 +209,7 @@
 [![Stars](https://img.shields.io/github/stars/NikitaBoyarkin/digital_garden?style=for-the-badge&logo=github&color=fe4e02)](https://github.com/NikitaBoyarkin/digital_garden)
 [![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/projects/garden/)
 
-**Stack:** TypeScript · Quartz v4 · Markdown · Obsidian
+**Stack:** ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white) ![Quartz v4](https://img.shields.io/badge/Quartz_v4-7C3AED?style=flat-square&logo=obsidian&logoColor=white) ![Markdown](https://img.shields.io/badge/Markdown-000000?style=flat-square&logo=markdown&logoColor=white) ![Obsidian](https://img.shields.io/badge/Obsidian-7C3AED?style=flat-square&logo=obsidian&logoColor=white)
 
 #### 26. <a href="https://nikitaboyarkin.github.io/projects/scrolly/"><img src="scrolly-title.svg" align="absmiddle" alt="Scrolly English Speaking" /></a> — Engineering
 
@@ -217,7 +217,7 @@
 [![Stars](https://img.shields.io/github/stars/NikitaBoyarkin/scrolly-english-speaking?style=for-the-badge&logo=github&color=fe4e02)](https://github.com/NikitaBoyarkin/scrolly-english-speaking)
 [![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/projects/scrolly/)
 
-**Stack:** Astro · TypeScript · MDX · D3
+**Stack:** ![Astro](https://img.shields.io/badge/Astro-BC52EE?style=flat-square&logo=astro&logoColor=white) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white) ![MDX](https://img.shields.io/badge/MDX-1B1F24?style=flat-square&logo=mdx&logoColor=white) ![D3](https://img.shields.io/badge/D3-F9A03C?style=flat-square&logo=d3&logoColor=white)
 
 #### 27. <a href="https://nikitaboyarkin.github.io/projects/site/"><img src="site-title.svg" align="absmiddle" alt="This Portfolio Site" /></a> — Engineering
 
@@ -225,7 +225,7 @@
 [![Stars](https://img.shields.io/github/stars/NikitaBoyarkin/NikitaBoyarkin.github.io?style=for-the-badge&logo=github&color=fe4e02)](https://github.com/NikitaBoyarkin/NikitaBoyarkin.github.io)
 [![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/projects/site/)
 
-**Stack:** Astro · TypeScript · Markdown · CSS custom properties
+**Stack:** ![Astro](https://img.shields.io/badge/Astro-BC52EE?style=flat-square&logo=astro&logoColor=white) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white) ![Markdown](https://img.shields.io/badge/Markdown-000000?style=flat-square&logo=markdown&logoColor=white) ![CSS custom properties](https://img.shields.io/badge/CSS_custom_properties-663399?style=flat-square&logo=css&logoColor=white)
 
 <details>
 <summary><b>🏦 Volta Neobank — 23 case studies</b></summary>
