@@ -836,13 +836,12 @@ def _repo_name(record: dict) -> str:
 
 
 def _project_card(index: int, record: dict) -> list[str]:
-    """One Featured-style card: linked heading, italic blurb, badges, stack.
+    """One card: linked heading, italic blurb, badges, stack line.
 
-    Mirrors the hand-written Featured Projects section — logo (when the project
-    has one) inside the linked heading, the outcome as the italic line, repo and
-    case study as for-the-badge buttons, tools as a plain ``**Stack:**`` line —
-    so the catalogue below reads as more of the same thing rather than a second,
-    plainer format.
+    Logo (when the project has one) sits inside the linked heading, the outcome
+    is the italic line, repo and case study are for-the-badge buttons, tools are
+    a plain ``**Stack:**`` line — so a screener reads title, result, links and
+    stack in the same order for every project.
     """
     title = _pick(record, "title_en", "title")
     href = _clean_text(record.get("href"))
@@ -1053,9 +1052,9 @@ def build_projects_block(registry: dict) -> str:
     Two registry shapes are accepted: a single ``projects`` array whose entries
     carry a ``track`` field (the frozen site contract), and one list per track
     keyed by name. Tracks still decide the order (``TRACK_ORDER``, empty tracks
-    skipped) but no longer the structure: every project is one Featured-style
-    card, so the catalogue reads as more of the Featured Projects section above
-    it. The ``volta_cases`` list folds into a collapsible block below.
+    skipped) but no longer the structure: every project is one card, so the
+    catalogue reads top to bottom as one scannable list. The ``volta_cases``
+    list folds into a collapsible block below.
     """
     projects = [project for _, project in _projects_in_track_order(registry)]
     counts = _track_counts(registry)
