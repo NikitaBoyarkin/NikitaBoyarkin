@@ -89,32 +89,36 @@ _A retrieval-augmented generation pipeline with a real offline eval harness. **r
 ### 🗂️ All Projects
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/projects.svg" width="100%" alt="Portfolio overview: 24 projects across 4 tracks plus 23 Volta Neobank case studies" />
+  <img src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/projects.svg" width="100%" alt="Portfolio overview: 27 projects across 4 tracks plus 23 Volta Neobank case studies" />
 </p>
 
-**24 projects** across **4 tracks** · **23 Volta case studies**
+**27 projects** across **4 tracks** · **23 Volta case studies**
 
-#### 🧪 Experiments · 4
+#### 🧪 Experiments · 6
 
 | Project | What it demonstrates | Links |
 | --- | --- | --- |
-| **A/B Testing Methodology Toolkit** | 18 A/B methodology modules, each calibrated by simulation: an A/A null check holds Type I error at α, and power curves show the effect size each method can actually detect. | [Repo](https://github.com/NikitaBoyarkin/ab_test) · [Case study](https://nikitaboyarkin.github.io/projects/ab/) |
+| **A/B Testing Methodology Toolkit** | 18 A/B modules, each calibrated: CUPED cuts variance 17.7% (SE 0.00360 → 0.00327), the delta method finds a +0.51 pp CTR lift at p < 0.0001, and SRM p = 0.8376. | [Repo](https://github.com/NikitaBoyarkin/ab_test) · [Case study](https://nikitaboyarkin.github.io/projects/ab/) |
 | **Browser Mini-Games — Analytics Arcade** | 10 playable mini-games as self-contained SVGs: 7 analytics (A/B to p<0.05, funnel drop, cohort catch, retention day) and 3 arcade. One file per game, zero dependencies, no build. | [Repo](https://github.com/NikitaBoyarkin/browser-mini-games) · [Case study](https://nikitaboyarkin.github.io/projects/games/) |
-| **Causal / Uplift — CUPED and Individual Treatment Effects** | CUPED cut the standard error by 26% — same power on 5.5k users per arm instead of 10k. On a synthetic experiment with known HTE, uplift at n=6000 is noise: QINI and AUUC cannot separate an oracle. | [Repo](https://github.com/NikitaBoyarkin/causal-uplift) · [Case study](https://nikitaboyarkin.github.io/projects/causal/) |
+| **Causal / Uplift — CUPED and Individual Treatment Effects** | CUPED cut the standard error by 26% — same power on 5.5k users per arm instead of 10k — and a pre-registered break-even threshold of 0.05 ships the campaign to new users only. | [Repo](https://github.com/NikitaBoyarkin/causal-uplift) · [Case study](https://nikitaboyarkin.github.io/projects/causal/) |
+| **CRM Experiment Lab — Segment-Stage Randomization, GCG and Net Effect** | CRM experiment: segment-stage randomization holds SRM at p=0.266, GCG uplift reaches +0.9968 purchases per user, and the net effect is +50.5 per 1,000 sends once unsubscribes are priced in. | [Repo](https://github.com/NikitaBoyarkin/crm-experiment-lab) · [Case study](https://nikitaboyarkin.github.io/projects/crm-experiment-lab/) |
+| **Data Analyst Telegram Bot** | A Telegram bot for the analyst without BI: a raw CSV export becomes p-value, lift and 95% CI in 30 seconds — 12 commands, history and HTML export. | [Case study](https://nikitaboyarkin.github.io/projects/bot/) · _private_ |
 | **Volta Neobank — Product Analytics** | Fixed a neobank's onboarding bottleneck with an A/B test: +5.72pp KYC conversion, €208.5K in 12 mo at 13.9× ROI. 23 projects: funnel → A/B → retention → segmentation → Market & Jobs → RAT v2 → causal. | [Repo](https://github.com/NikitaBoyarkin/volta-banking) · [Case study](https://nikitaboyarkin.github.io/projects/volta/) |
 
-#### 📊 Analytics · 12
+#### 📊 Analytics · 14
 
 | Project | What it demonstrates | Links |
 | --- | --- | --- |
 | **Churn Prediction — Leakage-Free Retention Model** | A leakage-free churn model: recall@top-10% 0.544, 5.44x lift at 0.916 ROC-AUC on a chronological split; 1.75x on the at-risk subgroup, where 69.7% of the cohort is a near-guaranteed negative. | [Repo](https://github.com/NikitaBoyarkin/churn-prediction) · [Case study](https://nikitaboyarkin.github.io/projects/churn/) |
-| **Cohort Analysis Dashboard** | A triangular cohort retention and LTV matrix on synthetic data: per-cohort ARPU and LTV with an observation-age caveat, plus a Tableau-ready CSV and Hyper export. | [Repo](https://github.com/NikitaBoyarkin/tableau_cohort_analysis) · [Case study](https://nikitaboyarkin.github.io/projects/cohort/) |
+| **Cohort Analysis Dashboard** | Python inside Tableau: 4 cohort calculations on a TabPy server and 65 tests; a triangular retention matrix with per-cohort ARPU and LTV, an observation-age caveat and a CSV + Hyper export. | [Repo](https://github.com/NikitaBoyarkin/tableau_cohort_analysis) · [Case study](https://nikitaboyarkin.github.io/projects/cohort/) |
 | **Delivery Control Tower** | A 550,710-row day × city × channel × category aggregate: DuckDB star schema, rolling-origin order forecast, delivery bottlenecks, 14 window SQL queries and an offline dashboard for three roles. | [Case study](https://nikitaboyarkin.github.io/projects/delivery/) |
+| **GMV Drop RCA — root cause on real data** | An injected −10% GMV drop on real UCI Online Retail II data: the metric tree attributes 56.2% of the named drop to UK decile-1 and the full attribution reconciles to £0.00. | [Case study](https://nikitaboyarkin.github.io/projects/gmv-drop-rca/) |
 | **LinkedIn Content Analytics** | Analytics on my own LinkedIn posts: one parser, four renderers. Formats are compared with confidence intervals — and noise is called noise, not a ranking. | [Case study](https://nikitaboyarkin.github.io/projects/linkedin/) · _private_ |
-| **ML Fundamentals — scikit-learn Pipeline** | A leak-free scikit-learn pipeline: missing-data imputation, categorical encoding, a deterministic split and feature scaling, all in one ColumnTransformer fit on the training split only. | [Repo](https://github.com/NikitaBoyarkin/ml) · [Case study](https://nikitaboyarkin.github.io/projects/ml/) |
-| **Promo Margin Lab — what a promo rouble actually earns** | Promo returns +70.5 m RUB of revenue and −17.6 m RUB of profit: 95.3% of waves lose money, breakeven depth is 2.0–20.5%, and the optimiser earns it for 487 k RUB, not 1.27 m. | [Repo](https://github.com/NikitaBoyarkin/promo-margin-lab) · [Case study](https://nikitaboyarkin.github.io/projects/promo/) |
+| **ML Fundamentals — scikit-learn Pipeline** | A leak-free scikit-learn pipeline: all preprocessing in one ColumnTransformer fit on the train split only, a deterministic split, and 21 tests (7 + 9 + 5) guarding reproducibility. | [Repo](https://github.com/NikitaBoyarkin/ml) · [Case study](https://nikitaboyarkin.github.io/projects/ml/) |
+| **Product A/B & Funnel Analytics — Conversion versus Retention** | A 12 000 → 9 623 → 3 384 funnel and A/B on 2 552 users: onboarding lifts activation → paid by 19.59% (p=0.000946), verdict SHIP; at an equal step, conversion adds 10.00% to LTV, retention 8.65%. | [Repo](https://github.com/NikitaBoyarkin/product-ab-funnel-analytics) · [Case study](https://nikitaboyarkin.github.io/projects/product-ab-funnel/) |
+| **Promo Margin Lab — what a promo rouble actually earns** | Promo returns +68.5 m RUB of revenue but −24.4 m RUB of profit: 97.9% of waves lose money at a 1.0–19.5% breakeven vs 25.4% actual, and the optimiser earns +231 496 ₽ vs +136 648 ₽ for top-15%. | [Repo](https://github.com/NikitaBoyarkin/promo-margin-lab) · [Case study](https://nikitaboyarkin.github.io/projects/promo/) |
 | **Python Analytics Playground** | ≥80% pytest coverage on a module-based Python analytics toolkit: loading, cleaning, EDA and visualization assembled into one reusable pipeline — the base I copy into every new analysis. | [Repo](https://github.com/NikitaBoyarkin/python) · [Case study](https://nikitaboyarkin.github.io/projects/python/) |
-| **RAG Evaluation Harness — retrieval and generation metrics** | RAG pipeline with a real offline harness: recall@5 and MRR = 1.00 on 20 questions, correctness 0.37. TF-IDF retrieval, no API keys; faithfulness ≡1.00 — an extractive invariant, not a measurement. | [Repo](https://github.com/NikitaBoyarkin/rag-eval-harness) · [Case study](https://nikitaboyarkin.github.io/projects/rag/) |
+| **RAG Evaluation Harness — retrieval and generation metrics** | RAG pipeline with an offline harness: recall@5 and MRR = 1.00 on 20 questions, correctness 0.37, 0.00 on retrieval-miss control set. TF-IDF, no API keys; faithfulness ≡1.00 — an extractive invariant. | [Repo](https://github.com/NikitaBoyarkin/rag-eval-harness) · [Case study](https://nikitaboyarkin.github.io/projects/rag/) |
 | **RFM Analysis of Bank Clients** | Segmented a bank's clients into 6 RFM segments: the top 20% hold 38.2% of revenue (Gini 0.324). Synthetic dataset — 1,983 clients, 9,492 transactions. | [Repo](https://github.com/NikitaBoyarkin/rfm-analysis-of-bank-clients) · [Case study](https://nikitaboyarkin.github.io/projects/rfm/) |
 | **Sales Calls Analytics Dashboard** | A Streamlit dashboard for AI sales calls on 16,891 synthetic calls: a 4-step funnel (greeting → offer → meeting → qualification), leak breakdown by type, and transcript drill-down. | [Repo](https://github.com/NikitaBoyarkin/sales-calls-dashboard) · [Case study](https://nikitaboyarkin.github.io/projects/sales-calls/) |
 | **SERP Rank Lab** | On a synthetic log, two policies on one information set: money buys +34.45% revenue per search for −16.84% CTR, while the user_id rollout returns −14.26% and a do-not-ship verdict. | [Repo](https://github.com/NikitaBoyarkin/serp-rank-lab) · [Case study](https://nikitaboyarkin.github.io/projects/serp-rank/) |
@@ -124,17 +128,16 @@ _A retrieval-augmented generation pipeline with a real offline eval harness. **r
 
 | Project | What it demonstrates | Links |
 | --- | --- | --- |
-| **Product Analytics + A/B on Supabase** | Full-stack analytics on Supabase: an A/B on a seeded event stream lifted conversion +11.1pp (p ≈ 1.7e-10, chi-square), with a Streamlit dashboard reading live data through RLS. | [Case study](https://nikitaboyarkin.github.io/projects/supabase/) · _private_ |
+| **Product Analytics + A/B on Supabase** | Full-stack analytics on Supabase: an A/B on a seeded event stream lifted conversion +11.1pp (p ≈ 1.7e-10, chi-square), with a Streamlit dashboard reading live data through RLS. | [Repo](https://github.com/NikitaBoyarkin/supabase-product-analytics) · [Case study](https://nikitaboyarkin.github.io/projects/supabase/) |
 | **Product Analytics Dashboard (Streamlit)** | A product analytics dashboard on a synthetic SaaS dataset (8,000 users): AARRR funnel, cohort retention, revenue (MRR, ARPU, churn) and segmentation — 5 Streamlit pages. | [Case study](https://nikitaboyarkin.github.io/projects/streamlit/) · _private_ |
-| **TaskFlow — PostHog Product Analytics Pipeline** | 7 analyses from a typed event catalog: PostHog end-to-end — funnel, retention, A/B, revenue/LTV, time-to-convert. The stream is seeded; the value is the method: catalog, PII scrubbing, SQL, CI. | [Case study](https://nikitaboyarkin.github.io/projects/posthog/) · _private_ |
+| **TaskFlow — PostHog Product Analytics Pipeline** | Onboarding test on a seeded event stream: completion 55.9% → 70.8% (+26.6%), χ² = 40.10, p < 0.0001 at SRM p = 0.90; 6.3% of completed signups reach a paid upgrade. | [Case study](https://nikitaboyarkin.github.io/projects/posthog/) · _private_ |
 
-#### 🛠️ Engineering · 5
+#### 🛠️ Engineering · 4
 
 | Project | What it demonstrates | Links |
 | --- | --- | --- |
-| **Airflow DAG Platform** | Report platform on Apache Airflow 3: every report is a versioned DAG on a fetch → validate → write → record_metrics template, with DQ validation, run alerts and observability metrics. | [Repo](https://github.com/NikitaBoyarkin/airflow) · [Case study](https://nikitaboyarkin.github.io/projects/airflow/) |
+| **Airflow DAG Platform** | A report platform on Airflow 3: the full DAG runs in 440 s and the forecast task alone takes 413 s; every report is a versioned DAG with DQ validation, alerts and run metrics. | [Repo](https://github.com/NikitaBoyarkin/airflow) · [Case study](https://nikitaboyarkin.github.io/projects/airflow/) |
 | **Digital Garden — EQ in IT** | Notes linked into a network, not a feed: a digital garden about emotional intelligence in IT on Quartz v4 — backlinks and a graph turn note accumulation into a navigable structure. | [Repo](https://github.com/NikitaBoyarkin/digital_garden) · [Case study](https://nikitaboyarkin.github.io/projects/garden/) |
-| **Reporting Automation Telegram Bot** | A Telegram bot replaced manual weekly reporting with a cron job: 1–2 hours of prep became a scheduled report with a KPI table and sparklines. | [Case study](https://nikitaboyarkin.github.io/projects/bot/) · _private_ |
 | **Scrolly English Speaking** | A scrollytelling guide to spoken English for workplace conversations (A2–B1): an MDX narrative with D3 visualizations, content and visuals decoupled. Built on Astro 6. | [Repo](https://github.com/NikitaBoyarkin/scrolly-english-speaking) · [Case study](https://nikitaboyarkin.github.io/projects/scrolly/) |
 | **This Portfolio Site** | The site you are reading: Astro 7, TypeScript and Markdown content collections, static output, dark/light theme, RSS, sitemap, JSON-LD and GitHub Pages deployment. | [Repo](https://github.com/NikitaBoyarkin/NikitaBoyarkin.github.io) · [Case study](https://nikitaboyarkin.github.io/projects/site/) |
 
@@ -284,7 +287,7 @@ _A retrieval-augmented generation pipeline with a real offline eval harness. **r
 ### ⚡ Activity
 
 <!-- LAST-REFRESHED:START -->
-_Last refreshed: 2026-10-25 09:11 UTC · 221 contributions in the last 7 days_
+_Last refreshed: 2026-10-26 10:11 UTC · 287 contributions in the last 7 days_
 <!-- LAST-REFRESHED:END -->
 
 <details>
@@ -332,7 +335,11 @@ _Last refreshed: 2026-10-25 09:11 UTC · 221 contributions in the last 7 days_
 ### 📝 Recent Notes
 
 <!-- RECENT-POSTS-LIST:START -->
-- [Кейс Volta: воронка, A/B и retention на синтетике необанка](https://nikitaboyarkin.github.io/posts/volta-neobank-case-study/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)- [Кейсы с собеседований: как диагностировать просадку метрики](https://nikitaboyarkin.github.io/posts/analyst-interview-cases/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)- [Проактивность аналитика за рамками роли](https://nikitaboyarkin.github.io/posts/analyst-proactivity/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)- [Churn + uplift: кому дать скидку &lpar;причинный таргетинг&rpar;](https://nikitaboyarkin.github.io/posts/churn-uplift-discount/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)- [EDA-шаблон с кодом: разведочный анализ по-продуктовому](https://nikitaboyarkin.github.io/posts/eda-python-template/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)
+- [Кейс Volta: воронка, A/B и retention на синтетике необанка](https://nikitaboyarkin.github.io/posts/volta-neobank-case-study/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)
+- [Кейсы с собеседований: как диагностировать просадку метрики](https://nikitaboyarkin.github.io/posts/analyst-interview-cases/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)
+- [Проактивность аналитика за рамками роли](https://nikitaboyarkin.github.io/posts/analyst-proactivity/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)
+- [Churn + uplift: кому дать скидку &lpar;причинный таргетинг&rpar;](https://nikitaboyarkin.github.io/posts/churn-uplift-discount/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)
+- [EDA-шаблон с кодом: разведочный анализ по-продуктовому](https://nikitaboyarkin.github.io/posts/eda-python-template/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)
 <!-- RECENT-POSTS-LIST:END -->
 
 > Auto-updated daily from the [site RSS](https://nikitaboyarkin.github.io/rss.xml) via GitHub Actions.
