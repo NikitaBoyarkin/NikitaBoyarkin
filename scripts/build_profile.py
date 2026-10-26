@@ -218,10 +218,18 @@ def graphql(query: str, variables: dict, retries: int = 6) -> dict:
                 raise RuntimeError("GraphQL errors: " + json.dumps(data["errors"]))
             return data["data"]
         except urllib.error.HTTPError as exc:
-            if exc.code not in _TRANSIENT_HTTP:
+            # GitHub reports primary rate limiting as 403, not 429; only that
+            # flavour is transient — any other 403 is a bad token and must fail.
+            rate_limited = exc.code == 403 and (
+                (exc.headers or {}).get("X-RateLimit-Remaining") == "0"
+            )
+            if exc.code not in _TRANSIENT_HTTP and not rate_limited:
                 raise
             last_exc = exc
         except (urllib.error.URLError, TimeoutError) as exc:
+            last_exc = exc
+        except (json.JSONDecodeError, KeyError) as exc:
+            # A 200 carrying an HTML error page or a truncated body: retryable.
             last_exc = exc
         if attempt == retries:
             break
@@ -549,7 +557,9 @@ def fetch_languages() -> list[tuple[str, int, str]]:
             size = edge["size"]
             agg.setdefault(name, [0, color])[0] += size
     items = [(name, v[0], v[1]) for name, v in agg.items()]
-    items.sort(key=lambda x: x[1], reverse=True)
+    # Name is the tie-break so equal byte counts keep a stable order; the repo
+    # order from the API is UPDATED_AT, which changes between runs.
+    items.sort(key=lambda x: (-x[1], x[0]))
     return items
 
 
@@ -1288,7 +1298,9 @@ def update_readme_refresh_block(
     if new_content == content:
         print("README already up to date")
         return False
-    readme_path.write_text(new_content, encoding="utf-8")
+    tmp_readme = readme_path.with_name(readme_path.name + ".tmp")
+    tmp_readme.write_text(new_content, encoding="utf-8")
+    os.replace(tmp_readme, readme_path)
     print(f"Refreshed README (refresh + notes + evidence sources + projects): {now} ({week} c/7d)")
     return True
 

@@ -22,7 +22,6 @@
 | Событие | Триггер | Properties |
 |---|---|---|
 | `profile_link_click` | Клик по ссылке README (через редирект-сервис) | `{section, href, utm_campaign}` |
-| `cv_download` | Загрузка CV | `{utm_campaign: "cv"}` |
 | `recruiter_contact` | Ручной учёт входящего контакта | `{source, date, company, role}` |
 
 ## 3. Отправка событий
@@ -92,7 +91,6 @@ Portfolio-сайт (Astro) уже имеет PostHog и видит `utm_source=g
 | Панель | Запрос |
 |---|---|
 | Контакты/мес (North Star) | `recruiter_contact` по месяцам, breakdown по source |
-| CV-загрузки/мес | `cv_download` по месяцам |
 | CTR по секциям | `profile_link_click` breakdown по section |
 | Источники трафика portfolio | UTM-клики на portfolio-сайте (существующий PostHog) |
 
@@ -102,4 +100,4 @@ Portfolio-сайт (Astro) уже имеет PostHog и видит `utm_source=g
 - [ ] `project_api_key` получен (phc_...)
 - [ ] Ручной учёт контактов запущен (еженедельно)
 - [ ] Редирект-сервис развёрнут (Cloudflare Worker) — опционально, для CTR по секциям
-- [ ] Дашборд построен (4 панели)
+- [ ] Дашборд построен (3 панели)

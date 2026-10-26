@@ -4,15 +4,14 @@
 
 ## Nikita Boyarkin — Data / Product Analyst
 
-A self-hosted analyst portfolio: 10 playable SVG mini-games and CI-checked headline numbers — **+5.72 pp KYC conversion** and **€208.5K over 12 months** on the Volta flagship.
+A self-hosted analyst portfolio: 8 playable SVG mini-games and CI-checked headline numbers — **+5.72 pp KYC conversion** and **€208.5K over 12 months** on the Volta flagship.
 
 - **Product experimentation** — A/B test design, sample-size planning, guardrail metrics, reproducible reporting. CUPED, AA-tests, Bonferroni, Bayesian A/B.
 - **User lifecycle analytics** — cohort retention, funnel analysis, RFM segmentation.
 - **End-to-end delivery** — SQL → Python → dashboard → stakeholder narrative.
 
 📦 **Portfolio:** <a href="https://nikitaboyarkin.github.io/?utm_source=github&utm_medium=profile_readme&utm_campaign=header"><img src="portfolio.svg" align="absmiddle" alt="Portfolio" /></a>  
-🔗 **Links:** <a href="https://linktr.ee/lofinibo?utm_source=github&utm_medium=profile_readme&utm_campaign=header"><img src="links.svg" align="absmiddle" alt="Links" /></a>  
-📄 **Download CV:** <a href="https://nikitaboyarkin.github.io/CV-Nikita-Boyarkin.pdf?utm_source=github&utm_medium=profile_readme&utm_campaign=cv"><img src="cv.svg" align="absmiddle" alt="Download CV" /></a>
+🔗 **Links:** <a href="https://linktr.ee/lofinibo?utm_source=github&utm_medium=profile_readme&utm_campaign=header"><img src="links.svg" align="absmiddle" alt="Links" /></a>
 
 ---
 
@@ -22,7 +21,7 @@ A self-hosted analyst portfolio: 10 playable SVG mini-games and CI-checked headl
 - 🏦 [Flagship: Volta neobank](https://github.com/NikitaBoyarkin/volta-banking)
 - 🧪 Related: [A/B Testing Toolkit](https://github.com/NikitaBoyarkin/ab_test) · [Causal / Uplift](https://github.com/NikitaBoyarkin/causal-uplift) · [SQL Analytics Case Study](https://github.com/NikitaBoyarkin/sql-analytics-case-study) · [RAG Evaluation Harness](https://github.com/NikitaBoyarkin/rag-eval-harness)
 
-**On this page:** [Featured Projects](#-featured-projects) · [Analytics Evidence](#-analytics-evidence) · [All Projects](#-all-projects) · [Playable Games](#-playable-games) · [Activity](#-activity) · [Recent Notes](#-recent-notes) · [Connect](#-connect)
+**On this page:** [Featured Projects](#-featured-projects) · [Analytics Evidence](#-analytics-evidence) · [All Projects](#️-all-projects) · [Playable Games](#-playable-games) · [Activity](#-activity) · [Recent Notes](#-recent-notes) · [Connect](#-connect)
 
 ---
 
@@ -48,7 +47,7 @@ _End-to-end neobank analytics: funnel, A/B test, retention, segmentation. **+5.7
 
 #### 2. <a href="https://nikitaboyarkin.github.io/projects/supabase/?utm_source=github&utm_medium=profile_readme&utm_campaign=featured"><img src="supabase-analytics.svg" align="absmiddle" alt="Supabase Product Analytics" /></a>
 
-_Full-stack analytics platform: Streamlit + Supabase with RLS and an Edge Function. **Significant A/B result (p=0.0034) on 8,000 seeded users**, reproducible pipeline._
+_Full-stack analytics platform: Streamlit + Supabase with RLS and an Edge Function. **A/B on a seeded event stream: 29.6% → 40.7%, +11.1 pp (p ≈ 1.7·10⁻¹⁰, χ²)**, reproducible pipeline._
 
 [![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/projects/supabase/?utm_source=github&utm_medium=profile_readme&utm_campaign=featured)
 
@@ -65,9 +64,10 @@ _Twenty-five end-to-end SQL cases on DuckDB — funnel, N-day retention, DAU/MAU
 
 #### 4. <a href="https://github.com/NikitaBoyarkin/rag-eval-harness">RAG Evaluation Harness</a>
 
-_A retrieval-augmented generation pipeline with a real offline eval harness. **recall@5 and MRR = 1.00, faithfulness 1.00** on 20 labeled questions — retrieval and generation scored separately, runs with zero API keys._
+_A retrieval-augmented generation pipeline with a real offline eval harness. **recall@5 and MRR = 1.00** on 20 labeled questions — retrieval and generation scored separately, runs with zero API keys. Faithfulness 1.00 is an extractive invariant, not model quality; answer correctness is 0.37._
 
 [![Repo](https://img.shields.io/badge/Repo-rag--eval--harness-0f2a2b?style=for-the-badge&logo=github&logoColor=fe4e02)](https://github.com/NikitaBoyarkin/rag-eval-harness)
+[![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/projects/rag/?utm_source=github&utm_medium=profile_readme&utm_campaign=featured)
 
 **Stack:** Python · scikit-learn · TF-IDF · pytest
 
@@ -406,7 +406,7 @@ _Last refreshed: 2026-10-26 20:11 UTC · 323 contributions in the last 7 days_
 
 **Actions.** Published the work end-to-end. Projects are grouped into Experiments / Analytics / Product / Engineering, the Volta flagship carries 23 linked sub-cases, and the portfolio site at https://nikitaboyarkin.github.io renders every case study. In the site, headline numbers are frozen in `src/lib/metrics.ts` and CI-checked; profile cards, stats and the SVG games are self-hosted via `scripts/build_profile.py`.
 
-**Result.** A public portfolio site plus a self-hosted profile: 10 playable SVG mini-games, the Volta flagship at +5.72 pp KYC conversion and €208.5K over 12 months, and an analytics evidence map linking each method to the repository that produced it.
+**Result.** A public portfolio site plus a self-hosted profile: 8 playable SVG mini-games, the Volta flagship at +5.72 pp KYC conversion and €208.5K over 12 months, and an analytics evidence map linking each method to the repository that produced it.
 
 </details>
 

@@ -102,6 +102,31 @@ def test_top_languages_folds_long_tail_into_other():
     assert "Lang8" not in svg
 
 
+def test_fetch_languages_orders_equal_sizes_by_name(monkeypatch):
+    # Repo order from the API is UPDATED_AT DESC, so it changes between runs. Without
+    # a name tie-break equal byte counts reshuffle the donut and produce a diff on a
+    # day when nothing changed.
+    repos = [
+        {
+            "languages": {
+                "edges": [
+                    {"size": 10, "node": {"name": "B", "color": "#111111"}},
+                    {"size": 10, "node": {"name": "A", "color": "#222222"}},
+                    {"size": 30, "node": {"name": "C", "color": "#333333"}},
+                ]
+            }
+        }
+    ]
+    monkeypatch.setattr(
+        bp, "graphql", lambda *args, **kwargs: {"user": {"repositories": {"nodes": repos}}}
+    )
+    assert bp.fetch_languages() == [
+        ("C", 30, "#333333"),
+        ("A", 10, "#222222"),
+        ("B", 10, "#111111"),
+    ]
+
+
 # ---------- build_stats_svg / build_activity_svg ----------
 
 

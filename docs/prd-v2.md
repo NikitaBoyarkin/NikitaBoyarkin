@@ -30,7 +30,7 @@
 |---|---|---|
 | metrics.svg | **365 963 B (~357 KiB)**, цель ≤80 KB | `metrics.svg` |
 | CI-петля | **7 коммитов за 105 сек** (09:01:53→09:03:38) | `git log origin/main` |
-| `concurrency` в workflow | **отсутствует** во всех 5 workflow | `.github/workflows/` |
+| `concurrency` в workflow | **отсутствует** во всех 4 workflow | `.github/workflows/` |
 | Тесты в CI | **не запускаются** (pytest не упомянут в `.github/`) | `.github/workflows/` |
 | Зависимости объявлены | **нет** `pyproject.toml` / `requirements.txt` | корень |
 | keepalive empty-commit | **жив в 3 местах**: `keepalive.yml:31`, `scripts/keepalive.sh:16`, launchd plist (22:00) | файлы |
@@ -190,9 +190,9 @@ concurrency:
 
 **Acceptance Criteria:**
 - [x] У каждой заявленной метрики есть ссылка на источник (кейс/методология на сайте). _(бейдж `Case study` на каждой featured-карточке.)_
-- [x] `48× ROI` и `€716K/yr` убраны либо подкреплены ссылкой на методологию — иначе смягчены до lift/p/конверсий. _(убраны из профиля; остались `+6.24pp (Z=6.35, p<0.0001)` и `p=0.0034`.)_
-- [x] `p=0.0034` и `+5.1 пп` (Supabase) ведут на `/projects/supabase/`. _(карточка Supabase → `Case study`.)_
-- [x] Терминология метрик согласована с сайтом (нет расхождений в цифрах). _(`+6.24pp` ↔ сайт `+6,24 пп`; `p=0.0034` ↔ сайт `p = 0.0034`.)_ **[manual]**
+- [x] `48× ROI` и `€716K/yr` убраны либо подкреплены ссылкой на методологию — иначе смягчены до lift/p/конверсий. _(убраны из профиля; остались `+5.72pp (Z=5.82, p<0.0001)` и `+11.1 пп` Supabase.)_
+- [x] `+11.1 пп` (Supabase) ведёт на `/projects/supabase/`. _(карточка Supabase → `Case study`; p-value сверен с сайтом: `p ≈ 1,7·10⁻¹⁰`.)_
+- [x] Терминология метрик согласована с сайтом (нет расхождений в цифрах). _(`+5.72pp` ↔ сайт `+5,72 пп`; `+11.1 пп` ↔ сайт `+11,1 пп` при `p ≈ 1,7·10⁻¹⁰`.)_ **[manual]**
 
 **Dependencies:** REQ-015; внешняя — REQ-028.
 
@@ -200,11 +200,11 @@ concurrency:
 **Описание:** Выкинуть `lowlighter/metrics` из `metrics.yml` и self-host slim-карточку метрик в `build_profile.py`. Стрики (`Current/Longest`) оставить только в `stats.svg`: отдельная `streak.svg` дублировала те же числа, что уже были в stats, и удалена из пайплайна.
 
 **Acceptance Criteria:**
-- [x] `metrics.svg` весит ≤80 KB и генерируется `build_profile.py`. _(44 921 B ≈ 44 KB; `build_metrics_svg` в генераторе; headline-числа убраны — heatmap без дублей.)_
+- [x] `metrics.svg` весит ≤80 KB и генерируется `build_profile.py`. _(51 660 B ≈ 50 KB; `build_metrics_svg` в генераторе; headline-числа убраны — heatmap без дублей.)_
 - [x] `metrics.yml` больше не тянет `lowlighter/metrics`. _(workflow удалён; `lowlighter` не встречается.)_
 - [x] В рендере карточек метрик — **0 внешних запросов**. _(все карточки — `raw.githubusercontent.com/<repo>/main/*.svg`, self-hosted.)_
 - [x] Стрики и суммарные числа не дублируются: живут только в `stats.svg`; отдельная `streak.svg` удалена из пайплайна и README (сирот нет). _(2026-09-18: `build_streak_svg` и `streak.svg` удалены.)_
-- [x] Карточка корректна в light/dark-режимах GitHub. _(карточки с собственным непрозрачным фоном `#1400c3` — тема GitHub не влияет.)_ **[manual]**
+- [x] Карточка корректна в light/dark-режимах GitHub. _(карточки с собственным непрозрачным фоном `#f8f2da` — тема GitHub не влияет.)_ **[manual]**
 
 **Dependencies:** REQ-014 (стабильный CI), REQ-020 (тесты).
 
@@ -227,8 +227,8 @@ concurrency:
 
 **Acceptance Criteria:**
 - [x] Есть `pyproject.toml` с pytest (и ruff).
-- [x] Шаг `pytest` есть в CI и зелёный на каждый push. _(`.github/workflows/ci.yml`: `ruff check` + `pytest --cov`; локально 19 passed.)_
-- [x] Покрытие `build_profile.py` измерено и задокументировано. _(~68%, `docs/development.md` §Coverage.)_
+- [x] Шаг `pytest` есть в CI и зелёный на каждый push. _(`.github/workflows/ci.yml`: `ruff check` + `pytest --cov`; локально 98 passed.)_
+- [x] Покрытие `build_profile.py` измерено и задокументировано. _(~87%, `docs/development.md` §Coverage.)_
 - [x] Тесты не делают сетевых вызовов (моки GraphQL). _(`tests/test_build_profile.py` — только чистые функции.)_
 
 **Dependencies:** None
@@ -264,7 +264,7 @@ concurrency:
 **Описание:** Часть секций без UTM (Recent Notes, Games, Tech Stack, Stats/Activity). Без редирект-сервиса (deferred) закрываем консистентность меток на оставшихся секциях, чтобы при включении аналитики данные были готовы.
 
 **Acceptance Criteria:**
-- [x] Все исходящие ссылки разделов имеют согласованную UTM-схему (`utm_source=github&utm_medium=profile_readme&utm_campaign=<section>`). _(header, cv, featured, building, notes, connect; notes — через `template` в `update-notes.yml`.)_
+- [x] Все исходящие ссылки разделов имеют согласованную UTM-схему (`utm_source=github&utm_medium=profile_readme&utm_campaign=<section>`). _(header, featured, building, notes, connect; notes — через `template` в `update-notes.yml`.)_
 - [x] Нет UTM с PII.
 - [x] Схема задокументирована. _(`docs/development.md` §UTM scheme.)_
 
@@ -283,7 +283,7 @@ concurrency:
 **Описание:** Целевая роль — Data/Product Analyst, Middle/Middle+. Выровнять заголовок/терминологию и порядок верхнего блока так, чтобы роль и доказательства читались без скролла.
 
 **Acceptance Criteria:**
-- [x] Заголовок и первая строка явно называют роль (Data/Product Analyst). _(H2 «Data / Product Analyst» + строка «(Middle+)».)_
+- [x] Заголовок и первая строка явно называют роль (Data/Product Analyst). _(H2 «Data / Product Analyst»; маркер «(Middle+)» в профиле не используется.)_
 - [x] Featured-кейсы и CTA доступны выше секции игр.
 - [x] Терминология согласована с сайтом. _(роль и метрики совпадают с кейсами.)_ **[manual]**
 
@@ -350,7 +350,7 @@ confidence + открытые пробелы), наполнение — анал
 - [x] Каждая цифра сверена с исходным репозиторием до публикации (`volta-banking`, `causal-uplift`, `ab_test`, `sql-analytics-case-study`, `airflow`).
 - [x] `build_analytics_evidence_svg()` — `role='img'` + `aria-label` + `<title>`; палитра — только 3 существующих токена, новых hex нет.
 - [x] Строка «Bayesian A/B» без ссылки — declared gap, а не выдуманный claim.
-- [x] Подключено в README (над `### 📊 GitHub Stats`), в `profile.yml` `file_pattern`, в тестах.
+- [x] Подключено в README (секция `### 🔬 Analytics Evidence`, перед `### 🗂️ All Projects`), в `profile.yml` `file_pattern`, в тестах.
 - [x] **Ссылка жива:** CI-job `links` — `python3 scripts/build_profile.py --print-links` → `curl -fsSL` по каждому URL; локально 5/5 → HTTP 200.
 - [x] **Дрейф закрыт:** README писал «Ten end-to-end SQL cases», репозиторий содержит 25 + 1 на реальных данных (UCI Online Retail II) — ровно тот класс дыры, против которого писался REQ-017.
 - [x] ROI намеренно не включён: REQ-017 убрал `€716K/48×` как непроверяемый; карточка держит методологию, не деньги.
@@ -449,14 +449,14 @@ confidence + открытые пробелы), наполнение — анал
 | REQ-015 | У приватного `supabase-product-analytics` бейдж `Repo` заменён на `Case study` → `/projects/supabase/`; `Case study` есть у всех трёх featured. |
 | REQ-016 | `extra_count=124` удалён из URL `hits.sh`. |
 | REQ-017 | `€716K/yr` и `48× ROI` убраны из профиля; каждая метрика подкреплена бейджем `Case study`. |
-| REQ-018 | `metrics.yml` (lowlighter) удалён; `metrics.svg` self-hosted (`build_metrics_svg`, heatmap без totals) — **44 921 B**; `streak.svg` слит в `stats.svg` и удалён (числа без дублей). |
+| REQ-018 | `metrics.yml` (lowlighter) удалён; `metrics.svg` self-hosted (`build_metrics_svg`, heatmap без totals) — **51 660 B**; `streak.svg` слит в `stats.svg` и удалён (числа без дублей). |
 | REQ-019 | `keepalive.yml`, `scripts/keepalive.sh` удалены; `enable_keepalive: false` в `update-notes.yml`; `--allow-empty` отсутствует. |
-| REQ-020 | `pyproject.toml` (pytest/ruff); `.github/workflows/ci.yml` — `ruff check` + `pytest --cov`; покрытие ~68% в `docs/development.md`. |
+| REQ-020 | `pyproject.toml` (pytest/ruff); `.github/workflows/ci.yml` — `ruff check` + `pytest --cov`; покрытие ~87% в `docs/development.md`. |
 | REQ-021 | Footer credits — только живые сервисы; `GH_USER`/`--user` вместо shell `$USER`; один GraphQL-запрос за прогон; `PLAN.md` → навигатор; `docs/prd.md` → исторический архив; `preview.sh` и политика пиннинга в `docs/development.md`; ветка `output` удалена. |
 | REQ-022 | Явный label «opens in a new tab»; `<title>`/`<desc>`/`role="img"` в 8/8 игровых SVG; все игровые ссылки → `@main`. |
-| REQ-023 | Единая UTM-схема на header/cv/featured/building/notes/connect; схема задокументирована. |
+| REQ-023 | Единая UTM-схема на header/featured/building/notes/connect; схема задокументирована. |
 | REQ-024 | «Building» ведёт на портфолио (HTTP 200). |
-| REQ-025 | H2 «Data / Product Analyst (Middle+)»; featured выше игр. |
+| REQ-025 | H2 «Data / Product Analyst»; featured выше игр. |
 | REQ-026 | Placeholder TODO P1.3 удалён; секция не добавлена (ждёт реальных данных). |
 | REQ-029 | `contribution-types.svg` + `monthly-activity.svg` — новые self-hosted графики (`build_contribution_types_svg` / `build_monthly_activity_svg`); поля типов добавлены в единственный GraphQL-запрос; подключены в README/`profile.yml`/тестах. |
 | REQ-030 | `analytics-evidence.svg` — authored-ledger доказательств (`ANALYTICS_EVIDENCE` + `build_analytics_evidence_svg`), 8 методов + строка-пробел; CI-job `links` HTTP-проверяет каждый источник; закрыт дрейф SQL-кейсов (10 → 25 + 1). |

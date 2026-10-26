@@ -31,7 +31,7 @@ jobs:
         run: ruff check scripts tests
 
       - name: Test
-        run: pytest --cov=build_profile --cov-report=term-missing
+        run: pytest --cov=scripts --cov-report=term-missing
 
   links:
     runs-on: ubuntu-latest
@@ -53,10 +53,6 @@ jobs:
             echo "checking $url"
             curl -fsSL --retry 2 --max-time 20 -o /dev/null "$url"
           done
-
-      - name: CV download link must resolve
-        # The highest-intent CTA on a hiring profile; nothing else checked it.
-        run: curl -fsSL --retry 2 --max-time 20 -o /dev/null https://nikitaboyarkin.github.io/CV-Nikita-Boyarkin.pdf
 
   project-links:
     runs-on: ubuntu-latest

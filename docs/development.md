@@ -8,10 +8,10 @@ The rendered artifact is `README.md`; everything here is for whoever maintains i
 | Path | What |
 |---|---|
 | `README.md` | The profile (rendered on github.com/NikitaBoyarkin). |
-| `scripts/build_profile.py` | Generates `stats/activity/metrics/contribution-types/monthly-activity/top-languages/projects.svg` + the README "Last refreshed" block. The All Projects block is derived from the projects registry, read from `NikitaBoyarkin.github.io` at `master` (`public/projects.json`). |
+| `scripts/build_profile.py` | Generates `hero/stats/activity/metrics/contribution-types/monthly-activity/top-languages/projects/analytics-evidence.svg` + the README "Last refreshed" block. The All Projects block is derived from the projects registry, read from `NikitaBoyarkin.github.io` at `master` (`public/projects.json`). |
 | `scripts/preview.sh` | Renders `README.md` locally as GitHub-flavored markdown and opens it in the browser (`scripts/preview.sh`). |
 | `tests/test_build_profile.py` | Pure-function tests for the generator (no network). |
-| `.github/workflows/ci.yml` | Lint + tests on every push/PR. |
+| `.github/workflows/ci.yml` | Lint + tests on every push/PR, plus liveness checks for the evidence-ledger and project links. |
 | `.github/workflows/profile.yml` | Daily (04:23 UTC) asset refresh; also runs on changes to the generator. |
 | `.github/workflows/snake.yml` | Daily contribution-snake refresh. |
 | `.github/workflows/update-notes.yml` | Daily "Recent notes" refresh from the site RSS. |
@@ -36,7 +36,7 @@ scripts/preview.sh                # local README preview
 
 `scripts/build_profile.py` is covered by `tests/test_build_profile.py` at **~87%**
 (network fetch, `main()`, and the CLI path are intentionally not covered — tests
-must stay offline). CI prints the number with `uv run pytest --cov=build_profile`.
+must stay offline). CI runs the same suite with `pytest --cov=scripts`.
 
 ## Asset / link pinning policy
 
@@ -55,9 +55,9 @@ Single brand palette — 60 / 30 / 10 by area:
 
 | Token | Hex | Share | Role |
 |---|---|---|---|
-| `BG` / `SURFACE` | `#1400c3` | 60% | background, card surfaces |
-| `ACCENT` | `#fe4e02` | 30% | primary data, actions |
-| `TEXT_MAIN` | `#f8f2da` | 10% | text, highlights |
+| `BG` / `SURFACE` | `#f8f2da` | 60% | background, card surfaces (cream) |
+| `ACCENT` | `#fe4e02` | 30% | primary data, actions (orange) |
+| `TEXT_MAIN` | `#1400c3` | 10% | text, highlights (deep blue) |
 
 Defined once in `scripts/build_profile.py`. Secondary tones are **opacity on
 these three tokens** — `MUTED_OP` (secondary text), `FAINT_OP` (gridlines,
@@ -75,7 +75,7 @@ All outbound section links use one scheme:
 ?utm_source=github&utm_medium=profile_readme&utm_campaign=<section>
 ```
 
-`<section>` is one of `header`, `cv`, `featured`, `building`, `notes`, `connect`.
+`<section>` is one of `header`, `featured`, `building`, `notes`, `connect`.
 RSS-generated "Recent notes" links get the scheme via the `template` input in
 `update-notes.yml`. No PII in UTMs. Aggregation (PostHog + a redirect service) is
 deferred — see REQ-027 in `docs/prd-v2.md`.
