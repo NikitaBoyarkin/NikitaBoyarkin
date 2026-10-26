@@ -863,15 +863,17 @@ def _row_text(record: dict) -> str:
     return f"{description} {result}"
 
 
-def _project_line(index: int, record: dict, *, with_result: bool = True) -> str:
-    """One numbered row: title · track — blurb · tools · links.
+def _project_line(index: int, record: dict) -> str:
+    """One numbered row: title · track · tools · links.
 
     Used for the collapsed Volta appendix, where 23 full cards would be length
     nobody scrolls; the visible catalogue uses ``_project_card`` instead. The
     title is still a self-hosted card — an ``<a>`` holding only an ``<img>`` —
     so the appendix carries the same cream-and-blue wordmarks without repeating
-    the heading/badge block. A case with no registered card falls back to the
-    bold text link, so a new case renders before its SVG exists.
+    the heading/badge block. The blurb is dropped here: inside a collapsed
+    appendix it was the bulk of the text and the case study one click away
+    states the same finding with its numbers. A case with no registered card
+    falls back to the bold text link, so a new case renders before its SVG.
     """
     title = _pick(record, "title_en", "title")
     href = _clean_text(record.get("href"))
@@ -888,9 +890,6 @@ def _project_line(index: int, record: dict, *, with_result: bool = True) -> str:
     track = TRACK_PLAIN_LABELS.get(_clean_text(record.get("track")))
     if track:
         parts.append(f"· *{track}*")
-    text = _row_text(record) if with_result else _pick(record, "description_en", "description")
-    if text:
-        parts.append(f"— {text}")
     tools = [_clean_text(tool) for tool in record.get("tools") or [] if _clean_text(tool)]
     if tools:
         parts.append("· " + " · ".join(f"`{tool}`" for tool in tools[:TOOL_LIMIT]))
@@ -1270,7 +1269,7 @@ def build_projects_block(registry: dict) -> str:
         # screener opens, the repeat is pure length, and 23 full cards would be an
         # appendix nobody scrolls — so these stay one-line rows.
         lines.extend(
-            _project_line(index, case, with_result=False) for index, case in enumerate(volta, 1)
+            _project_line(index, case) for index, case in enumerate(volta, 1)
         )
         lines.append("")
         lines.append("</details>")

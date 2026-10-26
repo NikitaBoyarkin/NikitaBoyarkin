@@ -693,8 +693,10 @@ def test_build_projects_block_volta_prefers_en_text():
     case["title_en"] = "Volta EN"
     case["description_en"] = "EN desc"
     block = bp.build_projects_block(_registry(volta_cases=[case]))
-    assert "Volta EN" in block and "EN desc" in block
-    assert "Volta RU" not in block and "RU desc" not in block
+    assert "Volta EN" in block
+    assert "Volta RU" not in block
+    # The appendix carries no blurb, so no description reaches the row at all.
+    assert "EN desc" not in block and "RU desc" not in block
 
 
 def test_build_projects_block_private_without_repo():
@@ -1116,17 +1118,20 @@ def test_row_text_skips_result_that_mostly_restates_description():
     assert "0.9433" not in text
 
 
-def test_build_projects_block_volta_rows_keep_description_only():
-    # Volta parts are result-first already; appending star.result would repeat them.
+def test_build_projects_block_volta_rows_drop_the_blurb():
+    """Rows are card + tools + links; the finding lives in the case study."""
     case = _case(
         "V",
         description="Travelers lose €0.45 per €100 of FX volume.",
         result="Travelers lose €0.45 per €100 of FX volume; break-even needs 0.55%.",
+        github="https://github.com/NikitaBoyarkin/case-v",
+        href="https://example.test/volta/v/",
     )
     block = bp.build_projects_block(_registry(volta_cases=[case]))
     volta = block[block.index("<details>") :]
-    assert "Travelers lose €0.45 per €100 of FX volume." in volta
+    assert "Travelers lose" not in volta
     assert "0.55%" not in volta
+    assert "[Repo](https://github.com/NikitaBoyarkin/case-v)" in volta
 
 
 def test_build_projects_block_volta_row_uses_registered_card():
