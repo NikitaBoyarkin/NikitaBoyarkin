@@ -565,7 +565,9 @@ _START = "<!-- ALL-PROJECTS:START -->"
 _END = "<!-- ALL-PROJECTS:END -->"
 
 _CARD_HEADING_RE = re.compile(r"^#### (\d+)\. ")
-_NUMBERED_ROW_RE = re.compile(r"^\d+\. \*\*")
+# Appendix rows start "N. " and may open with either a bold text link or a card
+# <a><img></a> once the case has a registered wordmark.
+_NUMBERED_ROW_RE = re.compile(r"^\d+\. ")
 
 
 def _project(
@@ -591,8 +593,15 @@ def _project(
     }
 
 
-def _case(title, *, description="desc", result=None, github=None):
-    return {"title": title, "description": description, "result": result, "github": github}
+def _case(title, *, description="desc", result=None, github=None, href=None, slug=None):
+    return {
+        "title": title,
+        "description": description,
+        "result": result,
+        "github": github,
+        "href": href,
+        "slug": slug,
+    }
 
 
 def _registry(*, projects=(), volta_cases=()):
@@ -1117,6 +1126,47 @@ def test_build_projects_block_volta_rows_keep_description_only():
     volta = block[block.index("<details>") :]
     assert "Travelers lose €0.45 per €100 of FX volume." in volta
     assert "0.55%" not in volta
+
+
+def test_build_projects_block_volta_row_uses_registered_card():
+    """A registered case renders the wordmark card, not a bold text link."""
+    case = _case(
+        "Volta — Funnel Analysis", href="https://example.test/volta/funnel/", slug="funnel"
+    )
+    block = bp.build_projects_block(_registry(volta_cases=[case]))
+    row = _volta_row_for(block, "Volta — Funnel Analysis")
+    assert '<img src="volta-card-funnel.svg"' in row
+    assert f'<a href="{case["href"]}">' in row
+    assert "**[Volta — Funnel Analysis]" not in row
+
+
+def test_build_projects_block_volta_card_escapes_alt_text():
+    # Titles carry "&" (Retention & Cohorts); a raw one breaks the attribute.
+    case = _case("Volta — Retention & Cohorts", href="https://example.test/r/", slug="retention")
+    block = bp.build_projects_block(_registry(volta_cases=[case]))
+    assert 'alt="Volta — Retention &amp; Cohorts"' in block
+
+
+def test_build_projects_block_volta_card_falls_back_without_slug():
+    """An unregistered case keeps the bold link instead of an <img> that 404s."""
+    case = _case("Unmapped Case", href="https://example.test/volta/unmapped/")
+    block = bp.build_projects_block(_registry(volta_cases=[case]))
+    assert "**[Unmapped Case](https://example.test/volta/unmapped/)**" in block
+
+
+def test_volta_card_map_matches_files_on_disk():
+    """The registry of cards and the shipped assets are the same set."""
+    root = Path(bp.__file__).resolve().parent.parent
+    on_disk = {path.name for path in root.glob("volta-card-*.svg")}
+    assert on_disk == set(bp.VOLTA_CARD_BY_SLUG.values())
+
+
+def test_volta_cards_use_the_cream_and_blue_palette():
+    root = Path(bp.__file__).resolve().parent.parent
+    for name in bp.VOLTA_CARD_BY_SLUG.values():
+        svg = (root / name).read_text(encoding="utf-8")
+        assert 'fill="#F8F2D8"' in svg, f"{name}: no cream card background"
+        assert 'fill="#1400C3"' in svg, f"{name}: no blue text"
 
 
 def test_build_projects_block_renders_no_tables():

@@ -788,12 +788,25 @@ def _row_text(record: dict) -> str:
 def _project_line(index: int, record: dict, *, with_result: bool = True) -> str:
     """One numbered row: title · track — blurb · tools · links.
 
-    Used for the collapsed Volta appendix, where 23 cards would be length nobody
-    scrolls; the visible catalogue uses ``_project_card`` instead.
+    Used for the collapsed Volta appendix, where 23 full cards would be length
+    nobody scrolls; the visible catalogue uses ``_project_card`` instead. The
+    title is still a self-hosted card — an ``<a>`` holding only an ``<img>`` —
+    so the appendix carries the same cream-and-blue wordmarks without repeating
+    the heading/badge block. A case with no registered card falls back to the
+    bold text link, so a new case renders before its SVG exists.
     """
     title = _pick(record, "title_en", "title")
     href = _clean_text(record.get("href"))
-    parts = [f"{index}. **[{title}]({href})**" if href else f"{index}. **{title}**"]
+    card = _volta_card(record)
+    if href and card:
+        parts = [
+            f'{index}. <a href="{_esc(href)}">'
+            f'<img src="{_esc(card)}" align="absmiddle" alt="{_esc(title)}" /></a>'
+        ]
+    elif href:
+        parts = [f"{index}. **[{title}]({href})**"]
+    else:
+        parts = [f"{index}. **{title}**"]
     track = TRACK_PLAIN_LABELS.get(_clean_text(record.get("track")))
     if track:
         parts.append(f"· *{track}*")
@@ -807,6 +820,47 @@ def _project_line(index: int, record: dict, *, with_result: bool = True) -> str:
     if links:
         parts.append(f"· {links}")
     return " ".join(parts)
+
+
+# Volta appendix cards. Same crisp-wordmark technique as the catalogue titles,
+# but on the cream-and-blue palette (F8F2D8 rectangle, 1400C3 text) so the 23
+# sub-cases read as a set instead of cloning the flagship's orange wordmark.
+# A slug missing here falls back to the bold text link, so a new case renders
+# before its SVG exists.
+VOLTA_CARD_BY_SLUG = {
+    "funnel": "volta-card-funnel.svg",
+    "ab": "volta-card-ab.svg",
+    "retention": "volta-card-retention.svg",
+    "segmentation": "volta-card-segmentation.svg",
+    "churn": "volta-card-churn.svg",
+    "rfm": "volta-card-rfm.svg",
+    "clv": "volta-card-clv.svg",
+    "attribution": "volta-card-attribution.svg",
+    "anomalies": "volta-card-anomalies.svg",
+    "spend": "volta-card-spend.svg",
+    "support-churn": "volta-card-support-churn.svg",
+    "nps": "volta-card-nps.svg",
+    "jtbd": "volta-card-jtbd.svg",
+    "unit-economics": "volta-card-unit-economics.svg",
+    "premium-upsell": "volta-card-premium-upsell.svg",
+    "kyc-45": "volta-card-kyc-45.svg",
+    "referral": "volta-card-referral.svg",
+    "assisted-cac": "volta-card-assisted-cac.svg",
+    "fx-sourcing": "volta-card-fx-sourcing.svg",
+    "premium-offers": "volta-card-premium-offers.svg",
+    "anchor-cac": "volta-card-anchor-cac.svg",
+    "dormant-winback": "volta-card-dormant-winback.svg",
+    "causal-kyc": "volta-card-causal-kyc.svg",
+}
+
+
+def _volta_card(record: dict) -> str:
+    """Card SVG filename for one Volta case, or "" when none is registered."""
+    slug = _clean_text(record.get("slug"))
+    if not slug:
+        href = _clean_text(record.get("href"))
+        slug = urllib.parse.urlsplit(href).path.strip("/").rsplit("/", 1)[-1]
+    return VOLTA_CARD_BY_SLUG.get(slug, "")
 
 
 # Featured-style cards. Every project ships a self-hosted SVG in the heading
