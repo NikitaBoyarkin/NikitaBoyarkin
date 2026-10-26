@@ -328,10 +328,19 @@ def _stub_main(monkeypatch, languages_exc):
     monkeypatch.setattr(bp, "extract_contributions", lambda data: [])
     monkeypatch.setattr(bp, "compute_streaks", lambda days: (0, 0, 0))
     monkeypatch.setattr(bp, "write_asset", lambda path, content: None)
-    monkeypatch.setattr(bp, "update_readme_refresh_block", lambda days: False)
+    monkeypatch.setattr(bp, "update_readme_refresh_block", lambda *a, **k: False)
     monkeypatch.setattr(bp, "fetch_languages", _raising(languages_exc))
     monkeypatch.setattr(bp.logging, "exception", lambda *a, **k: logged.append(a))
     return logged
+
+
+def test_no_card_renders_a_timestamp_the_regex_cannot_strip():
+    # Regression: the analytics-evidence footer rendered "last updated:"
+    # (lowercase) while _TIMESTAMP_RE matches "Last updated:", so that card was
+    # rewritten on every run regardless of whether its data changed.
+    with open(bp.__file__, encoding="utf-8") as fh:
+        source = fh.read()
+    assert "last updated:" not in source
 
 
 def test_main_reraises_language_failure_but_not_non_network_errors(monkeypatch):

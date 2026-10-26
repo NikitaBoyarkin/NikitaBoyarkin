@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@v5
 
       - name: Update recent notes from RSS
-        uses: gautamkrishnar/blog-post-workflow@master
+        uses: gautamkrishnar/blog-post-workflow@1.9.7
         with:
           comment_tag_name: "RECENT-POSTS-LIST"
           max_post_count: "5"

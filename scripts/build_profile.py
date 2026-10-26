@@ -91,7 +91,9 @@ def write_asset(path: Path, content: str) -> None:
     if DRY_RUN:
         print(f"[dry-run] would write {path.name} ({len(content)} chars)")
         return
-    path.write_text(content, encoding="utf-8")
+    tmp = path.with_name(path.name + ".tmp")
+    tmp.write_text(content, encoding="utf-8")
+    os.replace(tmp, path)
     print(f"Wrote {path.name}")
 
 
@@ -819,7 +821,7 @@ def build_analytics_evidence_svg(rows: tuple[dict[str, str], ...] | None = None)
       <line x1='24' y1='{header_h - 4}' x2='{W - 24}' y2='{header_h - 4}'
             stroke='{TEXT_MAIN}' stroke-opacity='{FAINT_OP}' stroke-width='1'/>
     {body}  <text x='{W / 2}' y='{H - 8}' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}'
-            font-family='Segoe UI, Ubuntu, sans-serif' font-size='11px'>Sources verified in CI · last updated: {datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")}</text>
+            font-family='Segoe UI, Ubuntu, sans-serif' font-size='11px'>Sources verified in CI · Last updated: {datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")}</text>
     </svg>
     """
     return textwrap.dedent(svg).strip() + "\n"
@@ -1359,38 +1361,48 @@ def main() -> None:
     for warning in evidence_warnings:
         print(f"WARNING: {warning}")
 
-    write_asset(REPO_ROOT / "hero.svg", build_hero_svg())
-    write_asset(REPO_ROOT / "stats.svg", build_stats_svg(user_data, total, current, longest))
-    write_asset(REPO_ROOT / "activity.svg", build_activity_svg(days))
-    write_asset(REPO_ROOT / "metrics.svg", build_metrics_svg(days))
-    write_asset(
-        REPO_ROOT / "contribution-types.svg",
-        build_contribution_types_svg(extract_contribution_types(user_data)),
-    )
-    write_asset(REPO_ROOT / "monthly-activity.svg", build_monthly_activity_svg(days))
-    write_asset(REPO_ROOT / "analytics-evidence.svg", build_analytics_evidence_svg(evidence_rows))
-
+    # Everything that can fail on the network or inside a builder runs BEFORE the
+    # first write: a raise between two write_asset calls used to leave half the
+    # cards refreshed, half stale, and README unrefreshed.
     try:
         langs = fetch_languages()
-        write_asset(REPO_ROOT / "top-languages.svg", build_top_languages_svg(langs))
-        print(f"top-languages: {len(langs)} languages")
     except (RuntimeError, urllib.error.URLError, TimeoutError):
         # A silent skip left a stale card behind on a green CI run.
         logging.exception("top-languages.svg could not be generated")
         raise
+    print(f"top-languages: {len(langs)} languages")
+
+    # A profile rebuild must not fail because the site registry is briefly
+    # unreachable: fetch the block, but on any failure leave README as-is.
+    registry = None
+    try:
+        registry = load_projects_registry(args.registry)
+    except (RuntimeError, urllib.error.URLError, TimeoutError, OSError, ValueError) as exc:
+        logging.warning("projects registry unavailable; README block left untouched: %s", exc)
+
+    cards = {
+        "hero.svg": build_hero_svg(),
+        "stats.svg": build_stats_svg(user_data, total, current, longest),
+        "activity.svg": build_activity_svg(days),
+        "metrics.svg": build_metrics_svg(days),
+        "contribution-types.svg": build_contribution_types_svg(
+            extract_contribution_types(user_data)
+        ),
+        "monthly-activity.svg": build_monthly_activity_svg(days),
+        "analytics-evidence.svg": build_analytics_evidence_svg(evidence_rows),
+        "top-languages.svg": build_top_languages_svg(langs),
+    }
+    projects_block: str | None = None
+    if registry is not None:
+        cards[PROJECTS_SVG_NAME] = build_projects_svg(registry)
+        projects_block = build_projects_block(registry)
+
+    for name, content in cards.items():
+        write_asset(REPO_ROOT / name, content)
 
     if DRY_RUN:
         print("[dry-run] skip README refresh block")
     else:
-        # A profile rebuild must not fail because the site registry is briefly
-        # unreachable: fetch the block, but on any failure leave README as-is.
-        projects_block: str | None = None
-        try:
-            registry = load_projects_registry(args.registry)
-            write_asset(REPO_ROOT / PROJECTS_SVG_NAME, build_projects_svg(registry))
-            projects_block = build_projects_block(registry)
-        except (RuntimeError, urllib.error.URLError, TimeoutError, OSError, ValueError) as exc:
-            logging.warning("projects registry unavailable; README block left untouched: %s", exc)
         update_readme_refresh_block(days, evidence_rows, projects_block)
 
 
