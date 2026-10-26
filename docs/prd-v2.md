@@ -337,7 +337,9 @@ concurrency:
 
 ## 5.2 Итерация v2.2 — Analytics Evidence
 
-#### REQ-030: Полоса доказательств `analytics-evidence.svg` `[P2] [DONE]`
+#### REQ-030: Полоса доказательств `analytics-evidence.svg` `[P2] [WITHDRAWN 2026-10-26]`
+
+> **Отозвано по запросу владельца.** Полоса, её генератор, `analytics-evidence.svg`, CI-job `links` (`--print-links`), запись в `profile.yml` и 19 тестов удалены. Критерии ниже — исторический след, не текущее состояние.
 **Описание:** Профиль показывал голые GitHub-статы — числа без provenance. Позиционирование
 («CUPED, AA-tests, Bonferroni, Bayesian A/B») лежало текстом, ничем не подкреплённое в один клик.
 Добавлена self-hosted полоса `метод → проверенный результат → источник` с честной строкой-пробелом.
@@ -459,7 +461,7 @@ confidence + открытые пробелы), наполнение — анал
 | REQ-025 | H2 «Data / Product Analyst»; featured выше игр. |
 | REQ-026 | Placeholder TODO P1.3 удалён; секция не добавлена (ждёт реальных данных). |
 | REQ-029 | `contribution-types.svg` + `monthly-activity.svg` — новые self-hosted графики (`build_contribution_types_svg` / `build_monthly_activity_svg`); поля типов добавлены в единственный GraphQL-запрос; подключены в README/`profile.yml`/тестах. |
-| REQ-030 | `analytics-evidence.svg` — authored-ledger доказательств (`ANALYTICS_EVIDENCE` + `build_analytics_evidence_svg`), 8 методов + строка-пробел; CI-job `links` HTTP-проверяет каждый источник; закрыт дрейф SQL-кейсов (10 → 25 + 1). |
+| REQ-030 | **[WITHDRAWN 2026-10-26]** `analytics-evidence.svg` — authored-ledger доказательств (`ANALYTICS_EVIDENCE` + `build_analytics_evidence_svg`), 8 методов + строка-пробел; CI-job `links` HTTP-проверяет каждый источник; закрыт дрейф SQL-кейсов (10 → 25 + 1). |
 
 **Верификация:** `pytest` — 23 passed; `ruff check scripts tests` — All checks passed;
 `python3 scripts/build_profile.py --dry-run` — генератор отрабатывает, ассеты собираются

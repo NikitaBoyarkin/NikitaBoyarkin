@@ -42,7 +42,7 @@ jobs:
           pip install --quiet pytest pytest-cov
           pytest -q
           for f in hero.svg stats.svg activity.svg top-languages.svg metrics.svg \
-                   monthly-activity.svg contribution-types.svg analytics-evidence.svg \
+                   monthly-activity.svg contribution-types.svg \
                    projects.svg; do
             test -s "$f" || { echo "::error::$f is missing or empty"; exit 1; }
             grep -q "</svg>" "$f" || { echo "::error::$f is not a closed SVG"; exit 1; }
@@ -52,4 +52,4 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "chore: update profile assets [skip ci]"
-          file_pattern: "hero.svg stats.svg activity.svg top-languages.svg metrics.svg monthly-activity.svg contribution-types.svg analytics-evidence.svg projects.svg README.md"
+          file_pattern: "hero.svg stats.svg activity.svg top-languages.svg metrics.svg monthly-activity.svg contribution-types.svg projects.svg README.md"

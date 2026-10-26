@@ -428,102 +428,6 @@ def test_monthly_activity_month_label_is_locale_independent():
     assert "янв" not in svg
 
 
-# --- analytics-evidence ledger ------------------------------------------------
-
-ALLOWED_EVIDENCE_HOSTS = {"github.com", "nikitaboyarkin.github.io"}
-
-
-def test_analytics_evidence_rows_are_complete():
-    assert bp.ANALYTICS_EVIDENCE, "ledger is empty"
-    for row in bp.ANALYTICS_EVIDENCE:
-        assert row["method"].strip()
-        assert row["evidence"].strip()
-        assert row["confidence"] in {"HIGH", "MODERATE", "GAP"}
-
-
-def test_analytics_evidence_methods_are_unique():
-    methods = [row["method"] for row in bp.ANALYTICS_EVIDENCE]
-    assert len(methods) == len(set(methods))
-
-
-def test_analytics_evidence_urls_are_https_on_allowlisted_hosts():
-    import urllib.parse
-
-    for row in bp.ANALYTICS_EVIDENCE:
-        if not row["repo"]:
-            # A row without a source is a declared gap, not an unproven claim.
-            assert row["confidence"] == "GAP"
-            continue
-        parsed = urllib.parse.urlparse(bp.evidence_url(row["repo"]))
-        assert parsed.scheme == "https", row["url"]
-        assert parsed.hostname in ALLOWED_EVIDENCE_HOSTS, row["url"]
-
-
-def test_analytics_evidence_fits_the_card():
-    proven = [row for row in bp.ANALYTICS_EVIDENCE if row["repo"]]
-    gaps = [row for row in bp.ANALYTICS_EVIDENCE if not row["repo"]]
-    assert len(proven) <= 8, "card height is fixed; more rows overflow the viewBox"
-    assert len(gaps) <= 1, "keep the gap list to one row, not a second section"
-
-
-def test_evidence_sources_are_distinct_and_ordered():
-    urls = bp.evidence_sources()
-    assert urls == list(dict.fromkeys(urls)), "sources must be de-duplicated in ledger order"
-    covered = {bp.evidence_url(row["repo"]) for row in bp.ANALYTICS_EVIDENCE if row["repo"]}
-    assert set(urls) == covered
-
-
-def test_analytics_evidence_svg_is_well_formed_and_accessible():
-    svg = bp.build_analytics_evidence_svg()
-    root = ET.fromstring(svg)
-    assert root.attrib["role"] == "img"
-    assert root.attrib["aria-label"].strip()
-    assert root.find("{http://www.w3.org/2000/svg}title") is not None
-
-
-def test_analytics_evidence_svg_names_every_method():
-    svg = bp.build_analytics_evidence_svg()
-    for row in bp.ANALYTICS_EVIDENCE:
-        assert bp._esc(row["method"]) in svg, row["method"]
-
-
-def test_analytics_evidence_svg_is_within_budget():
-    svg = bp.build_analytics_evidence_svg()
-    assert len(svg.encode("utf-8")) < 20_000
-
-
-def test_analytics_evidence_svg_escapes_untrusted_values(monkeypatch):
-    hostile = (
-        {
-            "method": "A&B <script>",
-            "evidence": '"quoted" & <tag>',
-            "confidence": "HIGH",
-            "repo": "x",
-        },
-    )
-    monkeypatch.setattr(bp, "ANALYTICS_EVIDENCE", hostile)
-    svg = bp.build_analytics_evidence_svg()
-    assert "&amp;" in svg and "&lt;script&gt;" in svg
-    assert "<script>" not in svg
-    ET.fromstring(svg)
-
-
-def test_chip_labels_clear_the_aa_contrast_floor():
-    """A chip label drawn translucent over a translucent pill blends twice.
-
-    GHOST_OP cream on this card is ~3.6:1, and MODERATE-over-MODERATE ~2.9:1 — both
-    miss WCAG AA's 4.5:1 for small text. Every chip label must stay >= MUTED_OP (~5.8:1).
-    """
-    root = ET.fromstring(bp.build_analytics_evidence_svg())
-    svg_text = "{http://www.w3.org/2000/svg}text"
-    labels = {"HIGH", "MODERATE", "GAP"}
-    chips = [el for el in root.iter(svg_text) if (el.text or "") in labels]
-    assert len(chips) == len(bp.ANALYTICS_EVIDENCE)
-    for el in chips:
-        op = float(el.attrib.get("fill-opacity", "1"))
-        assert op >= float(bp.MUTED_OP), f"{el.text} chip at opacity {op} fails AA"
-
-
 # ---------- build_hero_svg ----------
 
 
@@ -609,89 +513,8 @@ def test_refresh_block_writes_normalized_notes(tmp_path, monkeypatch):
     assert "- [A](https://a)- [B](https://b)" not in written
 
 
-# ---------- evidence reconciliation ----------
-
-_ALL_PUBLIC = {"volta-banking", "causal-uplift", "ab_test", "sql-analytics-case-study", "airflow"}
-
-
-def test_reconcile_keeps_rows_whose_repo_is_public():
-    rows, warnings = bp.reconcile_evidence(_ALL_PUBLIC)
-    assert warnings == []
-    assert rows == list(bp.ANALYTICS_EVIDENCE)
-    assert rows is not bp.ANALYTICS_EVIDENCE  # a fresh list, not the ledger itself
-
-
-def test_reconcile_withdraws_rows_whose_repo_vanished():
-    rows, warnings = bp.reconcile_evidence({"volta-banking"})
-    # The row that was already a declared gap (repo == "") is neither kept nor withdrawn.
-    expected = [r for r in bp.ANALYTICS_EVIDENCE if r["repo"] and r["repo"] != "volta-banking"]
-    withdrawn = [r for r in rows if "no longer public" in r["evidence"]]
-    assert len(withdrawn) == len(expected) == 5
-    for row in withdrawn:
-        assert row["confidence"] == "GAP"
-        assert row["repo"] == "", "a withdrawn claim must not keep its link"
-        assert bp.evidence_url(row["repo"]) == ""
-    assert warnings and all("is not public" in w for w in warnings)
-
-
-def test_reconcile_with_empty_repo_list_keeps_every_row():
-    """An empty list is missing data, not evidence that every repo is gone."""
-    rows, warnings = bp.reconcile_evidence(set())
-    assert rows == list(bp.ANALYTICS_EVIDENCE)
-    assert len(warnings) == 1
-
-
-def test_reconcile_does_not_mutate_the_ledger():
-    before = [dict(r) for r in bp.ANALYTICS_EVIDENCE]
-    bp.reconcile_evidence(set())
-    bp.reconcile_evidence({"volta-banking"})
-    assert [dict(r) for r in bp.ANALYTICS_EVIDENCE] == before
-
-
-def test_public_repo_names_reads_the_repository_nodes():
-    data = {"user": {"repositories": {"totalCount": 2, "nodes": [{"name": "a"}, {"name": "b"}]}}}
-    assert bp.public_repo_names(data) == {"a", "b"}
-    # Payload without nodes (older query shape) must not raise.
-    assert bp.public_repo_names({"user": {"repositories": {"totalCount": 2}}}) == set()
-
-
-# ---------- generated README evidence-sources line ----------
-
-
-def test_evidence_sources_line_lists_each_repo_once_with_its_url():
-    line = bp.build_evidence_sources_line()
-    assert line.startswith("<sub>Sources: ") and line.endswith("</sub>")
-    for repo in dict.fromkeys(r["repo"] for r in bp.ANALYTICS_EVIDENCE if r["repo"]):
-        assert f'<a href="{bp.evidence_url(repo)}">{repo}</a>' in line
-    assert line.count("volta-banking</a>") == 1, "repo used by 3 rows must appear once"
-
-
-def test_sync_evidence_sources_block_rewrites_and_is_idempotent():
-    doc = "x\n<!-- EVIDENCE-SOURCES:START -->\n<sub>stale</sub>\n<!-- EVIDENCE-SOURCES:END -->\ny\n"
-    out = bp.sync_evidence_sources_block(doc)
-    assert "stale" not in out
-    assert bp.build_evidence_sources_line() in out
-    assert bp.sync_evidence_sources_block(out) == out
-
-
-def test_sync_evidence_sources_block_without_marker_is_untouched():
-    doc = "x\n<sub>Sources: hand typed</sub>\n"
-    assert bp.sync_evidence_sources_block(doc) == doc
-
-
 def _repo_readme() -> str:
     return (Path(__file__).resolve().parent.parent / "README.md").read_text(encoding="utf-8")
-
-
-def test_readme_evidence_sources_block_is_in_sync():
-    """README drift is impossible: CI compares the block against the ledger."""
-    match = re.search(
-        r"<!-- EVIDENCE-SOURCES:START -->\n(.*?)\n<!-- EVIDENCE-SOURCES:END -->",
-        _repo_readme(),
-        re.DOTALL,
-    )
-    assert match, "EVIDENCE-SOURCES marker missing from README"
-    assert match.group(1) == bp.build_evidence_sources_line()
 
 
 def test_readme_stats_card_height_matches_the_svg():
@@ -717,7 +540,6 @@ def _all_cards() -> dict:
         "contribution-types": bp.build_contribution_types_svg([("Commits", 500), ("Issues", 3)]),
         "monthly-activity": bp.build_monthly_activity_svg(days),
         "top-languages": bp.build_top_languages_svg([("Python", 120000, "#3776AB")]),
-        "analytics-evidence": bp.build_analytics_evidence_svg(),
     }
 
 
@@ -737,10 +559,12 @@ def test_no_card_renders_text_below_the_readability_floor():
 
 # Frozen registry shape: a "projects" list (each project carries its "track")
 # plus a "volta_cases" list. Fixtures carry exactly that key set; each project
-# carries exactly track/title/description/href/github/private.
+# carries track/title/description/result/tools/href/github/private.
 
 _START = "<!-- ALL-PROJECTS:START -->"
 _END = "<!-- ALL-PROJECTS:END -->"
+
+_NUMBERED_ROW_RE = re.compile(r"^\d+\. \*\*")
 
 
 def _project(
@@ -748,6 +572,8 @@ def _project(
     track,
     *,
     description="desc",
+    result=None,
+    tools=(),
     href="https://example.test/case",
     github=None,
     private=False,
@@ -756,25 +582,32 @@ def _project(
         "track": track,
         "title": title,
         "description": description,
+        "result": result,
+        "tools": list(tools),
         "href": href,
         "github": github,
         "private": private,
     }
 
 
-def _case(title, *, description="desc", github=None):
-    return {"title": title, "description": description, "github": github}
+def _case(title, *, description="desc", result=None, github=None):
+    return {"title": title, "description": description, "result": result, "github": github}
 
 
 def _registry(*, projects=(), volta_cases=()):
     return {"projects": list(projects), "volta_cases": list(volta_cases)}
 
 
-def _heading(track):
-    return f"#### {bp.TRACK_LABELS[track]}"
+def _rows(block):
+    """The numbered project rows of the block, in render order."""
+    return [line for line in block.splitlines() if _NUMBERED_ROW_RE.match(line)]
 
 
-def test_build_projects_block_groups_by_track():
+def _row_for(block, title):
+    return next(line for line in _rows(block) if f"**[{title}]" in line or f"**{title}**" in line)
+
+
+def test_build_projects_block_lists_every_project_in_track_order():
     # 2 experiments + 1 analytics + 1 engineering; product intentionally empty.
     block = bp.build_projects_block(
         _registry(
@@ -787,17 +620,11 @@ def test_build_projects_block_groups_by_track():
         )
     )
     assert block.startswith("### 🗂️ All Projects")
-    assert "Exp A" in block and "Exp B" in block and "Ana A" in block and "Eng A" in block
-    assert _heading("experiments") in block
-    assert _heading("analytics") in block
-    assert _heading("engineering") in block
-    assert _heading("product") not in block  # empty track omitted
-    positions = [
-        block.index(_heading("experiments")),
-        block.index(_heading("analytics")),
-        block.index(_heading("engineering")),
-    ]
-    assert positions == sorted(positions), "headings must follow TRACK_ORDER"
+    titles = ["Exp A", "Exp B", "Ana A", "Eng A"]
+    rows = _rows(block)
+    assert len(rows) == len(titles)
+    assert [next(t for t in titles if t in row) for row in rows] == titles
+    assert "#### " not in block, "tracks order the list; they no longer head sections"
 
 
 def test_build_projects_block_repo_and_case_links():
@@ -1107,113 +934,138 @@ def test_build_projects_block_embeds_svg_and_summary_after_heading():
     assert summary in block
     heading = block.index("### 🗂️ All Projects")
     assert heading < block.index(bp.PROJECTS_SVG_URL)
-    assert heading < block.index(summary) < block.index(_heading("experiments"))
+    assert heading < block.index(summary) < block.index(_rows(block)[0])
 
 
-def test_build_projects_block_track_order_unchanged_with_embed():
-    block = bp.build_projects_block(
-        _registry(
-            projects=[
-                _project("A", "experiments"),
-                _project("B", "analytics"),
-                _project("C", "engineering"),
-            ]
-        )
-    )
-    positions = [
-        block.index(_heading("experiments")),
-        block.index(_heading("analytics")),
-        block.index(_heading("engineering")),
-    ]
-    assert positions == sorted(positions)
-
-
-def _tables(block):
-    """Contiguous runs of GFM table lines, each as a list of lines."""
-    tables, current = [], []
-    for line in block.splitlines():
-        if line.startswith("|"):
-            current.append(line)
-        elif current:
-            tables.append(current)
-            current = []
-    if current:
-        tables.append(current)
-    return tables
-
-
-def _cells(line):
-    """Cell texts of one table row, split on unescaped pipes."""
-    return [cell for cell in re.split(r"(?<!\\)\|", line)[1:-1]]
-
-
-def test_build_projects_block_renders_well_formed_tables():
-    """A ragged row makes GitHub drop the whole table back to plain text."""
-    block = bp.build_projects_block(
-        _registry(
-            projects=[
-                _project("Exp", "experiments"),
-                _project("Ana", "analytics", github="https://github.com/u/r"),
-                _project("Priv", "product", github="https://github.com/u/s", private=True),
-                _project("Eng", "engineering"),
-            ],
-            volta_cases=[_case("V1", github="https://github.com/u/v"), _case("V2")],
-        )
-    )
-    tables = _tables(block)
-    assert len(tables) == 5, "one table per populated track plus the Volta table"
-    for table in tables:
-        widths = {len(_cells(line)) for line in table}
-        assert widths == {3}, f"ragged table: {widths}"
-        assert [c.strip() for c in _cells(table[1])] == ["---"] * 3, "row 2 must be the separator"
-        assert [c.strip() for c in _cells(table[0])] == [
-            "Project",
-            "What it demonstrates",
-            "Links",
-        ]
-
-
-def test_build_projects_block_escapes_pipes_in_cells():
-    """A raw pipe in a description splits the row and kills the table."""
-    block = bp.build_projects_block(
-        _registry(projects=[_project("A|B", "analytics", description="left|right")])
-    )
-    assert "left\\|right" in block and "A\\|B" in block
-    assert {len(_cells(line)) for line in _tables(block)[0]} == {3}
-
-
-def test_build_projects_block_links_sit_in_their_own_column():
+def test_build_projects_block_row_carries_track_tools_and_links():
     github = "https://github.com/NikitaBoyarkin/demo"
     href = "https://example.test/case"
     block = bp.build_projects_block(
-        _registry(projects=[_project("Demo", "analytics", github=github, href=href)])
-    )
-    row = next(line for line in _tables(block)[0] if "Demo" in line)
-    cells = [cell.strip() for cell in _cells(row)]
-    assert cells[0] == "**Demo**"
-    assert cells[2] == f"[Repo]({github}) · [Case study]({href})"
-
-
-def test_build_projects_block_headings_carry_the_track_count():
-    block = bp.build_projects_block(
         _registry(
             projects=[
-                _project("A", "experiments"),
-                _project("B", "experiments"),
-                _project("C", "analytics"),
+                _project(
+                    "Demo",
+                    "analytics",
+                    github=github,
+                    href=href,
+                    tools=["Python", "SQL", "pytest", "uv", "dbt"],
+                )
             ]
         )
     )
-    assert f"{_heading('experiments')} · 2" in block
-    assert f"{_heading('analytics')} · 1" in block
+    row = _row_for(block, "Demo")
+    assert f"**[Demo]({href})**" in row
+    assert "*Analytics*" in row
+    assert row.endswith(f"· [Repo]({github}) · [Case study]({href})")
+    assert "`Python` · `SQL` · `pytest` · `uv`" in row
+    assert "`dbt`" not in row, "tools are capped so the title stays the scan anchor"
 
 
-def test_build_projects_block_has_no_leftover_bullets():
-    """The section is table-rendered; a '- **' bullet means a partial migration."""
+def test_build_projects_block_numbers_rows_across_the_section():
+    block = bp.build_projects_block(
+        _registry(
+            projects=[_project("A", "experiments"), _project("B", "analytics")],
+            volta_cases=[_case("V1"), _case("V2")],
+        )
+    )
+    top, _, volta = block.partition("<details>")
+    assert [line.split(".", 1)[0] for line in _rows(top)] == ["1", "2"]
+    assert [line.split(".", 1)[0] for line in _rows(volta)] == ["1", "2"]
+
+
+def test_build_projects_block_appends_result_when_it_adds_numbers():
+    block = bp.build_projects_block(
+        _registry(
+            projects=[
+                _project(
+                    "Demo",
+                    "analytics",
+                    description="16,891 synthetic sales calls across 4 funnel steps.",
+                    result="Funnel drop is 41.2% at the offer step.",
+                )
+            ]
+        )
+    )
+    row = _row_for(block, "Demo")
+    assert "16,891 synthetic sales calls" in row and "41.2% at the offer step" in row
+
+
+def test_build_projects_block_skips_result_that_restates_description():
+    description = "CUPED cuts variance 17.7% and the SRM check reads p = 0.8376."
+    block = bp.build_projects_block(
+        _registry(
+            projects=[
+                _project(
+                    "Demo",
+                    "experiments",
+                    description=description,
+                    result="CUPED cuts variance 17.7%; SRM p = 0.8376.",
+                )
+            ]
+        )
+    )
+    row = _row_for(block, "Demo")
+    assert description in row
+    assert row.count("17.7%") == 1, "a restated result would double the metric"
+
+
+def test_build_projects_block_skips_result_without_numbers():
+    # A result sentence with no measurement is scope restated, not an outcome.
+    block = bp.build_projects_block(
+        _registry(
+            projects=[
+                _project(
+                    "Demo",
+                    "analytics",
+                    description="Narrative and visuals stay in sync as the reader scrolls.",
+                    result="The narrative and the visualization are synchronised.",
+                )
+            ]
+        )
+    )
+    row = _row_for(block, "Demo")
+    assert "synchronised" not in row
+
+
+def test_build_projects_block_skips_result_that_mostly_restates_description():
+    # One new number out of four is not worth a second sentence on the row.
+    description = "SRM holds at p=0.266, GCG uplift 0.9968, net effect +50.5."
+    block = bp.build_projects_block(
+        _registry(
+            projects=[
+                _project(
+                    "Demo",
+                    "experiments",
+                    description=description,
+                    result="SRM p=0.266, GCG uplift 0.9968 [0.9433, 1.0502], net effect +50.5.",
+                )
+            ]
+        )
+    )
+    row = _row_for(block, "Demo")
+    assert description in row
+    assert "0.9433" not in row
+
+
+def test_build_projects_block_volta_rows_keep_description_only():
+    # Volta parts are result-first already; appending star.result would repeat them.
+    case = _case(
+        "V",
+        description="Travelers lose €0.45 per €100 of FX volume.",
+        result="Travelers lose €0.45 per €100 of FX volume; break-even needs 0.55%.",
+    )
+    block = bp.build_projects_block(_registry(volta_cases=[case]))
+    volta = block[block.index("<details>") :]
+    assert "Travelers lose €0.45 per €100 of FX volume." in volta
+    assert "0.55%" not in volta
+
+
+def test_build_projects_block_renders_no_tables():
+    """The section is a list; a '| ...' row means a partial migration."""
     block = bp.build_projects_block(
         _registry(projects=[_project("A", "experiments")], volta_cases=[_case("V")])
     )
-    assert "\n- **" not in block
+    assert not any(line.startswith("|") for line in block.splitlines())
 
 
 # ---------- graphql retry / build resilience ----------

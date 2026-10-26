@@ -8,7 +8,7 @@ The rendered artifact is `README.md`; everything here is for whoever maintains i
 | Path | What |
 |---|---|
 | `README.md` | The profile (rendered on github.com/NikitaBoyarkin). |
-| `scripts/build_profile.py` | Generates `hero/stats/activity/metrics/contribution-types/monthly-activity/top-languages/projects/analytics-evidence.svg` + the README "Last refreshed" block. The All Projects block is derived from the projects registry, read from `NikitaBoyarkin.github.io` at `master` (`public/projects.json`). |
+| `scripts/build_profile.py` | Generates `hero/stats/activity/metrics/contribution-types/monthly-activity/top-languages/projects.svg` + the README "Last refreshed" block. The All Projects block is derived from the projects registry, read from `NikitaBoyarkin.github.io` at `master` (`public/projects.json`). |
 | `scripts/preview.sh` | Renders `README.md` locally as GitHub-flavored markdown and opens it in the browser (`scripts/preview.sh`). |
 | `tests/test_build_profile.py` | Pure-function tests for the generator (no network). |
 | `.github/workflows/ci.yml` | Lint + tests on every push/PR, plus liveness checks for the evidence-ledger and project links. |

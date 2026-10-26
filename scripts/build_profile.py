@@ -134,8 +134,8 @@ def build_hero_svg() -> str:
     and positioning readable before any scroll — in ~2 KB and no raster.
 
     The motif is a bare A/B pair with a "+lift" caption rather than a figure:
-    a real number here would be an unlinked claim in the header, which is what
-    ANALYTICS_EVIDENCE exists to avoid.
+    a real number here would be an unlinked claim in the header, which is the
+    failure mode this profile avoids.
     """
     W, H = 800, 220
     alt = f"{HERO_NAME} — {HERO_ROLE}. {HERO_TAGLINE[0]} {HERO_TAGLINE[1]}"
@@ -322,12 +322,6 @@ def compute_streaks(days: list[dict]) -> tuple[int, int, int]:
         else:
             running = 0
     return total, current, longest
-
-
-def public_repo_names(user_data: dict) -> set[str]:
-    """Names of the owner's public non-fork repos — input to evidence reconciliation."""
-    nodes = user_data["user"]["repositories"].get("nodes") or []
-    return {n["name"] for n in nodes if n}
 
 
 def build_stats_svg(user_data: dict, total: int, current: int, longest: int) -> str:
@@ -638,205 +632,6 @@ def build_top_languages_svg(langs: list[tuple[str, int, str]]) -> str:
     return textwrap.dedent(svg).strip() + "\n"
 
 
-# Analytics evidence ledger — authored, not derived.
-#
-# The *results* are methodological, not repository metadata: "+5.72pp, p<0.0001"
-# lives in a case study, not in the GitHub API, so it cannot be recomputed the way
-# a contribution count can. Everything mechanical around them is derived, though:
-# the row carries a repo *name* and the URL is built from it (evidence_url), so a
-# renamed repo cannot leave a hand-typed URL behind; reconcile_evidence then drops
-# each name against the live public-repo list, so a deleted or newly-private repo
-# withdraws its own row instead of shipping a dead link; and the README's plain-text
-# sources line is generated from this same ledger, so card and text cannot drift.
-# The CI link-liveness job (.github/workflows/ci.yml) still HTTP-checks every URL.
-# The "Bayesian A/B" row carries no repo on purpose: a declared gap is cheaper to
-# trust than a padded row.
-ANALYTICS_EVIDENCE: tuple[dict[str, str], ...] = (
-    {
-        "method": "Experiment design & A/B",
-        "evidence": "+5.72pp KYC lift · p<0.0001 · no SRM",
-        "confidence": "HIGH",
-        "repo": "volta-banking",
-    },
-    {
-        "method": "Variance reduction (CUPED)",
-        "evidence": "SE ×0.742 — 10k → 5.5k users per arm",
-        "confidence": "HIGH",
-        "repo": "causal-uplift",
-    },
-    {
-        "method": "Multiple testing & sequential",
-        "evidence": "Bonferroni · Holm · BH · O'Brien-Fleming · HTE q-values",
-        "confidence": "HIGH",
-        "repo": "volta-banking",
-    },
-    {
-        "method": "Calibration-first testing",
-        "evidence": "Type I · power · coverage · FWER re-run as test assertions",
-        "confidence": "HIGH",
-        "repo": "ab_test",
-    },
-    {
-        "method": "Causal inference",
-        "evidence": "DiD ATT +9.2pp · parallel trends ✓ · placebo null",
-        "confidence": "MODERATE",
-        "repo": "volta-banking",
-    },
-    {
-        "method": "Uplift targeting",
-        "evidence": "n=6k: curve metrics noise-dominated (oracle 2.25σ); signal in ranking + segment split",
-        "confidence": "MODERATE",
-        "repo": "causal-uplift",
-    },
-    {
-        "method": "SQL depth",
-        "evidence": "25 DuckDB cases · QUALIFY · PIVOT · recursive CTE · z-test in SQL",
-        "confidence": "HIGH",
-        "repo": "sql-analytics-case-study",
-    },
-    {
-        "method": "Data engineering",
-        "evidence": "Airflow 3 · DQ validation · alerts · run metrics · idempotent",
-        "confidence": "HIGH",
-        "repo": "airflow",
-    },
-    {
-        "method": "Bayesian A/B",
-        "evidence": "learning — no published case yet",
-        "confidence": "GAP",
-        "repo": "",
-    },
-)
-
-
-def evidence_url(repo: str) -> str:
-    """Source URL for a ledger row's repo name. An empty repo is a declared gap."""
-    return f"https://github.com/{USER}/{repo}" if repo else ""
-
-
-def reconcile_evidence(
-    public_repos: set[str], rows: tuple[dict[str, str], ...] | None = None
-) -> tuple[list[dict[str, str]], list[str]]:
-    """Withdraw ledger rows whose source repo is no longer public.
-
-    The ledger is authored, so nothing recomputes its claims — but the repo each
-    claim points at can be renamed, deleted or made private, and the row would keep
-    pointing at it. Such a row is rewritten as a declared gap that names the repo,
-    never as a still-linked claim: an unverifiable number is exactly the padded
-    claim the ledger exists to avoid.
-
-    An empty `public_repos` means the API returned nothing to check against, which
-    is not evidence of absence — every row is kept rather than mass-withdrawn.
-    """
-    rows = ANALYTICS_EVIDENCE if rows is None else rows
-    if not public_repos:
-        return list(rows), ["public repo list unavailable — evidence rows not reconciled"]
-    reconciled: list[dict[str, str]] = []
-    warnings: list[str] = []
-    for row in rows:
-        repo = row["repo"]
-        if repo and repo not in public_repos:
-            warnings.append(f"evidence source {repo!r} is not public — row withdrawn")
-            reconciled.append(
-                {
-                    "method": row["method"],
-                    "evidence": f"source repo {repo} is no longer public — claim withdrawn",
-                    "confidence": "GAP",
-                    "repo": "",
-                }
-            )
-        else:
-            reconciled.append(dict(row))
-    return reconciled, warnings
-
-
-def evidence_sources(rows: tuple[dict[str, str], ...] | None = None) -> list[str]:
-    """Distinct source URLs, in ledger order — the CI link-liveness job's input."""
-    rows = ANALYTICS_EVIDENCE if rows is None else rows
-    return list(dict.fromkeys(evidence_url(row["repo"]) for row in rows if row["repo"]))
-
-
-def build_evidence_sources_line(rows: tuple[dict[str, str], ...] | None = None) -> str:
-    """Plain-text mirror of the evidence card.
-
-    The card is an `<img>`: its text is neither selectable nor indexable by GitHub.
-    This line is both, and it is generated from the same ledger, so the card and the
-    text can never disagree about which repositories back the claims.
-    """
-    rows = ANALYTICS_EVIDENCE if rows is None else rows
-    repos = list(dict.fromkeys(row["repo"] for row in rows if row["repo"]))
-    links = " · ".join(f'<a href="{_esc(evidence_url(r))}">{_esc(r)}</a>' for r in repos)
-    return f"<sub>Sources: {links} — every link is HTTP-checked in CI.</sub>"
-
-
-def build_analytics_evidence_svg(rows: tuple[dict[str, str], ...] | None = None) -> str:
-    """Evidence band: method -> verified result -> source, with honest gaps.
-
-    Every row that carries a number also carries the repository that produced it,
-    so a reader can check it in one click instead of taking the profile's word.
-    """
-    rows = ANALYTICS_EVIDENCE if rows is None else rows
-    W = 800
-    header_h, row_h, footer_h = 62, 50, 24
-    chip_w = 88
-    H = header_h + row_h * len(rows) + footer_h
-    body = ""
-    for i, row in enumerate(rows):
-        y = header_h + i * row_h
-        conf = row["confidence"]
-        repo = row["repo"]
-        detail = f"{repo} · {row['evidence']}" if repo else row["evidence"]
-        # Three visual weights, still only the three brand tokens. Opacity goes on the
-        # pill only: a label drawn translucent *over* a translucent pill blends twice,
-        # and MODERATE at 0.62 lands near 2.9:1 against its own chip — under WCAG AA.
-        if conf == "HIGH":
-            pill = f"fill='{ACCENT}'"
-            # Label is the dark token, not BG: on an inverted (cream) card BG is the
-            # light colour, and cream on #fe4e02 would be 3.0:1 — blue keeps the 3.5:1
-            # the card had before the palette flip.
-            label_fill, label_op, label = TEXT_MAIN, "1", "HIGH"
-        elif conf == "MODERATE":
-            pill = f"fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}'"
-            label_fill, label_op, label = BG, "1", "MODERATE"
-        else:
-            # A gap is an absence, not a weaker verdict, so it reads as an outline
-            # rather than a dimmer filled pill. Cream at GHOST_OP would be ~3.6:1, so
-            # the outline and its label both stay at MUTED_OP (~5.8:1).
-            pill = f"fill='none' stroke='{TEXT_MAIN}' stroke-opacity='{MUTED_OP}'"
-            label_fill, label_op, label = TEXT_MAIN, MUTED_OP, "GAP"
-        body += (
-            f"    <text x='24' y='{y + 21}' fill='{TEXT_MAIN}' "
-            f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='14px' font-weight='600'>"
-            f"{_esc(row['method'])}</text>\n"
-            f"    <text x='24' y='{y + 41}' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' "
-            f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px'>{_esc(detail)}</text>\n"
-            f"    <rect x='{W - 24 - chip_w}' y='{y + 16}' width='{chip_w}' height='18' rx='9' "
-            f"{pill}/>\n"
-            f"    <text x='{W - 24 - chip_w / 2}' y='{y + 29}' text-anchor='middle' "
-            f"fill='{label_fill}' fill-opacity='{label_op}' "
-            f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='11px' font-weight='700'>"
-            f"{label}</text>\n"
-        )
-    methods = ", ".join(_esc(row["method"]) for row in rows)
-    summary = f"Analytics evidence: {methods}"
-    svg = f"""\
-    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 {W} {H}' width='{W}px' height='{H}px'
-         role='img' aria-label='{summary}. Each linked row points to the public repository that produced the result.'>
-      <title>{summary}</title>
-      <rect fill='{BG}' width='{W}' height='{H}' rx='6'/>
-      <text x='24' y='32' fill='{TEXT_MAIN}' font-family='Segoe UI, Ubuntu, sans-serif'
-            font-size='15px' font-weight='700' letter-spacing='1.2'>{_esc(USER)} — ANALYTICS EVIDENCE</text>
-      <text x='24' y='49' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}'
-            font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px'>method · verified result · source repository — no unlinked claims</text>
-      <line x1='24' y1='{header_h - 4}' x2='{W - 24}' y2='{header_h - 4}'
-            stroke='{TEXT_MAIN}' stroke-opacity='{FAINT_OP}' stroke-width='1'/>
-    {body}  <text x='{W / 2}' y='{H - 8}' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}'
-            font-family='Segoe UI, Ubuntu, sans-serif' font-size='11px'>Sources verified in CI · Last updated: {datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")}</text>
-    </svg>
-    """
-    return textwrap.dedent(svg).strip() + "\n"
-
-
 _NOTES_BLOCK_RE = re.compile(
     r"(<!-- RECENT-POSTS-LIST:START -->)(.*?)(<!-- RECENT-POSTS-LIST:END -->)",
     re.DOTALL,
@@ -862,30 +657,6 @@ def normalize_notes_block(content: str) -> str:
     return _NOTES_BLOCK_RE.sub(rebuild, content)
 
 
-_EVIDENCE_SOURCES_RE = re.compile(
-    r"<!-- EVIDENCE-SOURCES:START -->.*?<!-- EVIDENCE-SOURCES:END -->", re.DOTALL
-)
-
-
-def sync_evidence_sources_block(
-    content: str, rows: tuple[dict[str, str], ...] | None = None
-) -> str:
-    """Regenerate the README's plain-text sources line from the ledger.
-
-    Hand-typed, it drifted from the card the moment a row changed; generated from
-    the same ledger the card renders, the two cannot disagree. A missing marker is
-    left alone rather than appended — placement in the README is a human decision.
-    """
-    if not _EVIDENCE_SOURCES_RE.search(content):
-        return content
-    block = (
-        "<!-- EVIDENCE-SOURCES:START -->\n"
-        f"{build_evidence_sources_line(rows)}\n"
-        "<!-- EVIDENCE-SOURCES:END -->"
-    )
-    return _EVIDENCE_SOURCES_RE.sub(lambda _: block, content)
-
-
 # Project registry — the portfolio site publishes every project as JSON, and the
 # profile renders that same registry so the README and the site can never disagree
 # about which projects exist. The site owns the list; this only formats it.
@@ -904,15 +675,10 @@ ALL_PROJECTS_END = "<!-- ALL-PROJECTS:END -->"
 
 # Site tracks rendered in this order; unknown tracks are ignored, not guessed.
 TRACK_ORDER = ("experiments", "analytics", "product", "engineering")
-TRACK_LABELS = {
-    "experiments": "🧪 Experiments",
-    "analytics": "📊 Analytics",
-    "product": "📦 Product",
-    "engineering": "🛠️ Engineering",
-}
 
-# ASCII-only labels for the SVG: emoji are dropped because a screen reader reads
-# them verbatim ("test tube Experiments"), and the vector card has no emoji font.
+# ASCII-only labels: emoji are dropped because a screen reader reads them verbatim
+# ("test tube Experiments"), and the vector card has no emoji font. The README rows
+# use the same plain words, so one track name serves both surfaces.
 TRACK_PLAIN_LABELS = {
     "experiments": "Experiments",
     "analytics": "Analytics",
@@ -970,18 +736,8 @@ def _pick(record: dict, en_key: str, ru_key: str) -> str:
     return _clean_text(record.get(en_key)) or _clean_text(record.get(ru_key))
 
 
-def _md_cell(value: object) -> str:
-    """One GFM table cell: whitespace collapsed, a literal pipe escaped.
-
-    A raw ``|`` inside a cell splits the row, and one over-wide row silently
-    makes GitHub drop the entire table back to plain text — so an escape here is
-    what keeps the rendered list a list.
-    """
-    return _clean_text(value).replace("|", "\\|")
-
-
-def _links_cell(record: dict) -> str:
-    """Repo / case-study links for one row, or a declared gap when there are none."""
+def _links(record: dict) -> str:
+    """Repo / case-study links for one project, or a declared gap when there are none."""
     github = _clean_text(record.get("github"))
     href = _clean_text(record.get("href"))
     parts: list[str] = []
@@ -996,19 +752,61 @@ def _links_cell(record: dict) -> str:
     return " · ".join(parts) if parts else "—"
 
 
-def _table(rows: list[tuple[str, str, str]]) -> list[str]:
-    """Render (title, description, links) rows as a three-column GFM table."""
-    lines = ["| Project | What it demonstrates | Links |", "| --- | --- | --- |"]
-    lines.extend(f"| **{title}** | {description} | {links} |" for title, description, links in rows)
-    return lines
+_NUMBER_RE = re.compile(r"\d+(?:[.,]\d+)?")
+
+# Tools are a stack signal for a screener, not a manifest: past four they push
+# the row past a line and the title stops being the scan anchor.
+TOOL_LIMIT = 4
 
 
-def _table_row(record: dict) -> tuple[str, str, str]:
-    return (
-        _md_cell(_pick(record, "title_en", "title")),
-        _md_cell(_pick(record, "description_en", "description")),
-        _links_cell(record),
-    )
+def _row_text(record: dict) -> str:
+    """The blurb for one project: its description, plus the result when it adds numbers.
+
+    ``description`` states the scope ("16,891 synthetic calls", "8,000 users") and
+    ``result`` states the outcome. On this registry they overlap often: an EN
+    description usually already carries the headline numbers, and its RU result twin
+    restates them. Appending such a result only doubles the line, so the two number
+    sets are compared and the result is kept only when at least half of its numbers
+    are new — a screener reads one sentence per project, not two versions of it.
+    """
+    description = _pick(record, "description_en", "description")
+    result = _pick(record, "result_en", "result")
+    if not result:
+        return description
+    if not description:
+        return result
+    if result in description:
+        return description
+    described = set(_NUMBER_RE.findall(description))
+    measured = set(_NUMBER_RE.findall(result))
+    if not measured or len(measured - described) * 2 < len(measured):
+        return description
+    return f"{description} {result}"
+
+
+def _project_line(index: int, record: dict, *, with_result: bool = True) -> str:
+    """One numbered list item: title · track — blurb · tools · links.
+
+    A flat numbered list rather than per-track tables: the site's HR landing reads
+    a project as one line of role, stack and outcome in chronological order, and
+    the profile mirrors that so the two surfaces answer a screener the same way.
+    """
+    title = _pick(record, "title_en", "title")
+    href = _clean_text(record.get("href"))
+    parts = [f"{index}. **[{title}]({href})**" if href else f"{index}. **{title}**"]
+    track = TRACK_PLAIN_LABELS.get(_clean_text(record.get("track")))
+    if track:
+        parts.append(f"· *{track}*")
+    text = _row_text(record) if with_result else _pick(record, "description_en", "description")
+    if text:
+        parts.append(f"— {text}")
+    tools = [_clean_text(tool) for tool in record.get("tools") or [] if _clean_text(tool)]
+    if tools:
+        parts.append("· " + " · ".join(f"`{tool}`" for tool in tools[:TOOL_LIMIT]))
+    links = _links(record)
+    if links:
+        parts.append(f"· {links}")
+    return " ".join(parts)
 
 
 def _projects_in_track_order(registry: dict) -> list[tuple[str, dict]]:
@@ -1180,54 +978,45 @@ def build_projects_block(registry: dict) -> str:
 
     Two registry shapes are accepted: a single ``projects`` array whose entries
     carry a ``track`` field (the frozen site contract), and one list per track
-    keyed by name. Tracks render in ``TRACK_ORDER`` (empty tracks skipped); the
-    ``volta_cases`` list folds into a collapsible block.
+    keyed by name. Tracks still decide the order (``TRACK_ORDER``, empty tracks
+    skipped) but no longer the structure: every project is one numbered row, so
+    the catalogue reads top to bottom the way the site's HR landing does. The
+    ``volta_cases`` list folds into a collapsible block below.
 
-    Each track is a table rather than a bullet wall: a description runs to ~180
-    characters, so as bullets the links ended up at a ragged right edge after
-    three wrapped lines and could not be scanned for. In a table the project
-    names and the Repo / Case study affordances each sit in their own column, so
-    "which of these has a public repo" is a single glance down one strip.
+    A list, not per-track tables: a table forced a screener to read four separate
+    grids and to jump columns for the links, while the outcome sentence — the one
+    thing HR scans for — wrapped inside a fixed-width cell.
     """
-    by_track: dict[str, list[dict]] = {track: [] for track in TRACK_ORDER}
-    for track in TRACK_ORDER:
-        items = registry.get(track)
-        if isinstance(items, list):
-            by_track[track].extend(project for project in items if isinstance(project, dict))
-    for project in registry.get("projects") or []:
-        if isinstance(project, dict) and project.get("track") in by_track:
-            by_track[project["track"]].append(project)
-
-    lines: list[str] = ["### 🗂️ All Projects", ""]
+    projects = [project for _, project in _projects_in_track_order(registry)]
     counts = _track_counts(registry)
     total = sum(counts.values())
     track_total = sum(1 for count in counts.values() if count > 0)
-    volta_total = len(registry.get("volta_cases") or [])
+    volta = [case for case in (registry.get("volta_cases") or []) if isinstance(case, dict)]
+
+    lines: list[str] = ["### 🗂️ All Projects", ""]
     lines.append('<p align="center">')
     lines.append(
         f'  <img src="{PROJECTS_SVG_URL}" width="100%" '
         f'alt="Portfolio overview: {total} projects across {track_total} tracks '
-        f'plus {volta_total} Volta Neobank case studies" />'
+        f'plus {len(volta)} Volta Neobank case studies" />'
     )
     lines.append("</p>")
     lines.append("")
     lines.append(_portfolio_summary(registry))
     lines.append("")
-    for track in TRACK_ORDER:
-        items = by_track[track]
-        if not items:
-            continue
-        lines.append(f"#### {TRACK_LABELS[track]} · {len(items)}")
-        lines.append("")
-        lines.extend(_table([_table_row(project) for project in items]))
-        lines.append("")
+    lines.extend(_project_line(index, project) for index, project in enumerate(projects, 1))
 
-    volta = registry.get("volta_cases") or []
     if volta:
+        lines.append("")
         lines.append("<details>")
         lines.append(f"<summary><b>🏦 Volta Neobank — {len(volta)} case studies</b></summary>")
         lines.append("")
-        lines.extend(_table([_table_row(case) for case in volta]))
+        # Volta parts are authored result-first — their description is the finding —
+        # so the star.result twin only repeats it. Inside a collapsed block that no
+        # screener opens, the repeat is pure length.
+        lines.extend(
+            _project_line(index, case, with_result=False) for index, case in enumerate(volta, 1)
+        )
         lines.append("")
         lines.append("</details>")
 
@@ -1260,7 +1049,6 @@ def sync_projects_block(content: str, block: str) -> str:
 
 def update_readme_refresh_block(
     days: list[dict],
-    evidence_rows: tuple[dict[str, str], ...] | None = None,
     projects_block: str | None = None,
 ) -> bool:
     """Refresh the 'Last refreshed' marker block in README.
@@ -1288,11 +1076,9 @@ def update_readme_refresh_block(
             f"### \u26a1 Activity\n\n{block}\n\n",
             1,
         )
-    # One write, several repairs: the RSS job leaves the notes list on one line,
-    # the evidence sources line is generated rather than hand-typed, and the
-    # All Projects section is rendered from the site registry.
+    # One write, several repairs: the RSS job leaves the notes list on one line
+    # and the All Projects section is rendered from the site registry.
     new_content = normalize_notes_block(new_content)
-    new_content = sync_evidence_sources_block(new_content, evidence_rows)
     if projects_block is not None:
         new_content = sync_projects_block(new_content, projects_block)
     if new_content == content:
@@ -1301,7 +1087,7 @@ def update_readme_refresh_block(
     tmp_readme = readme_path.with_name(readme_path.name + ".tmp")
     tmp_readme.write_text(new_content, encoding="utf-8")
     os.replace(tmp_readme, readme_path)
-    print(f"Refreshed README (refresh + notes + evidence sources + projects): {now} ({week} c/7d)")
+    print(f"Refreshed README (refresh + notes + projects): {now} ({week} c/7d)")
     return True
 
 
@@ -1319,11 +1105,6 @@ def main() -> None:
         help=f"GitHub login to render (default: {DEFAULT_USER})",
     )
     parser.add_argument(
-        "--print-links",
-        action="store_true",
-        help="print one evidence source URL per line and exit (CI link-liveness check)",
-    )
-    parser.add_argument(
         "--print-project-links",
         action="store_true",
         help="print one project URL per line and exit (CI link-liveness check)",
@@ -1334,10 +1115,6 @@ def main() -> None:
         help="path or URL to the projects registry JSON (default: live site)",
     )
     args = parser.parse_args()
-    if args.print_links:
-        for url in evidence_sources():
-            print(url)
-        return
     if args.print_project_links:
         # Registry-only path: no GraphQL, no token — so CI can check project
         # links even when the reads quota is exhausted.
@@ -1369,10 +1146,6 @@ def main() -> None:
     total, current, longest = compute_streaks(days)
     print(f"total={total} current={current} longest={longest}")
 
-    evidence_rows, evidence_warnings = reconcile_evidence(public_repo_names(user_data))
-    for warning in evidence_warnings:
-        print(f"WARNING: {warning}")
-
     # Everything that can fail on the network or inside a builder runs BEFORE the
     # first write: a raise between two write_asset calls used to leave half the
     # cards refreshed, half stale, and README unrefreshed.
@@ -1401,7 +1174,6 @@ def main() -> None:
             extract_contribution_types(user_data)
         ),
         "monthly-activity.svg": build_monthly_activity_svg(days),
-        "analytics-evidence.svg": build_analytics_evidence_svg(evidence_rows),
         "top-languages.svg": build_top_languages_svg(langs),
     }
     projects_block: str | None = None
@@ -1415,7 +1187,7 @@ def main() -> None:
     if DRY_RUN:
         print("[dry-run] skip README refresh block")
     else:
-        update_readme_refresh_block(days, evidence_rows, projects_block)
+        update_readme_refresh_block(days, projects_block)
 
 
 if __name__ == "__main__":
