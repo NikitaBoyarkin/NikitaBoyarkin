@@ -665,15 +665,18 @@ def test_build_projects_block_prefers_en_text():
     project["title_en"] = "EN Title"
     project["description_en"] = "EN desc"
     block = bp.build_projects_block(_registry(projects=[project]))
-    assert "EN Title" in block and "EN desc" in block
-    assert "RU Title" not in block and "RU desc" not in block
+    assert "EN Title" in block
+    assert "RU Title" not in block
+    # Cards carry no blurb, so the description preference is asserted where it lives.
+    assert bp._row_text(project) == "EN desc"
 
 
 def test_build_projects_block_falls_back_to_ru_text():
-    # An older RU-only registry (no *_en keys) must still render its bullets.
+    # An older RU-only registry (no *_en keys) must still render its rows.
     project = _project("RU Title", "analytics", description="RU desc")
     block = bp.build_projects_block(_registry(projects=[project]))
-    assert "RU Title" in block and "RU desc" in block
+    assert "RU Title" in block
+    assert bp._row_text(project) == "RU desc"
 
 
 def test_build_projects_block_volta_prefers_en_text():
@@ -987,6 +990,34 @@ def test_build_projects_block_card_carries_track_badges_and_stack():
     assert "dbt" not in card, "tools are capped so the title stays the scan anchor"
 
 
+def test_build_projects_block_card_shows_live_star_count():
+    """Public repos get a linked stars badge; private ones must not.
+
+    The count is shields' live endpoint, not a snapshot, so the assertion pins the
+    owner/repo path — a registry rename has to move the badge with it.
+    """
+    github = "https://github.com/NikitaBoyarkin/demo"
+    block = bp.build_projects_block(
+        _registry(
+            projects=[
+                _project("Public", "analytics", github=github),
+                _project(
+                    "Secret",
+                    "analytics",
+                    github="https://github.com/NikitaBoyarkin/hidden",
+                    private=True,
+                ),
+            ]
+        )
+    )
+    card = _card_for(block, "Public")
+    assert "img.shields.io/github/stars/NikitaBoyarkin/demo?style=for-the-badge" in card
+    assert "[![Stars](https://img.shields.io/github/stars/NikitaBoyarkin/demo" in card
+    assert f")]({github})" in card
+    secret = _card_for(block, "Secret")
+    assert "github/stars" not in secret, "a private repo's star badge is a dead link"
+
+
 def test_build_projects_block_known_project_gets_a_logo_card():
     project = _project("Volta Neobank", "experiments", href="https://example.test/volta")
     project["slug"] = "volta"
@@ -1014,78 +1045,65 @@ def test_build_projects_block_numbers_cards_across_the_section():
     assert [line.split(".", 1)[0] for line in _volta_rows(block)] == ["1", "2"]
 
 
-def test_build_projects_block_appends_result_when_it_adds_numbers():
+def test_build_projects_block_card_has_no_description_text():
+    """A card is a directory entry: title, badges, stack — the case study carries the claim."""
     block = bp.build_projects_block(
         _registry(
-            projects=[
-                _project(
-                    "Demo",
-                    "analytics",
-                    description="16,891 synthetic sales calls across 4 funnel steps.",
-                    result="Funnel drop is 41.2% at the offer step.",
-                )
-            ]
+            projects=[_project("Demo", "analytics", description="16,891 synthetic sales calls.")]
         )
     )
     card = _card_for(block, "Demo")
-    assert "16,891 synthetic sales calls" in card and "41.2% at the offer step" in card
+    assert "16,891 synthetic sales calls" not in card
+    assert "**Stack:**" not in card and "#### 1." in card
 
 
-def test_build_projects_block_skips_result_that_restates_description():
+def test_row_text_appends_result_when_it_adds_numbers():
+    record = _project(
+        "Demo",
+        "analytics",
+        description="16,891 synthetic sales calls across 4 funnel steps.",
+        result="Funnel drop is 41.2% at the offer step.",
+    )
+    text = bp._row_text(record)
+    assert "16,891 synthetic sales calls" in text and "41.2% at the offer step" in text
+
+
+def test_row_text_skips_result_that_restates_description():
     description = "CUPED cuts variance 17.7% and the SRM check reads p = 0.8376."
-    block = bp.build_projects_block(
-        _registry(
-            projects=[
-                _project(
-                    "Demo",
-                    "experiments",
-                    description=description,
-                    result="CUPED cuts variance 17.7%; SRM p = 0.8376.",
-                )
-            ]
-        )
+    record = _project(
+        "Demo",
+        "experiments",
+        description=description,
+        result="CUPED cuts variance 17.7%; SRM p = 0.8376.",
     )
-    card = _card_for(block, "Demo")
-    assert description in card
-    assert card.count("17.7%") == 1, "a restated result would double the metric"
+    text = bp._row_text(record)
+    assert text == description
+    assert text.count("17.7%") == 1, "a restated result would double the metric"
 
 
-def test_build_projects_block_skips_result_without_numbers():
+def test_row_text_skips_result_without_numbers():
     # A result sentence with no measurement is scope restated, not an outcome.
-    block = bp.build_projects_block(
-        _registry(
-            projects=[
-                _project(
-                    "Demo",
-                    "analytics",
-                    description="Narrative and visuals stay in sync as the reader scrolls.",
-                    result="The narrative and the visualization are synchronised.",
-                )
-            ]
-        )
+    record = _project(
+        "Demo",
+        "analytics",
+        description="Narrative and visuals stay in sync as the reader scrolls.",
+        result="The narrative and the visualization are synchronised.",
     )
-    card = _card_for(block, "Demo")
-    assert "synchronised" not in card
+    assert "synchronised" not in bp._row_text(record)
 
 
-def test_build_projects_block_skips_result_that_mostly_restates_description():
+def test_row_text_skips_result_that_mostly_restates_description():
     # One new number out of four is not worth a second sentence on the row.
     description = "SRM holds at p=0.266, GCG uplift 0.9968, net effect +50.5."
-    block = bp.build_projects_block(
-        _registry(
-            projects=[
-                _project(
-                    "Demo",
-                    "experiments",
-                    description=description,
-                    result="SRM p=0.266, GCG uplift 0.9968 [0.9433, 1.0502], net effect +50.5.",
-                )
-            ]
-        )
+    record = _project(
+        "Demo",
+        "experiments",
+        description=description,
+        result="SRM p=0.266, GCG uplift 0.9968 [0.9433, 1.0502], net effect +50.5.",
     )
-    card = _card_for(block, "Demo")
-    assert description in card
-    assert "0.9433" not in card
+    text = bp._row_text(record)
+    assert text == description
+    assert "0.9433" not in text
 
 
 def test_build_projects_block_volta_rows_keep_description_only():

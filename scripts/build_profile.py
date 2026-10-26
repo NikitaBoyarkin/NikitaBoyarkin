@@ -32,6 +32,7 @@ import sys
 import textwrap
 import time
 import urllib.error
+import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta, timezone
@@ -849,6 +850,11 @@ REPO_BADGE = (
     "?style=for-the-badge&logo=github&logoColor=fe4e02"
 )
 CASE_STUDY_BADGE = "https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge"
+# Stars come from shields' live endpoint rather than a fetched number: the block is
+# rebuilt daily, but a counter that updates on every page view needs no snapshot.
+STARS_BADGE = (
+    "https://img.shields.io/github/stars/{path}?style=for-the-badge&logo=github&color=fe4e02"
+)
 
 
 def _badge_escape(value: str) -> str:
@@ -862,13 +868,29 @@ def _repo_name(record: dict) -> str:
     return github.rsplit("/", 1)[-1] if github else ""
 
 
-def _project_card(index: int, record: dict) -> list[str]:
-    """One card: linked heading, italic blurb, badges, stack line.
+def _stars_badge(record: dict) -> str:
+    """Linked star-count badge for a public repo, or an empty string.
 
-    Logo (when the project has one) sits inside the linked heading, the outcome
-    is the italic line, repo and case study are for-the-badge buttons, tools are
-    a plain ``**Stack:**`` line — so a screener reads title, result, links and
-    stack in the same order for every project.
+    The owner/repo pair is read from the registry's github URL (``GitHub`` casing
+    matters to shields), so the badge follows a rename in the registry instead of
+    repeating an owner hardcoded here.
+    """
+    github = _clean_text(record.get("github")).rstrip("/")
+    path = urllib.parse.urlsplit(github).path.strip("/")
+    if path.count("/") != 1:
+        return ""
+    badge_url = STARS_BADGE.format(path=path)
+    return f"[![Stars]({badge_url})]({github})"
+
+
+def _project_card(index: int, record: dict) -> list[str]:
+    """One card: linked heading, badges, stack line.
+
+    Logo (when the project has one) sits inside the linked heading, repo / stars /
+    case study are for-the-badge buttons, tools are a plain ``**Stack:**`` line — so
+    a screener reads title, links and stack in the same order for every project.
+    The registry's description is deliberately absent: a card is a directory entry,
+    and the case study one click away is where the claim and its numbers live.
     """
     title = _pick(record, "title_en", "title")
     href = _clean_text(record.get("href"))
@@ -889,15 +911,15 @@ def _project_card(index: int, record: dict) -> list[str]:
         heading += f" — {track}"
 
     lines = [heading, ""]
-    text = _row_text(record)
-    if text:
-        lines.extend([f"_{text}_", ""])
 
     badges: list[str] = []
     # A private repo 404s for anonymous readers — a badge there is a dead link.
     if github and not record.get("private"):
         badge_url = REPO_BADGE.format(name=_badge_escape(_repo_name(record)))
         badges.append(f"[![Repo]({badge_url})]({github})")
+        stars = _stars_badge(record)
+        if stars:
+            badges.append(stars)
     if href:
         badges.append(f"[![Case study]({CASE_STUDY_BADGE})]({href})")
     if badges:
