@@ -564,6 +564,7 @@ def test_no_card_renders_text_below_the_readability_floor():
 _START = "<!-- ALL-PROJECTS:START -->"
 _END = "<!-- ALL-PROJECTS:END -->"
 
+_CARD_HEADING_RE = re.compile(r"^#### (\d+)\. ")
 _NUMBERED_ROW_RE = re.compile(r"^\d+\. \*\*")
 
 
@@ -598,13 +599,33 @@ def _registry(*, projects=(), volta_cases=()):
     return {"projects": list(projects), "volta_cases": list(volta_cases)}
 
 
-def _rows(block):
-    """The numbered project rows of the block, in render order."""
+def _cards(block):
+    """The Featured-style cards of the visible catalogue, in render order."""
+    top = block.partition("<details>")[0]
+    cards, current = [], None
+    for line in top.splitlines():
+        if _CARD_HEADING_RE.match(line):
+            if current is not None:
+                cards.append("\n".join(current).strip())
+            current = [line]
+        elif current is not None:
+            current.append(line)
+    if current is not None:
+        cards.append("\n".join(current).strip())
+    return cards
+
+
+def _card_for(block, title):
+    return next(card for card in _cards(block) if title in card)
+
+
+def _volta_rows(block):
+    """The numbered one-line rows of the collapsed Volta appendix."""
     return [line for line in block.splitlines() if _NUMBERED_ROW_RE.match(line)]
 
 
-def _row_for(block, title):
-    return next(line for line in _rows(block) if f"**[{title}]" in line or f"**{title}**" in line)
+def _volta_row_for(block, title):
+    return next(line for line in _volta_rows(block) if title in line)
 
 
 def test_build_projects_block_lists_every_project_in_track_order():
@@ -621,10 +642,10 @@ def test_build_projects_block_lists_every_project_in_track_order():
     )
     assert block.startswith("### 🗂️ All Projects")
     titles = ["Exp A", "Exp B", "Ana A", "Eng A"]
-    rows = _rows(block)
-    assert len(rows) == len(titles)
-    assert [next(t for t in titles if t in row) for row in rows] == titles
-    assert "#### " not in block, "tracks order the list; they no longer head sections"
+    cards = _cards(block)
+    assert len(cards) == len(titles)
+    assert [next(t for t in titles if t in card) for card in cards] == titles
+    assert [re.match(r"^#### (\d+)\. ", card).group(1) for card in cards] == ["1", "2", "3", "4"]
 
 
 def test_build_projects_block_repo_and_case_links():
@@ -633,8 +654,10 @@ def test_build_projects_block_repo_and_case_links():
     block = bp.build_projects_block(
         _registry(projects=[_project("Demo", "analytics", github=github, href=href)])
     )
-    assert f"[Repo]({github})" in block
-    assert f"[Case study]({href})" in block
+    assert "img.shields.io/badge/Repo-demo-0f2a2b" in block
+    assert f"]({github})" in block
+    assert "img.shields.io/badge/Case_study-fe4e02" in block
+    assert f"]({href})" in block
 
 
 def test_build_projects_block_prefers_en_text():
@@ -666,8 +689,8 @@ def test_build_projects_block_private_without_repo():
     block = bp.build_projects_block(
         _registry(projects=[_project("Closed", "engineering", github=None, private=True)])
     )
-    assert "[Repo](" not in block
-    assert "[Case study](" in block
+    assert "Repo-" not in block
+    assert "Case_study" in block
     assert "_private_" in block
 
 
@@ -676,8 +699,9 @@ def test_build_projects_block_private_with_repo_omits_dead_repo_link():
     block = bp.build_projects_block(
         _registry(projects=[_project("Closed", "analytics", github=github, private=True)])
     )
-    assert f"[Repo]({github})" not in block
-    assert "[Case study](" in block
+    assert "Repo-secret" not in block
+    assert f"]({github})" not in block
+    assert "Case_study" in block
     assert "_private_" in block
 
 
@@ -934,10 +958,10 @@ def test_build_projects_block_embeds_svg_and_summary_after_heading():
     assert summary in block
     heading = block.index("### 🗂️ All Projects")
     assert heading < block.index(bp.PROJECTS_SVG_URL)
-    assert heading < block.index(summary) < block.index(_rows(block)[0])
+    assert heading < block.index(summary) < block.index(_cards(block)[0])
 
 
-def test_build_projects_block_row_carries_track_tools_and_links():
+def test_build_projects_block_card_carries_track_badges_and_stack():
     github = "https://github.com/NikitaBoyarkin/demo"
     href = "https://example.test/case"
     block = bp.build_projects_block(
@@ -953,24 +977,41 @@ def test_build_projects_block_row_carries_track_tools_and_links():
             ]
         )
     )
-    row = _row_for(block, "Demo")
-    assert f"**[Demo]({href})**" in row
-    assert "*Analytics*" in row
-    assert row.endswith(f"· [Repo]({github}) · [Case study]({href})")
-    assert "`Python` · `SQL` · `pytest` · `uv`" in row
-    assert "`dbt`" not in row, "tools are capped so the title stays the scan anchor"
+    card = _card_for(block, "Demo")
+    assert card.startswith(f'#### 1. <a href="{href}">Demo</a> — Analytics')
+    assert "img.shields.io/badge/Repo-demo-0f2a2b" in card
+    assert f"]({github})" in card
+    assert "img.shields.io/badge/Case_study-fe4e02" in card
+    assert f"]({href})" in card
+    assert "**Stack:** Python · SQL · pytest · uv" in card
+    assert "dbt" not in card, "tools are capped so the title stays the scan anchor"
 
 
-def test_build_projects_block_numbers_rows_across_the_section():
+def test_build_projects_block_known_project_gets_a_logo_card():
+    project = _project("Volta Neobank", "experiments", href="https://example.test/volta")
+    project["slug"] = "volta"
+    card = _card_for(bp.build_projects_block(_registry(projects=[project])), "Volta Neobank")
+    assert 'src="volta-neobank.svg"' in card
+    assert 'alt="Volta Neobank"' in card
+
+
+def test_build_projects_block_unknown_project_links_its_title():
+    project = _project("Plain", "analytics", href="https://example.test/plain")
+    project["slug"] = "plain"
+    card = _card_for(bp.build_projects_block(_registry(projects=[project])), "Plain")
+    assert "<img" not in card
+    assert card.startswith('#### 1. <a href="https://example.test/plain">Plain</a>')
+
+
+def test_build_projects_block_numbers_cards_across_the_section():
     block = bp.build_projects_block(
         _registry(
             projects=[_project("A", "experiments"), _project("B", "analytics")],
             volta_cases=[_case("V1"), _case("V2")],
         )
     )
-    top, _, volta = block.partition("<details>")
-    assert [line.split(".", 1)[0] for line in _rows(top)] == ["1", "2"]
-    assert [line.split(".", 1)[0] for line in _rows(volta)] == ["1", "2"]
+    assert [re.match(r"^#### (\d+)\. ", card).group(1) for card in _cards(block)] == ["1", "2"]
+    assert [line.split(".", 1)[0] for line in _volta_rows(block)] == ["1", "2"]
 
 
 def test_build_projects_block_appends_result_when_it_adds_numbers():
@@ -986,8 +1027,8 @@ def test_build_projects_block_appends_result_when_it_adds_numbers():
             ]
         )
     )
-    row = _row_for(block, "Demo")
-    assert "16,891 synthetic sales calls" in row and "41.2% at the offer step" in row
+    card = _card_for(block, "Demo")
+    assert "16,891 synthetic sales calls" in card and "41.2% at the offer step" in card
 
 
 def test_build_projects_block_skips_result_that_restates_description():
@@ -1004,9 +1045,9 @@ def test_build_projects_block_skips_result_that_restates_description():
             ]
         )
     )
-    row = _row_for(block, "Demo")
-    assert description in row
-    assert row.count("17.7%") == 1, "a restated result would double the metric"
+    card = _card_for(block, "Demo")
+    assert description in card
+    assert card.count("17.7%") == 1, "a restated result would double the metric"
 
 
 def test_build_projects_block_skips_result_without_numbers():
@@ -1023,8 +1064,8 @@ def test_build_projects_block_skips_result_without_numbers():
             ]
         )
     )
-    row = _row_for(block, "Demo")
-    assert "synchronised" not in row
+    card = _card_for(block, "Demo")
+    assert "synchronised" not in card
 
 
 def test_build_projects_block_skips_result_that_mostly_restates_description():
@@ -1042,9 +1083,9 @@ def test_build_projects_block_skips_result_that_mostly_restates_description():
             ]
         )
     )
-    row = _row_for(block, "Demo")
-    assert description in row
-    assert "0.9433" not in row
+    card = _card_for(block, "Demo")
+    assert description in card
+    assert "0.9433" not in card
 
 
 def test_build_projects_block_volta_rows_keep_description_only():

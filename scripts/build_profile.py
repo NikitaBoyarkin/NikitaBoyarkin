@@ -785,11 +785,10 @@ def _row_text(record: dict) -> str:
 
 
 def _project_line(index: int, record: dict, *, with_result: bool = True) -> str:
-    """One numbered list item: title · track — blurb · tools · links.
+    """One numbered row: title · track — blurb · tools · links.
 
-    A flat numbered list rather than per-track tables: the site's HR landing reads
-    a project as one line of role, stack and outcome in chronological order, and
-    the profile mirrors that so the two surfaces answer a screener the same way.
+    Used for the collapsed Volta appendix, where 23 cards would be length nobody
+    scrolls; the visible catalogue uses ``_project_card`` instead.
     """
     title = _pick(record, "title_en", "title")
     href = _clean_text(record.get("href"))
@@ -807,6 +806,81 @@ def _project_line(index: int, record: dict, *, with_result: bool = True) -> str:
     if links:
         parts.append(f"· {links}")
     return " ".join(parts)
+
+
+# Featured-style cards. Only three projects ship a self-hosted logo card; every
+# other project gets a text link in the same heading slot, so the card shape
+# (linked title — track) stays identical down the catalogue.
+LOGO_BY_SLUG = {
+    "volta": "volta-neobank.svg",
+    "supabase": "supabase-analytics.svg",
+    "sql": "sql-case-study.svg",
+}
+
+REPO_BADGE = (
+    "https://img.shields.io/badge/Repo-{name}-0f2a2b"
+    "?style=for-the-badge&logo=github&logoColor=fe4e02"
+)
+CASE_STUDY_BADGE = "https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge"
+
+
+def _badge_escape(value: str) -> str:
+    """shields.io static-badge escaping: '-' → '--', '_' → '__', ' ' → '_'."""
+    return value.replace("-", "--").replace("_", "__").replace(" ", "_")
+
+
+def _repo_name(record: dict) -> str:
+    """Last path segment of the github URL — the badge label."""
+    github = _clean_text(record.get("github")).rstrip("/")
+    return github.rsplit("/", 1)[-1] if github else ""
+
+
+def _project_card(index: int, record: dict) -> list[str]:
+    """One Featured-style card: linked heading, italic blurb, badges, stack.
+
+    Mirrors the hand-written Featured Projects section — logo (when the project
+    has one) inside the linked heading, the outcome as the italic line, repo and
+    case study as for-the-badge buttons, tools as a plain ``**Stack:**`` line —
+    so the catalogue below reads as more of the same thing rather than a second,
+    plainer format.
+    """
+    title = _pick(record, "title_en", "title")
+    href = _clean_text(record.get("href"))
+    github = _clean_text(record.get("github"))
+    logo = LOGO_BY_SLUG.get(_clean_text(record.get("slug")))
+
+    if href and logo:
+        heading = (
+            f'#### {index}. <a href="{_esc(href)}">'
+            f'<img src="{_esc(logo)}" align="absmiddle" alt="{_esc(title)}" /></a>'
+        )
+    elif href:
+        heading = f'#### {index}. <a href="{_esc(href)}">{_esc(title)}</a>'
+    else:
+        heading = f"#### {index}. {_esc(title)}"
+    track = TRACK_PLAIN_LABELS.get(_clean_text(record.get("track")))
+    if track:
+        heading += f" — {track}"
+
+    lines = [heading, ""]
+    text = _row_text(record)
+    if text:
+        lines.extend([f"_{text}_", ""])
+
+    badges: list[str] = []
+    # A private repo 404s for anonymous readers — a badge there is a dead link.
+    if github and not record.get("private"):
+        badge_url = REPO_BADGE.format(name=_badge_escape(_repo_name(record)))
+        badges.append(f"[![Repo]({badge_url})]({github})")
+    if href:
+        badges.append(f"[![Case study]({CASE_STUDY_BADGE})]({href})")
+    if badges:
+        lines.extend(["\n".join(badges) + (" · _private_" if record.get("private") else ""), ""])
+
+    tools = [_clean_text(tool) for tool in record.get("tools") or [] if _clean_text(tool)]
+    if tools:
+        lines.extend(["**Stack:** " + " · ".join(tools[:TOOL_LIMIT]), ""])
+    return lines
 
 
 def _projects_in_track_order(registry: dict) -> list[tuple[str, dict]]:
@@ -979,13 +1053,9 @@ def build_projects_block(registry: dict) -> str:
     Two registry shapes are accepted: a single ``projects`` array whose entries
     carry a ``track`` field (the frozen site contract), and one list per track
     keyed by name. Tracks still decide the order (``TRACK_ORDER``, empty tracks
-    skipped) but no longer the structure: every project is one numbered row, so
-    the catalogue reads top to bottom the way the site's HR landing does. The
-    ``volta_cases`` list folds into a collapsible block below.
-
-    A list, not per-track tables: a table forced a screener to read four separate
-    grids and to jump columns for the links, while the outcome sentence — the one
-    thing HR scans for — wrapped inside a fixed-width cell.
+    skipped) but no longer the structure: every project is one Featured-style
+    card, so the catalogue reads as more of the Featured Projects section above
+    it. The ``volta_cases`` list folds into a collapsible block below.
     """
     projects = [project for _, project in _projects_in_track_order(registry)]
     counts = _track_counts(registry)
@@ -1004,16 +1074,20 @@ def build_projects_block(registry: dict) -> str:
     lines.append("")
     lines.append(_portfolio_summary(registry))
     lines.append("")
-    lines.extend(_project_line(index, project) for index, project in enumerate(projects, 1))
+    for index, project in enumerate(projects, 1):
+        lines.extend(_project_card(index, project))
 
     if volta:
+        while lines and lines[-1] == "":
+            lines.pop()
         lines.append("")
         lines.append("<details>")
         lines.append(f"<summary><b>🏦 Volta Neobank — {len(volta)} case studies</b></summary>")
         lines.append("")
         # Volta parts are authored result-first — their description is the finding —
         # so the star.result twin only repeats it. Inside a collapsed block that no
-        # screener opens, the repeat is pure length.
+        # screener opens, the repeat is pure length, and 23 full cards would be an
+        # appendix nobody scrolls — so these stay one-line rows.
         lines.extend(
             _project_line(index, case, with_result=False) for index, case in enumerate(volta, 1)
         )
