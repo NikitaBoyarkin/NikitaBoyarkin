@@ -2,7 +2,7 @@
   <title>Snake — playable SVG game</title>
   <desc>Classic snake. Steer with arrow keys or WASD, press R to restart.</desc>
   <rect width="400" height="440" fill="#f8f2da"/>
-  <text x="200" y="28" text-anchor="middle" fill="#fe4e02" font-size="16" font-weight="bold" letter-spacing="3">SNAKE</text>
+  <text x="200" y="28" text-anchor="middle" fill="#1400c3" font-size="16" font-weight="bold" letter-spacing="3">SNAKE</text>
   <text id="score" x="200" y="52" text-anchor="middle" fill="#1400c3" font-size="12">Score: 0</text>
   <g transform="translate(30,70)">
     <rect width="340" height="340" fill="#0c0078" stroke="#fe4e02" stroke-width="2" rx="6"/>
