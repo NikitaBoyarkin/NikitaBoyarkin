@@ -157,13 +157,13 @@ def build_hero_svg() -> str:
       <rect fill='{BG}' width='{W}' height='{H}' rx='8'/>
       <text x='40' y='64' fill='{TEXT_MAIN}' font-family='Segoe UI, Ubuntu, sans-serif'
             font-size='34px' font-weight='800' letter-spacing='1.5'>{_esc(HERO_NAME)}</text>
-      <text x='40' y='99' fill='{ACCENT}' font-family='Segoe UI, Ubuntu, sans-serif'
+      <text x='40' y='99' fill='{TEXT_MAIN}' font-family='Segoe UI, Ubuntu, sans-serif'
             font-size='16px' font-weight='700' letter-spacing='2.6'>{_esc(HERO_ROLE)}</text>
       <line x1='40' y1='117' x2='360' y2='117' stroke='{TEXT_MAIN}' stroke-opacity='{FAINT_OP}' stroke-width='1'/>
 {tagline}      <text x='40' y='199' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}'
             font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px' font-weight='600'>{_esc(HERO_STRIP)}</text>
       <line x1='490' y1='40' x2='490' y2='180' stroke='{TEXT_MAIN}' stroke-opacity='{FAINT_OP}' stroke-width='1'/>
-      <text x='647' y='56' text-anchor='middle' fill='{ACCENT}'
+      <text x='647' y='56' text-anchor='middle' fill='{TEXT_MAIN}'
             font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px' font-weight='700'>+lift</text>
       <rect x='584' y='112' width='50' height='58' rx='3' fill='{TEXT_MAIN}' fill-opacity='0.26'/>
       <rect x='660' y='84' width='50' height='86' rx='3' fill='{ACCENT}'/>
@@ -344,27 +344,27 @@ def build_stats_svg(user_data: dict, total: int, current: int, longest: int) -> 
         <text x='247.5' y='32' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='16px' font-weight='400'>{_esc(USER)}'s GitHub Stats</text>
         <g transform='translate(0, 55)'>
           <text x='82.5' y='0' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='13px' font-weight='400'>Contributions</text>
-          <text x='82.5' y='28' text-anchor='middle' fill='{ACCENT}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='30px' font-weight='700'>{total}</text>
+          <text x='82.5' y='28' text-anchor='middle' fill='{TEXT_MAIN}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='30px' font-weight='700'>{total}</text>
         </g>
         <g transform='translate(165, 55)'>
           <text x='82.5' y='0' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='13px' font-weight='400'>Public Repos</text>
-          <text x='82.5' y='28' text-anchor='middle' fill='{ACCENT}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='30px' font-weight='700'>{public_repos}</text>
+          <text x='82.5' y='28' text-anchor='middle' fill='{TEXT_MAIN}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='30px' font-weight='700'>{public_repos}</text>
         </g>
         <g transform='translate(330, 55)'>
           <text x='82.5' y='0' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='13px' font-weight='400'>Followers</text>
-          <text x='82.5' y='28' text-anchor='middle' fill='{ACCENT}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='30px' font-weight='700'>{followers}</text>
+          <text x='82.5' y='28' text-anchor='middle' fill='{TEXT_MAIN}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='30px' font-weight='700'>{followers}</text>
         </g>
         <g transform='translate(0, 118)'>
           <text x='82.5' y='0' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='13px' font-weight='400'>Current Streak</text>
-          <text x='82.5' y='28' text-anchor='middle' fill='{ACCENT}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='30px' font-weight='700'>{current}</text>
+          <text x='82.5' y='28' text-anchor='middle' fill='{TEXT_MAIN}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='30px' font-weight='700'>{current}</text>
         </g>
         <g transform='translate(165, 118)'>
           <text x='82.5' y='0' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='13px' font-weight='400'>Longest Streak</text>
-          <text x='82.5' y='28' text-anchor='middle' fill='{ACCENT}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='30px' font-weight='700'>{longest}</text>
+          <text x='82.5' y='28' text-anchor='middle' fill='{TEXT_MAIN}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='30px' font-weight='700'>{longest}</text>
         </g>
         <g transform='translate(330, 118)'>
           <text x='82.5' y='0' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='13px' font-weight='400'>Active Since</text>
-          <text x='82.5' y='28' text-anchor='middle' fill='{ACCENT}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='30px' font-weight='700'>{active_since}</text>
+          <text x='82.5' y='28' text-anchor='middle' fill='{TEXT_MAIN}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='30px' font-weight='700'>{active_since}</text>
         </g>
         <text x='247.5' y='182' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' font-family='"Segoe UI", Ubuntu, sans-serif' font-size='12px' font-weight='400'>Last updated: {datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")}</text>
       </g>
@@ -418,7 +418,9 @@ def build_contribution_types_svg(items: list[tuple[str, int]]) -> str:
     rows = ""
     for i, (label, value) in enumerate(items):
         y = row_y0 + i * step
-        w = (value / max_val) * bar_w
+        # A 4 px floor keeps a small non-zero count visible: at 0.0/0.1 px the row
+        # renders as an empty track and the card reads as missing data.
+        w = max((value / max_val) * bar_w, 4.0) if value else 0.0
         rows += (
             f"    <text x='24' y='{y + 4}' fill='{TEXT_MAIN}' "
             f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='13px'>{_esc(label)}</text>\n"
@@ -426,7 +428,7 @@ def build_contribution_types_svg(items: list[tuple[str, int]]) -> str:
             f"rx='3' fill='{TEXT_MAIN}' fill-opacity='{FAINT_OP}'/>\n"
             f"    <rect x='{bar_x}' y='{y - bar_h + 3}' width='{w:.1f}' height='{bar_h}' "
             f"rx='3' fill='{ACCENT}'><title>{_esc(label)}: {value}</title></rect>\n"
-            f"    <text x='{bar_x + bar_w + 10}' y='{y + 4}' fill='{ACCENT}' "
+            f"    <text x='{bar_x + bar_w + 10}' y='{y + 4}' fill='{TEXT_MAIN}' "
             f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='14px' font-weight='700'>{value}</text>\n"
         )
     svg = f"""\
@@ -455,7 +457,7 @@ def build_monthly_activity_svg(days: list[dict]) -> str:
     bars = ""
     for i, m in enumerate(months):
         value = totals[m]
-        h = (value / max_val) * chart_h
+        h = max((value / max_val) * chart_h, 2.0) if value else 0.0
         x = pad_left + i * gap + (gap - bar_w) / 2
         y = pad_top + chart_h - h
         label = _MONTHS[int(m[5:7]) - 1]
@@ -613,7 +615,7 @@ def build_top_languages_svg(langs: list[tuple[str, int, str]]) -> str:
             f"    <text x='{cx}' y='{cy - 4}' text-anchor='middle' fill='{TEXT_MAIN}' "
             f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='14px' "
             f"font-weight='700'>{_esc(_truncate(rows[0][0], 11))}</text>\n"
-            f"    <text x='{cx}' y='{cy + 15}' text-anchor='middle' fill='{ACCENT}' "
+            f"    <text x='{cx}' y='{cy + 15}' text-anchor='middle' fill='{TEXT_MAIN}' "
             f"font-family='Segoe UI, Ubuntu, sans-serif' font-size='13px' "
             f"font-weight='700'>{rows[0][1] / total * 100:.0f}%</text>\n"
         )
