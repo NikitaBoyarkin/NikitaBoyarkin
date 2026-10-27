@@ -1,21 +1,21 @@
 <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 150' width='800' height='150'
      role="img" aria-label='Portfolio overview: 27 projects across 4 tracks plus 23 Volta Neobank case studies — A/B Testing Methodology Toolkit, Browser Mini-Games — Analytics Arcade, Causal / Uplift — CUPED and Individual Treatment Effects, CRM Experiment Lab — Segment-Stage Randomization, GCG and Net Effect, Data Analyst Telegram Bot, Volta Neobank — Product Analytics, Churn Prediction — Leakage-Free Retention Model, Cohort Analysis Dashboard, Delivery Control Tower, GMV Drop RCA — root cause on real data, LinkedIn Content Analytics, ML Fundamentals — scikit-learn Pipeline, Product A/B &amp; Funnel Analytics — Conversion versus Retention, Promo Margin Lab — what a promo rouble actually earns, Python Analytics Playground, RAG Evaluation Harness — retrieval and generation metrics, RFM Analysis of Bank Clients, Sales Calls Analytics Dashboard, SERP Rank Lab, SQL Analytics Case Study, Product Analytics + A/B on Supabase, Product Analytics Dashboard (Streamlit), TaskFlow — PostHog Product Analytics Pipeline, Airflow DAG Platform, Digital Garden — EQ in IT, Scrolly English Speaking, This Portfolio Site'>
   <title>Portfolio overview: 27 projects across 4 tracks plus 23 Volta Neobank case studies — A/B Testing Methodology Toolkit, Browser Mini-Games — Analytics Arcade, Causal / Uplift — CUPED and Individual Treatment Effects, CRM Experiment Lab — Segment-Stage Randomization, GCG and Net Effect, Data Analyst Telegram Bot, Volta Neobank — Product Analytics, Churn Prediction — Leakage-Free Retention Model, Cohort Analysis Dashboard, Delivery Control Tower, GMV Drop RCA — root cause on real data, LinkedIn Content Analytics, ML Fundamentals — scikit-learn Pipeline, Product A/B &amp; Funnel Analytics — Conversion versus Retention, Promo Margin Lab — what a promo rouble actually earns, Python Analytics Playground, RAG Evaluation Harness — retrieval and generation metrics, RFM Analysis of Bank Clients, Sales Calls Analytics Dashboard, SERP Rank Lab, SQL Analytics Case Study, Product Analytics + A/B on Supabase, Product Analytics Dashboard (Streamlit), TaskFlow — PostHog Product Analytics Pipeline, Airflow DAG Platform, Digital Garden — EQ in IT, Scrolly English Speaking, This Portfolio Site</title>
-  <rect fill='#1400c3' width='800' height='150' rx='8'/>
-  <text x='24' y='37' fill='#f8f2da' font-family='Segoe UI, Ubuntu, sans-serif'
+  <rect fill='#f8f2da' width='800' height='150' rx='8'/>
+  <text x='24' y='37' fill='#1400c3' font-family='Segoe UI, Ubuntu, sans-serif'
         font-size='16px' font-weight='700' letter-spacing='0.3'>27 projects · 4 tracks · 23 Volta case studies</text>
     <rect x='20.0' y='84' width='168.9' height='30' fill='#fe4e02' fill-opacity='1'><title>Experiments: 6</title></rect>
 <rect x='188.9' y='84' width='394.1' height='30' fill='#fe4e02' fill-opacity='0.82'><title>Analytics: 14</title></rect>
 <rect x='583.0' y='84' width='84.4' height='30' fill='#fe4e02' fill-opacity='0.64'><title>Product: 3</title></rect>
 <rect x='667.4' y='84' width='112.6' height='30' fill='#fe4e02' fill-opacity='0.46'><title>Engineering: 4</title></rect>
   <rect x='20' y='122' width='11' height='11' rx='2' fill='#fe4e02' fill-opacity='1'/>
-<text x='37' y='131' fill='#f8f2da' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='13px'>Experiments: 6</text>
+<text x='37' y='131' fill='#1400c3' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='13px'>Experiments: 6</text>
 <rect x='210' y='122' width='11' height='11' rx='2' fill='#fe4e02' fill-opacity='0.82'/>
-<text x='227' y='131' fill='#f8f2da' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='13px'>Analytics: 14</text>
+<text x='227' y='131' fill='#1400c3' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='13px'>Analytics: 14</text>
 <rect x='400' y='122' width='11' height='11' rx='2' fill='#fe4e02' fill-opacity='0.64'/>
-<text x='417' y='131' fill='#f8f2da' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='13px'>Product: 3</text>
+<text x='417' y='131' fill='#1400c3' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='13px'>Product: 3</text>
 <rect x='590' y='122' width='11' height='11' rx='2' fill='#fe4e02' fill-opacity='0.46'/>
-<text x='607' y='131' fill='#f8f2da' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='13px'>Engineering: 4</text>
+<text x='607' y='131' fill='#1400c3' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='13px'>Engineering: 4</text>
 <rect x='20' y='84' width='760' height='30'
-      rx='4' fill='none' stroke='#f8f2da' stroke-opacity='0.14' stroke-width='1'/>
+      rx='4' fill='none' stroke='#1400c3' stroke-opacity='0.14' stroke-width='1'/>
 </svg>

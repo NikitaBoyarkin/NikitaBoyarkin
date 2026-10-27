@@ -1140,10 +1140,10 @@ def projects_links(registry: dict) -> list[str]:
 def build_projects_svg(registry: dict) -> str:
     """Stacked-track overview card for the All Projects section.
 
-    Self-contained and vector-only, like the other cards. It is deliberately the
-    dark inverse of the cream README cards: it opens the projects section, so it
-    reads as that section's header band instead of another body tile. Only the
-    three brand tokens appear — tracks are told apart by accent opacity alone.
+    Self-contained and vector-only, like the other cards. It uses the same cream
+    ground as the rest of the README, so the projects section opens on the shared
+    card treatment instead of flipping to an inverted band. Only the three brand
+    tokens appear — tracks are told apart by accent opacity alone.
     The accessible name enumerates the project titles, so a screen reader hears
     the portfolio rather than a bare count.
     """
@@ -1161,9 +1161,9 @@ def build_projects_svg(registry: dict) -> str:
 
     W, H = 800, 150
     bar_x, bar_y, bar_w, bar_h = 20, 84, 760, 30
-    # Contract names the field #1400c3 (module TEXT_MAIN) and the ink #f8f2da
-    # (module BG) — i.e. the card inverts the cream cards on purpose.
-    card_bg, card_ink, card_accent = TEXT_MAIN, BG, ACCENT
+    # Cream field #f8f2da (module BG) with blue ink #1400c3 (module TEXT_MAIN):
+    # the same pairing as every other README card.
+    card_bg, card_ink, card_accent = BG, TEXT_MAIN, ACCENT
     tones = ("1", "0.82", "0.64", "0.46")
 
     if total > 0:
