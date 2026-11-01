@@ -1,3 +1,18 @@
+<!-- ascii-art: pyfiglet + ascii-bin (CC0) -->
+```text
+ _   _ _ _    _ _        ____                         _    _
+| \ | (_) | _(_) |_ __ _| __ )  ___  _   _  __ _ _ __| | _(_)_ __
+|  \| | | |/ / | __/ _` |  _ \ / _ \| | | |/ _` | '__| |/ / | '_ \
+| |\  | |   <| | || (_| | |_) | (_) | |_| | (_| | |  |   <| | | | |
+|_| \_|_|_|\_\_|\__\__,_|____/ \___/ \__, |\__,_|_|  |_|\_\_|_| |_|
+                                     |___/
+
+╭─────────────────────────────────────────────────────────────────────────╮
+│ Last refreshed: 2026-10-27 21:00 UTC · 141 contributions in the last... │
+╰─────────────────────────────────────────────────────────────────────────╯
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
 <p align="center">
   <img src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/hero.svg" width="100%" alt="Nikita Boyarkin — Data / Product Analyst. Ambiguous product questions turned into clean experiments, SQL pipelines, and decisions." />
 </p>
@@ -264,7 +279,7 @@
 ### ⚡ Activity
 
 <!-- LAST-REFRESHED:START -->
-_Last refreshed: 2026-10-31 10:25 UTC · 369 contributions in the last 7 days_
+_Last refreshed: 2026-10-27 21:00 UTC · 141 contributions in the last 7 days_
 <!-- LAST-REFRESHED:END -->
 
 <details>
