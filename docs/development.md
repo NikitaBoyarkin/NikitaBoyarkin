@@ -75,10 +75,29 @@ All outbound section links use one scheme:
 ?utm_source=github&utm_medium=profile_readme&utm_campaign=<section>
 ```
 
-`<section>` is one of `header`, `featured`, `building`, `notes`, `connect`.
-RSS-generated "Recent notes" links get the scheme via the `template` input in
-`update-notes.yml`. No PII in UTMs. Aggregation (PostHog + a redirect service) is
-deferred — see REQ-027 in `docs/prd-v2.md`.
+`<section>` is one of `header`, `featured`, `building`, `notes`, `connect`,
+`volta`.
+
+| Section | Links it covers |
+|---|---|
+| `header` | Portfolio / Links plates and the KYC A/B line at the top |
+| `featured` | the numbered catalogue under **All Projects** (27 cards) |
+| `volta` | the collapsed Volta appendix (23 sub-cases) |
+| `notes` | the RSS-generated "Recent notes" list — scheme applied by the `template` input in `update-notes.yml` |
+| `building` | the "Currently building" line |
+| `connect` | the contact plates at the bottom |
+
+Catalogue and appendix links also carry **`utm_content=<project slug>`**, so
+per-project clicks are separable without inventing a campaign per project. Both
+are emitted by `scripts/build_profile.py` (`_utm`), which tags the site host
+only — repo links (github.com) and the raw asset host stay untagged, and a link
+that already carries `utm_campaign` is left alone.
+
+No PII in UTMs. UTM is deliberately **not** applied to `rss.xml`: feed readers
+re-fetch and re-share the URL, so a tag there manufactures campaign hits that
+never happened. Aggregation runs on the portfolio site's PostHog — dashboard
+06 "UTM-кампании" in `NikitaBoyarkin.github.io/monitoring/dashboards/`; the
+redirect-service plan in REQ-027 (`docs/prd-v2.md`) stays deferred.
 
 ## CI self-loop protection
 

@@ -739,10 +739,47 @@ def _pick(record: dict, en_key: str, ru_key: str) -> str:
     return _clean_text(record.get(en_key)) or _clean_text(record.get(ru_key))
 
 
-def _links(record: dict) -> str:
+# UTM scheme — docs/development.md §UTM scheme. `<section>` is utm_campaign and
+# the project slug travels as utm_content, so one campaign covers the whole
+# catalogue while individual projects stay separable in PostHog.
+UTM_SOURCE = "github"
+UTM_MEDIUM = "profile_readme"
+SITE_HOST = "nikitaboyarkin.github.io"
+
+
+def _utm_slug(value: object) -> str:
+    """Registry slug → utm_content: lower, ASCII, underscore-joined."""
+    return re.sub(r"[^a-z0-9]+", "_", _clean_text(value).lower()).strip("_")
+
+
+def _utm(url: str, campaign: str, content: object = "") -> str:
+    """Tag a portfolio-site link with the profile UTM scheme.
+
+    Only the site host is tagged: repo links (github.com) and the raw asset
+    host are other domains where a utm_* is noise, and a link that already
+    carries a campaign is left alone so the scheme is not applied twice.
+    A `#fragment` stays last.
+    """
+    if not url or SITE_HOST not in url or "utm_campaign=" in url:
+        return url
+    base, _, fragment = url.partition("#")
+    params = [
+        f"utm_source={UTM_SOURCE}",
+        f"utm_medium={UTM_MEDIUM}",
+        f"utm_campaign={campaign}",
+    ]
+    slug = _utm_slug(content)
+    if slug:
+        params.append(f"utm_content={slug}")
+    joiner = "&" if "?" in base else "?"
+    tagged = f"{base}{joiner}{'&'.join(params)}"
+    return f"{tagged}#{fragment}" if fragment else tagged
+
+
+def _links(record: dict, campaign: str = "volta") -> str:
     """Repo / case-study links for one project, or a declared gap when there are none."""
     github = _clean_text(record.get("github"))
-    href = _clean_text(record.get("href"))
+    href = _utm(_clean_text(record.get("href")), campaign, record.get("slug"))
     parts: list[str] = []
     # A private repo 404s for anonymous readers, so advertising its URL here (and
     # in the CI liveness list) is a dead link, not a pointer — mark it private.
@@ -878,7 +915,7 @@ def _project_line(index: int, record: dict) -> str:
     falls back to the bold text link, so a new case renders before its SVG.
     """
     title = _pick(record, "title_en", "title")
-    href = _clean_text(record.get("href"))
+    href = _utm(_clean_text(record.get("href")), "volta", record.get("slug"))
     card = _volta_card(record)
     if href and card:
         parts = [
@@ -1026,7 +1063,7 @@ def _project_card(index: int, record: dict) -> list[str]:
     and the case study one click away is where the claim and its numbers live.
     """
     title = _pick(record, "title_en", "title")
-    href = _clean_text(record.get("href"))
+    href = _utm(_clean_text(record.get("href")), "featured", record.get("slug"))
     github = _clean_text(record.get("github"))
     logo = LOGO_BY_SLUG.get(_clean_text(record.get("slug")))
 

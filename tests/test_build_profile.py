@@ -580,6 +580,7 @@ def _project(
     href="https://example.test/case",
     github=None,
     private=False,
+    slug=None,
 ):
     return {
         "track": track,
@@ -590,6 +591,7 @@ def _project(
         "href": href,
         "github": github,
         "private": private,
+        "slug": slug,
     }
 
 
@@ -666,7 +668,59 @@ def test_build_projects_block_repo_and_case_links():
     assert "img.shields.io/badge/Repo-demo-0f2a2b" in block
     assert f"]({github})" in block
     assert "img.shields.io/badge/Case_study-fe4e02" in block
-    assert f"]({href})" in block
+    # The case-study link is tagged (docs/development.md §UTM scheme); the repo
+    # link is another host and stays untagged.
+    assert f"]({bp._utm(href, 'featured')})" in block
+
+
+def test_utm_tags_site_links_only():
+    site = "https://nikitaboyarkin.github.io/projects/ab/"
+    assert bp._utm(site, "featured") == (
+        f"{site}?utm_source=github&utm_medium=profile_readme&utm_campaign=featured"
+    )
+    # Another host, no host, empty value: untouched — a utm_* there is noise.
+    for url in (
+        "https://github.com/NikitaBoyarkin/ab_test",
+        "/relative/path",
+        "",
+    ):
+        assert bp._utm(url, "featured") == url
+
+
+def test_utm_keeps_fragment_last_and_is_not_applied_twice():
+    tagged = bp._utm("https://nikitaboyarkin.github.io/x/?a=1#section", "notes", "AB Card")
+    assert tagged == (
+        "https://nikitaboyarkin.github.io/x/?a=1"
+        "&utm_source=github&utm_medium=profile_readme&utm_campaign=notes"
+        "&utm_content=ab_card#section"
+    )
+    assert bp._utm(tagged, "connect") == tagged
+
+
+def test_project_card_tags_case_study_in_both_places():
+    href = "https://nikitaboyarkin.github.io/projects/ab/"
+    block = bp.build_projects_block(
+        _registry(projects=[_project("A/B", "experiments", href=href, slug="ab")])
+    )
+    card = _cards(block)[0]
+    expected = bp._utm(href, "featured", "ab")
+    # Heading link and case-study badge both carry the tag, so a click from
+    # either place lands in the same campaign. The heading is raw HTML, where
+    # `&` is escaped by _esc.
+    assert expected in card
+    assert expected.replace("&", "&amp;") in card
+    assert "utm_content=ab" in expected
+
+
+def test_volta_appendix_tags_site_links_with_its_own_campaign():
+    href = "https://nikitaboyarkin.github.io/projects/volta/funnel/"
+    block = bp.build_projects_block(
+        _registry(volta_cases=[_case("Funnel", href=href, slug="funnel")])
+    )
+    tagged = bp._utm(href, "volta", "funnel")
+    assert tagged in block
+    assert "utm_campaign=volta" in tagged
+    assert "utm_campaign=featured" not in block
 
 
 def test_build_projects_block_prefers_en_text():
