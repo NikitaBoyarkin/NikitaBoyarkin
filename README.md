@@ -1,18 +1,3 @@
-<!-- ascii-art: pyfiglet + ascii-bin (CC0) -->
-```text
- _   _ _ _    _ _        ____                         _    _
-| \ | (_) | _(_) |_ __ _| __ )  ___  _   _  __ _ _ __| | _(_)_ __
-|  \| | | |/ / | __/ _` |  _ \ / _ \| | | |/ _` | '__| |/ / | '_ \
-| |\  | |   <| | || (_| | |_) | (_) | |_| | (_| | |  |   <| | | | |
-|_| \_|_|_|\_\_|\__\__,_|____/ \___/ \__, |\__,_|_|  |_|\_\_|_| |_|
-                                     |___/
-
-╭─────────────────────────────────────────────────────────────────────────╮
-│ Last refreshed: 2026-10-27 21:00 UTC · 141 contributions in the last... │
-╰─────────────────────────────────────────────────────────────────────────╯
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-```
-
 <p align="center">
   <img src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/hero.svg" width="100%" alt="Nikita Boyarkin — Data / Product Analyst. Ambiguous product questions turned into clean experiments, SQL pipelines, and decisions." />
 </p>
@@ -339,10 +324,6 @@ _Last refreshed: 2026-11-02 12:30 UTC · 303 contributions in the last 7 days_
 ---
 
 ### 🛠️ Tech Stack
-
-<p align="center">
-  <img src="https://skillicons.dev/icons?i=python,scikitlearn,postgres,sqlite,docker,git&theme=dark&perline=6" alt="Core stack" />
-</p>
 
 **Languages**
 
