@@ -20,10 +20,10 @@
 ### 🗂️ All Projects
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/projects.svg" width="100%" alt="Portfolio overview: 27 projects across 4 tracks plus 23 Volta Neobank case studies" />
+  <img src="https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin/main/projects.svg" width="100%" alt="Portfolio overview: 31 projects across 4 tracks plus 23 Volta Neobank case studies" />
 </p>
 
-**27 projects** across **4 tracks** · **23 Volta case studies**
+**31 projects** across **4 tracks** · **23 Volta case studies**
 
 #### 1. <a href="https://nikitaboyarkin.github.io/projects/ab/?utm_source=github&amp;utm_medium=profile_readme&amp;utm_campaign=featured&amp;utm_content=ab"><img src="ab-title.svg" align="absmiddle" alt="A/B Testing Methodology Toolkit" /></a> — Experiments
 
@@ -89,6 +89,8 @@
 
 #### 9. <a href="https://nikitaboyarkin.github.io/projects/delivery/?utm_source=github&amp;utm_medium=profile_readme&amp;utm_campaign=featured&amp;utm_content=delivery"><img src="delivery-title.svg" align="absmiddle" alt="Delivery Control Tower" /></a> — Analytics
 
+[![Repo](https://img.shields.io/badge/Repo-delivery--control--tower-0f2a2b?style=for-the-badge&logo=github&logoColor=fe4e02)](https://github.com/NikitaBoyarkin/delivery-control-tower)
+[![Stars](https://img.shields.io/github/stars/NikitaBoyarkin/delivery-control-tower?style=for-the-badge&logo=github&color=fe4e02)](https://github.com/NikitaBoyarkin/delivery-control-tower)
 [![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/projects/delivery/?utm_source=github&utm_medium=profile_readme&utm_campaign=featured&utm_content=delivery)
 
 **Stack:** ![python](https://img.shields.io/badge/python-3776AB?style=flat-square&logo=python&logoColor=white) ![sql](https://img.shields.io/badge/sql-4169E1?style=flat-square&logo=postgresql&logoColor=white) ![duckdb](https://img.shields.io/badge/duckdb-FFF000?style=flat-square&logo=duckdb&logoColor=white) ![superset](https://img.shields.io/badge/superset-20A6C9?style=flat-square&logo=apachesuperset&logoColor=white)
@@ -177,7 +179,15 @@
 
 **Stack:** ![SQL](https://img.shields.io/badge/SQL-4169E1?style=flat-square&logo=postgresql&logoColor=white) ![dbt](https://img.shields.io/badge/dbt-FF694A?style=flat-square&logo=dbt&logoColor=white) ![DuckDB](https://img.shields.io/badge/DuckDB-FFF000?style=flat-square&logo=duckdb&logoColor=white) ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
 
-#### 21. <a href="https://nikitaboyarkin.github.io/projects/supabase/?utm_source=github&amp;utm_medium=profile_readme&amp;utm_campaign=featured&amp;utm_content=supabase"><img src="supabase-analytics.svg" align="absmiddle" alt="Product Analytics + A/B on Supabase" /></a> — Product
+#### 21. <a href="https://nikitaboyarkin.github.io/projects/marketplace-liquidity/?utm_source=github&amp;utm_medium=profile_readme&amp;utm_campaign=featured&amp;utm_content=marketplace_liquidity">Classifieds liquidity — a measurability audit</a> — Analytics
+
+[![Repo](https://img.shields.io/badge/Repo-marketplace--liquidity--lab-0f2a2b?style=for-the-badge&logo=github&logoColor=fe4e02)](https://github.com/NikitaBoyarkin/marketplace-liquidity-lab)
+[![Stars](https://img.shields.io/github/stars/NikitaBoyarkin/marketplace-liquidity-lab?style=for-the-badge&logo=github&color=fe4e02)](https://github.com/NikitaBoyarkin/marketplace-liquidity-lab)
+[![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/projects/marketplace-liquidity/?utm_source=github&utm_medium=profile_readme&utm_campaign=featured&utm_content=marketplace_liquidity)
+
+**Stack:** ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white) ![pandas](https://img.shields.io/badge/pandas-150458?style=flat-square&logo=pandas&logoColor=white) ![DuckDB](https://img.shields.io/badge/DuckDB-FFF000?style=flat-square&logo=duckdb&logoColor=white) ![SciPy](https://img.shields.io/badge/SciPy-8CAAE6?style=flat-square&logo=scipy&logoColor=white)
+
+#### 22. <a href="https://nikitaboyarkin.github.io/projects/supabase/?utm_source=github&amp;utm_medium=profile_readme&amp;utm_campaign=featured&amp;utm_content=supabase"><img src="supabase-analytics.svg" align="absmiddle" alt="Product Analytics + A/B on Supabase" /></a> — Product
 
 [![Repo](https://img.shields.io/badge/Repo-supabase--product--analytics-0f2a2b?style=for-the-badge&logo=github&logoColor=fe4e02)](https://github.com/NikitaBoyarkin/supabase-product-analytics)
 [![Stars](https://img.shields.io/github/stars/NikitaBoyarkin/supabase-product-analytics?style=for-the-badge&logo=github&color=fe4e02)](https://github.com/NikitaBoyarkin/supabase-product-analytics)
@@ -185,19 +195,19 @@
 
 **Stack:** ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white) ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=flat-square&logo=streamlit&logoColor=white) ![Supabase](https://img.shields.io/badge/Supabase-3FCF8E?style=flat-square&logo=supabase&logoColor=white) ![SQL](https://img.shields.io/badge/SQL-4169E1?style=flat-square&logo=postgresql&logoColor=white)
 
-#### 22. <a href="https://nikitaboyarkin.github.io/projects/streamlit/?utm_source=github&amp;utm_medium=profile_readme&amp;utm_campaign=featured&amp;utm_content=streamlit"><img src="streamlit-title.svg" align="absmiddle" alt="Product Analytics Dashboard (Streamlit)" /></a> — Product
+#### 23. <a href="https://nikitaboyarkin.github.io/projects/streamlit/?utm_source=github&amp;utm_medium=profile_readme&amp;utm_campaign=featured&amp;utm_content=streamlit"><img src="streamlit-title.svg" align="absmiddle" alt="Product Analytics Dashboard (Streamlit)" /></a> — Product
 
 [![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/projects/streamlit/?utm_source=github&utm_medium=profile_readme&utm_campaign=featured&utm_content=streamlit) · _private_
 
 **Stack:** ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white) ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=flat-square&logo=streamlit&logoColor=white) ![pandas / NumPy](https://img.shields.io/badge/pandas_%2F_NumPy-150458?style=flat-square&logo=pandas&logoColor=white)
 
-#### 23. <a href="https://nikitaboyarkin.github.io/projects/posthog/?utm_source=github&amp;utm_medium=profile_readme&amp;utm_campaign=featured&amp;utm_content=posthog"><img src="posthog-title.svg" align="absmiddle" alt="TaskFlow — PostHog Product Analytics Pipeline" /></a> — Product
+#### 24. <a href="https://nikitaboyarkin.github.io/projects/posthog/?utm_source=github&amp;utm_medium=profile_readme&amp;utm_campaign=featured&amp;utm_content=posthog"><img src="posthog-title.svg" align="absmiddle" alt="TaskFlow — PostHog Product Analytics Pipeline" /></a> — Product
 
 [![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/projects/posthog/?utm_source=github&utm_medium=profile_readme&utm_campaign=featured&utm_content=posthog) · _private_
 
 **Stack:** ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white) ![PostHog](https://img.shields.io/badge/PostHog-000000?style=flat-square&logo=posthog&logoColor=white) ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white) ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=flat-square&logo=streamlit&logoColor=white)
 
-#### 24. <a href="https://nikitaboyarkin.github.io/projects/airflow/?utm_source=github&amp;utm_medium=profile_readme&amp;utm_campaign=featured&amp;utm_content=airflow"><img src="airflow-title.svg" align="absmiddle" alt="Airflow DAG Platform" /></a> — Engineering
+#### 25. <a href="https://nikitaboyarkin.github.io/projects/airflow/?utm_source=github&amp;utm_medium=profile_readme&amp;utm_campaign=featured&amp;utm_content=airflow"><img src="airflow-title.svg" align="absmiddle" alt="Airflow DAG Platform" /></a> — Engineering
 
 [![Repo](https://img.shields.io/badge/Repo-airflow-0f2a2b?style=for-the-badge&logo=github&logoColor=fe4e02)](https://github.com/NikitaBoyarkin/airflow)
 [![Stars](https://img.shields.io/github/stars/NikitaBoyarkin/airflow?style=for-the-badge&logo=github&color=fe4e02)](https://github.com/NikitaBoyarkin/airflow)
@@ -205,7 +215,15 @@
 
 **Stack:** ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white) ![Apache Airflow 3](https://img.shields.io/badge/Apache_Airflow_3-017CEE?style=flat-square&logo=apacheairflow&logoColor=white) ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=postgresql&logoColor=white) ![Docker Compose](https://img.shields.io/badge/Docker_Compose-2496ED?style=flat-square&logo=docker&logoColor=white)
 
-#### 25. <a href="https://nikitaboyarkin.github.io/projects/garden/?utm_source=github&amp;utm_medium=profile_readme&amp;utm_campaign=featured&amp;utm_content=garden"><img src="garden-title.svg" align="absmiddle" alt="Digital Garden — EQ in IT" /></a> — Engineering
+#### 26. <a href="https://nikitaboyarkin.github.io/projects/clickhouse/?utm_source=github&amp;utm_medium=profile_readme&amp;utm_campaign=featured&amp;utm_content=clickhouse">ClickHouse — ten SQL cases on 50M rows</a> — Engineering
+
+[![Repo](https://img.shields.io/badge/Repo-clickhouse--analytics-0f2a2b?style=for-the-badge&logo=github&logoColor=fe4e02)](https://github.com/NikitaBoyarkin/clickhouse-analytics)
+[![Stars](https://img.shields.io/github/stars/NikitaBoyarkin/clickhouse-analytics?style=for-the-badge&logo=github&color=fe4e02)](https://github.com/NikitaBoyarkin/clickhouse-analytics)
+[![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/projects/clickhouse/?utm_source=github&utm_medium=profile_readme&utm_campaign=featured&utm_content=clickhouse)
+
+**Stack:** ![ClickHouse](https://img.shields.io/badge/ClickHouse-6E7681?style=flat-square) ![DuckDB](https://img.shields.io/badge/DuckDB-FFF000?style=flat-square&logo=duckdb&logoColor=white) ![SQL](https://img.shields.io/badge/SQL-4169E1?style=flat-square&logo=postgresql&logoColor=white) ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
+
+#### 27. <a href="https://nikitaboyarkin.github.io/projects/garden/?utm_source=github&amp;utm_medium=profile_readme&amp;utm_campaign=featured&amp;utm_content=garden"><img src="garden-title.svg" align="absmiddle" alt="Digital Garden — EQ in IT" /></a> — Engineering
 
 [![Repo](https://img.shields.io/badge/Repo-digital__garden-0f2a2b?style=for-the-badge&logo=github&logoColor=fe4e02)](https://github.com/NikitaBoyarkin/digital_garden)
 [![Stars](https://img.shields.io/github/stars/NikitaBoyarkin/digital_garden?style=for-the-badge&logo=github&color=fe4e02)](https://github.com/NikitaBoyarkin/digital_garden)
@@ -213,7 +231,15 @@
 
 **Stack:** ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white) ![Quartz v4](https://img.shields.io/badge/Quartz_v4-7C3AED?style=flat-square&logo=obsidian&logoColor=white) ![Markdown](https://img.shields.io/badge/Markdown-000000?style=flat-square&logo=markdown&logoColor=white) ![Obsidian](https://img.shields.io/badge/Obsidian-7C3AED?style=flat-square&logo=obsidian&logoColor=white)
 
-#### 26. <a href="https://nikitaboyarkin.github.io/projects/scrolly/?utm_source=github&amp;utm_medium=profile_readme&amp;utm_campaign=featured&amp;utm_content=scrolly"><img src="scrolly-title.svg" align="absmiddle" alt="Scrolly English Speaking" /></a> — Engineering
+#### 28. <a href="https://nikitaboyarkin.github.io/projects/oss-catalog/?utm_source=github&amp;utm_medium=profile_readme&amp;utm_campaign=featured&amp;utm_content=oss_catalog">OSS catalog — 47 projects from one source</a> — Engineering
+
+[![Repo](https://img.shields.io/badge/Repo-oss--catalog-0f2a2b?style=for-the-badge&logo=github&logoColor=fe4e02)](https://github.com/NikitaBoyarkin/oss-catalog)
+[![Stars](https://img.shields.io/github/stars/NikitaBoyarkin/oss-catalog?style=for-the-badge&logo=github&color=fe4e02)](https://github.com/NikitaBoyarkin/oss-catalog)
+[![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/projects/oss-catalog/?utm_source=github&utm_medium=profile_readme&utm_campaign=featured&utm_content=oss_catalog)
+
+**Stack:** ![Astro](https://img.shields.io/badge/Astro-BC52EE?style=flat-square&logo=astro&logoColor=white) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white) ![Bun](https://img.shields.io/badge/Bun-6E7681?style=flat-square) ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
+
+#### 29. <a href="https://nikitaboyarkin.github.io/projects/scrolly/?utm_source=github&amp;utm_medium=profile_readme&amp;utm_campaign=featured&amp;utm_content=scrolly"><img src="scrolly-title.svg" align="absmiddle" alt="Scrolly English Speaking" /></a> — Engineering
 
 [![Repo](https://img.shields.io/badge/Repo-scrolly--english--speaking-0f2a2b?style=for-the-badge&logo=github&logoColor=fe4e02)](https://github.com/NikitaBoyarkin/scrolly-english-speaking)
 [![Stars](https://img.shields.io/github/stars/NikitaBoyarkin/scrolly-english-speaking?style=for-the-badge&logo=github&color=fe4e02)](https://github.com/NikitaBoyarkin/scrolly-english-speaking)
@@ -221,13 +247,21 @@
 
 **Stack:** ![Astro](https://img.shields.io/badge/Astro-BC52EE?style=flat-square&logo=astro&logoColor=white) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white) ![MDX](https://img.shields.io/badge/MDX-1B1F24?style=flat-square&logo=mdx&logoColor=white) ![D3](https://img.shields.io/badge/D3-F9A03C?style=flat-square&logo=d3&logoColor=white)
 
-#### 27. <a href="https://nikitaboyarkin.github.io/projects/site/?utm_source=github&amp;utm_medium=profile_readme&amp;utm_campaign=featured&amp;utm_content=site"><img src="site-title.svg" align="absmiddle" alt="This Portfolio Site" /></a> — Engineering
+#### 30. <a href="https://nikitaboyarkin.github.io/projects/site/?utm_source=github&amp;utm_medium=profile_readme&amp;utm_campaign=featured&amp;utm_content=site"><img src="site-title.svg" align="absmiddle" alt="This Portfolio Site" /></a> — Engineering
 
 [![Repo](https://img.shields.io/badge/Repo-NikitaBoyarkin.github.io-0f2a2b?style=for-the-badge&logo=github&logoColor=fe4e02)](https://github.com/NikitaBoyarkin/NikitaBoyarkin.github.io)
 [![Stars](https://img.shields.io/github/stars/NikitaBoyarkin/NikitaBoyarkin.github.io?style=for-the-badge&logo=github&color=fe4e02)](https://github.com/NikitaBoyarkin/NikitaBoyarkin.github.io)
 [![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/projects/site/?utm_source=github&utm_medium=profile_readme&utm_campaign=featured&utm_content=site)
 
 **Stack:** ![Astro](https://img.shields.io/badge/Astro-BC52EE?style=flat-square&logo=astro&logoColor=white) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white) ![Markdown](https://img.shields.io/badge/Markdown-000000?style=flat-square&logo=markdown&logoColor=white) ![CSS custom properties](https://img.shields.io/badge/CSS_custom_properties-663399?style=flat-square&logo=css&logoColor=white)
+
+#### 31. <a href="https://nikitaboyarkin.github.io/projects/mm-program-page/?utm_source=github&amp;utm_medium=profile_readme&amp;utm_campaign=featured&amp;utm_content=mm_program_page">Matemarketing 2026 Programme — a static replica</a> — Engineering
+
+[![Repo](https://img.shields.io/badge/Repo-mm--program--page-0f2a2b?style=for-the-badge&logo=github&logoColor=fe4e02)](https://github.com/NikitaBoyarkin/mm-program-page)
+[![Stars](https://img.shields.io/github/stars/NikitaBoyarkin/mm-program-page?style=for-the-badge&logo=github&color=fe4e02)](https://github.com/NikitaBoyarkin/mm-program-page)
+[![Case study](https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge)](https://nikitaboyarkin.github.io/projects/mm-program-page/?utm_source=github&utm_medium=profile_readme&utm_campaign=featured&utm_content=mm_program_page)
+
+**Stack:** ![HTML](https://img.shields.io/badge/HTML-6E7681?style=flat-square) ![CSS](https://img.shields.io/badge/CSS-663399?style=flat-square&logo=css&logoColor=white) ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=white) ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
 
 <details>
 <summary><b>🏦 Volta Neobank — 23 case studies</b></summary>
@@ -264,7 +298,7 @@
 ### ⚡ Activity
 
 <!-- LAST-REFRESHED:START -->
-_Last refreshed: 2026-11-02 12:30 UTC · 303 contributions in the last 7 days_
+_Last refreshed: 2026-11-03 11:58 UTC · 337 contributions in the last 7 days_
 <!-- LAST-REFRESHED:END -->
 
 <details>
@@ -312,7 +346,11 @@ _Last refreshed: 2026-11-02 12:30 UTC · 303 contributions in the last 7 days_
 ### 📝 Recent Notes
 
 <!-- RECENT-POSTS-LIST:START -->
-- [Кейс Volta: воронка, A/B и retention на синтетике необанка](https://nikitaboyarkin.github.io/posts/volta-neobank-case-study/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)- [Кейсы с собеседований: как диагностировать просадку метрики](https://nikitaboyarkin.github.io/posts/analyst-interview-cases/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)- [Проактивность аналитика за рамками роли](https://nikitaboyarkin.github.io/posts/analyst-proactivity/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)- [Churn + uplift: кому дать скидку &lpar;причинный таргетинг&rpar;](https://nikitaboyarkin.github.io/posts/churn-uplift-discount/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)- [EDA-шаблон с кодом: разведочный анализ по-продуктовому](https://nikitaboyarkin.github.io/posts/eda-python-template/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)
+- [Кейс Volta: воронка, A/B и retention на синтетике необанка](https://nikitaboyarkin.github.io/posts/volta-neobank-case-study/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)
+- [Кейсы с собеседований: как диагностировать просадку метрики](https://nikitaboyarkin.github.io/posts/analyst-interview-cases/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)
+- [Проактивность аналитика за рамками роли](https://nikitaboyarkin.github.io/posts/analyst-proactivity/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)
+- [Churn + uplift: кому дать скидку &lpar;причинный таргетинг&rpar;](https://nikitaboyarkin.github.io/posts/churn-uplift-discount/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)
+- [EDA-шаблон с кодом: разведочный анализ по-продуктовому](https://nikitaboyarkin.github.io/posts/eda-python-template/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)
 <!-- RECENT-POSTS-LIST:END -->
 
 > Auto-updated daily from the [site RSS](https://nikitaboyarkin.github.io/rss.xml) via GitHub Actions.
