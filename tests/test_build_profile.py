@@ -813,10 +813,11 @@ def test_sync_projects_block_replaces_existing():
     assert "pre" in out and "post" in out
 
 
-def test_sync_projects_block_inserts_before_games():
-    games = "### 🎮 Playable Games"
-    out = bp.sync_projects_block(f"body\n\n{games}\nmore\n", "BLOCK")
-    assert out.index(_START) < out.index(games)
+def test_sync_projects_block_inserts_before_activity():
+    """Without markers, the block lands where the shipped README keeps it."""
+    activity = "### ⚡ Activity"
+    out = bp.sync_projects_block(f"body\n\n{activity}\nmore\n", "BLOCK")
+    assert out.index(_START) < out.index(activity)
 
 
 def test_sync_projects_block_appends_when_no_anchor():
@@ -826,7 +827,7 @@ def test_sync_projects_block_appends_when_no_anchor():
 
 
 def test_sync_projects_block_is_idempotent():
-    doc = "body\n\n### 🎮 Playable Games\n"
+    doc = "body\n\n### ⚡ Activity\n"
     once = bp.sync_projects_block(doc, "BLOCK")
     assert bp.sync_projects_block(once, "BLOCK") == once
 

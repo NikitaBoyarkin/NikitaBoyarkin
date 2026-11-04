@@ -1365,15 +1365,16 @@ def sync_projects_block(content: str, block: str) -> str:
     """Place a generated projects block into README content, idempotently.
 
     Existing markers are replaced in place; otherwise the block is inserted just
-    above the Playable Games section, or appended at EOF as a last resort.
+    above the Activity section — where it sits in the shipped README, after
+    "Currently" — or appended at EOF as a last resort.
     """
     body = block.strip("\n")
     replacement = f"{ALL_PROJECTS_START}\n{body}\n{ALL_PROJECTS_END}"
     if _ALL_PROJECTS_RE.search(content):
         return _ALL_PROJECTS_RE.sub(lambda _: replacement, content)
-    games_heading = "### 🎮 Playable Games"
-    if games_heading in content:
-        return content.replace(games_heading, f"{replacement}\n\n{games_heading}", 1)
+    activity_heading = "### ⚡ Activity"
+    if activity_heading in content:
+        return content.replace(activity_heading, f"{replacement}\n\n{activity_heading}", 1)
     if content.endswith("\n"):
         return content + "\n" + replacement + "\n"
     return content + "\n\n" + replacement + "\n"

@@ -44,10 +44,6 @@ must stay offline). CI runs the same suite with `pytest --cov=scripts`.
   are referenced from the repo's own `main` via `raw.githubusercontent.com` — no
   third-party render service, zero external requests at render time.
 - **Contribution snake** is committed to `main` and referenced from `main`.
-- **Playable games** are referenced from jsDelivr at `@main`
-  (`cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/<game>.svg`). One policy
-  for all games — no mixed pinned-SHA refs. `@main` resolves the moment the SVG is
-  pushed, so links never point at a commit that lacks the file.
 - **Project covers** are referenced from the portfolio site
   (`nikitaboyarkin.github.io/images/*`), not copied here: the site owns the art, so
   a renamed or redrawn cover cannot leave a stale copy in this repo. GitHub proxies
@@ -66,10 +62,8 @@ Single brand palette — 60 / 30 / 10 by area:
 Defined once in `scripts/build_profile.py`. Secondary tones are **opacity on
 these three tokens** — `MUTED_OP` (secondary text), `FAINT_OP` (gridlines,
 baselines, empty bars/tiles), `GHOST_OP` (the `Other` language slice) — never
-new hex values, so the rendered cards stay exactly 3 colors. Two deliberate
-exceptions are semantic and kept: GitHub linguist colors in `top-languages.svg`
-and in-game state colors (e.g. Cohort Catch green/grey). README game-card
-borders use the cream token.
+new hex values, so the rendered cards stay exactly 3 colors. One deliberate
+exception is semantic and kept: GitHub linguist colors in `top-languages.svg`.
 
 ## All Projects cards
 
