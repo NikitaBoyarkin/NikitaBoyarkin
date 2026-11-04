@@ -689,6 +689,18 @@ TRACK_PLAIN_LABELS = {
     "engineering": "Engineering",
 }
 
+# Volta sub-cases are ordered by depth, not by track: the four core cases carry the
+# product argument, and each later layer adds a reading (extended, market jobs, the
+# v2 segmentation, causal validation). The label is the card's eyebrow, so a reader
+# scrolling the appendix knows how far from the core a case sits.
+LAYER_PLAIN_LABELS = {
+    "core": "Core",
+    "extended": "Extended",
+    "market-jobs": "Market jobs",
+    "rat-v2": "RAT v2",
+    "causal": "Causal",
+}
+
 
 def fetch_projects_registry(url: str = PROJECTS_REGISTRY_URL, retries: int = 3) -> dict:
     """GET the project registry JSON, retrying transient network failures.
@@ -776,26 +788,8 @@ def _utm(url: str, campaign: str, content: object = "") -> str:
     return f"{tagged}#{fragment}" if fragment else tagged
 
 
-def _links(record: dict, campaign: str = "volta") -> str:
-    """Repo / case-study links for one project, or a declared gap when there are none."""
-    github = _clean_text(record.get("github"))
-    href = _utm(_clean_text(record.get("href")), campaign, record.get("slug"))
-    parts: list[str] = []
-    # A private repo 404s for anonymous readers, so advertising its URL here (and
-    # in the CI liveness list) is a dead link, not a pointer — mark it private.
-    if github and not record.get("private"):
-        parts.append(f"[Repo]({github})")
-    if href:
-        parts.append(f"[Case study]({href})")
-    if record.get("private"):
-        parts.append("_private_")
-    return " · ".join(parts) if parts else "—"
-
-
-_NUMBER_RE = re.compile(r"\d+(?:[.,]\d+)?")
-
-# Tools are a stack signal for a screener, not a manifest: past four they push
-# the row past a line and the title stops being the scan anchor.
+# Tools are a stack signal for a screener, not a manifest: past four the card's
+# stack row wraps under the action badges and stops being scannable.
 TOOL_LIMIT = 4
 
 # Registry tool names are free text ("pandas / NumPy", "uv + ruff", "Docker /
@@ -857,11 +851,144 @@ TOOL_BADGE = "https://img.shields.io/badge/{label}-{color}?style=flat-square{log
 TOOL_LOGO = "&logo={slug}&logoColor=white"
 
 
+# Catalogue cards. Every card opens on the site's own cover art —
+# `public/images/<slug>.svg` in the portfolio repo, a 1200×600 titled diagram —
+# so the README and the portfolio show the same picture of a project. Volta
+# sub-cases have no art of their own and render without a cover; see _volta_card.
+#
+# The map is explicit rather than `f"{slug}.svg"` on purpose: a project added to
+# the registry before its cover exists must render without an image, not with an
+# <img> that 404s.
+COVER_BASE = f"https://{SITE_HOST}/images/"
+COVER_BY_SLUG = {
+    "ab": "ab.svg",
+    "airflow": "airflow.svg",
+    "bot": "bot.svg",
+    "causal": "causal.svg",
+    "churn": "churn.svg",
+    "clickhouse": "clickhouse.svg",
+    "cohort": "cohort.svg",
+    "crm-experiment-lab": "crm-experiment-lab.png",
+    "delivery": "delivery.svg",
+    "games": "games.svg",
+    "garden": "garden.svg",
+    "gmv-drop-rca": "gmv-drop-rca.svg",
+    "linkedin": "linkedin.svg",
+    "marketplace-liquidity": "marketplace-liquidity.svg",
+    "ml": "ml.svg",
+    "mm-program-page": "mm-program-page.svg",
+    "oss-catalog": "oss-catalog.svg",
+    "posthog": "posthog.svg",
+    "product-ab-funnel": "product-ab-funnel.svg",
+    "promo": "promo.svg",
+    "python": "python.svg",
+    "rag": "rag.svg",
+    "rfm": "rfm.svg",
+    "sales-calls": "sales-calls.svg",
+    "scrolly": "scrolly.svg",
+    "serp-rank": "serp-rank.svg",
+    "site": "site.svg",
+    "sql": "sql.svg",
+    "streamlit": "streamlit.svg",
+    "supabase": "supabase.svg",
+    "volta": "volta.svg",
+}
+# The one cover that is not a slug-named vector: crm-experiment-lab's diagram
+# predates the SVG template and ships as a raster. Only a test reads this — it is
+# the declared exception, and a second raster has to be added here on purpose.
+COVER_RASTERS = frozenset({"crm-experiment-lab.png"})
+
+# One card is one table cell. Constant because the tests and the padding cell
+# must agree with the renderer on the exact opening tag.
+CARD_CELL_OPEN = '<td width="50%" valign="top">'
+CARD_CELL_EMPTY = f"{CARD_CELL_OPEN}</td>"
+
+
+def _cover_url(record: dict) -> str:
+    """Public cover image for one project, or "" when it has no registered cover."""
+    slug = _clean_text(record.get("slug"))
+    name = COVER_BY_SLUG.get(slug)
+    if not name:
+        return ""
+    return COVER_BASE + urllib.parse.quote(name)
+
+
+def _demo_url(record: dict) -> str:
+    """Absolute URL of the live demo, or "" when the project ships none.
+
+    The registry stores a site-hosted demo relative to the site
+    (`demos/ab/index.html`); the two demos that live elsewhere carry an absolute
+    URL already.
+    """
+    demo = _clean_text(record.get("demo"))
+    if not demo:
+        return ""
+    if demo.startswith(("http://", "https://")):
+        return demo
+    return f"https://{SITE_HOST}/" + demo.lstrip("/")
+
+
+# Badge URLs. Rendered as raw `<img>` inside the card's `<td>` — a markdown badge
+# would print as literal brackets there. The star counter is shields' live
+# endpoint rather than a number baked in here: it changes between page views, so a
+# snapshot would be wrong by the next day.
+#
+# `flat-square` rather than `for-the-badge`: four button-weight badges overflow a
+# half-width column and wrap "Case study" onto a line of its own. The counter also
+# drops its "stars" label — the GitHub mark plus a number reads as a count on its
+# own, and the 36 px it frees keeps a long repo name on the same line. Orange is
+# spent once, on the case study (the primary action) and the counter; repo and demo
+# are ink, so the row reads as one call to action instead of two competing ones.
+REPO_BADGE = (
+    "https://img.shields.io/badge/Repo-{name}-0f2a2b?style=flat-square&logo=github&logoColor=fe4e02"
+)
+DEMO_BADGE = "https://img.shields.io/badge/Demo-0f2a2b?style=flat-square&logo=github"
+CASE_STUDY_BADGE = "https://img.shields.io/badge/Case_study-fe4e02?style=flat-square"
+PRIVATE_BADGE = "https://img.shields.io/badge/repo-private-6e7681?style=flat-square"
+STARS_BADGE = (
+    "https://img.shields.io/github/stars/{path}?style=flat-square&label=&logo=github&color=fe4e02"
+)
+
+
+def _badge_escape(value: str) -> str:
+    """shields.io static-badge escaping: '-' → '--', '_' → '__', ' ' → '_'."""
+    return value.replace("-", "--").replace("_", "__").replace(" ", "_")
+
+
+def _badge(url: str, alt: str) -> str:
+    """One shields badge as HTML. The URL is attribute-escaped (`&` → `&amp;`)."""
+    return f'<img src="{_esc(url)}" alt="{_esc(alt)}" />'
+
+
+def _linked_badge(href: str, url: str, alt: str) -> str:
+    return f'<a href="{_esc(href)}">{_badge(url, alt)}</a>'
+
+
+def _repo_name(record: dict) -> str:
+    """Last path segment of the github URL — the Repo badge label."""
+    github = _clean_text(record.get("github")).rstrip("/")
+    return github.rsplit("/", 1)[-1] if github else ""
+
+
+def _stars_badge(record: dict) -> str:
+    """Linked live star-count badge for a public repo, or "" when unparsable.
+
+    The owner/repo pair is read from the registry's github URL (``GitHub`` casing
+    matters to shields), so the badge follows a rename in the registry instead of
+    repeating an owner hardcoded here.
+    """
+    github = _clean_text(record.get("github")).rstrip("/")
+    path = urllib.parse.urlsplit(github).path.strip("/")
+    if path.count("/") != 1:
+        return ""
+    return _linked_badge(github, STARS_BADGE.format(path=path), f"Stars for {path}")
+
+
 def _tool_badge(tool: str) -> str:
-    """One flat-square badge: brand icon + the tool name as the label.
+    """One flat-square stack badge: brand icon + the tool name as the label.
 
     Unknown tools keep the label and drop the logo, so a registry addition
-    renders without editing this table.
+    renders without editing the alias table.
     """
     needle = tool.lower()
     slug, color = "", "6E7681"
@@ -874,231 +1001,140 @@ def _tool_badge(tool: str) -> str:
     shown = tool.split(" (")[0] if len(tool) > 24 else tool
     label = urllib.parse.quote(_badge_escape(shown), safe="")
     logo = TOOL_LOGO.format(slug=slug) if slug else ""
-    return f"![{shown}]({TOOL_BADGE.format(label=label, color=color, logo=logo)})"
+    return _badge(TOOL_BADGE.format(label=label, color=color, logo=logo), shown)
 
 
-def _row_text(record: dict) -> str:
-    """The blurb for one project: its description, plus the result when it adds numbers.
+def _card_badges(record: dict, campaign: str = "featured") -> str:
+    """The card's action row: repo · stars · demo · case study.
 
-    ``description`` states the scope ("16,891 synthetic calls", "8,000 users") and
-    ``result`` states the outcome. On this registry they overlap often: an EN
-    description usually already carries the headline numbers, and its RU result twin
-    restates them. Appending such a result only doubles the line, so the two number
-    sets are compared and the result is kept only when at least half of its numbers
-    are new — a screener reads one sentence per project, not two versions of it.
+    Raw `<a>`/`<img>`, not markdown: GitHub does not run the markdown parser
+    inside an HTML table cell, so `[![Repo](…)](…)` would print as literal
+    brackets. The star count is shields' live endpoint, so a number that changes
+    between page views needs no rebuild here.
+
+    A private repo is not linked — its URL 404s for an anonymous reader — and gets
+    a "repo private" badge instead of a dead button.
     """
-    description = _pick(record, "description_en", "description")
-    result = _pick(record, "result_en", "result")
-    if not result:
-        return description
-    if not description:
-        return result
-    if result in description:
-        return description
-    described = set(_NUMBER_RE.findall(description))
-    measured = set(_NUMBER_RE.findall(result))
-    if not measured or len(measured - described) * 2 < len(measured):
-        return description
-    return f"{description} {result}"
-
-
-def _project_line(index: int, record: dict) -> str:
-    """One numbered row: title · track · tools · links.
-
-    Used for the collapsed Volta appendix, where 23 full cards would be length
-    nobody scrolls; the visible catalogue uses ``_project_card`` instead. The
-    title is still a self-hosted card — an ``<a>`` holding only an ``<img>`` —
-    so the appendix carries the same cream-and-blue wordmarks without repeating
-    the heading/badge block. The blurb is dropped here: inside a collapsed
-    appendix it was the bulk of the text and the case study one click away
-    states the same finding with its numbers. A case with no registered card
-    falls back to the bold text link, so a new case renders before its SVG.
-    """
-    title = _pick(record, "title_en", "title")
-    href = _utm(_clean_text(record.get("href")), "volta", record.get("slug"))
-    card = _volta_card(record)
-    if href and card:
-        parts = [
-            f'{index}. <a href="{_esc(href)}">'
-            f'<img src="{_esc(card)}" align="absmiddle" alt="{_esc(title)}" /></a>'
-        ]
-    elif href:
-        parts = [f"{index}. **[{title}]({href})**"]
-    else:
-        parts = [f"{index}. **{title}**"]
-    track = TRACK_PLAIN_LABELS.get(_clean_text(record.get("track")))
-    if track:
-        parts.append(f"· *{track}*")
-    tools = [_clean_text(tool) for tool in record.get("tools") or [] if _clean_text(tool)]
-    if tools:
-        parts.append("· " + " · ".join(f"`{tool}`" for tool in tools[:TOOL_LIMIT]))
-    links = _links(record)
-    if links:
-        parts.append(f"· {links}")
-    return " ".join(parts)
-
-
-# Volta appendix cards. Same crisp card as the catalogue titles, keyed by case
-# slug, so the 23 sub-cases carry wordmarks without a heading/badge block.
-# A slug missing here falls back to the bold text link, so a new case renders
-# before its SVG exists.
-VOLTA_CARD_BY_SLUG = {
-    "funnel": "volta-card-funnel.svg",
-    "ab": "volta-card-ab.svg",
-    "retention": "volta-card-retention.svg",
-    "segmentation": "volta-card-segmentation.svg",
-    "churn": "volta-card-churn.svg",
-    "rfm": "volta-card-rfm.svg",
-    "clv": "volta-card-clv.svg",
-    "attribution": "volta-card-attribution.svg",
-    "anomalies": "volta-card-anomalies.svg",
-    "spend": "volta-card-spend.svg",
-    "support-churn": "volta-card-support-churn.svg",
-    "nps": "volta-card-nps.svg",
-    "jtbd": "volta-card-jtbd.svg",
-    "unit-economics": "volta-card-unit-economics.svg",
-    "premium-upsell": "volta-card-premium-upsell.svg",
-    "kyc-45": "volta-card-kyc-45.svg",
-    "referral": "volta-card-referral.svg",
-    "assisted-cac": "volta-card-assisted-cac.svg",
-    "fx-sourcing": "volta-card-fx-sourcing.svg",
-    "premium-offers": "volta-card-premium-offers.svg",
-    "anchor-cac": "volta-card-anchor-cac.svg",
-    "dormant-winback": "volta-card-dormant-winback.svg",
-    "causal-kyc": "volta-card-causal-kyc.svg",
-}
-
-
-def _volta_card(record: dict) -> str:
-    """Card SVG filename for one Volta case, or "" when none is registered."""
-    slug = _clean_text(record.get("slug"))
-    if not slug:
-        href = _clean_text(record.get("href"))
-        slug = urllib.parse.urlsplit(href).path.strip("/").rsplit("/", 1)[-1]
-    return VOLTA_CARD_BY_SLUG.get(slug, "")
-
-
-# Featured-style cards. Every project ships a self-hosted SVG in the heading
-# slot instead of linked text: an <a> holding only an <img> escapes GitHub's
-# forced underline. Every wordmark is rendered by github-crisp-links as a card
-# — 15px text on a cream rectangle (F8F2D8) with blue glyphs (1400C3) — so the
-# catalogue and the Volta appendix share one palette.
-# A slug missing here falls back to a plain text link, so a new project still
-# renders before its SVG exists.
-LOGO_BY_SLUG = {
-    "ab": "ab-title.svg",
-    "airflow": "airflow-title.svg",
-    "bot": "bot-title.svg",
-    "causal": "causal-title.svg",
-    "churn": "churn-title.svg",
-    "cohort": "cohort-title.svg",
-    "crm-experiment-lab": "crm-experiment-lab-title.svg",
-    "delivery": "delivery-title.svg",
-    "games": "games-title.svg",
-    "garden": "garden-title.svg",
-    "gmv-drop-rca": "gmv-drop-rca-title.svg",
-    "linkedin": "linkedin-title.svg",
-    "ml": "ml-title.svg",
-    "posthog": "posthog-title.svg",
-    "product-ab-funnel": "product-ab-funnel-title.svg",
-    "promo": "promo-title.svg",
-    "python": "python-title.svg",
-    "rag": "rag-title.svg",
-    "rfm": "rfm-title.svg",
-    "sales-calls": "sales-calls-title.svg",
-    "scrolly": "scrolly-title.svg",
-    "serp-rank": "serp-rank-title.svg",
-    "site": "site-title.svg",
-    "sql": "sql-case-study.svg",
-    "streamlit": "streamlit-title.svg",
-    "supabase": "supabase-analytics.svg",
-    "volta": "volta-neobank.svg",
-}
-
-REPO_BADGE = (
-    "https://img.shields.io/badge/Repo-{name}-0f2a2b"
-    "?style=for-the-badge&logo=github&logoColor=fe4e02"
-)
-CASE_STUDY_BADGE = "https://img.shields.io/badge/Case_study-fe4e02?style=for-the-badge"
-# Stars come from shields' live endpoint rather than a fetched number: the block is
-# rebuilt daily, but a counter that updates on every page view needs no snapshot.
-STARS_BADGE = (
-    "https://img.shields.io/github/stars/{path}?style=for-the-badge&logo=github&color=fe4e02"
-)
-
-
-def _badge_escape(value: str) -> str:
-    """shields.io static-badge escaping: '-' → '--', '_' → '__', ' ' → '_'."""
-    return value.replace("-", "--").replace("_", "__").replace(" ", "_")
-
-
-def _repo_name(record: dict) -> str:
-    """Last path segment of the github URL — the badge label."""
+    href = _utm(_clean_text(record.get("href")), campaign, record.get("slug"))
+    demo = _utm(_demo_url(record), campaign, record.get("slug"))
     github = _clean_text(record.get("github")).rstrip("/")
-    return github.rsplit("/", 1)[-1] if github else ""
-
-
-def _stars_badge(record: dict) -> str:
-    """Linked star-count badge for a public repo, or an empty string.
-
-    The owner/repo pair is read from the registry's github URL (``GitHub`` casing
-    matters to shields), so the badge follows a rename in the registry instead of
-    repeating an owner hardcoded here.
-    """
-    github = _clean_text(record.get("github")).rstrip("/")
-    path = urllib.parse.urlsplit(github).path.strip("/")
-    if path.count("/") != 1:
-        return ""
-    badge_url = STARS_BADGE.format(path=path)
-    return f"[![Stars]({badge_url})]({github})"
-
-
-def _project_card(index: int, record: dict) -> list[str]:
-    """One card: linked heading, badges, stack line.
-
-    Logo (when the project has one) sits inside the linked heading, repo / stars /
-    case study are for-the-badge buttons, tools are a plain ``**Stack:**`` line — so
-    a screener reads title, links and stack in the same order for every project.
-    The registry's description is deliberately absent: a card is a directory entry,
-    and the case study one click away is where the claim and its numbers live.
-    """
-    title = _pick(record, "title_en", "title")
-    href = _utm(_clean_text(record.get("href")), "featured", record.get("slug"))
-    github = _clean_text(record.get("github"))
-    logo = LOGO_BY_SLUG.get(_clean_text(record.get("slug")))
-
-    if href and logo:
-        heading = (
-            f'#### {index}. <a href="{_esc(href)}">'
-            f'<img src="{_esc(logo)}" align="absmiddle" alt="{_esc(title)}" /></a>'
-        )
-    elif href:
-        heading = f'#### {index}. <a href="{_esc(href)}">{_esc(title)}</a>'
-    else:
-        heading = f"#### {index}. {_esc(title)}"
-    track = TRACK_PLAIN_LABELS.get(_clean_text(record.get("track")))
-    if track:
-        heading += f" — {track}"
-
-    lines = [heading, ""]
-
+    private = bool(record.get("private"))
     badges: list[str] = []
-    # A private repo 404s for anonymous readers — a badge there is a dead link.
-    if github and not record.get("private"):
-        badge_url = REPO_BADGE.format(name=_badge_escape(_repo_name(record)))
-        badges.append(f"[![Repo]({badge_url})]({github})")
+    if github and not private:
+        name = _repo_name(record)
+        badges.append(
+            _linked_badge(github, REPO_BADGE.format(name=_badge_escape(name)), f"Repo: {name}")
+        )
         stars = _stars_badge(record)
         if stars:
             badges.append(stars)
+    if demo:
+        badges.append(_linked_badge(demo, DEMO_BADGE, "Live demo"))
     if href:
-        badges.append(f"[![Case study]({CASE_STUDY_BADGE})]({href})")
-    if badges:
-        lines.extend(["\n".join(badges) + (" · _private_" if record.get("private") else ""), ""])
+        badges.append(_linked_badge(href, CASE_STUDY_BADGE, "Case study"))
+    if private:
+        badges.append(_badge(PRIVATE_BADGE, "Private repository"))
+    return " ".join(badges)
 
+
+def _card_cell(record: dict, cover: str, eyebrow: str, campaign: str = "featured") -> list[str]:
+    """One card cell: cover (optional), eyebrow, title, action badges, stack badges.
+
+    Shared by the catalogue and the Volta appendix so the two cannot drift into two
+    card dialects: a project card passes the site cover and the track, a Volta card
+    passes its cream wordmark and the layer it belongs to. ``campaign`` keeps each
+    surface's own UTM bucket (docs/development.md §UTM scheme).
+
+    The card carries no prose — the case study one click away is where the claim
+    and its numbers live, and 54 two-sentence blurbs would be a wall of text. What
+    stays is what a screener scans for: the picture, the group, the name, the
+    buttons, the stack.
+
+    The title is text, not the cream wordmark used as a heading before: a heading a
+    screen reader can read beats a branded chip, and the cover above it already
+    carries the brand. The cover is the click target, so the title stays a plain
+    heading instead of a third link to the same case study. It is an `<h3>` rather
+    than the nesting-correct `<h4>` on purpose: nothing consumes a profile README's
+    outline, and GitHub renders `<h4>` at body size, which would erase the card's
+    only hierarchy cue.
+    """
+    title = _pick(record, "title_en", "title")
+    href = _utm(_clean_text(record.get("href")), campaign, record.get("slug"))
     tools = [_clean_text(tool) for tool in record.get("tools") or [] if _clean_text(tool)]
+
+    cell = [CARD_CELL_OPEN]
+    # An untitled record must not become an empty heading, and a cover link with an
+    # empty alt is a link with no accessible name — so without a title the image
+    # renders unlinked and the heading is skipped.
+    cover_alt = _esc(title) if title else ""
+    if cover and href and title:
+        cell.append(
+            f'<a href="{_esc(href)}"><img src="{_esc(cover)}" width="100%" alt="{cover_alt}" /></a>'
+        )
+    elif cover:
+        cell.append(f'<img src="{_esc(cover)}" width="100%" alt="{cover_alt}" />')
+    if eyebrow:
+        cell.append(f"<sub>{_esc(eyebrow)}</sub>")
+    if title:
+        cell.append(f"<h3>{_esc(title)}</h3>")
+    badges = _card_badges(record, campaign)
+    if badges:
+        cell.append(f"<p>{badges}</p>")
     if tools:
-        badges = " ".join(_tool_badge(tool) for tool in tools[:TOOL_LIMIT])
-        lines.extend([f"**Stack:** {badges}", ""])
+        cell.append(f"<p>{' '.join(_tool_badge(tool) for tool in tools[:TOOL_LIMIT])}</p>")
+    cell.append("</td>")
+    return cell
+
+
+def _project_card(record: dict) -> list[str]:
+    """A catalogue card: the project's site cover, its track as the eyebrow."""
+    return _card_cell(
+        record,
+        _cover_url(record),
+        TRACK_PLAIN_LABELS.get(_clean_text(record.get("track")), ""),
+    )
+
+
+def _volta_card(record: dict) -> list[str]:
+    """An appendix card: no cover, layer as the eyebrow, no stack row.
+
+    The neobank has no per-case art — the 23 sub-cases share the flagship's diagram,
+    and the cream wordmark that used to sit in the row repeats the heading at banner
+    size when stretched across a card. So these render without an image: eyebrow,
+    title, repo/star/case-study badges. Same anatomy, minus the picture it cannot
+    honestly supply. ``volta_cases`` also carry no ``tools`` and no ``demo``.
+    """
+    return _card_cell(
+        record,
+        "",
+        LAYER_PLAIN_LABELS.get(_clean_text(record.get("layer")), ""),
+        campaign="volta",
+    )
+
+
+def _cards_table(records: list[dict], card=_project_card) -> list[str]:
+    """Two-column `<table>` of cards, two per row, built by ``card``.
+
+    Authored as raw HTML rather than a pipe table: a pipe cell cannot hold a
+    1200×600 cover, and the reference this follows renders its catalogue the same
+    way. An odd count is padded with an empty cell — a lone `<td width="50%">` in
+    its own row stretches to the full width and the section stops reading as a grid.
+
+    An empty list returns no lines: a stray `<table></table>` under a "0 projects"
+    summary is markup with nothing to say.
+    """
+    if not records:
+        return []
+    lines = ["<table>"]
+    for start in range(0, len(records), 2):
+        pair = records[start : start + 2]
+        lines.append("<tr>")
+        for record in pair:
+            lines.extend(card(record))
+        if len(pair) == 1:
+            lines.append(CARD_CELL_EMPTY)
+        lines.append("</tr>")
+    lines.append("</table>")
     return lines
 
 
@@ -1122,19 +1158,13 @@ def _projects_in_track_order(registry: dict) -> list[tuple[str, dict]]:
 def _track_counts(registry: dict) -> dict[str, int]:
     """Projects per track, resolved exactly as ``build_projects_block`` does.
 
-    A per-track list contributes its raw ``len`` (the site contract guarantees
-    dict entries); the flat ``projects`` array contributes one per entry whose
-    ``track`` is known. Unknown tracks are ignored; every ``TRACK_ORDER`` key is
-    present and defaults to 0.
+    Counted from ``_projects_in_track_order`` rather than from the raw lists: the
+    summary line, ``projects.svg`` and the number of cards must be one number, and
+    two independent walkers of the same registry is how they drift.
     """
     counts: dict[str, int] = {track: 0 for track in TRACK_ORDER}
-    for track in TRACK_ORDER:
-        items = registry.get(track)
-        if isinstance(items, list):
-            counts[track] += len(items)
-    for project in registry.get("projects") or []:
-        if isinstance(project, dict) and project.get("track") in counts:
-            counts[project["track"]] += 1
+    for track, _ in _projects_in_track_order(registry):
+        counts[track] += 1
     return counts
 
 
@@ -1151,28 +1181,38 @@ def _portfolio_summary(registry: dict) -> str:
 
 
 def projects_links(registry: dict) -> list[str]:
-    """Distinct public github/case-study URLs across the registry, first-seen order.
+    """Distinct public URLs the All Projects block can render, first-seen order.
 
-    Input to the CI link-liveness check: every publicly reachable URL the All
-    Projects block can render, deduped, so a dead link is reported once rather
-    than per occurrence. A private project's ``github`` is skipped — it 404s for
-    anonymous requests — while its public ``href`` case study is still checked.
+    Input to the CI link-liveness check. A catalogue card contributes four kinds —
+    repo, case study, cover and demo — because all four are clicked or fetched on
+    the rendered card, so a renamed asset is a dead card, not just a dead link. A
+    private project's ``github`` is skipped (it 404s for anonymous requests) while
+    its public cover, demo and case study are still checked.
+
+    A Volta case contributes only repo and case study: its card carries no cover and
+    the registry gives it no demo.
     """
-    records = [project for _, project in _projects_in_track_order(registry)]
-    records.extend(case for case in (registry.get("volta_cases") or []) if isinstance(case, dict))
+    projects = [project for _, project in _projects_in_track_order(registry)]
+    cases = [case for case in (registry.get("volta_cases") or []) if isinstance(case, dict)]
     links: list[str] = []
     seen: set[str] = set()
-    for record in records:
-        private = bool(record.get("private"))
-        for key in ("github", "href"):
-            # A private repo's URL is only reachable by its owner; anonymous CI
-            # and readers get a 404, so keep it out of the liveness check.
-            if key == "github" and private:
-                continue
-            value = _clean_text(record.get(key))
+
+    def add(*urls: str) -> None:
+        for value in urls:
             if value and value not in seen:
                 seen.add(value)
                 links.append(value)
+
+    for record in projects:
+        private = bool(record.get("private"))
+        add(
+            "" if private else _clean_text(record.get("github")),
+            _clean_text(record.get("href")),
+            _cover_url(record),
+            _demo_url(record),
+        )
+    for case in cases:
+        add(_clean_text(case.get("github")), _clean_text(case.get("href")))
     return links
 
 
@@ -1272,9 +1312,10 @@ def build_projects_block(registry: dict) -> str:
     Two registry shapes are accepted: a single ``projects`` array whose entries
     carry a ``track`` field (the frozen site contract), and one list per track
     keyed by name. Tracks still decide the order (``TRACK_ORDER``, empty tracks
-    skipped) but no longer the structure: every project is one card, so the
-    catalogue reads top to bottom as one scannable list. The ``volta_cases``
-    list folds into a collapsible block below.
+    skipped) but no longer the structure: every project is one card in a
+    two-column grid — cover, track, title, blurb, links, stack — so the catalogue
+    reads top to bottom as one scannable board. The ``volta_cases`` list folds
+    into a collapsible block below.
     """
     projects = [project for _, project in _projects_in_track_order(registry)]
     counts = _track_counts(registry)
@@ -1286,15 +1327,14 @@ def build_projects_block(registry: dict) -> str:
     lines.append('<p align="center">')
     lines.append(
         f'  <img src="{PROJECTS_SVG_URL}" width="100%" '
-        f'alt="Portfolio overview: {total} projects across {track_total} tracks '
-        f'plus {len(volta)} Volta Neobank case studies" />'
+        f'alt="Portfolio overview: {_esc(total)} projects across {_esc(track_total)} tracks '
+        f'plus {_esc(len(volta))} Volta Neobank case studies" />'
     )
     lines.append("</p>")
     lines.append("")
     lines.append(_portfolio_summary(registry))
     lines.append("")
-    for index, project in enumerate(projects, 1):
-        lines.extend(_project_card(index, project))
+    lines.extend(_cards_table(projects))
 
     if volta:
         while lines and lines[-1] == "":
@@ -1303,13 +1343,12 @@ def build_projects_block(registry: dict) -> str:
         lines.append("<details>")
         lines.append(f"<summary><b>🏦 Volta Neobank — {len(volta)} case studies</b></summary>")
         lines.append("")
-        # Volta parts are authored result-first — their description is the finding —
-        # so the star.result twin only repeats it. Inside a collapsed block that no
-        # screener opens, the repeat is pure length, and 23 full cards would be an
-        # appendix nobody scrolls — so these stay one-line rows.
-        lines.extend(
-            _project_line(index, case) for index, case in enumerate(volta, 1)
-        )
+        # Same card as the catalogue, one level down: the neobank's sub-cases are
+        # where the method is applied end to end, so they earn the same anatomy —
+        # wordmark plate, layer, title, repo/star/case-study badges. They stay
+        # collapsed only because 23 more rows above the Activity section is length
+        # nobody scrolls before deciding whether to keep reading.
+        lines.extend(_cards_table(volta, _volta_card))
         lines.append("")
         lines.append("</details>")
 

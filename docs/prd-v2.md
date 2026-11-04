@@ -265,7 +265,7 @@ concurrency:
 
 **Acceptance Criteria:**
 - [x] Все исходящие ссылки разделов имеют согласованную UTM-схему (`utm_source=github&utm_medium=profile_readme&utm_campaign=<section>`). _(header, featured, building, notes, connect, volta; notes — через `template` в `update-notes.yml`.)_
-- [x] Ссылки каталога и Volta-приложения размечены генератором, а не руками. _(2026-11-01: `_utm` в `scripts/build_profile.py`; `featured` + `utm_content=<slug>` для 27 карточек, `volta` для 23 под-кейсов. Тесты: `tests/test_build_profile.py::test_project_card_tags_case_study_in_both_places`, `::test_volta_appendix_tags_site_links_with_its_own_campaign`.)_
+- [x] Ссылки каталога и Volta-приложения размечены генератором, а не руками. _(2026-11-01: `_utm` в `scripts/build_profile.py`; `featured` + `utm_content=<slug>` для карточек каталога, `volta` для 23 под-кейсов. Тесты: `tests/test_build_profile.py::test_project_card_tags_case_study_in_both_places`, `::test_volta_appendix_tags_site_links_with_its_own_campaign`.)_
 - [x] Нет UTM с PII.
 - [x] Схема задокументирована. _(`docs/development.md` §UTM scheme.)_
 

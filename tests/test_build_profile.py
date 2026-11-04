@@ -8,6 +8,7 @@ import re
 import sys
 import urllib.error
 import xml.etree.ElementTree as ET
+from html.parser import HTMLParser
 from pathlib import Path
 
 import pytest
@@ -564,10 +565,9 @@ def test_no_card_renders_text_below_the_readability_floor():
 _START = "<!-- ALL-PROJECTS:START -->"
 _END = "<!-- ALL-PROJECTS:END -->"
 
-_CARD_HEADING_RE = re.compile(r"^#### (\d+)\. ")
-# Appendix rows start "N. " and may open with either a bold text link or a card
-# <a><img></a> once the case has a registered wordmark.
-_NUMBERED_ROW_RE = re.compile(r"^\d+\. ")
+# A card is one table cell. The block's only other cell is the empty padding cell
+# that keeps an odd catalogue square, so "the cards" == "the non-empty cells".
+_CARD_CELL_OPEN = bp.CARD_CELL_OPEN
 
 
 def _project(
@@ -581,6 +581,7 @@ def _project(
     github=None,
     private=False,
     slug=None,
+    demo=None,
 ):
     return {
         "track": track,
@@ -592,6 +593,7 @@ def _project(
         "github": github,
         "private": private,
         "slug": slug,
+        "demo": demo,
     }
 
 
@@ -611,18 +613,14 @@ def _registry(*, projects=(), volta_cases=()):
 
 
 def _cards(block):
-    """The Featured-style cards of the visible catalogue, in render order."""
+    """The project cards of the visible catalogue, in render order."""
     top = block.partition("<details>")[0]
-    cards, current = [], None
-    for line in top.splitlines():
-        if _CARD_HEADING_RE.match(line):
-            if current is not None:
-                cards.append("\n".join(current).strip())
-            current = [line]
-        elif current is not None:
-            current.append(line)
-    if current is not None:
-        cards.append("\n".join(current).strip())
+    cards = []
+    for chunk in top.split(_CARD_CELL_OPEN)[1:]:
+        cell = chunk.split("</td>", 1)[0]
+        # The padding cell keeps the grid square and holds no project.
+        if cell.strip():
+            cards.append((_CARD_CELL_OPEN + cell + "</td>").strip())
     return cards
 
 
@@ -630,13 +628,14 @@ def _card_for(block, title):
     return next(card for card in _cards(block) if title in card)
 
 
-def _volta_rows(block):
-    """The numbered one-line rows of the collapsed Volta appendix."""
-    return [line for line in block.splitlines() if _NUMBERED_ROW_RE.match(line)]
+def _volta_cards(block):
+    """The appendix cards, i.e. every card after the `<details>` marker."""
+    _, _, appendix = block.partition("<details>")
+    return _cards(appendix)
 
 
-def _volta_row_for(block, title):
-    return next(line for line in _volta_rows(block) if title in line)
+def _volta_card_for(block, title):
+    return next(card for card in _volta_cards(block) if title in card)
 
 
 def test_build_projects_block_lists_every_project_in_track_order():
@@ -656,7 +655,9 @@ def test_build_projects_block_lists_every_project_in_track_order():
     cards = _cards(block)
     assert len(cards) == len(titles)
     assert [next(t for t in titles if t in card) for card in cards] == titles
-    assert [re.match(r"^#### (\d+)\. ", card).group(1) for card in cards] == ["1", "2", "3", "4"]
+    # Order is the registry's track order, and a card is a grid cell — not a
+    # numbered heading, so nothing in the section restarts the count.
+    assert "#### " not in block
 
 
 def test_build_projects_block_repo_and_case_links():
@@ -665,12 +666,15 @@ def test_build_projects_block_repo_and_case_links():
     block = bp.build_projects_block(
         _registry(projects=[_project("Demo", "analytics", github=github, href=href)])
     )
-    assert "img.shields.io/badge/Repo-demo-0f2a2b" in block
-    assert f"]({github})" in block
-    assert "img.shields.io/badge/Case_study-fe4e02" in block
-    # The case-study link is tagged (docs/development.md §UTM scheme); the repo
-    # link is another host and stays untagged.
-    assert f"]({bp._utm(href, 'featured')})" in block
+    card = _card_for(block, "Demo")
+    # Raw anchors and raw <img>: GitHub does not run the markdown parser inside a
+    # table cell, so a `[![Repo](…)](…)` here would print as literal brackets.
+    assert f'href="{github}"' in card
+    assert "img.shields.io/badge/Repo-demo-0f2a2b" in card
+    # The case-study link is tagged (docs/development.md §UTM scheme) and escaped;
+    # the repo link is another host and stays untagged.
+    assert f'href="{bp._esc(bp._utm(href, "featured"))}"' in card
+    assert "[![Repo]" not in block and "[![Case study]" not in block
 
 
 def test_utm_tags_site_links_only():
@@ -704,12 +708,10 @@ def test_project_card_tags_case_study_in_both_places():
     )
     card = _cards(block)[0]
     expected = bp._utm(href, "featured", "ab")
-    # Heading link and case-study badge both carry the tag, so a click from
-    # either place lands in the same campaign. The heading is raw HTML, where
-    # `&` is escaped by _esc.
-    assert expected in card
-    assert expected.replace("&", "&amp;") in card
     assert "utm_content=ab" in expected
+    # Cover anchor and the link line both carry the tag, escaped for HTML, so a
+    # click from either place lands in the same campaign.
+    assert card.count(f'href="{bp._esc(expected)}"') == 2
 
 
 def test_volta_appendix_tags_site_links_with_its_own_campaign():
@@ -718,7 +720,7 @@ def test_volta_appendix_tags_site_links_with_its_own_campaign():
         _registry(volta_cases=[_case("Funnel", href=href, slug="funnel")])
     )
     tagged = bp._utm(href, "volta", "funnel")
-    assert tagged in block
+    assert bp._esc(tagged) in block
     assert "utm_campaign=volta" in tagged
     assert "utm_campaign=featured" not in block
 
@@ -730,16 +732,16 @@ def test_build_projects_block_prefers_en_text():
     block = bp.build_projects_block(_registry(projects=[project]))
     assert "EN Title" in block
     assert "RU Title" not in block
-    # Cards carry no blurb, so the description preference is asserted where it lives.
-    assert bp._row_text(project) == "EN desc"
+    # A card is a directory entry and carries no prose: neither description lands.
+    assert "EN desc" not in block and "RU desc" not in block
 
 
 def test_build_projects_block_falls_back_to_ru_text():
-    # An older RU-only registry (no *_en keys) must still render its rows.
+    # An older RU-only registry (no *_en keys) must still render its cards.
     project = _project("RU Title", "analytics", description="RU desc")
     block = bp.build_projects_block(_registry(projects=[project]))
     assert "RU Title" in block
-    assert bp._row_text(project) == "RU desc"
+    assert "RU desc" not in block
 
 
 def test_build_projects_block_volta_prefers_en_text():
@@ -749,7 +751,7 @@ def test_build_projects_block_volta_prefers_en_text():
     block = bp.build_projects_block(_registry(volta_cases=[case]))
     assert "Volta EN" in block
     assert "Volta RU" not in block
-    # The appendix carries no blurb, so no description reaches the row at all.
+    # Appendix rows are card + tools + links — no blurb anywhere in the section.
     assert "EN desc" not in block and "RU desc" not in block
 
 
@@ -757,9 +759,11 @@ def test_build_projects_block_private_without_repo():
     block = bp.build_projects_block(
         _registry(projects=[_project("Closed", "engineering", github=None, private=True)])
     )
-    assert "Repo-" not in block
-    assert "Case_study" in block
-    assert "_private_" in block
+    card = _card_for(block, "Closed")
+    assert "Repo-" not in card
+    assert "img.shields.io/github/stars" not in card
+    assert "img.shields.io/badge/Case_study" in card
+    assert "img.shields.io/badge/repo-private" in card
 
 
 def test_build_projects_block_private_with_repo_omits_dead_repo_link():
@@ -767,10 +771,11 @@ def test_build_projects_block_private_with_repo_omits_dead_repo_link():
     block = bp.build_projects_block(
         _registry(projects=[_project("Closed", "analytics", github=github, private=True)])
     )
+    assert f'href="{github}"' not in block
     assert "Repo-secret" not in block
-    assert f"]({github})" not in block
-    assert "Case_study" in block
-    assert "_private_" in block
+    assert "img.shields.io/github/stars" not in block
+    assert "img.shields.io/badge/Case_study" in block
+    assert "img.shields.io/badge/repo-private" in block
 
 
 def test_build_projects_block_volta_details():
@@ -785,12 +790,11 @@ def test_build_projects_block_volta_details():
     )
     assert "<details>" in block
     assert "2 case studies" in block
-    details = block[block.index("<details>") :]
-    assert "Volta One" in details and "Volta Two" in details
-    one = next(line for line in details.splitlines() if "Volta One" in line)
-    two = next(line for line in details.splitlines() if "Volta Two" in line)
-    assert f"[Repo]({github})" in one
-    assert "[Repo](" not in two  # null github → no repo link on that bullet
+    one = _volta_card_for(block, "Volta One")
+    two = _volta_card_for(block, "Volta Two")
+    assert f'href="{github}"' in one
+    assert "img.shields.io/badge/Repo-" in one
+    assert "img.shields.io/badge/Repo-" not in two  # null github → no repo badge
 
 
 def test_build_projects_block_no_volta_omits_details():
@@ -1013,6 +1017,36 @@ def test_projects_links_covers_track_lists_and_volta():
     assert len(links) == len(set(links))
 
 
+def test_projects_links_include_the_cover_and_the_demo():
+    """A renamed cover is a dead card on a live README, so CI checks it too."""
+    href = "https://nikitaboyarkin.github.io/projects/ab/"
+    reg = _registry(
+        projects=[_project("AB", "experiments", href=href, slug="ab", demo="demos/ab/index.html")]
+    )
+    links = bp.projects_links(reg)
+    assert "https://nikitaboyarkin.github.io/images/ab.svg" in links
+    assert "https://nikitaboyarkin.github.io/demos/ab/index.html" in links
+
+
+def test_projects_links_keep_a_private_projects_cover_and_demo():
+    reg = _registry(
+        projects=[
+            _project(
+                "P",
+                "analytics",
+                github="https://github.com/NikitaBoyarkin/hidden",
+                private=True,
+                slug="ab",
+                demo="demos/ab/index.html",
+            )
+        ]
+    )
+    links = bp.projects_links(reg)
+    assert "https://github.com/NikitaBoyarkin/hidden" not in links
+    assert "https://nikitaboyarkin.github.io/images/ab.svg" in links
+    assert "https://nikitaboyarkin.github.io/demos/ab/index.html" in links
+
+
 def test_build_projects_block_embeds_svg_and_summary_after_heading():
     reg = _registry(
         projects=[_project("Exp", "experiments"), _project("Ana", "analytics")],
@@ -1029,7 +1063,7 @@ def test_build_projects_block_embeds_svg_and_summary_after_heading():
     assert heading < block.index(summary) < block.index(_cards(block)[0])
 
 
-def test_build_projects_block_card_carries_track_badges_and_stack():
+def test_build_projects_block_card_carries_eyebrow_title_badges_and_stack():
     github = "https://github.com/NikitaBoyarkin/demo"
     href = "https://example.test/case"
     block = bp.build_projects_block(
@@ -1040,24 +1074,41 @@ def test_build_projects_block_card_carries_track_badges_and_stack():
                     "analytics",
                     github=github,
                     href=href,
+                    demo="demos/ab/index.html",
+                    slug="ab",
                     tools=["Python", "SQL", "pytest", "uv", "dbt"],
                 )
             ]
         )
     )
     card = _card_for(block, "Demo")
-    assert card.startswith(f'#### 1. <a href="{href}">Demo</a> — Analytics')
+    assert "<sub>Analytics</sub>" in card  # track eyebrow
+    assert "<h3>Demo</h3>" in card  # title is text, not a wordmark image
+    assert f'href="{github}"' in card
+    assert "<p>desc</p>" not in card, "a card is a directory entry, not a blurb"
+    # Action row: repo badge, live star count, demo, case study.
     assert "img.shields.io/badge/Repo-demo-0f2a2b" in card
-    assert f"]({github})" in card
+    assert "img.shields.io/github/stars/NikitaBoyarkin/demo?style=flat-square" in card
+    assert "img.shields.io/badge/Demo-0f2a2b" in card
     assert "img.shields.io/badge/Case_study-fe4e02" in card
-    assert f"]({href})" in card
-    assert "**Stack:** ![Python](https://img.shields.io/badge/Python-3776AB" in card
-    assert "&logo=python&logoColor=white)" in card
-    assert "dbt" not in card, "tools are capped so the title stays the scan anchor"
+    assert "img.shields.io/badge/Python-3776AB" in card
+    assert "<sub>Python · SQL · pytest · uv</sub>" not in card, "stack is badges now"
+    assert "dbt" not in card, "tools are capped so the stack row stays one line"
+
+
+def test_build_projects_block_card_links_its_cover_to_the_case_study():
+    href = "https://nikitaboyarkin.github.io/projects/ab/"
+    block = bp.build_projects_block(
+        _registry(projects=[_project("A/B", "experiments", href=href, slug="ab")])
+    )
+    card = _card_for(block, "A/B")
+    assert '<img src="https://nikitaboyarkin.github.io/images/ab.svg" width="100%"' in card
+    assert f'<a href="{bp._esc(bp._utm(href, "featured", "ab"))}"><img' in card
+    assert 'alt="A/B"' in card, "a cover-only link needs an accessible name"
 
 
 def test_build_projects_block_card_shows_live_star_count():
-    """Public repos get a linked stars badge; private ones must not.
+    """Public repos get a linked stars badge; a private one must not.
 
     The count is shields' live endpoint, not a snapshot, so the assertion pins the
     owner/repo path — a registry rename has to move the badge with it.
@@ -1077,103 +1128,198 @@ def test_build_projects_block_card_shows_live_star_count():
         )
     )
     card = _card_for(block, "Public")
-    assert "img.shields.io/github/stars/NikitaBoyarkin/demo?style=for-the-badge" in card
-    assert "[![Stars](https://img.shields.io/github/stars/NikitaBoyarkin/demo" in card
-    assert f")]({github})" in card
+    assert "img.shields.io/github/stars/NikitaBoyarkin/demo" in card
+    assert f'<a href="{github}"><img src="https://img.shields.io/github/stars/' in card
     secret = _card_for(block, "Secret")
     assert "github/stars" not in secret, "a private repo's star badge is a dead link"
 
 
-def test_build_projects_block_known_project_gets_a_logo_card():
+class _TableAudit(HTMLParser):
+    """Collects tag-balance errors and the `<td>` count of each `<tr>`."""
+
+    VOID = frozenset({"br", "img", "hr", "meta", "link", "input"})
+
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.stack: list[str] = []
+        self.errors: list[tuple[str, list[str]]] = []
+        self.rows: list[int] = []
+
+    def handle_starttag(self, tag, attrs):
+        if tag in self.VOID:
+            return
+        self.stack.append(tag)
+        if tag == "tr":
+            self.rows.append(0)
+        elif tag == "td" and self.rows:
+            self.rows[-1] += 1
+
+    def handle_startendtag(self, tag, attrs):
+        # `<img />` is self-closing markup, not an open/close pair.
+        self.handle_starttag(tag, attrs)
+
+    def handle_endtag(self, tag):
+        if not self.stack or self.stack[-1] != tag:
+            self.errors.append((tag, list(self.stack)))
+            return
+        self.stack.pop()
+
+
+def test_build_projects_block_emits_balanced_card_html():
+    """Card HTML is string-concatenated: a stray tag would break the live grid."""
+    block = bp.build_projects_block(
+        _registry(
+            projects=[
+                _project("A", "experiments", slug="ab"),
+                _project("B", "analytics"),
+                _project("C", "product"),
+            ],
+            volta_cases=[_case("V")],
+        )
+    )
+    audit = _TableAudit()
+    audit.feed(block)
+    assert audit.errors == []
+    assert audit.stack == [], "every opened element must be closed"
+    # Three cards in two rows, the second padded to stay a grid; then the single
+    # Volta case in its own padded row of the appendix table.
+    assert audit.rows == [2, 2, 2]
+    assert len(_cards(block)) == 3
+    assert len(_volta_cards(block)) == 1
+
+
+def test_build_projects_block_summary_count_matches_the_cards():
+    """The headline count, projects.svg and the grid must be one number."""
+    reg = _registry(
+        projects=[
+            _project("A", "experiments"),
+            _project("B", "analytics"),
+            _project("C", "analytics"),
+            _project("D", "engineering"),
+        ]
+    )
+    block = bp.build_projects_block(reg)
+    assert f"**{len(_cards(block))} projects**" in block
+    assert sum(bp._track_counts(reg).values()) == len(_cards(block))
+
+
+def test_build_projects_block_without_projects_renders_no_table():
+    """A zero-project registry must not emit an empty <table>."""
+    block = bp.build_projects_block({"projects": [], "volta_cases": []})
+    assert "<table>" not in block
+    assert "0 projects" in block
+
+
+def test_build_projects_block_escapes_the_card_tools_line():
+    project = _project("Demo", "analytics", tools=['SQL" onload="x', "pandas <b>"])
+    block = bp.build_projects_block(_registry(projects=[project]))
+    assert 'onload="x' not in block
+    # The label travels url-encoded in the badge URL and escaped in its alt text.
+    assert "SQL%22" in block
+    assert "pandas &lt;b&gt;" in block
+
+
+def test_build_projects_block_known_project_gets_a_cover():
     project = _project("Volta Neobank", "experiments", href="https://example.test/volta")
     project["slug"] = "volta"
     card = _card_for(bp.build_projects_block(_registry(projects=[project])), "Volta Neobank")
-    assert 'src="volta-neobank.svg"' in card
+    assert 'src="https://nikitaboyarkin.github.io/images/volta.svg"' in card
     assert 'alt="Volta Neobank"' in card
 
 
-def test_build_projects_block_unknown_project_links_its_title():
+def test_build_projects_block_unmapped_slug_renders_without_a_cover():
+    """A project with no registered cover must not point at an image that 404s."""
     project = _project("Plain", "analytics", href="https://example.test/plain")
     project["slug"] = "plain"
     card = _card_for(bp.build_projects_block(_registry(projects=[project])), "Plain")
-    assert "<img" not in card
-    assert card.startswith('#### 1. <a href="https://example.test/plain">Plain</a>')
+    assert 'width="100%"' not in card, "no cover image should be emitted"
+    assert bp.COVER_BASE not in card
+    assert "<h3>Plain</h3>" in card
 
 
-def test_build_projects_block_numbers_cards_across_the_section():
+def test_build_projects_block_pads_an_odd_catalogue_with_an_empty_cell():
+    """31 projects would leave the last row at full width; the pad keeps the grid."""
+    block = bp.build_projects_block(
+        _registry(projects=[_project(name, "analytics") for name in ("A", "B", "C")])
+    )
+    assert len(_cards(block)) == 3
+    assert block.count(bp.CARD_CELL_EMPTY) == 1
+    assert block.count("<tr>") == 2
+    assert block.count("</tr>") == 2
+
+
+def test_build_projects_block_numbers_nothing():
+    """Cards are a grid, not a list: neither surface carries a row number."""
     block = bp.build_projects_block(
         _registry(
             projects=[_project("A", "experiments"), _project("B", "analytics")],
             volta_cases=[_case("V1"), _case("V2")],
         )
     )
-    assert [re.match(r"^#### (\d+)\. ", card).group(1) for card in _cards(block)] == ["1", "2"]
-    assert [line.split(".", 1)[0] for line in _volta_rows(block)] == ["1", "2"]
+    assert len(_cards(block)) == 2
+    assert len(_volta_cards(block)) == 2
+    assert not any(re.match(r"^\d+\. ", line) for line in block.splitlines())
 
 
-def test_build_projects_block_card_has_no_description_text():
-    """A card is a directory entry: title, badges, stack — the case study carries the claim."""
+def test_build_projects_block_card_escapes_untrusted_text():
+    # Titles carry "&" (Retention & Cohorts) and descriptions carry "p < 0.0001";
+    # a raw one opens a tag or breaks the attribute.
+    project = _project("A & B <script>", "analytics", description="p < 0.05 & n > 3")
+    block = bp.build_projects_block(_registry(projects=[project]))
+    assert "<script>" not in block
+    assert "A &amp; B &lt;script&gt;" in block
+    # The description is not rendered at all, so it cannot leak either.
+    assert "p &lt; 0.05" not in block
+
+
+def test_cover_map_names_a_file_after_its_slug():
+    """Every cover is `<slug>.<ext>`, so the map can be checked against the site."""
+    for slug, name in bp.COVER_BY_SLUG.items():
+        assert name.startswith(f"{slug}."), f"{slug}: {name} is not named after its slug"
+        assert name.endswith((".svg", ".png"))
+    assert set(bp.COVER_BY_SLUG) >= {"ab", "volta", "crm-experiment-lab"}
+
+
+def test_cover_rasters_are_the_documented_exceptions():
+    """The vector default is the rule; a raster has to be declared as one."""
+    rasters = {name for name in bp.COVER_BY_SLUG.values() if not name.endswith(".svg")}
+    assert rasters == bp.COVER_RASTERS
+
+
+def test_demo_url_makes_a_site_demo_absolute():
+    site = "https://nikitaboyarkin.github.io"
+    assert bp._demo_url({"demo": "demos/ab/index.html"}) == f"{site}/demos/ab/index.html"
+    assert bp._demo_url({"demo": "/games/"}) == f"{site}/games/"
+    assert bp._demo_url({"demo": "https://example.test/x"}) == "https://example.test/x"
+    assert bp._demo_url({}) == ""
+
+
+def test_build_projects_block_card_has_no_prose():
+    """A card is a directory entry: picture, track, title, buttons, stack.
+
+    31 two-sentence blurbs turned the catalogue into a wall of text, so the
+    description and the result sentence stay on the case study.
+    """
     block = bp.build_projects_block(
         _registry(
-            projects=[_project("Demo", "analytics", description="16,891 synthetic sales calls.")]
+            projects=[
+                _project(
+                    "Demo",
+                    "analytics",
+                    description="16,891 synthetic sales calls.",
+                    result="Funnel drop is 41.2% at the offer step.",
+                )
+            ]
         )
     )
     card = _card_for(block, "Demo")
     assert "16,891 synthetic sales calls" not in card
-    assert "**Stack:**" not in card and "#### 1." in card
+    assert "41.2%" not in card
+    assert "<h3>Demo</h3>" in card
 
 
-def test_row_text_appends_result_when_it_adds_numbers():
-    record = _project(
-        "Demo",
-        "analytics",
-        description="16,891 synthetic sales calls across 4 funnel steps.",
-        result="Funnel drop is 41.2% at the offer step.",
-    )
-    text = bp._row_text(record)
-    assert "16,891 synthetic sales calls" in text and "41.2% at the offer step" in text
-
-
-def test_row_text_skips_result_that_restates_description():
-    description = "CUPED cuts variance 17.7% and the SRM check reads p = 0.8376."
-    record = _project(
-        "Demo",
-        "experiments",
-        description=description,
-        result="CUPED cuts variance 17.7%; SRM p = 0.8376.",
-    )
-    text = bp._row_text(record)
-    assert text == description
-    assert text.count("17.7%") == 1, "a restated result would double the metric"
-
-
-def test_row_text_skips_result_without_numbers():
-    # A result sentence with no measurement is scope restated, not an outcome.
-    record = _project(
-        "Demo",
-        "analytics",
-        description="Narrative and visuals stay in sync as the reader scrolls.",
-        result="The narrative and the visualization are synchronised.",
-    )
-    assert "synchronised" not in bp._row_text(record)
-
-
-def test_row_text_skips_result_that_mostly_restates_description():
-    # One new number out of four is not worth a second sentence on the row.
-    description = "SRM holds at p=0.266, GCG uplift 0.9968, net effect +50.5."
-    record = _project(
-        "Demo",
-        "experiments",
-        description=description,
-        result="SRM p=0.266, GCG uplift 0.9968 [0.9433, 1.0502], net effect +50.5.",
-    )
-    text = bp._row_text(record)
-    assert text == description
-    assert "0.9433" not in text
-
-
-def test_build_projects_block_volta_rows_drop_the_blurb():
-    """Rows are card + tools + links; the finding lives in the case study."""
+def test_build_projects_block_volta_cards_drop_the_blurb():
+    """A case card is eyebrow + title + badges; the finding lives in the case study."""
     case = _case(
         "V",
         description="Travelers lose €0.45 per €100 of FX volume.",
@@ -1182,68 +1328,47 @@ def test_build_projects_block_volta_rows_drop_the_blurb():
         href="https://example.test/volta/v/",
     )
     block = bp.build_projects_block(_registry(volta_cases=[case]))
-    volta = block[block.index("<details>") :]
-    assert "Travelers lose" not in volta
-    assert "0.55%" not in volta
-    assert "[Repo](https://github.com/NikitaBoyarkin/case-v)" in volta
+    card = _volta_cards(block)[0]
+    assert "Travelers lose" not in card
+    assert "0.55%" not in card
+    assert "img.shields.io/badge/Repo-case--v-0f2a2b" in card
+    assert "img.shields.io/badge/Case_study-fe4e02" in card
 
 
-def test_build_projects_block_volta_row_uses_registered_card():
-    """A registered case renders the wordmark card, not a bold text link."""
-    case = _case(
-        "Volta — Funnel Analysis", href="https://example.test/volta/funnel/", slug="funnel"
-    )
+def test_build_projects_block_volta_card_carries_its_layer():
+    """The 23 sub-cases are depth-ordered, so the card names the layer it sits in."""
+    core = _case("Volta — Funnel Analysis", href="https://example.test/volta/funnel/")
+    core["layer"] = "core"
+    causal = _case("Volta — Causal KYC", href="https://example.test/volta/causal/")
+    causal["layer"] = "causal"
+    block = bp.build_projects_block(_registry(volta_cases=[core, causal]))
+    assert "<sub>Core</sub>" in block
+    assert "<sub>Causal</sub>" in block
+    # No cover: the neobank has no per-case art, so a card must not fake one.
+    assert "<img" not in _volta_cards(block)[0].split("<p>")[0]
+
+
+def test_build_projects_block_volta_card_escapes_its_title():
+    # Titles carry "&" (Retention & Cohorts); a raw one opens a tag.
+    case = _case("Volta — Retention & Cohorts", href="https://example.test/r/")
+    case["layer"] = "core"
     block = bp.build_projects_block(_registry(volta_cases=[case]))
-    row = _volta_row_for(block, "Volta — Funnel Analysis")
-    assert '<img src="volta-card-funnel.svg"' in row
-    assert f'<a href="{case["href"]}">' in row
-    assert "**[Volta — Funnel Analysis]" not in row
+    assert "<h3>Volta — Retention &amp; Cohorts</h3>" in block
 
 
-def test_build_projects_block_volta_card_escapes_alt_text():
-    # Titles carry "&" (Retention & Cohorts); a raw one breaks the attribute.
-    case = _case("Volta — Retention & Cohorts", href="https://example.test/r/", slug="retention")
-    block = bp.build_projects_block(_registry(volta_cases=[case]))
-    assert 'alt="Volta — Retention &amp; Cohorts"' in block
-
-
-def test_build_projects_block_volta_card_falls_back_without_slug():
-    """An unregistered case keeps the bold link instead of an <img> that 404s."""
-    case = _case("Unmapped Case", href="https://example.test/volta/unmapped/")
-    block = bp.build_projects_block(_registry(volta_cases=[case]))
-    assert "**[Unmapped Case](https://example.test/volta/unmapped/)**" in block
-
-
-def test_volta_card_map_matches_files_on_disk():
-    """The registry of cards and the shipped assets are the same set."""
-    root = Path(bp.__file__).resolve().parent.parent
-    on_disk = {path.name for path in root.glob("volta-card-*.svg")}
-    assert on_disk == set(bp.VOLTA_CARD_BY_SLUG.values())
-
-
-def test_volta_cards_use_the_cream_and_blue_palette():
-    root = Path(bp.__file__).resolve().parent.parent
-    for name in bp.VOLTA_CARD_BY_SLUG.values():
-        svg = (root / name).read_text(encoding="utf-8")
-        assert 'fill="#F8F2D8"' in svg, f"{name}: no cream card background"
-        assert 'fill="#1400C3"' in svg, f"{name}: no blue text"
-
-
-def test_catalogue_wordmarks_use_the_cream_and_blue_palette():
-    root = Path(bp.__file__).resolve().parent.parent
-    for slug, name in bp.LOGO_BY_SLUG.items():
-        path = root / name
-        assert path.exists(), f"{slug}: {name} is missing"
-        svg = path.read_text(encoding="utf-8")
-        assert 'fill="#F8F2D8"' in svg, f"{slug}: no cream card background"
-        assert 'fill="#1400C3"' in svg, f"{slug}: no blue text"
-
-
-def test_build_projects_block_renders_no_tables():
-    """The section is a list; a '| ...' row means a partial migration."""
+def test_build_projects_block_renders_an_html_card_table():
+    """Two cards per row in a raw <table>: a pipe cell cannot hold a cover."""
     block = bp.build_projects_block(
-        _registry(projects=[_project("A", "experiments")], volta_cases=[_case("V")])
+        _registry(
+            projects=[_project("A", "experiments"), _project("B", "analytics")],
+            volta_cases=[_case("V"), _case("W")],
+        )
     )
+    # One table for the catalogue, one for the Volta appendix.
+    assert block.count("<table>") == 2 and block.count("</table>") == 2
+    assert block.count("<tr>") == 2
+    assert block.count(bp.CARD_CELL_OPEN) == 4
+    # A pipe row would mean a half-migrated section that renders as text.
     assert not any(line.startswith("|") for line in block.splitlines())
 
 

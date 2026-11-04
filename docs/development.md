@@ -48,6 +48,10 @@ must stay offline). CI runs the same suite with `pytest --cov=scripts`.
   (`cdn.jsdelivr.net/gh/NikitaBoyarkin/NikitaBoyarkin@main/<game>.svg`). One policy
   for all games — no mixed pinned-SHA refs. `@main` resolves the moment the SVG is
   pushed, so links never point at a commit that lacks the file.
+- **Project covers** are referenced from the portfolio site
+  (`nikitaboyarkin.github.io/images/*`), not copied here: the site owns the art, so
+  a renamed or redrawn cover cannot leave a stale copy in this repo. GitHub proxies
+  each one through camo, so the rendered profile still issues no third-party request.
 
 ## Palette
 
@@ -67,6 +71,42 @@ exceptions are semantic and kept: GitHub linguist colors in `top-languages.svg`
 and in-game state colors (e.g. Cohort Catch green/grey). README game-card
 borders use the cream token.
 
+## All Projects cards
+
+The catalogue is one raw-HTML `<table>`: two `<td width="50%" valign="top">` cards
+per row, in registry track order (`experiments → analytics → product →
+engineering`), padded with an empty cell when the count is odd so the last row does
+not stretch to full width.
+
+A card is assembled from the registry alone, in this order:
+
+| Slot | Source | Why |
+|---|---|---|
+| cover | `COVER_BY_SLUG` → `<site>/images/<file>`, linked to the case study | the site's own 1200×600 diagram, so the profile and the portfolio show the same picture of a project; a slug with no registered cover renders without an image instead of an `<img>` that 404s |
+| eyebrow | `track` via `TRACK_PLAIN_LABELS` | a card stays readable out of context — quoted, screenshotted, in a search result |
+| title | `title_en`, else `title` | text, not the cream wordmark image the catalogue used before: a heading a screen reader can read beats a branded chip, and the cover above it already carries the brand |
+| action badges | repo · **live star count** · demo · case study | raw `<a>`/`<img>`, because GitHub does not run the markdown parser inside a table cell; the star counter is shields' live endpoint, so it needs no rebuild; `flat-square` and a label-less counter keep all four on one line at half-column width; a private repo is not linked (its URL 404s) and gets a `repo-private` badge instead |
+| stack badges | `tools`, capped at `TOOL_LIMIT` | flat-square brand badges, one row |
+
+The card carries **no prose**: the case study one click away is where the claim and
+its numbers live, and 31 two-sentence blurbs turned the catalogue into a wall of
+text. Covers, track labels, titles and stacks all come from `public/projects.json`;
+nothing on a card is authored by hand.
+
+### Volta Neobank appendix
+
+The 23 sub-cases use the same card, one level down, inside a collapsed `<details>`:
+same `<table>` grid, same badges, no stack row (the registry gives them no `tools`
+or `demo`) and **no cover** — the neobank has no per-case art, and the cream
+wordmark that used to sit in the row repeats the heading at banner size once
+stretched across a card. The eyebrow is the **layer** the case belongs to
+(`core → extended → market jobs → RAT v2 → causal`), so a reader knows how far from
+the product argument a case sits. Their case-study links keep the `volta` UTM
+campaign rather than `featured`, so the appendix stays separable in PostHog.
+
+They stay inside `<details>`: 23 more rows above the Activity section is length
+nobody scrolls before deciding whether to keep reading.
+
 ## UTM scheme
 
 All outbound section links use one scheme:
@@ -81,7 +121,7 @@ All outbound section links use one scheme:
 | Section | Links it covers |
 |---|---|
 | `header` | Portfolio / Links plates and the KYC A/B line at the top |
-| `featured` | the numbered catalogue under **All Projects** (27 cards) |
+| `featured` | the two-column card catalogue under **All Projects** (31 cards) |
 | `volta` | the collapsed Volta appendix (23 sub-cases) |
 | `notes` | the RSS-generated "Recent notes" list — scheme applied by the `template` input in `update-notes.yml` |
 | `building` | the "Currently building" line |
@@ -113,5 +153,6 @@ itself:
 - `enable_keepalive: false` on the RSS workflow (no dummy empty commits).
 - `projects.svg` is committed by `profile.yml` alongside the other generated assets.
 - A project-links liveness job runs `build_profile.py --print-project-links` and
-  checks every URL, so a stale registry or dead link surfaces in CI instead of
+  checks every URL the block renders — repo, case study, cover and demo — so a
+  stale registry, a renamed cover or a dead link surfaces in CI instead of
   silently dropping out of the README.
