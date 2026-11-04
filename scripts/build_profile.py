@@ -1345,9 +1345,9 @@ def build_projects_block(registry: dict) -> str:
         lines.append("")
         # Same card as the catalogue, one level down: the neobank's sub-cases are
         # where the method is applied end to end, so they earn the same anatomy —
-        # wordmark plate, layer, title, repo/star/case-study badges. They stay
-        # collapsed only because 23 more rows above the Activity section is length
-        # nobody scrolls before deciding whether to keep reading.
+        # layer, title, repo/star/case-study badges, no cover. They stay collapsed
+        # only because 23 more rows above the Activity section is length nobody
+        # scrolls before deciding whether to keep reading.
         lines.extend(_cards_table(volta, _volta_card))
         lines.append("")
         lines.append("</details>")
