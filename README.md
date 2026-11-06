@@ -5,7 +5,9 @@
 📦 **Portfolio:** <a href="https://nikitaboyarkin.github.io/?utm_source=github&utm_medium=profile_readme&utm_campaign=header"><img src="portfolio.svg" align="absmiddle" alt="Portfolio" /></a>  
 🔗 **Links:** <a href="https://linktr.ee/lofinibo?utm_source=github&utm_medium=profile_readme&utm_campaign=header"><img src="links.svg" align="absmiddle" alt="Links" /></a>
 
-**KYC A/B: +5.72 pp conversion** ([case study](https://nikitaboyarkin.github.io/projects/volta/ab/?utm_source=github&utm_medium=profile_readme&utm_campaign=header)) · **€208.5K A/B impact (12 mo) + €282K retention LTV** · **31 projects**, each with a public case study
+**Data / Product Analyst** — a working portfolio of experiments, SQL pipelines and retention analyses, each written up as a public case study.
+
+**KYC A/B: +5.72 pp conversion** ([case study](https://nikitaboyarkin.github.io/projects/volta/ab/?utm_source=github&utm_medium=profile_readme&utm_campaign=header)) · **€208.5K A/B impact (12 mo) + €282K retention LTV** on synthetic Volta data (simulated bank, seeded figures) · **31 projects**, each with a public case study
 
 ---
 
@@ -571,7 +573,7 @@ _Last refreshed: 2026-11-06 12:10 UTC · 305 contributions in the last 7 days_
 
 **Actions.** Published the work end-to-end. Projects are grouped into Experiments / Analytics / Product / Engineering, the Volta flagship carries 23 linked sub-cases, and the portfolio site at https://nikitaboyarkin.github.io renders every case study. In the site, headline numbers are frozen in `src/lib/metrics.ts` and CI-checked; profile cards and stats are self-hosted via `scripts/build_profile.py`.
 
-**Result.** A public portfolio site plus a self-hosted profile: 10 playable SVG mini-games, the Volta flagship at +5.72 pp KYC conversion and €656K annualized impact, and a case study that links each method back to the repository that produced it.
+**Result.** A public portfolio site plus a self-hosted profile: 10 playable SVG mini-games, the Volta flagship at +5.72 pp KYC conversion, €208.5K A/B impact (12 mo) and €282K retention LTV, and a case study that links each method back to the repository that produced it.
 
 </details>
 
