@@ -356,6 +356,7 @@ def _stub_main(monkeypatch, languages_exc):
     monkeypatch.setattr(bp, "write_asset", lambda path, content: None)
     monkeypatch.setattr(bp, "update_readme_refresh_block", lambda *a, **k: False)
     monkeypatch.setattr(bp, "fetch_languages", _raising(languages_exc))
+    monkeypatch.setattr(bp, "fetch_repo_stars", lambda: {})
     monkeypatch.setattr(bp.logging, "exception", lambda *a, **k: logged.append(a))
     return logged
 
@@ -658,6 +659,73 @@ def test_build_projects_block_lists_every_project_in_track_order():
     # Order is the registry's track order, and a card is a grid cell — not a
     # numbered heading, so nothing in the section restarts the count.
     assert "#### " not in block
+
+
+def test_build_projects_block_orders_projects_by_stars_descending():
+    """The catalogue is a leaderboard: most-starred repo first.
+
+    Ties keep the registry's track order, and a repo with no stars (private, or
+    renamed so the payload has no entry) closes the list instead of headlining it.
+    """
+    reg = _registry(
+        projects=[
+            _project("Exp", "experiments", github="https://github.com/o/exp"),
+            _project("Ana", "analytics", github="https://github.com/o/ana"),
+            _project("Eng", "engineering", github="https://github.com/o/eng"),
+            _project("Hidden", "product", github="https://github.com/o/hidden", private=True),
+        ]
+    )
+    stars = {"exp": 1, "ana": 13, "eng": 6}
+    cards = _cards(bp.build_projects_block(reg, stars))
+    titles = ["Ana", "Eng", "Exp", "Hidden"]
+    assert [next(t for t in titles if t in card) for card in cards] == titles
+
+
+def test_build_projects_block_without_stars_keeps_track_order():
+    """No token / offline: the section still renders, in registry track order."""
+    reg = _registry(
+        projects=[
+            _project("Ana", "analytics", github="https://github.com/o/ana"),
+            _project("Exp", "experiments", github="https://github.com/o/exp"),
+        ]
+    )
+    cards = _cards(bp.build_projects_block(reg))
+    titles = ["Ana", "Exp"]
+    assert [next(t for t in titles if t in card) for card in cards] == ["Exp", "Ana"]
+
+
+def test_extract_repo_stars_keys_names_lowercased_and_tolerates_missing_nodes():
+    data = {
+        "user": {
+            "repositories": {
+                "nodes": [
+                    {"name": "AB_Test", "stargazerCount": 4},
+                    {"name": "no-stars"},
+                    {"stargazerCount": 9},  # nameless node: skip, never KeyError
+                ]
+            }
+        }
+    }
+    assert bp.extract_repo_stars(data) == {"ab_test": 4, "no-stars": 0}
+    # The stats payload is a different shape and must not raise here either.
+    assert bp.extract_repo_stars({"user": {"repositories": {"totalCount": 42}}}) == {}
+
+
+def test_fetch_repo_stars_includes_forks_in_one_call(monkeypatch):
+    """A fork keeps its own stars, so the payload must not filter forks out.
+
+    The stats card's ``totalCount`` does filter them (a different question), which
+    is why stars get their own query instead of riding on ``fetch_user_data``.
+    """
+    captured: dict = {}
+
+    def fake_graphql(query, variables, retries=6):
+        captured["query"] = query
+        return {"user": {"repositories": {"nodes": [{"name": "Sales-Calls", "stargazerCount": 3}]}}}
+
+    monkeypatch.setattr(bp, "graphql", fake_graphql)
+    assert bp.fetch_repo_stars() == {"sales-calls": 3}
+    assert "isFork" not in captured["query"]
 
 
 def test_build_projects_block_repo_and_case_links():

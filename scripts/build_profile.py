@@ -306,6 +306,47 @@ def extract_contribution_types(user_data: dict) -> list[tuple[str, int]]:
     ]
 
 
+def extract_repo_stars(user_data: dict) -> dict[str, int]:
+    """Public repo star counts, keyed by lowercased repo name.
+
+    A private repo is not in the payload at all — its record resolves to 0 stars
+    and sorts with the tail, which is the honest position for a number nobody
+    can see.
+    """
+    repositories = (user_data.get("user") or {}).get("repositories") or {}
+    nodes = repositories.get("nodes") or []
+    stars: dict[str, int] = {}
+    for node in nodes:
+        if not isinstance(node, dict) or not node.get("name"):
+            continue
+        stars[str(node["name"]).lower()] = int(node.get("stargazerCount") or 0)
+    return stars
+
+
+def fetch_repo_stars() -> dict[str, int]:
+    """Every public repo's star count, forks included, in one GraphQL call.
+
+    Forks are included on purpose: the catalogue ships at least one (a dashboard
+    repo that was forked, then starred) and a fork keeps its own star count, so
+    excluding it would drop a 3-star project into the unstarred tail. The
+    ``fetch_user_data`` query deliberately keeps ``isFork: false`` because its
+    ``totalCount`` feeds the "public repos" stat — a different question.
+    """
+    query = """
+    query($login: String!) {
+      user(login: $login) {
+        repositories(privacy: PUBLIC, first: 100, ownerAffiliations: OWNER) {
+          nodes {
+            name
+            stargazerCount
+          }
+        }
+      }
+    }
+    """
+    return extract_repo_stars(graphql(query, {"login": USER}))
+
+
 def compute_streaks(days: list[dict]) -> tuple[int, int, int]:
     total = sum(d["contributionCount"] for d in days)
     current = 0
@@ -984,6 +1025,20 @@ def _stars_badge(record: dict) -> str:
     return _linked_badge(github, STARS_BADGE.format(path=path), f"Stars for {path}")
 
 
+def _project_stars(record: dict, stars: dict[str, int] | None) -> int:
+    """Star count of the record's repo, 0 when unknown.
+
+    ``stars`` is keyed by lowercased repo name (``extract_repo_stars``); the
+    registry's github URL is the link between the two. A private or renamed repo
+    simply has no entry and lands in the zero-star tail.
+    """
+    if not stars:
+        return 0
+    github = _clean_text(record.get("github")).rstrip("/")
+    name = urllib.parse.urlsplit(github).path.strip("/").rsplit("/", 1)[-1]
+    return stars.get(name.lower(), 0)
+
+
 def _tool_badge(tool: str) -> str:
     """One flat-square stack badge: brand icon + the tool name as the label.
 
@@ -1155,6 +1210,26 @@ def _projects_in_track_order(registry: dict) -> list[tuple[str, dict]]:
     return [(track, project) for track in TRACK_ORDER for project in by_track[track]]
 
 
+def _projects_in_display_order(
+    registry: dict, stars: dict[str, int] | None = None
+) -> list[tuple[str, dict]]:
+    """Resolve the registry into (track, project) pairs, most-starred first.
+
+    The catalogue is a leaderboard, not a syllabus: a reader scanning 31 cards
+    spends the top of the section deciding whether to keep reading, so the repo
+    with the most stars leads and the private / unstarred tail closes it. The
+    sort is stable, so projects on the same star count keep the registry's track
+    order instead of shuffling between builds.
+
+    Without star counts (no token, offline run) the track order is returned
+    untouched — the section must still render when the API cannot answer.
+    """
+    pairs = _projects_in_track_order(registry)
+    if not stars:
+        return pairs
+    return sorted(pairs, key=lambda pair: -_project_stars(pair[1], stars))
+
+
 def _track_counts(registry: dict) -> dict[str, int]:
     """Projects per track, resolved exactly as ``build_projects_block`` does.
 
@@ -1216,15 +1291,16 @@ def projects_links(registry: dict) -> list[str]:
     return links
 
 
-def build_projects_svg(registry: dict) -> str:
+def build_projects_svg(registry: dict, stars: dict[str, int] | None = None) -> str:
     """Stacked-track overview card for the All Projects section.
 
     Self-contained and vector-only, like the other cards. It uses the same cream
     ground as the rest of the README, so the projects section opens on the shared
     card treatment instead of flipping to an inverted band. Only the three brand
     tokens appear — tracks are told apart by accent opacity alone.
-    The accessible name enumerates the project titles, so a screen reader hears
-    the portfolio rather than a bare count.
+    The accessible name enumerates the project titles in the same order the
+    catalogue renders them, so a screen reader hears the portfolio rather than a
+    bare count.
     """
     counts = _track_counts(registry)
     total = sum(counts.values())
@@ -1233,7 +1309,8 @@ def build_projects_svg(registry: dict) -> str:
     titles = [
         title
         for title in (
-            _pick(project, "title_en", "title") for _, project in _projects_in_track_order(registry)
+            _pick(project, "title_en", "title")
+            for _, project in _projects_in_display_order(registry, stars)
         )
         if title
     ]
@@ -1306,18 +1383,20 @@ def build_projects_svg(registry: dict) -> str:
     return textwrap.dedent(svg).strip()
 
 
-def build_projects_block(registry: dict) -> str:
+def build_projects_block(registry: dict, stars: dict[str, int] | None = None) -> str:
     """Render the marker-inner markdown for the 'All Projects' section.
 
     Two registry shapes are accepted: a single ``projects`` array whose entries
     carry a ``track`` field (the frozen site contract), and one list per track
-    keyed by name. Tracks still decide the order (``TRACK_ORDER``, empty tracks
-    skipped) but no longer the structure: every project is one card in a
-    two-column grid — cover, track, title, blurb, links, stack — so the catalogue
-    reads top to bottom as one scannable board. The ``volta_cases`` list folds
-    into a collapsible block below.
+    keyed by name. ``stars`` (``extract_repo_stars``) decides the card order —
+    most-starred first, ties keeping track order — while the track stays the
+    card's eyebrow. Without star counts the track order renders instead. Every
+    project is one card in a two-column grid — cover, track, title, blurb, links,
+    stack — so the catalogue reads top to bottom as one scannable board. The
+    ``volta_cases`` list folds into a collapsible block below, still ordered by
+    depth: those are one product's layers, not competing repos.
     """
-    projects = [project for _, project in _projects_in_track_order(registry)]
+    projects = [project for _, project in _projects_in_display_order(registry, stars)]
     counts = _track_counts(registry)
     total = sum(counts.values())
     track_total = sum(1 for count in counts.values() if count > 0)
@@ -1490,6 +1569,12 @@ def main() -> None:
         raise
     print(f"top-languages: {len(langs)} languages")
 
+    # Stars decide the catalogue order, so a run that cannot read them must not
+    # silently ship a differently-ordered section: fail like any other missing
+    # input, before the first write.
+    stars = fetch_repo_stars()
+    print(f"stars: {len(stars)} public repos")
+
     # A profile rebuild must not fail because the site registry is briefly
     # unreachable: fetch the block, but on any failure leave README as-is.
     registry = None
@@ -1511,8 +1596,8 @@ def main() -> None:
     }
     projects_block: str | None = None
     if registry is not None:
-        cards[PROJECTS_SVG_NAME] = build_projects_svg(registry)
-        projects_block = build_projects_block(registry)
+        cards[PROJECTS_SVG_NAME] = build_projects_svg(registry, stars)
+        projects_block = build_projects_block(registry, stars)
 
     for name, content in cards.items():
         write_asset(REPO_ROOT / name, content)
