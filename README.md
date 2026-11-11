@@ -53,20 +53,20 @@
 <p><img src="https://img.shields.io/badge/Astro-BC52EE?style=flat-square&amp;logo=astro&amp;logoColor=white" alt="Astro" /> <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&amp;logo=typescript&amp;logoColor=white" alt="TypeScript" /> <img src="https://img.shields.io/badge/Markdown-000000?style=flat-square&amp;logo=markdown&amp;logoColor=white" alt="Markdown" /> <img src="https://img.shields.io/badge/CSS_custom_properties-663399?style=flat-square&amp;logo=css&amp;logoColor=white" alt="CSS custom properties" /></p>
 </td>
 <td width="50%" valign="top">
-<a href="https://nikitaboyarkin.github.io/projects/cohort/?utm_source=github&amp;utm_medium=profile_readme&amp;utm_campaign=featured&amp;utm_content=cohort"><img src="https://nikitaboyarkin.github.io/images/cohort.svg" width="100%" alt="Cohort Analysis Dashboard" /></a>
-<sub>Analytics</sub>
-<h3>Cohort Analysis Dashboard</h3>
-<p><a href="https://github.com/NikitaBoyarkin/tableau_cohort_analysis"><img src="https://img.shields.io/badge/Repo-tableau__cohort__analysis-0f2a2b?style=flat-square&amp;logo=github&amp;logoColor=fe4e02" alt="Repo: tableau_cohort_analysis" /></a> <a href="https://github.com/NikitaBoyarkin/tableau_cohort_analysis"><img src="https://img.shields.io/github/stars/NikitaBoyarkin/tableau_cohort_analysis?style=flat-square&amp;label=&amp;logo=github&amp;color=fe4e02" alt="Stars for NikitaBoyarkin/tableau_cohort_analysis" /></a> <a href="https://nikitaboyarkin.github.io/demos/cohort/index.html?utm_source=github&amp;utm_medium=profile_readme&amp;utm_campaign=featured&amp;utm_content=cohort"><img src="https://img.shields.io/badge/Demo-0f2a2b?style=flat-square&amp;logo=github" alt="Live demo" /></a> <a href="https://nikitaboyarkin.github.io/projects/cohort/?utm_source=github&amp;utm_medium=profile_readme&amp;utm_campaign=featured&amp;utm_content=cohort"><img src="https://img.shields.io/badge/Case_study-fe4e02?style=flat-square" alt="Case study" /></a></p>
-<p><img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&amp;logo=python&amp;logoColor=white" alt="Python" /> <img src="https://img.shields.io/badge/pandas-150458?style=flat-square&amp;logo=pandas&amp;logoColor=white" alt="pandas" /> <img src="https://img.shields.io/badge/matplotlib_%2F_seaborn-11557C?style=flat-square&amp;logo=matplotlib&amp;logoColor=white" alt="matplotlib / seaborn" /> <img src="https://img.shields.io/badge/Jupyter_Notebook-F37626?style=flat-square&amp;logo=jupyter&amp;logoColor=white" alt="Jupyter Notebook" /></p>
-</td>
-</tr>
-<tr>
-<td width="50%" valign="top">
 <a href="https://nikitaboyarkin.github.io/projects/ab/?utm_source=github&amp;utm_medium=profile_readme&amp;utm_campaign=featured&amp;utm_content=ab"><img src="https://nikitaboyarkin.github.io/images/ab.svg" width="100%" alt="A/B Testing Methodology Toolkit" /></a>
 <sub>Experiments</sub>
 <h3>A/B Testing Methodology Toolkit</h3>
 <p><a href="https://github.com/NikitaBoyarkin/ab_test"><img src="https://img.shields.io/badge/Repo-ab__test-0f2a2b?style=flat-square&amp;logo=github&amp;logoColor=fe4e02" alt="Repo: ab_test" /></a> <a href="https://github.com/NikitaBoyarkin/ab_test"><img src="https://img.shields.io/github/stars/NikitaBoyarkin/ab_test?style=flat-square&amp;label=&amp;logo=github&amp;color=fe4e02" alt="Stars for NikitaBoyarkin/ab_test" /></a> <a href="https://nikitaboyarkin.github.io/demos/ab/index.html?utm_source=github&amp;utm_medium=profile_readme&amp;utm_campaign=featured&amp;utm_content=ab"><img src="https://img.shields.io/badge/Demo-0f2a2b?style=flat-square&amp;logo=github" alt="Live demo" /></a> <a href="https://nikitaboyarkin.github.io/projects/ab/?utm_source=github&amp;utm_medium=profile_readme&amp;utm_campaign=featured&amp;utm_content=ab"><img src="https://img.shields.io/badge/Case_study-fe4e02?style=flat-square" alt="Case study" /></a></p>
 <p><img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&amp;logo=python&amp;logoColor=white" alt="Python" /> <img src="https://img.shields.io/badge/NumPy_%2F_SciPy-013243?style=flat-square&amp;logo=numpy&amp;logoColor=white" alt="NumPy / SciPy" /> <img src="https://img.shields.io/badge/pytest-0A9EDC?style=flat-square&amp;logo=pytest&amp;logoColor=white" alt="pytest" /> <img src="https://img.shields.io/badge/uv-3776AB?style=flat-square&amp;logo=python&amp;logoColor=white" alt="uv" /></p>
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+<a href="https://nikitaboyarkin.github.io/projects/cohort/?utm_source=github&amp;utm_medium=profile_readme&amp;utm_campaign=featured&amp;utm_content=cohort"><img src="https://nikitaboyarkin.github.io/images/cohort.svg" width="100%" alt="Cohort Analysis Dashboard" /></a>
+<sub>Analytics</sub>
+<h3>Cohort Analysis Dashboard</h3>
+<p><a href="https://github.com/NikitaBoyarkin/tableau_cohort_analysis"><img src="https://img.shields.io/badge/Repo-tableau__cohort__analysis-0f2a2b?style=flat-square&amp;logo=github&amp;logoColor=fe4e02" alt="Repo: tableau_cohort_analysis" /></a> <a href="https://github.com/NikitaBoyarkin/tableau_cohort_analysis"><img src="https://img.shields.io/github/stars/NikitaBoyarkin/tableau_cohort_analysis?style=flat-square&amp;label=&amp;logo=github&amp;color=fe4e02" alt="Stars for NikitaBoyarkin/tableau_cohort_analysis" /></a> <a href="https://nikitaboyarkin.github.io/demos/cohort/index.html?utm_source=github&amp;utm_medium=profile_readme&amp;utm_campaign=featured&amp;utm_content=cohort"><img src="https://img.shields.io/badge/Demo-0f2a2b?style=flat-square&amp;logo=github" alt="Live demo" /></a> <a href="https://nikitaboyarkin.github.io/projects/cohort/?utm_source=github&amp;utm_medium=profile_readme&amp;utm_campaign=featured&amp;utm_content=cohort"><img src="https://img.shields.io/badge/Case_study-fe4e02?style=flat-square" alt="Case study" /></a></p>
+<p><img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&amp;logo=python&amp;logoColor=white" alt="Python" /> <img src="https://img.shields.io/badge/pandas-150458?style=flat-square&amp;logo=pandas&amp;logoColor=white" alt="pandas" /> <img src="https://img.shields.io/badge/matplotlib_%2F_seaborn-11557C?style=flat-square&amp;logo=matplotlib&amp;logoColor=white" alt="matplotlib / seaborn" /> <img src="https://img.shields.io/badge/Jupyter_Notebook-F37626?style=flat-square&amp;logo=jupyter&amp;logoColor=white" alt="Jupyter Notebook" /></p>
 </td>
 <td width="50%" valign="top">
 <a href="https://nikitaboyarkin.github.io/projects/volta/?utm_source=github&amp;utm_medium=profile_readme&amp;utm_campaign=featured&amp;utm_content=volta"><img src="https://nikitaboyarkin.github.io/images/volta.svg" width="100%" alt="Volta Neobank — Product Analytics" /></a>
@@ -434,7 +434,7 @@
 ### ⚡ Activity
 
 <!-- LAST-REFRESHED:START -->
-_Last refreshed: 2026-11-10 12:42 UTC · 308 contributions in the last 7 days_
+_Last refreshed: 2026-11-11 11:54 UTC · 276 contributions in the last 7 days_
 <!-- LAST-REFRESHED:END -->
 
 <details>
@@ -482,7 +482,11 @@ _Last refreshed: 2026-11-10 12:42 UTC · 308 contributions in the last 7 days_
 ### 📝 Recent Notes
 
 <!-- RECENT-POSTS-LIST:START -->
-- [Кейс Volta: воронка, A/B и retention на синтетике необанка](https://nikitaboyarkin.github.io/posts/volta-neobank-case-study/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)- [Кейсы с собеседований: как диагностировать просадку метрики](https://nikitaboyarkin.github.io/posts/analyst-interview-cases/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)- [Проактивность аналитика за рамками роли](https://nikitaboyarkin.github.io/posts/analyst-proactivity/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)- [Churn + uplift: кому дать скидку &lpar;причинный таргетинг&rpar;](https://nikitaboyarkin.github.io/posts/churn-uplift-discount/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)- [EDA-шаблон с кодом: разведочный анализ по-продуктовому](https://nikitaboyarkin.github.io/posts/eda-python-template/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)
+- [Кейс Volta: воронка, A/B и retention на синтетике необанка](https://nikitaboyarkin.github.io/posts/volta-neobank-case-study/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)
+- [Кейсы с собеседований: как диагностировать просадку метрики](https://nikitaboyarkin.github.io/posts/analyst-interview-cases/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)
+- [Проактивность аналитика за рамками роли](https://nikitaboyarkin.github.io/posts/analyst-proactivity/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)
+- [Churn + uplift: кому дать скидку &lpar;причинный таргетинг&rpar;](https://nikitaboyarkin.github.io/posts/churn-uplift-discount/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)
+- [EDA-шаблон с кодом: разведочный анализ по-продуктовому](https://nikitaboyarkin.github.io/posts/eda-python-template/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)
 <!-- RECENT-POSTS-LIST:END -->
 
 > Auto-updated daily from the [site RSS](https://nikitaboyarkin.github.io/rss.xml) via GitHub Actions.
