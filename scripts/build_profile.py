@@ -1291,6 +1291,291 @@ def projects_links(registry: dict) -> list[str]:
     return links
 
 
+# GEO surface: llms.txt and profile.json are the text twin of this profile. The
+# SVG cards are pixels to a crawler, so an assistant, an ATS or an AI search index
+# reading this repo saw badges and alt text and nothing it could quote. Both files
+# are derived from the same registry as the cards, so the count in the prose, the
+# count in the catalogue and the count in the machine layer cannot drift apart.
+PROFILE_HOST = f"https://{SITE_HOST}"
+GITHUB_URL = "https://github.com/NikitaBoyarkin"
+LINKEDIN_URL = "https://linkedin.com/in/nikita-boyarkin"
+LINKTREE_URL = "https://linktr.ee/lofinibo"
+TELEGRAM_URL = "https://t.me/lofinibo"
+BLOG_URL = f"{PROFILE_HOST}/notes/"
+EMAIL = "boyarkin_yandex@mail.ru"
+
+PROFILE_NAME = "Nikita Boyarkin"
+PROFILE_ROLE = "Data / Product Analyst"
+
+PROFILE_SUMMARY = (
+    "Data / product analyst with a working portfolio of experiments, SQL pipelines and "
+    "retention analyses, each written up as a public case study. Flagship: Volta Neobank — "
+    "a KYC A/B at +5.72 pp conversion and EUR 208.5K modelled A/B impact over 12 months on "
+    "synthetic data, plus EUR 282K retention LTV across 23 linked sub-cases."
+)
+
+TRACK_BLURBS = {
+    "experiments": "A/B design, SRM checks, CUPED variance reduction and delta-method inference.",
+    "analytics": "Funnel, cohort, retention and segmentation work, plus the SQL behind it.",
+    "product": "Product-analytics cases: metric trees, churn and uplift targeting.",
+    "engineering": "The portfolio site, self-hosted profile assets and reporting tooling.",
+}
+
+KNOWS_ABOUT = (
+    "A/B testing",
+    "CUPED",
+    "Sample ratio mismatch checks",
+    "SQL",
+    "Python",
+    "pandas",
+    "Retention and cohort analysis",
+    "RFM segmentation",
+    "Product metrics",
+    "Tableau",
+    "dbt",
+    "Streamlit",
+)
+
+LLMS_TXT_NAME = "llms.txt"
+PROFILE_JSON_NAME = "profile.json"
+
+
+def _case_url(record: dict) -> str:
+    """The URL a reader follows to the argument behind a card."""
+    return _clean_text(record.get("href")) or _clean_text(record.get("github"))
+
+
+def _outcome_line(record: dict) -> str:
+    """One quotable line per entry: the result if the registry has one, else the blurb."""
+    return _pick(record, "result_en", "result") or _pick(record, "description_en", "description")
+
+
+def _volta_cases(registry: dict) -> list[dict]:
+    return [case for case in (registry.get("volta_cases") or []) if isinstance(case, dict)]
+
+
+def build_llms_txt(registry: dict, generated: str = "") -> str:
+    """Compact LLM index: who this is, what the work proves, where to read it.
+
+    Track sections are syllabus order, not the star leaderboard the cards use: a
+    reader of a text file is looking for coverage, not for the top repo.
+    """
+    pairs = _projects_in_track_order(registry)
+    cases = _volta_cases(registry)
+    counts = _track_counts(registry)
+    total = sum(counts.values())
+    tracks = sum(1 for count in counts.values() if count > 0)
+    stamp = generated or datetime.now(timezone.utc).strftime("%Y-%m-%d")
+
+    lines = [
+        f"# {PROFILE_NAME} — {PROFILE_ROLE}",
+        "",
+        f"> {PROFILE_SUMMARY}",
+        "",
+        f"Last updated: {stamp}",
+        f"Canonical: {PROFILE_HOST}/",
+        f"Registry: {PROJECTS_REGISTRY_URL}",
+        f'Preferred citation: "{PROFILE_NAME}, data and product analyst"',
+        "",
+        "## Availability",
+        "",
+        "Open to BI / product / data analyst roles. Currently learning Bayesian A/B testing "
+        "and ClickHouse.",
+        "",
+        f"## Selected work ({total} projects across {tracks} track{'' if tracks == 1 else 's'})",
+    ]
+    for track in TRACK_ORDER:
+        group = [project for pair_track, project in pairs if pair_track == track]
+        if not group:
+            continue
+        lines += [
+            "",
+            f"### {TRACK_PLAIN_LABELS[track]} ({len(group)})",
+            "",
+            TRACK_BLURBS[track],
+            "",
+        ]
+        for project in group:
+            lines.append(
+                f"- **{_pick(project, 'title_en', 'title')}** — "
+                f"{_outcome_line(project)} ({_case_url(project)})"
+            )
+    if cases:
+        lines += [
+            "",
+            f"## Volta Neobank — {len(cases)} linked case studies",
+            "",
+            "One simulated neobank, one argument: funnel, A/B, retention, segmentation and "
+            "causal checks, each a separate case.",
+            "",
+        ]
+        for case in cases:
+            lines.append(
+                f"- **{_pick(case, 'title_en', 'title')}** — "
+                f"{_outcome_line(case)} ({_case_url(case)})"
+            )
+    lines += [
+        "",
+        "## Contact",
+        "",
+        f"- Portfolio: {PROFILE_HOST}/",
+        f"- Blog: {BLOG_URL}",
+        f"- LinkedIn: {LINKEDIN_URL}",
+        f"- Telegram: {TELEGRAM_URL}",
+        f"- Links: {LINKTREE_URL}",
+        f"- GitHub: {GITHUB_URL}",
+        f"- Email: {EMAIL}",
+        "",
+    ]
+    return "\n".join(lines)
+
+
+def _item_list(name: str, entries: list[dict]) -> dict:
+    """Schema.org ItemList whose items are the works, not bare URLs."""
+    return {
+        "@type": "ItemList",
+        "name": name,
+        "numberOfItems": len(entries),
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": index,
+                "item": {
+                    "@type": "CreativeWork",
+                    "name": _pick(entry, "title_en", "title"),
+                    "url": _case_url(entry),
+                    "description": _outcome_line(entry),
+                },
+            }
+            for index, entry in enumerate(entries, start=1)
+        ],
+    }
+
+
+def build_profile_json(registry: dict) -> str:
+    """JSON-LD document (Person + ItemLists) for AI search and ATS parsers.
+
+    No timestamp: the file changes only when the work does, so a rebuild is a
+    no-op and a diff means something.
+    """
+    projects = [project for _, project in _projects_in_track_order(registry)]
+    cases = _volta_cases(registry)
+
+    graph: list[dict] = [
+        {
+            "@type": "Person",
+            "@id": f"{PROFILE_HOST}/#person",
+            "name": PROFILE_NAME,
+            "jobTitle": PROFILE_ROLE,
+            "description": PROFILE_SUMMARY,
+            "url": f"{PROFILE_HOST}/",
+            "email": f"mailto:{EMAIL}",
+            "sameAs": [GITHUB_URL, LINKEDIN_URL, LINKTREE_URL, TELEGRAM_URL],
+            "knowsAbout": list(KNOWS_ABOUT),
+        },
+        _item_list("Portfolio case studies", projects),
+    ]
+    if cases:
+        graph.append(_item_list("Volta Neobank case studies", cases))
+    return (
+        json.dumps(
+            {"@context": "https://schema.org", "@graph": graph}, ensure_ascii=False, indent=2
+        )
+        + "\n"
+    )
+
+
+# Audit gate — every claim this repo makes about its own artifacts that a local
+# check can confirm. Network liveness of project links is a separate CI job; the
+# checks here are deterministic, so a PR can run them without a token.
+RAW_ASSET_PREFIX = f"https://raw.githubusercontent.com/{DEFAULT_USER}/{DEFAULT_USER}/main/"
+_RAW_ASSET_RE = re.compile(re.escape(RAW_ASSET_PREFIX) + r"([A-Za-z0-9._-]+)")
+README_PROJECT_CLAIM_RE = re.compile(r"\*\*(\d+) projects\*\*")
+README_VOLTA_CLAIM_RE = re.compile(r"\*\*(\d+) Volta case studies\*\*")
+LLMS_HEADER_RE = re.compile(
+    r"^## Selected work \((\d+) projects across (\d+) tracks?\)$", re.MULTILINE
+)
+LLMS_VOLTA_RE = re.compile(r"^## Volta Neobank — (\d+) linked case studies$", re.MULTILINE)
+
+# Claim in docs/development.md and prd-v2 REQ-018: the contribution map stays
+# under 80 KB. Nothing enforced it until this gate.
+ASSET_BUDGET_BYTES = {"metrics.svg": 80 * 1024}
+
+
+def referenced_assets(text: str) -> set[str]:
+    """Repo-root assets a markdown file points at, by file name."""
+    return set(_RAW_ASSET_RE.findall(text))
+
+
+def audit_repo(root: Path = REPO_ROOT) -> list[str]:
+    """Return one problem per broken claim; empty list means the gate passes."""
+    problems: list[str] = []
+    readme_path = root / "README.md"
+    llms_path = root / LLMS_TXT_NAME
+    json_path = root / PROFILE_JSON_NAME
+
+    for path in (readme_path, llms_path, json_path):
+        if not path.exists():
+            problems.append(f"{path.name} is missing")
+    if problems:
+        return problems
+
+    readme = readme_path.read_text(encoding="utf-8")
+    llms = llms_path.read_text(encoding="utf-8")
+
+    for name in sorted(referenced_assets(readme)):
+        if not (root / name).exists():
+            problems.append(f"README references {name}, which is not in the repo")
+
+    referenced = referenced_assets(readme)
+    for svg in sorted(path.name for path in root.glob("*.svg")):
+        if svg not in referenced and svg not in readme:
+            problems.append(f"{svg} is committed but no surface references it")
+
+    for name, budget in ASSET_BUDGET_BYTES.items():
+        path = root / name
+        if path.exists() and path.stat().st_size > budget:
+            problems.append(f"{name} is {path.stat().st_size} B, over the {budget} B budget")
+
+    header = LLMS_HEADER_RE.search(llms)
+    if not header:
+        problems.append("llms.txt has no '## Selected work (N projects across M tracks)' header")
+    else:
+        projects = int(header.group(1))
+        for claim in README_PROJECT_CLAIM_RE.findall(readme):
+            if int(claim) != projects:
+                problems.append(f"README claims {claim} projects, llms.txt says {projects}")
+
+    volta_header = LLMS_VOLTA_RE.search(llms)
+    if volta_header:
+        cases = int(volta_header.group(1))
+        for claim in README_VOLTA_CLAIM_RE.findall(readme):
+            if int(claim) != cases:
+                problems.append(f"README claims {claim} Volta case studies, llms.txt says {cases}")
+
+    try:
+        document = json.loads(json_path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        problems.append(f"profile.json is not valid JSON: {exc}")
+        return problems
+    graph = document.get("@graph") or []
+    people = [node for node in graph if node.get("@type") == "Person"]
+    if not people:
+        problems.append("profile.json has no Person node")
+    elif len(people[0].get("sameAs") or []) < 3:
+        problems.append("profile.json Person has fewer than 3 sameAs profiles")
+    lists = {node.get("name"): node for node in graph if node.get("@type") == "ItemList"}
+    portfolio = lists.get("Portfolio case studies")
+    if portfolio is None:
+        problems.append("profile.json has no 'Portfolio case studies' ItemList")
+    elif header and portfolio.get("numberOfItems") != int(header.group(1)):
+        problems.append(
+            f"profile.json lists {portfolio.get('numberOfItems')} projects, "
+            f"llms.txt says {header.group(1)}"
+        )
+    return problems
+
+
 def build_projects_svg(registry: dict, stars: dict[str, int] | None = None) -> str:
     """Stacked-track overview card for the All Projects section.
 
@@ -1526,7 +1811,20 @@ def main() -> None:
         default=PROJECTS_REGISTRY_URL,
         help="path or URL to the projects registry JSON (default: live site)",
     )
+    parser.add_argument(
+        "--audit",
+        action="store_true",
+        help="check committed artifacts against local claims and exit 1 on drift (no network)",
+    )
     args = parser.parse_args()
+    if args.audit:
+        problems = audit_repo()
+        for problem in problems:
+            print(f"audit: {problem}", file=sys.stderr)
+        if problems:
+            raise SystemExit(1)
+        print("audit: clean")
+        return
     if args.print_project_links:
         # Registry-only path: no GraphQL, no token — so CI can check project
         # links even when the reads quota is exhausted.
@@ -1597,6 +1895,8 @@ def main() -> None:
     projects_block: str | None = None
     if registry is not None:
         cards[PROJECTS_SVG_NAME] = build_projects_svg(registry, stars)
+        cards[LLMS_TXT_NAME] = build_llms_txt(registry)
+        cards[PROFILE_JSON_NAME] = build_profile_json(registry)
         projects_block = build_projects_block(registry, stars)
 
     for name, content in cards.items():

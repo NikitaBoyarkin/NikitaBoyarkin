@@ -8,7 +8,9 @@ The rendered artifact is `README.md`; everything here is for whoever maintains i
 | Path | What |
 |---|---|
 | `README.md` | The profile (rendered on github.com/NikitaBoyarkin). |
-| `scripts/build_profile.py` | Generates `hero/stats/activity/metrics/contribution-types/monthly-activity/top-languages/projects.svg` + the README "Last refreshed" block. The All Projects block is derived from the projects registry, read from `NikitaBoyarkin.github.io` at `master` (`public/projects.json`). |
+| `scripts/build_profile.py` | Generates `hero/stats/activity/metrics/contribution-types/monthly-activity/top-languages/projects.svg`, `llms.txt`, `profile.json` + the README "Last refreshed" block. The All Projects block and both GEO files are derived from the projects registry, read from `NikitaBoyarkin.github.io` at `master` (`public/projects.json`). |
+| `llms.txt` | Generated compact LLM index: role, headline numbers, every project with its result and case-study URL. Text twin of the SVG cards. |
+| `profile.json` | Generated JSON-LD (`Person` + two `ItemList`s) for AI search and ATS parsers. No timestamp: it changes only when the work does. |
 | `scripts/preview.sh` | Renders `README.md` locally as GitHub-flavored markdown and opens it in the browser (`scripts/preview.sh`). |
 | `tests/test_build_profile.py` | Pure-function tests for the generator (no network). |
 | `.github/workflows/ci.yml` | Lint + tests on every push/PR, plus liveness checks for the evidence-ledger and project links. |
@@ -25,12 +27,49 @@ uv run ruff check scripts tests   # lint
 GH_USER=NikitaBoyarkin GH_TOKEN=$(gh auth token) uv run python scripts/build_profile.py --dry-run
 GH_USER=NikitaBoyarkin GH_TOKEN=$(gh auth token) uv run python scripts/build_profile.py
 GH_USER=NikitaBoyarkin uv run python scripts/build_profile.py --print-project-links  # one project/repo/case-study URL per line
+uv run python scripts/build_profile.py --audit   # local artifact gate (no network)
 scripts/preview.sh                # local README preview
 ```
 
 `GH_USER` selects the GitHub login to render; it never falls back to the shell
 `$USER` (which on macOS/Linux is the OS account, not the login). `GH_TOKEN` needs
 `read:user`/`repo` scope for the GraphQL calls.
+
+## GEO surface (`llms.txt`, `profile.json`)
+
+The cards are pixels to a crawler; before these two files existed, an AI search
+index or an ATS reading this repo saw badge URLs and alt text and had nothing it
+could quote. Both are generated from the same registry as the cards, so the count
+in the prose, the count in the catalogue and the count in the machine layer cannot
+drift apart.
+
+- `llms.txt` — plain-text index: role, headline numbers, availability, then one
+  bullet per project (`**title** — result (case-study URL)`) grouped by track in
+  syllabus order, then the Volta appendix and contacts. English field preferred
+  (`title_en`/`result_en`), falling back to the RU one exactly like the cards.
+- `profile.json` — JSON-LD `@graph`: one `Person` (`sameAs` to GitHub, LinkedIn,
+  Linktree, Telegram; `knowsAbout` the method list) plus an `ItemList` of portfolio
+  works and one of Volta cases. No timestamp, so a rebuild is a no-op.
+
+Both are written by `build_profile.py` only when the registry loads; a registry
+outage leaves the old files in place rather than shipping a half-empty index.
+
+## Audit gate (`--audit`)
+
+One local, token-free command, wired into `ci.yml` and into `profile.yml`'s
+validate step. It fails on:
+
+| Check | Claim it binds |
+|---|---|
+| an asset referenced from `README.md` is missing on disk | "self-hosted" means present |
+| a committed root `*.svg` no surface references | no orphan art left by a rename |
+| `metrics.svg` over the 80 KB budget | the size budget in `docs/prd-v2.md` REQ-018 |
+| a `**N projects**` / `**N Volta case studies**` claim in README prose not equal to the generated `llms.txt` count | the hand-written header cannot outrun the work |
+| `profile.json` missing, unparsable, or its `ItemList` count off | the machine layer is present and agrees |
+| `llms.txt` / `profile.json` absent | GEO surface cannot be silently deleted |
+
+Link liveness stays a separate CI job (`--print-project-links` + HTTP) because it
+needs the network; the audit is deterministic, so it can run on every PR.
 
 ## Coverage
 

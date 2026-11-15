@@ -1,0 +1,103 @@
+# Nikita Boyarkin — Data / Product Analyst
+
+> Data / product analyst with a working portfolio of experiments, SQL pipelines and retention analyses, each written up as a public case study. Flagship: Volta Neobank — a KYC A/B at +5.72 pp conversion and EUR 208.5K modelled A/B impact over 12 months on synthetic data, plus EUR 282K retention LTV across 23 linked sub-cases.
+
+Last updated: 2026-11-15
+Canonical: https://nikitaboyarkin.github.io/
+Registry: https://raw.githubusercontent.com/NikitaBoyarkin/NikitaBoyarkin.github.io/master/public/projects.json
+Preferred citation: "Nikita Boyarkin, data and product analyst"
+
+## Availability
+
+Open to BI / product / data analyst roles. Currently learning Bayesian A/B testing and ClickHouse.
+
+## Selected work (31 projects across 4 tracks)
+
+### Experiments (6)
+
+A/B design, SRM checks, CUPED variance reduction and delta-method inference.
+
+- **A/B Testing Methodology Toolkit** — CUPED cuts variance 17.7% (SE 0.00360 → 0.00327) and the delta method finds a +0.51 pp CTR lift at p < 0.0001 with SRM p = 0.8376 — all 18 modules calibrated by simulation (https://nikitaboyarkin.github.io/projects/ab/)
+- **Browser Mini-Games — Analytics Arcade** — 10 games: 7 analytics and 3 arcade, one file with no server; Playwright smoke tests catch load failures (https://nikitaboyarkin.github.io/projects/games/)
+- **Causal / Uplift — CUPED and Individual Treatment Effects** — CUPED cuts the standard error 26% (5.5k users per arm instead of 10k), and a pre-registered break-even threshold of 0.05 ships the campaign to new users only. (https://nikitaboyarkin.github.io/projects/causal/)
+- **CRM Experiment Lab — Segment-Stage Randomization, GCG and Net Effect** — Segment-stage randomization holds SRM at p=0.266, GCG uplift is +0.9968 [0.9433, 1.0502], and the net effect is +50.5 per 1,000 treated — positive, but the unsubscribe guardrail breaches. (https://nikitaboyarkin.github.io/projects/crm-experiment-lab/)
+- **Data Analyst Telegram Bot** — From a CSV — p-value, lift and 95% CI in under 30 seconds, plus a power note and a chart; /export returns a standalone HTML report (https://nikitaboyarkin.github.io/projects/bot/)
+- **Volta Neobank — Product Analytics** — KYC fix: +5.72pp conversion (p<0.0001) → €208.5K over 12 months at 13.9× ROI; M3 retention +9.2pp (https://nikitaboyarkin.github.io/projects/volta/)
+
+### Analytics (15)
+
+Funnel, cohort, retention and segmentation work, plus the SQL behind it.
+
+- **Churn Prediction — Leakage-Free Retention Model** — The top 10% riskiest catches 54.4% of churners at 5.44x lift, but only 1.75x on the at-risk subgroup: 69.7% of the cohort is a near-guaranteed negative by construction. (https://nikitaboyarkin.github.io/projects/churn/)
+- **Cohort Analysis Dashboard** — Python inside Tableau: 4 cohort calculations on a TabPy server and 65 tests; the cohort matrix replaces average retention and shows churn speed and where monetization diverges (https://nikitaboyarkin.github.io/projects/cohort/)
+- **Delivery Control Tower** — Best WAPE 6.01% at h=7 with seasonal_naive; delivery time barely moves with load (rho = −0.092), yet snacks take 40.0 min against 26.6 min for pizza; the mp channel share grew 5.7 pp (https://nikitaboyarkin.github.io/projects/delivery/)
+- **GMV Drop RCA — root cause on real data** — UK decile-1 explains 56.2% of the named drop (−£195,218.25); the full attribution reconciles to £0.00 against an overall −10.0% decline (https://nikitaboyarkin.github.io/projects/gmv-drop-rca/)
+- **LinkedIn Content Analytics** — 50,101 impressions, 9,440 reach, 1.71% ER over 12.10.2025 — 11.10.2026; three of four comparisons landed inside the noise, and that is recorded as the result (https://nikitaboyarkin.github.io/projects/linkedin/)
+- **ML Fundamentals — scikit-learn Pipeline** — A split reproducible without a seed (Train (8, 5), Test (2, 5)), four synthetic datasets and 21 tests (7 + 9 + 5) that keep the pipeline runnable (https://nikitaboyarkin.github.io/projects/ml/)
+- **Product A/B & Funnel Analytics — Conversion versus Retention** — SHIP: activation → paid +19.59% (p=0.000946) with no guardrail degradation; at an equal step conversion adds +10.00% to LTV versus +8.65% for retention (https://nikitaboyarkin.github.io/projects/product-ab-funnel/)
+- **Promo Margin Lab — what a promo rouble actually earns** — Promo returns +68.5 m RUB of revenue and −24.4 m RUB of profit; 97.9% of waves lose money at a breakeven depth of 1.0–19.5% against 25.4% actual, and on one budget the optimiser earns +231 496 ₽ versus +136 648 ₽ for top-15% (https://nikitaboyarkin.github.io/projects/promo/)
+- **Python Analytics Playground** — pytest coverage ≥80%; modules stay small and single-purpose, requirements live in the PRD, and the tool extends without breakage (https://nikitaboyarkin.github.io/projects/python/)
+- **RAG Evaluation Harness — retrieval and generation metrics** — recall@5 and MRR = 1.00 over 20 questions and 0.00 on an 11-question control set of retrieval misses (MRR@all 0.12) — the metric can fall; correctness 0.37 for the offline baseline (faithfulness ≡1.00 is an extractive invariant); retrieval and generation scored separately (https://nikitaboyarkin.github.io/projects/rag/)
+- **RFM Analysis of Bank Clients** — Six named segments; the top 20% of clients hold 38.2% of revenue (Gini 0.324), and Champions — 6.4% of the base — drive 12.1% of revenue (https://nikitaboyarkin.github.io/projects/rfm/)
+- **Sales Calls Analytics Dashboard** — An answer in a minute: which step loses the client and what to fix; the funnel yields weighted contact loss and a first A/B scenario (https://nikitaboyarkin.github.io/projects/sales-calls/)
+- **SERP Rank Lab** — On a synthetic log: +34.45% revenue per search for −16.84% CTR; the rollout returns −14.26% (p = 0.11) and −16.05% conversion → do not ship (https://nikitaboyarkin.github.io/projects/serp-rank/)
+- **SQL Analytics Case Study** — The funnel drops 78% at add-to-cart → checkout (54% is the view→cart step); retention falls from ~19.5% (D1) to ~4% (D30); only 3.5% repeat; on real data 72.4% return (https://nikitaboyarkin.github.io/projects/sql/)
+- **Classifieds liquidity — a measurability audit** — The proxy reads 0.2413 against a truth of 0.3070, an error of −0.0657 (−21.4%); after correction the worst category misses by 1.61 pp, and paid visibility yields −2.47% contacts per session at p = 0.308 (https://nikitaboyarkin.github.io/projects/marketplace-liquidity/)
+
+### Product (3)
+
+Product-analytics cases: metric trees, churn and uplift targeting.
+
+- **Product Analytics + A/B on Supabase** — A/B concluded on a seeded stream: control 29.6% vs treatment 40.7%, +11.1pp at p ≈ 1.7e-10 (chi-square); metrics computed in the live DB for any client (https://nikitaboyarkin.github.io/projects/supabase/)
+- **Product Analytics Dashboard (Streamlit)** — Funnel, Retention, Revenue, and Segments read from one consistent base; the same UI became the Supabase project's presentation layer (https://nikitaboyarkin.github.io/projects/streamlit/)
+- **TaskFlow — PostHog Product Analytics Pipeline** — Onboarding test on a seeded stream: completion 55.9% → 70.8% (+26.6%, χ² = 40.10, p < 0.0001, SRM p = 0.90), and 6.3% of completed signups reach a paid upgrade (https://nikitaboyarkin.github.io/projects/posthog/)
+
+### Engineering (7)
+
+The portfolio site, self-hosted profile assets and reporting tooling.
+
+- **Airflow DAG Platform** — Three DAGs on one shared template and 72 tests without Airflow services or a DB; the full DAG runs in 440 s, 413 s of it in the forecast task (https://nikitaboyarkin.github.io/projects/airflow/)
+- **ClickHouse — ten SQL cases on 50M rows** — The snapshot and seven DuckDB twins agree, slow and fast SQL are pinned as identical by a test, and the projection clears the ≥10× speed-up threshold the suite asserts on a full scan (https://nikitaboyarkin.github.io/projects/clickhouse/)
+- **Digital Garden — EQ in IT** — Links over chronology: backlinks make each note a node, and the graph turns note accumulation into a navigable structure (https://nikitaboyarkin.github.io/projects/garden/)
+- **OSS catalog — 47 projects from one source** — 47 project pages and 15 metadata fields are built from one TOML file; a repeated render is idempotent, and 26 tests cover all three record-matching branches (https://nikitaboyarkin.github.io/projects/oss-catalog/)
+- **Scrolly English Speaking** — Narrative and visualization in sync: the chart changes as the reader reaches a paragraph; a new scene is just a data file plus MDX (https://nikitaboyarkin.github.io/projects/scrolly/)
+- **This Portfolio Site** — Invalid frontmatter breaks the build, not the deploy; no link hardcodes the base; adding a project needs no code changes (https://nikitaboyarkin.github.io/projects/site/)
+- **Matemarketing 2026 Programme — a static replica** — The grid matches the original to the pixel: 99 px time column, 420 px hall column, 391 px card, 550 px row, grid top at y = 414; tests catch data and layout drift (https://nikitaboyarkin.github.io/projects/mm-program-page/)
+
+## Volta Neobank — 23 linked case studies
+
+One simulated neobank, one argument: funnel, A/B, retention, segmentation and causal checks, each a separate case.
+
+- **Volta — Funnel Analysis** — KYC — 56.6% step conversion; registration — 2,682 users; 1,269 of 10,000 reach the first transaction (https://nikitaboyarkin.github.io/projects/volta/funnel/)
+- **Volta — KYC Progress-Bar A/B Test** — KYC conversion 55.8% → 61.5%: +5.72pp at p<0.0001, above the MDE; gate passed, +€208.5K over 12 months (https://nikitaboyarkin.github.io/projects/volta/ab/)
+- **Volta — Retention & Cohorts** — Post-fix cohorts hold 61–67% at M1 vs 51–53% pre-fix; M3 +9.2pp, Premium LTV 2.7× Free, +€282K/yr (https://nikitaboyarkin.github.io/projects/volta/retention/)
+- **Volta — User Segmentation** — K=4 (Power 12% / Growth 24% / Casual 32% / Dormant 32%); Power drive 41% of revenue, 68% → 92%; migration +€310K/yr (https://nikitaboyarkin.github.io/projects/volta/segmentation/)
+- **Volta — Churn Prediction** — Random Forest adds +0.03 ROC-AUC over LR; top driver is device-error rate 23.7%, usage_frequency 18.7% and days_since_last_activity 16.5% (https://nikitaboyarkin.github.io/projects/volta/churn/)
+- **Volta — RFM Analysis** — Champions — 23.9% of the base with all three axes high (91/93/93); At Risk 11.5% and Lost 23.2% are a large reactivation reserve (https://nikitaboyarkin.github.io/projects/volta/rfm/)
+- **Volta — CLV Modeling** — Power > Growth > Casual > Dormant holds across all three methods; Gamma-Gamma Power €5,166 vs Dormant €27.7 — a ~187× gap (https://nikitaboyarkin.github.io/projects/volta/clv/)
+- **Volta — Marketing Attribution** — Referral leads in all four models (€218–264K); Shapley takes referral to €263.7K and drops display to €125.0K (https://nikitaboyarkin.github.io/projects/volta/attribution/)
+- **Volta — Anomaly Detection** — Isolation Forest — best F1 (50.4%, 401 detections); Z-score — precision 80.5% at recall 24.7% (123 detections) (https://nikitaboyarkin.github.io/projects/volta/anomalies/)
+- **Volta — Spend Analysis** — Bills (25.8%) and travel (20.2%) — nearly half the turnover; groceries most frequent (18,238 transactions, €45.8 ticket) (https://nikitaboyarkin.github.io/projects/volta/spend/)
+- **Volta — Support & Churn** — Churn rises with ticket count: 37.1% (0) → 81.1% (3+); users with 3+ tickets churn 2.2× more; CSAT bands barely discriminate (52–55%) (https://nikitaboyarkin.github.io/projects/volta/support-churn/)
+- **Volta — NPS Trends** — NPS hovers near zero: peak +12.9 (2024-10), bottom −1.8 (2024-09); fees −59.4 is the main negative, app_quality +30.3 (https://nikitaboyarkin.github.io/projects/volta/nps/)
+- **Volta — JTBD × Cohorts** — JTBD segment × cohort are NOT independent (p<0.001); Dormant 39.4% among Digital Newcomers 45+ vs 15.1% among Family Budgeters (https://nikitaboyarkin.github.io/projects/volta/jtbd/)
+- **Volta — Traveler Unit Economics** — Net margin −€0.45 per €100 FX; break-even needs FX cost cut 1.00% → 0.55% (https://nikitaboyarkin.github.io/projects/volta/unit-economics/)
+- **Volta — Premium Upsell** — Premium Status 41.2%, anchor 17.3% vs Digital Newcomers 45+ 1.8% (z=34, p<0.001) (https://nikitaboyarkin.github.io/projects/volta/premium-upsell/)
+- **Volta — 45+ KYC Deep-Dive** — 35–44 +11.0pp (p<0.001), 45+ +1.4pp (ns), 45+ in treatment 53.2% vs 61.2% (https://nikitaboyarkin.github.io/projects/volta/kyc-45/)
+- **Volta — Referral Segments** — Anchor 29.6% vs 45+ 4.8% and families 8.6%; the gap opens at accept (78% vs 26% vs 40%), in-app 20.6% vs link 14.3% (https://nikitaboyarkin.github.io/projects/volta/referral/)
+- **Volta — Assisted CAC vs LTV** — The anchor clears the ≥3 gate only via referral at LTV/CAC 3.62; 45+ clears none: assisted 0.41; blended 0.66; 50-month payback (https://nikitaboyarkin.github.io/projects/volta/assisted-cac/)
+- **Volta — FX Sourcing Feasibility** — The 0.55% gate needs ≈ €332M/month at SOM scale; today's ~€2.7M/mo is ~122× lower; ~0.20pp per order of magnitude; Interbank Prime 0.745% (https://nikitaboyarkin.github.io/projects/volta/fx-sourcing/)
+- **Volta — Segment Premium Offers** — 45+ 1.6%→5.0%, families 4.4%→8.6%, travelers 8.8%→12.6%; anchor +0.86pp — the gap is not closed (https://nikitaboyarkin.github.io/projects/volta/premium-offers/)
+- **Volta — Anchor Launch CAC at Scale** — LTV/CAC ≥3 holds only to ~70K users (31% of SOM); at SOM 225K it is 1.76× with a 17.0-month payback (https://nikitaboyarkin.github.io/projects/volta/anchor-cac/)
+- **Volta — Dormant 45+ Win-back** — human +5.34pp, light-touch +2.77pp; light-touch pays off at 30–60d (ROI 2.54) and 60–90d (1.26), human overall 0.40 (https://nikitaboyarkin.github.io/projects/volta/dormant-winback/)
+- **Volta — Causal Validation of KYC (DiD)** — M3 retention: DiD ATT +9.09pp (95% CI [+6.21, +11.96]); activation naive +6.29pp vs DiD +4.92pp (https://nikitaboyarkin.github.io/projects/volta/causal-kyc/)
+
+## Contact
+
+- Portfolio: https://nikitaboyarkin.github.io/
+- Blog: https://nikitaboyarkin.github.io/notes/
+- LinkedIn: https://linkedin.com/in/nikita-boyarkin
+- Telegram: https://t.me/lofinibo
+- Links: https://linktr.ee/lofinibo
+- GitHub: https://github.com/NikitaBoyarkin
+- Email: boyarkin_yandex@mail.ru

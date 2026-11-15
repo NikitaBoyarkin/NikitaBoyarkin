@@ -1,0 +1,588 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://nikitaboyarkin.github.io/#person",
+      "name": "Nikita Boyarkin",
+      "jobTitle": "Data / Product Analyst",
+      "description": "Data / product analyst with a working portfolio of experiments, SQL pipelines and retention analyses, each written up as a public case study. Flagship: Volta Neobank — a KYC A/B at +5.72 pp conversion and EUR 208.5K modelled A/B impact over 12 months on synthetic data, plus EUR 282K retention LTV across 23 linked sub-cases.",
+      "url": "https://nikitaboyarkin.github.io/",
+      "email": "mailto:boyarkin_yandex@mail.ru",
+      "sameAs": [
+        "https://github.com/NikitaBoyarkin",
+        "https://linkedin.com/in/nikita-boyarkin",
+        "https://linktr.ee/lofinibo",
+        "https://t.me/lofinibo"
+      ],
+      "knowsAbout": [
+        "A/B testing",
+        "CUPED",
+        "Sample ratio mismatch checks",
+        "SQL",
+        "Python",
+        "pandas",
+        "Retention and cohort analysis",
+        "RFM segmentation",
+        "Product metrics",
+        "Tableau",
+        "dbt",
+        "Streamlit"
+      ]
+    },
+    {
+      "@type": "ItemList",
+      "name": "Portfolio case studies",
+      "numberOfItems": 31,
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "A/B Testing Methodology Toolkit",
+            "url": "https://nikitaboyarkin.github.io/projects/ab/",
+            "description": "CUPED cuts variance 17.7% (SE 0.00360 → 0.00327) and the delta method finds a +0.51 pp CTR lift at p < 0.0001 with SRM p = 0.8376 — all 18 modules calibrated by simulation"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "Browser Mini-Games — Analytics Arcade",
+            "url": "https://nikitaboyarkin.github.io/projects/games/",
+            "description": "10 games: 7 analytics and 3 arcade, one file with no server; Playwright smoke tests catch load failures"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "Causal / Uplift — CUPED and Individual Treatment Effects",
+            "url": "https://nikitaboyarkin.github.io/projects/causal/",
+            "description": "CUPED cuts the standard error 26% (5.5k users per arm instead of 10k), and a pre-registered break-even threshold of 0.05 ships the campaign to new users only."
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "CRM Experiment Lab — Segment-Stage Randomization, GCG and Net Effect",
+            "url": "https://nikitaboyarkin.github.io/projects/crm-experiment-lab/",
+            "description": "Segment-stage randomization holds SRM at p=0.266, GCG uplift is +0.9968 [0.9433, 1.0502], and the net effect is +50.5 per 1,000 treated — positive, but the unsubscribe guardrail breaches."
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "Data Analyst Telegram Bot",
+            "url": "https://nikitaboyarkin.github.io/projects/bot/",
+            "description": "From a CSV — p-value, lift and 95% CI in under 30 seconds, plus a power note and a chart; /export returns a standalone HTML report"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 6,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "Volta Neobank — Product Analytics",
+            "url": "https://nikitaboyarkin.github.io/projects/volta/",
+            "description": "KYC fix: +5.72pp conversion (p<0.0001) → €208.5K over 12 months at 13.9× ROI; M3 retention +9.2pp"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 7,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "Churn Prediction — Leakage-Free Retention Model",
+            "url": "https://nikitaboyarkin.github.io/projects/churn/",
+            "description": "The top 10% riskiest catches 54.4% of churners at 5.44x lift, but only 1.75x on the at-risk subgroup: 69.7% of the cohort is a near-guaranteed negative by construction."
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 8,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "Cohort Analysis Dashboard",
+            "url": "https://nikitaboyarkin.github.io/projects/cohort/",
+            "description": "Python inside Tableau: 4 cohort calculations on a TabPy server and 65 tests; the cohort matrix replaces average retention and shows churn speed and where monetization diverges"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 9,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "Delivery Control Tower",
+            "url": "https://nikitaboyarkin.github.io/projects/delivery/",
+            "description": "Best WAPE 6.01% at h=7 with seasonal_naive; delivery time barely moves with load (rho = −0.092), yet snacks take 40.0 min against 26.6 min for pizza; the mp channel share grew 5.7 pp"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 10,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "GMV Drop RCA — root cause on real data",
+            "url": "https://nikitaboyarkin.github.io/projects/gmv-drop-rca/",
+            "description": "UK decile-1 explains 56.2% of the named drop (−£195,218.25); the full attribution reconciles to £0.00 against an overall −10.0% decline"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 11,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "LinkedIn Content Analytics",
+            "url": "https://nikitaboyarkin.github.io/projects/linkedin/",
+            "description": "50,101 impressions, 9,440 reach, 1.71% ER over 12.10.2025 — 11.10.2026; three of four comparisons landed inside the noise, and that is recorded as the result"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 12,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "ML Fundamentals — scikit-learn Pipeline",
+            "url": "https://nikitaboyarkin.github.io/projects/ml/",
+            "description": "A split reproducible without a seed (Train (8, 5), Test (2, 5)), four synthetic datasets and 21 tests (7 + 9 + 5) that keep the pipeline runnable"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 13,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "Product A/B & Funnel Analytics — Conversion versus Retention",
+            "url": "https://nikitaboyarkin.github.io/projects/product-ab-funnel/",
+            "description": "SHIP: activation → paid +19.59% (p=0.000946) with no guardrail degradation; at an equal step conversion adds +10.00% to LTV versus +8.65% for retention"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 14,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "Promo Margin Lab — what a promo rouble actually earns",
+            "url": "https://nikitaboyarkin.github.io/projects/promo/",
+            "description": "Promo returns +68.5 m RUB of revenue and −24.4 m RUB of profit; 97.9% of waves lose money at a breakeven depth of 1.0–19.5% against 25.4% actual, and on one budget the optimiser earns +231 496 ₽ versus +136 648 ₽ for top-15%"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 15,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "Python Analytics Playground",
+            "url": "https://nikitaboyarkin.github.io/projects/python/",
+            "description": "pytest coverage ≥80%; modules stay small and single-purpose, requirements live in the PRD, and the tool extends without breakage"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 16,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "RAG Evaluation Harness — retrieval and generation metrics",
+            "url": "https://nikitaboyarkin.github.io/projects/rag/",
+            "description": "recall@5 and MRR = 1.00 over 20 questions and 0.00 on an 11-question control set of retrieval misses (MRR@all 0.12) — the metric can fall; correctness 0.37 for the offline baseline (faithfulness ≡1.00 is an extractive invariant); retrieval and generation scored separately"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 17,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "RFM Analysis of Bank Clients",
+            "url": "https://nikitaboyarkin.github.io/projects/rfm/",
+            "description": "Six named segments; the top 20% of clients hold 38.2% of revenue (Gini 0.324), and Champions — 6.4% of the base — drive 12.1% of revenue"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 18,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "Sales Calls Analytics Dashboard",
+            "url": "https://nikitaboyarkin.github.io/projects/sales-calls/",
+            "description": "An answer in a minute: which step loses the client and what to fix; the funnel yields weighted contact loss and a first A/B scenario"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 19,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "SERP Rank Lab",
+            "url": "https://nikitaboyarkin.github.io/projects/serp-rank/",
+            "description": "On a synthetic log: +34.45% revenue per search for −16.84% CTR; the rollout returns −14.26% (p = 0.11) and −16.05% conversion → do not ship"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 20,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "SQL Analytics Case Study",
+            "url": "https://nikitaboyarkin.github.io/projects/sql/",
+            "description": "The funnel drops 78% at add-to-cart → checkout (54% is the view→cart step); retention falls from ~19.5% (D1) to ~4% (D30); only 3.5% repeat; on real data 72.4% return"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 21,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "Classifieds liquidity — a measurability audit",
+            "url": "https://nikitaboyarkin.github.io/projects/marketplace-liquidity/",
+            "description": "The proxy reads 0.2413 against a truth of 0.3070, an error of −0.0657 (−21.4%); after correction the worst category misses by 1.61 pp, and paid visibility yields −2.47% contacts per session at p = 0.308"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 22,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "Product Analytics + A/B on Supabase",
+            "url": "https://nikitaboyarkin.github.io/projects/supabase/",
+            "description": "A/B concluded on a seeded stream: control 29.6% vs treatment 40.7%, +11.1pp at p ≈ 1.7e-10 (chi-square); metrics computed in the live DB for any client"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 23,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "Product Analytics Dashboard (Streamlit)",
+            "url": "https://nikitaboyarkin.github.io/projects/streamlit/",
+            "description": "Funnel, Retention, Revenue, and Segments read from one consistent base; the same UI became the Supabase project's presentation layer"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 24,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "TaskFlow — PostHog Product Analytics Pipeline",
+            "url": "https://nikitaboyarkin.github.io/projects/posthog/",
+            "description": "Onboarding test on a seeded stream: completion 55.9% → 70.8% (+26.6%, χ² = 40.10, p < 0.0001, SRM p = 0.90), and 6.3% of completed signups reach a paid upgrade"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 25,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "Airflow DAG Platform",
+            "url": "https://nikitaboyarkin.github.io/projects/airflow/",
+            "description": "Three DAGs on one shared template and 72 tests without Airflow services or a DB; the full DAG runs in 440 s, 413 s of it in the forecast task"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 26,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "ClickHouse — ten SQL cases on 50M rows",
+            "url": "https://nikitaboyarkin.github.io/projects/clickhouse/",
+            "description": "The snapshot and seven DuckDB twins agree, slow and fast SQL are pinned as identical by a test, and the projection clears the ≥10× speed-up threshold the suite asserts on a full scan"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 27,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "Digital Garden — EQ in IT",
+            "url": "https://nikitaboyarkin.github.io/projects/garden/",
+            "description": "Links over chronology: backlinks make each note a node, and the graph turns note accumulation into a navigable structure"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 28,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "OSS catalog — 47 projects from one source",
+            "url": "https://nikitaboyarkin.github.io/projects/oss-catalog/",
+            "description": "47 project pages and 15 metadata fields are built from one TOML file; a repeated render is idempotent, and 26 tests cover all three record-matching branches"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 29,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "Scrolly English Speaking",
+            "url": "https://nikitaboyarkin.github.io/projects/scrolly/",
+            "description": "Narrative and visualization in sync: the chart changes as the reader reaches a paragraph; a new scene is just a data file plus MDX"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 30,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "This Portfolio Site",
+            "url": "https://nikitaboyarkin.github.io/projects/site/",
+            "description": "Invalid frontmatter breaks the build, not the deploy; no link hardcodes the base; adding a project needs no code changes"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 31,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "Matemarketing 2026 Programme — a static replica",
+            "url": "https://nikitaboyarkin.github.io/projects/mm-program-page/",
+            "description": "The grid matches the original to the pixel: 99 px time column, 420 px hall column, 391 px card, 550 px row, grid top at y = 414; tests catch data and layout drift"
+          }
+        }
+      ]
+    },
+    {
+      "@type": "ItemList",
+      "name": "Volta Neobank case studies",
+      "numberOfItems": 23,
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "Volta — Funnel Analysis",
+            "url": "https://nikitaboyarkin.github.io/projects/volta/funnel/",
+            "description": "KYC — 56.6% step conversion; registration — 2,682 users; 1,269 of 10,000 reach the first transaction"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "Volta — KYC Progress-Bar A/B Test",
+            "url": "https://nikitaboyarkin.github.io/projects/volta/ab/",
+            "description": "KYC conversion 55.8% → 61.5%: +5.72pp at p<0.0001, above the MDE; gate passed, +€208.5K over 12 months"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "Volta — Retention & Cohorts",
+            "url": "https://nikitaboyarkin.github.io/projects/volta/retention/",
+            "description": "Post-fix cohorts hold 61–67% at M1 vs 51–53% pre-fix; M3 +9.2pp, Premium LTV 2.7× Free, +€282K/yr"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "Volta — User Segmentation",
+            "url": "https://nikitaboyarkin.github.io/projects/volta/segmentation/",
+            "description": "K=4 (Power 12% / Growth 24% / Casual 32% / Dormant 32%); Power drive 41% of revenue, 68% → 92%; migration +€310K/yr"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "Volta — Churn Prediction",
+            "url": "https://nikitaboyarkin.github.io/projects/volta/churn/",
+            "description": "Random Forest adds +0.03 ROC-AUC over LR; top driver is device-error rate 23.7%, usage_frequency 18.7% and days_since_last_activity 16.5%"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 6,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "Volta — RFM Analysis",
+            "url": "https://nikitaboyarkin.github.io/projects/volta/rfm/",
+            "description": "Champions — 23.9% of the base with all three axes high (91/93/93); At Risk 11.5% and Lost 23.2% are a large reactivation reserve"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 7,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "Volta — CLV Modeling",
+            "url": "https://nikitaboyarkin.github.io/projects/volta/clv/",
+            "description": "Power > Growth > Casual > Dormant holds across all three methods; Gamma-Gamma Power €5,166 vs Dormant €27.7 — a ~187× gap"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 8,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "Volta — Marketing Attribution",
+            "url": "https://nikitaboyarkin.github.io/projects/volta/attribution/",
+            "description": "Referral leads in all four models (€218–264K); Shapley takes referral to €263.7K and drops display to €125.0K"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 9,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "Volta — Anomaly Detection",
+            "url": "https://nikitaboyarkin.github.io/projects/volta/anomalies/",
+            "description": "Isolation Forest — best F1 (50.4%, 401 detections); Z-score — precision 80.5% at recall 24.7% (123 detections)"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 10,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "Volta — Spend Analysis",
+            "url": "https://nikitaboyarkin.github.io/projects/volta/spend/",
+            "description": "Bills (25.8%) and travel (20.2%) — nearly half the turnover; groceries most frequent (18,238 transactions, €45.8 ticket)"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 11,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "Volta — Support & Churn",
+            "url": "https://nikitaboyarkin.github.io/projects/volta/support-churn/",
+            "description": "Churn rises with ticket count: 37.1% (0) → 81.1% (3+); users with 3+ tickets churn 2.2× more; CSAT bands barely discriminate (52–55%)"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 12,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "Volta — NPS Trends",
+            "url": "https://nikitaboyarkin.github.io/projects/volta/nps/",
+            "description": "NPS hovers near zero: peak +12.9 (2024-10), bottom −1.8 (2024-09); fees −59.4 is the main negative, app_quality +30.3"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 13,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "Volta — JTBD × Cohorts",
+            "url": "https://nikitaboyarkin.github.io/projects/volta/jtbd/",
+            "description": "JTBD segment × cohort are NOT independent (p<0.001); Dormant 39.4% among Digital Newcomers 45+ vs 15.1% among Family Budgeters"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 14,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "Volta — Traveler Unit Economics",
+            "url": "https://nikitaboyarkin.github.io/projects/volta/unit-economics/",
+            "description": "Net margin −€0.45 per €100 FX; break-even needs FX cost cut 1.00% → 0.55%"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 15,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "Volta — Premium Upsell",
+            "url": "https://nikitaboyarkin.github.io/projects/volta/premium-upsell/",
+            "description": "Premium Status 41.2%, anchor 17.3% vs Digital Newcomers 45+ 1.8% (z=34, p<0.001)"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 16,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "Volta — 45+ KYC Deep-Dive",
+            "url": "https://nikitaboyarkin.github.io/projects/volta/kyc-45/",
+            "description": "35–44 +11.0pp (p<0.001), 45+ +1.4pp (ns), 45+ in treatment 53.2% vs 61.2%"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 17,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "Volta — Referral Segments",
+            "url": "https://nikitaboyarkin.github.io/projects/volta/referral/",
+            "description": "Anchor 29.6% vs 45+ 4.8% and families 8.6%; the gap opens at accept (78% vs 26% vs 40%), in-app 20.6% vs link 14.3%"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 18,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "Volta — Assisted CAC vs LTV",
+            "url": "https://nikitaboyarkin.github.io/projects/volta/assisted-cac/",
+            "description": "The anchor clears the ≥3 gate only via referral at LTV/CAC 3.62; 45+ clears none: assisted 0.41; blended 0.66; 50-month payback"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 19,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "Volta — FX Sourcing Feasibility",
+            "url": "https://nikitaboyarkin.github.io/projects/volta/fx-sourcing/",
+            "description": "The 0.55% gate needs ≈ €332M/month at SOM scale; today's ~€2.7M/mo is ~122× lower; ~0.20pp per order of magnitude; Interbank Prime 0.745%"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 20,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "Volta — Segment Premium Offers",
+            "url": "https://nikitaboyarkin.github.io/projects/volta/premium-offers/",
+            "description": "45+ 1.6%→5.0%, families 4.4%→8.6%, travelers 8.8%→12.6%; anchor +0.86pp — the gap is not closed"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 21,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "Volta — Anchor Launch CAC at Scale",
+            "url": "https://nikitaboyarkin.github.io/projects/volta/anchor-cac/",
+            "description": "LTV/CAC ≥3 holds only to ~70K users (31% of SOM); at SOM 225K it is 1.76× with a 17.0-month payback"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 22,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "Volta — Dormant 45+ Win-back",
+            "url": "https://nikitaboyarkin.github.io/projects/volta/dormant-winback/",
+            "description": "human +5.34pp, light-touch +2.77pp; light-touch pays off at 30–60d (ROI 2.54) and 60–90d (1.26), human overall 0.40"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 23,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "Volta — Causal Validation of KYC (DiD)",
+            "url": "https://nikitaboyarkin.github.io/projects/volta/causal-kyc/",
+            "description": "M3 retention: DiD ATT +9.09pp (95% CI [+6.21, +11.96]); activation naive +6.29pp vs DiD +4.92pp"
+          }
+        }
+      ]
+    }
+  ]
+}

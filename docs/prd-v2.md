@@ -360,6 +360,43 @@ confidence + открытые пробелы), наполнение — анал
 
 **Dependencies:** REQ-017 (непроверяемые числа), REQ-018 (бюджет карточек), REQ-020 (тесты офлайн), REQ-029 (идиома карточки).
 
+## 5.3 Итерация v2.3 — GEO-слой и локальный гейт `[DONE 2026-11-16]`
+
+> Источник паттерна — референс `ChanMeng666` (data-driven профиль: YAML → README +
+> `llms.txt` + `profile.json` + JSON-LD, гейты в `npm run check`). Перенесена только
+> недостающая часть: текстовый слой для машин и локальная проверка артефактов.
+> YAML-шарды **не** перенесены: источник данных уже один — `public/projects.json` сайта.
+
+#### REQ-031: `llms.txt` + `profile.json` (GEO) `[P1]`
+
+**Проблема:** профиль читался человеком и больше никем. Карточки — SVG, то есть для
+LLM-краулера, AI-поиска и ATS в репозитории не было ни одного цитируемого факта.
+
+**Решение:** оба файла генерируются из того же registry, что и карточки.
+
+**Acceptance Criteria:**
+- [x] `llms.txt`: роль, headline-числа, доступность, bullet на проект (`**title** — result (case-study URL)`) в порядке треков, приложение Volta, контакты.
+- [x] `profile.json`: JSON-LD `@graph` — `Person` (`sameAs` ×4, `knowsAbout`) + два `ItemList`.
+- [x] EN-поле предпочтительнее (`title_en`/`result_en`), fallback на RU — как у карточек.
+- [x] Оба пишутся только при успешной загрузке registry: сбой сети оставляет старые файлы.
+- [x] `profile.json` без таймстампа → повторный билд = no-op.
+
+#### REQ-032: Локальный гейт `--audit` `[P1]`
+
+**Проблема:** бюджет `metrics.svg ≤ 80 KB` и «31 проект» в прозе README были claim'ами
+без механизма; claim без проверки — это проза.
+
+**Решение:** `python3 scripts/build_profile.py --audit` — без сети и токена; в `ci.yml` и в
+validate-шаге `profile.yml`.
+
+**Acceptance Criteria:**
+- [x] Битая ссылка на self-hosted ассет в README → fail.
+- [x] Orphan `*.svg` в корне → fail.
+- [x] `metrics.svg` > 80 KB → fail.
+- [x] `**N projects**` / `**N Volta case studies**` в прозе README ≠ счётчику из `llms.txt` → fail.
+- [x] `profile.json` отсутствует / битый / счётчик `ItemList` расходится → fail.
+- [x] 11 тестов на GEO-функции и гейт; liveness ссылок остаётся отдельным сетевым job'ом.
+
 ## 6. Non-Functional Requirements
 
 ### Performance

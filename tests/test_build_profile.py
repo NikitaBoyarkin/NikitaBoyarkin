@@ -3,6 +3,7 @@
 Run: python3 -m pytest tests/test_build_profile.py -v
 """
 
+import json
 import math
 import re
 import sys
@@ -1507,3 +1508,165 @@ def test_main_is_soft_when_github_api_is_unavailable(monkeypatch, capsys):
     bp.main()
     assert touched == [], "no files may be written when the API is down"
     assert "::warning::" in capsys.readouterr().out
+
+
+# ---------- GEO surface: llms.txt + profile.json ----------
+
+
+def test_llms_txt_counts_and_entries_match_the_registry():
+    registry = _registry(
+        projects=[
+            _project("A/B Toolkit", "experiments", result="lift +1 pp"),
+            _project("Cohorts", "analytics"),
+        ],
+        volta_cases=[_case("V1", href="https://example.test/v1")],
+    )
+    text = bp.build_llms_txt(registry, "2026-01-01")
+    assert "## Selected work (2 projects across 2 tracks)" in text
+    assert "Last updated: 2026-01-01" in text
+    assert "- **A/B Toolkit** — lift +1 pp (https://example.test/case)" in text
+    assert "- **V1** — desc (https://example.test/v1)" in text
+    assert "## Volta Neobank — 1 linked case studies" in text
+
+
+def test_llms_txt_prefers_the_english_fields():
+    # title_en only exists in the site registry; without the preference the
+    # machine layer would publish a different language than the README.
+    record = {
+        "track": "experiments",
+        "title": "Русский",
+        "title_en": "English",
+        "description": "д",
+        "description_en": "d",
+        "result": "р",
+        "result_en": "EN result",
+        "href": "https://example.test/x",
+    }
+    text = bp.build_llms_txt(_registry(projects=[record]), "2026-01-01")
+    assert "- **English** — EN result (https://example.test/x)" in text
+    assert "Русский" not in text
+
+
+def test_llms_txt_falls_back_to_the_description_when_no_result():
+    text = bp.build_llms_txt(_registry(projects=[_project("P", "product")]), "2026-01-01")
+    assert "- **P** — desc (https://example.test/case)" in text
+
+
+def test_profile_json_is_a_person_with_the_work_attached():
+    registry = _registry(
+        projects=[_project("P1", "analytics")],
+        volta_cases=[_case("V", href="https://example.test/v")],
+    )
+    document = json.loads(bp.build_profile_json(registry))
+    assert document["@context"] == "https://schema.org"
+    person = document["@graph"][0]
+    assert person["@type"] == "Person"
+    assert "https://github.com/NikitaBoyarkin" in person["sameAs"]
+    assert len(person["sameAs"]) >= 3
+    lists = {node["name"]: node for node in document["@graph"] if node["@type"] == "ItemList"}
+    assert lists["Portfolio case studies"]["numberOfItems"] == 1
+    assert lists["Volta Neobank case studies"]["numberOfItems"] == 1
+
+
+def test_profile_json_carries_no_timestamp():
+    registry = _registry(projects=[_project("P1", "analytics")])
+    assert bp.build_profile_json(registry) == bp.build_profile_json(registry)
+
+
+# ---------- audit gate ----------
+
+
+def _consistent_repo(tmp_path, *, projects=2, readme=None, llms=None, profile=None, svgs=None):
+    """A tree the audit passes on; each test overrides exactly one artifact."""
+    readme = (
+        readme
+        if readme is not None
+        else f'**{projects} projects**\n\n<img src="{bp.RAW_ASSET_PREFIX}hero.svg">\n'
+    )
+    llms = (
+        llms
+        if llms is not None
+        else f"# N\n\n> s\n\n## Selected work ({projects} projects across 1 track)\n"
+    )
+    profile = (
+        profile
+        if profile is not None
+        else json.dumps(
+            {
+                "@context": "https://schema.org",
+                "@graph": [
+                    {"@type": "Person", "name": "N", "sameAs": ["a", "b", "c"]},
+                    {
+                        "@type": "ItemList",
+                        "name": "Portfolio case studies",
+                        "numberOfItems": projects,
+                    },
+                ],
+            }
+        )
+    )
+    for name, content in (svgs if svgs is not None else {"hero.svg": "<svg/>"}).items():
+        (tmp_path / name).write_text(content, encoding="utf-8")
+    (tmp_path / "README.md").write_text(readme, encoding="utf-8")
+    (tmp_path / "llms.txt").write_text(llms, encoding="utf-8")
+    (tmp_path / "profile.json").write_text(profile, encoding="utf-8")
+    return tmp_path
+
+
+def test_audit_passes_on_a_consistent_repo(tmp_path):
+    assert bp.audit_repo(_consistent_repo(tmp_path)) == []
+
+
+def test_audit_flags_a_claim_that_outran_the_work(tmp_path):
+    root = _consistent_repo(
+        tmp_path, readme=f'**30 projects**\n\n<img src="{bp.RAW_ASSET_PREFIX}hero.svg">\n'
+    )
+    assert any("claims 30 projects" in problem for problem in bp.audit_repo(root))
+
+
+def test_audit_flags_a_referenced_asset_that_is_gone(tmp_path):
+    root = _consistent_repo(
+        tmp_path, readme=f'**2 projects**\n\n<img src="{bp.RAW_ASSET_PREFIX}gone.svg">\n'
+    )
+    assert any("gone.svg" in problem for problem in bp.audit_repo(root))
+
+
+def test_audit_flags_an_orphan_svg(tmp_path):
+    root = _consistent_repo(tmp_path, svgs={"hero.svg": "<svg/>", "stale.svg": "<svg/>"})
+    assert any("stale.svg" in problem for problem in bp.audit_repo(root))
+
+
+def test_audit_flags_an_asset_over_budget(tmp_path, monkeypatch):
+    monkeypatch.setitem(bp.ASSET_BUDGET_BYTES, "metrics.svg", 10)
+    root = _consistent_repo(
+        tmp_path,
+        svgs={"hero.svg": "<svg/>", "metrics.svg": "<svg>" + " " * 100 + "</svg>"},
+    )
+    assert any("over the 10 B budget" in problem for problem in bp.audit_repo(root))
+
+
+def test_audit_flags_profile_json_count_drift(tmp_path):
+    root = _consistent_repo(
+        tmp_path,
+        profile=json.dumps(
+            {
+                "@context": "https://schema.org",
+                "@graph": [
+                    {"@type": "Person", "name": "N", "sameAs": ["a", "b", "c"]},
+                    {
+                        "@type": "ItemList",
+                        "name": "Portfolio case studies",
+                        "numberOfItems": 7,
+                    },
+                ],
+            }
+        ),
+    )
+    assert any("lists 7 projects" in problem for problem in bp.audit_repo(root))
+
+
+def test_audit_flags_a_missing_geo_file(tmp_path):
+    (tmp_path / "README.md").write_text("**2 projects**\n", encoding="utf-8")
+    problems = bp.audit_repo(tmp_path)
+    assert any("llms.txt is missing" in problem for problem in problems)
+    assert any("profile.json is missing" in problem for problem in problems)

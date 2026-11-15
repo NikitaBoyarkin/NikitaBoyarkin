@@ -33,6 +33,11 @@ jobs:
       - name: Test
         run: pytest --cov=scripts --cov-report=term-missing
 
+      - name: Audit committed artifacts
+        # Local, token-free: dead asset refs, orphan SVGs, size budget, and every
+        # number the README states in prose against the generated llms.txt.
+        run: python3 scripts/build_profile.py --audit
+
   project-links:
     runs-on: ubuntu-latest
     steps:
