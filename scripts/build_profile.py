@@ -2,7 +2,7 @@
 """Build self-hosted profile assets for github.com/NikitaBoyarkin.
 
 Assets generated:
-- hero.svg: branded header band — name, role, one-line pitch, A/B motif
+- hero.svg: branded header band — name, role, one-line pitch, animated pixel terminal
 - stats.svg: contributions, current/longest streak, public repos, followers (GraphQL)
 - activity.svg: 30-day contribution activity sparkline
 - metrics.svg: slim self-hosted contribution map (replaces lowlighter/metrics)
@@ -126,23 +126,94 @@ HERO_TAGLINE = (
 )
 HERO_STRIP = "SQL · Python · Experimentation · CUPED · Retention"
 
+# 3x5 bitmap font for the terminal panel. Each glyph is five rows of three bits
+# (bit 2 = leftmost pixel). Rects instead of a webfont keep the panel pixel-crisp
+# and let the whole banner stay vector-only.
+PIXEL_GLYPHS = {
+    " ": (0, 0, 0, 0, 0),
+    ",": (0, 0, 0, 2, 4),
+    ";": (0, 2, 0, 2, 4),
+    "1": (2, 6, 2, 2, 7),
+    "B": (6, 5, 6, 5, 6),
+    "C": (3, 4, 4, 4, 3),
+    "E": (7, 4, 6, 4, 7),
+    "F": (7, 4, 6, 4, 4),
+    "G": (3, 4, 5, 5, 3),
+    "H": (5, 5, 7, 5, 5),
+    "I": (7, 2, 2, 2, 7),
+    "L": (4, 4, 4, 4, 7),
+    "M": (5, 7, 7, 5, 5),
+    "N": (5, 7, 7, 7, 5),
+    "O": (2, 5, 5, 5, 2),
+    "P": (6, 5, 6, 4, 4),
+    "R": (6, 5, 6, 5, 5),
+    "S": (3, 4, 2, 1, 6),
+    "T": (7, 2, 2, 2, 2),
+    "U": (5, 5, 5, 5, 7),
+    "V": (5, 5, 5, 5, 2),
+    "Y": (5, 5, 2, 2, 2),
+}
+
+HERO_TERMINAL_LINES = ("SELECT COHORT,", "  RETENTION", "FROM EVENTS", "GROUP BY 1;")
+
+# CSS steps, not smooth easing: the panel has to move in whole pixels. Loaded via
+# <img>, so the animation has to live inside the file (GitHub strips page JS).
+HERO_TERMINAL_STYLE = """
+  <style>
+    @keyframes hero-blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+    @keyframes hero-load{0%{transform:scaleX(.04)}70%,100%{transform:scaleX(1)}}
+    .hero-cursor{animation:hero-blink 1.1s steps(1,end) infinite}
+    .hero-bar{transform-origin:516px 160px;animation:hero-load 2.4s steps(10,end) infinite}
+    @media (prefers-reduced-motion:reduce){.hero-cursor,.hero-bar{animation:none}}
+  </style>"""
+
+
+def _pixel_text(line: str) -> str:
+    """Merge one line of bitmap text into path data, in font units (1 unit = 3 px)."""
+    grid = {
+        (row, i * 4 + col)
+        for i, ch in enumerate(line)
+        for row, bits in enumerate(PIXEL_GLYPHS[ch])
+        for col in range(3)
+        if bits & (1 << (2 - col))
+    }
+    d: list[str] = []
+    done: set[tuple[int, int]] = set()
+    for row, x in sorted(grid):
+        if (row, x) in done:
+            continue
+        w = 1
+        while (row, x + w) in grid:
+            w += 1
+        h = 1
+        while all((row + h, x + k) in grid for k in range(w)):
+            h += 1
+        done.update((row + dr, x + k) for dr in range(h) for k in range(w))
+        d.append(f"M{x} {row}h{w}v{h}h-{w}")
+    return "".join(d)
+
 
 def build_hero_svg() -> str:
-    """Branded header band: name, role, one-line pitch, schematic A/B motif.
+    """Branded header band: name, role, one-line pitch, animated pixel terminal.
 
     Vector-only and self-hosted. The reference profile opens with an 820x250
     banner that is ~200 KB of base64 GIF; this one carries the same job — name
-    and positioning readable before any scroll — in ~2 KB and no raster.
+    and positioning readable before any scroll — in under 4 KB and no raster.
 
-    The motif is a bare A/B pair with a "+lift" caption rather than a figure:
-    a real number here would be an unlinked claim in the header, which is the
-    failure mode this profile avoids.
+    The right panel is a pixel terminal running a retention query with a blinking
+    cursor and a stepped progress bar: the work the profile claims to do, drawn
+    rather than asserted. It shows no result number, so the header cannot carry an
+    unlinked metric.
     """
     W, H = 800, 220
     alt = f"{HERO_NAME} — {HERO_ROLE}. {HERO_TAGLINE[0]} {HERO_TAGLINE[1]}"
     desc = (
-        "Header banner: name, role, a one-line positioning statement, and a "
-        "schematic A/B lift motif."
+        "Header banner: name, role, a one-line positioning statement, and a pixel "
+        "terminal panel animating a retention query."
+    )
+    terminal = "".join(
+        f"<path transform='translate(0 {i * 7})' d='{_pixel_text(line)}'/>"
+        for i, line in enumerate(HERO_TERMINAL_LINES)
     )
     tagline = "".join(
         f"      <text x='40' y='{146 + i * 22}' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}' "
@@ -153,7 +224,7 @@ def build_hero_svg() -> str:
     <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 {W} {H}' width='{W}' height='{H}'
          role='img' aria-label='{_esc(alt)}'>
       <title>{_esc(alt)}</title>
-      <desc>{_esc(desc)}</desc>
+      <desc>{_esc(desc)}</desc>{HERO_TERMINAL_STYLE}
       <rect fill='{BG}' width='{W}' height='{H}' rx='8'/>
       <text x='40' y='64' fill='{TEXT_MAIN}' font-family='Segoe UI, Ubuntu, sans-serif'
             font-size='34px' font-weight='800' letter-spacing='1.5'>{_esc(HERO_NAME)}</text>
@@ -163,15 +234,15 @@ def build_hero_svg() -> str:
 {tagline}      <text x='40' y='199' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}'
             font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px' font-weight='600'>{_esc(HERO_STRIP)}</text>
       <line x1='490' y1='40' x2='490' y2='180' stroke='{TEXT_MAIN}' stroke-opacity='{FAINT_OP}' stroke-width='1'/>
-      <text x='647' y='56' text-anchor='middle' fill='{TEXT_MAIN}'
-            font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px' font-weight='700'>+lift</text>
-      <rect x='584' y='112' width='50' height='58' rx='3' fill='{TEXT_MAIN}' fill-opacity='0.26'/>
-      <rect x='660' y='84' width='50' height='86' rx='3' fill='{ACCENT}'/>
-      <line x1='550' y1='170' x2='744' y2='170' stroke='{TEXT_MAIN}' stroke-opacity='{FAINT_OP}' stroke-width='1'/>
-      <text x='609' y='188' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}'
-            font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px' font-weight='600'>A</text>
-      <text x='685' y='188' text-anchor='middle' fill='{TEXT_MAIN}' fill-opacity='{MUTED_OP}'
-            font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px' font-weight='600'>B</text>
+      <rect x='506' y='34' width='258' height='152' fill='none' stroke='{TEXT_MAIN}' stroke-width='2'/>
+      <rect x='508' y='36' width='254' height='18' fill='{TEXT_MAIN}' fill-opacity='{FAINT_OP}'/>
+      <rect x='516' y='42' width='6' height='6' fill='{ACCENT}'/>
+      <rect x='526' y='42' width='6' height='6' fill='{TEXT_MAIN}' fill-opacity='{GHOST_OP}'/>
+      <rect x='536' y='42' width='6' height='6' fill='{TEXT_MAIN}' fill-opacity='{GHOST_OP}'/>
+      <g transform='translate(516 64) scale(3)' fill='{TEXT_MAIN}'>{terminal}</g>
+      <rect class='hero-cursor' x='651' y='127' width='9' height='15' fill='{ACCENT}'/>
+      <rect x='516' y='156' width='152' height='8' fill='{TEXT_MAIN}' fill-opacity='{FAINT_OP}'/>
+      <rect class='hero-bar' x='516' y='156' width='152' height='8' fill='{ACCENT}'/>
     </svg>
     """
     return textwrap.dedent(svg).strip() + "\n"

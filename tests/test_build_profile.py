@@ -458,6 +458,16 @@ def test_hero_svg_uses_only_brand_tokens():
     assert set(re.findall(r"#[0-9a-fA-F]{6}", svg)) <= allowed
 
 
+def test_hero_terminal_glyphs_cover_every_character_on_a_3x5_grid():
+    for line in bp.HERO_TERMINAL_LINES:
+        missing = set(line) - set(bp.PIXEL_GLYPHS)
+        assert not missing, f"no glyph for {missing}"
+        assert bp._pixel_text(line), f"{line!r} rendered no pixels"
+    for char, rows in bp.PIXEL_GLYPHS.items():
+        assert len(rows) == 5, char
+        assert all(0 <= bits <= 7 for bits in rows), char
+
+
 # ---------- normalize_notes_block ----------
 
 

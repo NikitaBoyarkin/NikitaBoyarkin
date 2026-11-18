@@ -1,25 +1,32 @@
 <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 220' width='800' height='220'
-     role='img' aria-label='NIKITA BOYARKIN — DATA / PRODUCT ANALYST. Ambiguous product questions → clean experiments, SQL pipelines, decisions.'>
-  <title>NIKITA BOYARKIN — DATA / PRODUCT ANALYST. Ambiguous product questions → clean experiments, SQL pipelines, decisions.</title>
-  <desc>Header banner: name, role, a one-line positioning statement, and a schematic A/B lift motif.</desc>
-  <rect fill='#f8f2da' width='800' height='220' rx='8'/>
-  <text x='40' y='64' fill='#1400c3' font-family='Segoe UI, Ubuntu, sans-serif'
-        font-size='34px' font-weight='800' letter-spacing='1.5'>NIKITA BOYARKIN</text>
-  <text x='40' y='99' fill='#1400c3' font-family='Segoe UI, Ubuntu, sans-serif'
-        font-size='16px' font-weight='700' letter-spacing='2.6'>DATA / PRODUCT ANALYST</text>
-  <line x1='40' y1='117' x2='360' y2='117' stroke='#1400c3' stroke-opacity='0.14' stroke-width='1'/>
-  <text x='40' y='146' fill='#1400c3' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='15px'>Ambiguous product questions →</text>
-  <text x='40' y='168' fill='#1400c3' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='15px'>clean experiments, SQL pipelines, decisions.</text>
-  <text x='40' y='199' fill='#1400c3' fill-opacity='0.62'
-        font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px' font-weight='600'>SQL · Python · Experimentation · CUPED · Retention</text>
-  <line x1='490' y1='40' x2='490' y2='180' stroke='#1400c3' stroke-opacity='0.14' stroke-width='1'/>
-  <text x='647' y='56' text-anchor='middle' fill='#1400c3'
-        font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px' font-weight='700'>+lift</text>
-  <rect x='584' y='112' width='50' height='58' rx='3' fill='#1400c3' fill-opacity='0.26'/>
-  <rect x='660' y='84' width='50' height='86' rx='3' fill='#fe4e02'/>
-  <line x1='550' y1='170' x2='744' y2='170' stroke='#1400c3' stroke-opacity='0.14' stroke-width='1'/>
-  <text x='609' y='188' text-anchor='middle' fill='#1400c3' fill-opacity='0.62'
-        font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px' font-weight='600'>A</text>
-  <text x='685' y='188' text-anchor='middle' fill='#1400c3' fill-opacity='0.62'
-        font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px' font-weight='600'>B</text>
-</svg>
+       role='img' aria-label='NIKITA BOYARKIN — DATA / PRODUCT ANALYST. Ambiguous product questions → clean experiments, SQL pipelines, decisions.'>
+    <title>NIKITA BOYARKIN — DATA / PRODUCT ANALYST. Ambiguous product questions → clean experiments, SQL pipelines, decisions.</title>
+    <desc>Header banner: name, role, a one-line positioning statement, and a pixel terminal panel animating a retention query.</desc>
+<style>
+  @keyframes hero-blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+  @keyframes hero-load{0%{transform:scaleX(.04)}70%,100%{transform:scaleX(1)}}
+  .hero-cursor{animation:hero-blink 1.1s steps(1,end) infinite}
+  .hero-bar{transform-origin:516px 160px;animation:hero-load 2.4s steps(10,end) infinite}
+  @media (prefers-reduced-motion:reduce){.hero-cursor,.hero-bar{animation:none}}
+</style>
+    <rect fill='#f8f2da' width='800' height='220' rx='8'/>
+    <text x='40' y='64' fill='#1400c3' font-family='Segoe UI, Ubuntu, sans-serif'
+          font-size='34px' font-weight='800' letter-spacing='1.5'>NIKITA BOYARKIN</text>
+    <text x='40' y='99' fill='#1400c3' font-family='Segoe UI, Ubuntu, sans-serif'
+          font-size='16px' font-weight='700' letter-spacing='2.6'>DATA / PRODUCT ANALYST</text>
+    <line x1='40' y1='117' x2='360' y2='117' stroke='#1400c3' stroke-opacity='0.14' stroke-width='1'/>
+    <text x='40' y='146' fill='#1400c3' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='15px'>Ambiguous product questions →</text>
+    <text x='40' y='168' fill='#1400c3' fill-opacity='0.62' font-family='Segoe UI, Ubuntu, sans-serif' font-size='15px'>clean experiments, SQL pipelines, decisions.</text>
+    <text x='40' y='199' fill='#1400c3' fill-opacity='0.62'
+          font-family='Segoe UI, Ubuntu, sans-serif' font-size='12px' font-weight='600'>SQL · Python · Experimentation · CUPED · Retention</text>
+    <line x1='490' y1='40' x2='490' y2='180' stroke='#1400c3' stroke-opacity='0.14' stroke-width='1'/>
+    <rect x='506' y='34' width='258' height='152' fill='none' stroke='#1400c3' stroke-width='2'/>
+    <rect x='508' y='36' width='254' height='18' fill='#1400c3' fill-opacity='0.14'/>
+    <rect x='516' y='42' width='6' height='6' fill='#fe4e02'/>
+    <rect x='526' y='42' width='6' height='6' fill='#1400c3' fill-opacity='0.45'/>
+    <rect x='536' y='42' width='6' height='6' fill='#1400c3' fill-opacity='0.45'/>
+    <g transform='translate(516 64) scale(3)' fill='#1400c3'><path transform='translate(0 0)' d='M1 0h2v1h-2M4 0h3v1h-3M8 0h1v5h-1M12 0h3v1h-3M17 0h2v1h-2M20 0h3v1h-3M29 0h2v1h-2M33 0h1v1h-1M36 0h1v5h-1M38 0h1v5h-1M41 0h1v1h-1M44 0h2v1h-2M48 0h3v1h-3M0 1h1v1h-1M4 1h1v4h-1M12 1h1v4h-1M16 1h1v3h-1M21 1h1v4h-1M28 1h1v3h-1M32 1h1v3h-1M34 1h1v3h-1M40 1h1v3h-1M42 1h1v3h-1M44 1h1v4h-1M46 1h1v1h-1M49 1h1v4h-1M1 2h1v1h-1M5 2h1v1h-1M13 2h1v1h-1M37 2h2v1h-2M45 2h1v1h-1M2 3h1v1h-1M46 3h1v2h-1M53 3h1v1h-1M0 4h2v1h-2M5 4h2v1h-2M9 4h2v1h-2M13 4h2v1h-2M17 4h2v1h-2M29 4h2v1h-2M33 4h1v1h-1M41 4h1v1h-1M52 4h1v1h-1'/><path transform='translate(0 7)' d='M8 0h2v1h-2M12 0h3v1h-3M16 0h3v1h-3M20 0h3v1h-3M24 0h1v5h-1M26 0h1v5h-1M28 0h3v1h-3M32 0h3v1h-3M37 0h1v1h-1M40 0h1v5h-1M42 0h1v5h-1M8 1h1v4h-1M10 1h1v1h-1M12 1h1v4h-1M17 1h1v4h-1M20 1h1v4h-1M25 1h2v3h-2M29 1h1v4h-1M33 1h1v4h-1M36 1h1v3h-1M38 1h1v3h-1M41 1h2v3h-2M9 2h1v1h-1M13 2h1v1h-1M21 2h1v1h-1M10 3h1v2h-1M13 4h2v1h-2M21 4h2v1h-2M32 4h3v1h-3M37 4h1v1h-1'/><path transform='translate(0 14)' d='M0 0h3v1h-3M4 0h2v1h-2M9 0h1v1h-1M12 0h1v5h-1M14 0h1v5h-1M20 0h3v1h-3M24 0h1v4h-1M26 0h1v4h-1M28 0h3v1h-3M32 0h1v5h-1M34 0h1v5h-1M36 0h3v1h-3M41 0h2v1h-2M0 1h1v4h-1M4 1h1v4h-1M6 1h1v1h-1M8 1h1v3h-1M10 1h1v3h-1M13 1h2v2h-2M20 1h1v4h-1M28 1h1v4h-1M33 1h2v3h-2M37 1h1v4h-1M40 1h1v1h-1M1 2h1v1h-1M5 2h1v1h-1M21 2h1v1h-1M29 2h1v1h-1M41 2h1v1h-1M6 3h1v2h-1M42 3h1v1h-1M9 4h1v1h-1M21 4h2v1h-2M25 4h1v1h-1M29 4h2v1h-2M40 4h2v1h-2'/><path transform='translate(0 21)' d='M1 0h2v1h-2M4 0h2v1h-2M9 0h1v1h-1M12 0h1v5h-1M14 0h1v5h-1M16 0h2v1h-2M24 0h2v1h-2M28 0h1v2h-1M30 0h1v2h-1M37 0h1v5h-1M0 1h1v3h-1M4 1h1v4h-1M6 1h1v1h-1M8 1h1v3h-1M10 1h1v3h-1M16 1h1v4h-1M18 1h1v1h-1M24 1h1v4h-1M26 1h1v1h-1M36 1h2v1h-2M41 1h1v1h-1M2 2h1v3h-1M5 2h1v1h-1M17 2h1v1h-1M25 2h1v1h-1M29 2h1v3h-1M6 3h1v2h-1M26 3h1v1h-1M41 3h1v1h-1M1 4h2v1h-2M9 4h1v1h-1M13 4h2v1h-2M25 4h1v1h-1M36 4h3v1h-3M40 4h1v1h-1'/></g>
+    <rect class='hero-cursor' x='651' y='127' width='9' height='15' fill='#fe4e02'/>
+    <rect x='516' y='156' width='152' height='8' fill='#1400c3' fill-opacity='0.14'/>
+    <rect class='hero-bar' x='516' y='156' width='152' height='8' fill='#fe4e02'/>
+  </svg>
