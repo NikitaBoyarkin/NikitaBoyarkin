@@ -5,18 +5,7 @@
 📦 **Portfolio:** <a href="https://nikitaboyarkin.github.io/?utm_source=github&utm_medium=profile_readme&utm_campaign=header"><img src="portfolio.svg" align="absmiddle" alt="Portfolio" /></a>  
 🔗 **Links:** <a href="https://linktr.ee/lofinibo?utm_source=github&utm_medium=profile_readme&utm_campaign=header"><img src="links.svg" align="absmiddle" alt="Links" /></a>
 
-**Data / Product Analyst** — a working portfolio of experiments, SQL pipelines and retention analyses, each written up as a public case study.
-
-**KYC A/B: +5.72 pp conversion** ([case study](https://nikitaboyarkin.github.io/projects/volta/ab/?utm_source=github&utm_medium=profile_readme&utm_campaign=header)) · **€208.5K A/B impact (12 mo) + €282K retention LTV** on synthetic Volta data (simulated bank, seeded figures) · **31 projects**, each with a public case study
-
 ---
-
-### 📚 Currently
-
-- 📚 Learning: Bayesian A/B testing, ClickHouse
-- 💼 Open to: BI / product / data analyst roles — actively interviewing
-- 🤝 Collab: experimentation, user retention analytics
-- 🚧 Building: [interactive analyst portfolio](https://nikitaboyarkin.github.io/?utm_source=github&utm_medium=profile_readme&utm_campaign=building) — playable SVG games + self-hosted GitHub stats
 
 <!-- ALL-PROJECTS:START -->
 ### 🗂️ All Projects
