@@ -980,7 +980,7 @@ COVER_BY_SLUG = {
     "churn": "churn.svg",
     "clickhouse": "clickhouse.svg",
     "cohort": "cohort.svg",
-    "crm-experiment-lab": "crm-experiment-lab.png",
+    "crm-experiment-lab": "crm-experiment-lab.svg",
     "delivery": "delivery.svg",
     "games": "games.svg",
     "garden": "garden.svg",
@@ -1005,10 +1005,9 @@ COVER_BY_SLUG = {
     "supabase": "supabase.svg",
     "volta": "volta.svg",
 }
-# The one cover that is not a slug-named vector: crm-experiment-lab's diagram
-# predates the SVG template and ships as a raster. Only a test reads this — it is
-# the declared exception, and a second raster has to be added here on purpose.
-COVER_RASTERS = frozenset({"crm-experiment-lab.png"})
+# The vector default is the rule; a cover that ships as a raster has to be
+# declared here on purpose. Only a test reads this.
+COVER_RASTERS = frozenset()
 
 # One card is one table cell. Constant because the tests and the padding cell
 # must agree with the renderer on the exact opening tag.
