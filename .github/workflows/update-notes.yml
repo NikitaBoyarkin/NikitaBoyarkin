@@ -29,5 +29,7 @@ jobs:
           # REQ-019: no dummy/keepalive commits — daily build already keeps the repo active.
           enable_keepalive: "false"
           # REQ-023: consistent UTM scheme for outbound section links.
-          template: "- [$title]($url?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)\n"
+          # Separator must come from the template: core.getInput() trims it, so a
+          # trailing "\n" never survives — only $newline (substituted after the trim).
+          template: "- [$title]($url?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)$newline"
           tag_post_pre_newline: "true"
