@@ -36,6 +36,7 @@ import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta, timezone
+from email.utils import parsedate_to_datetime
 from pathlib import Path
 from xml.sax.saxutils import escape
 
@@ -751,25 +752,82 @@ _NOTES_BLOCK_RE = re.compile(
     r"(<!-- RECENT-POSTS-LIST:START -->)(.*?)(<!-- RECENT-POSTS-LIST:END -->)",
     re.DOTALL,
 )
-_NOTES_ITEM_RE = re.compile(r"-\s*\[(.*?)\]\((.*?)\)")
+
+NOTES_FEED_URL = "https://nikitaboyarkin.github.io/rss.xml"
+NOTES_LIMIT = 5
+NOTES_UTM = "utm_source=github&utm_medium=profile_readme&utm_campaign=notes"
+NOTES_TOPIC_BADGE = "https://img.shields.io/badge/{label}-{color}?style=flat-square"
+NOTES_TOPIC_COLOR = "6e7681"
+# Colours the site already uses for the same words, so a badge never invents a hue.
+NOTES_TOPIC_COLORS = {
+    "decision-log": "fe4e02",
+    "guide": "0f2a2b",
+    "framework": "0f2a2b",
+    "note": "6e7681",
+}
 
 
-def normalize_notes_block(content: str) -> str:
-    """Put one Recent-Notes item per line.
+def _topic_badge(topic: str) -> str:
+    """Static shields badge for a note's subject; shields needs '-' doubled."""
+    label = topic.replace("-", "--").replace("_", "__").replace(" ", "_")
+    color = NOTES_TOPIC_COLORS.get(topic, NOTES_TOPIC_COLOR)
+    return NOTES_TOPIC_BADGE.format(label=label, color=color)
 
-    blog-post-workflow applies its `template` per entry but joins the results
-    with no separator, so all five posts land on a single line and GitHub renders
-    the section as one run-on paragraph instead of a list.
+
+def parse_notes(xml_text: str) -> list[tuple[str, str, datetime, str]]:
+    """RSS feed → newest-first (title, link, published, topic).
+
+    The first <category> is the post's subject (decision-log, guide, …); the rest
+    are free-form tags. An item missing a field is skipped rather than half-rendered.
     """
+    root = ET.fromstring(xml_text)
+    notes = []
+    for item in root.iter("item"):
+        title = (item.findtext("title") or "").strip()
+        link = (item.findtext("link") or "").strip()
+        raw = (item.findtext("pubDate") or "").strip()
+        category = item.find("category")
+        topic = (category.text or "").strip() if category is not None else ""
+        if title and link and raw and topic:
+            notes.append((title, link, parsedate_to_datetime(raw), topic))
+    return sorted(notes, key=lambda note: note[2], reverse=True)
 
-    def rebuild(match: re.Match) -> str:
-        items = _NOTES_ITEM_RE.findall(match.group(2))
-        if not items:
-            return match.group(0)
-        body = "\n".join(f"- [{title}]({url})" for title, url in items)
-        return f"{match.group(1)}\n{body}\n{match.group(3)}"
 
-    return _NOTES_BLOCK_RE.sub(rebuild, content)
+def fetch_notes(
+    url: str = NOTES_FEED_URL, retries: int = 3
+) -> list[tuple[str, str, datetime, str]]:
+    """GET the site RSS, retrying transient failures like the registry fetch does."""
+    last_exc: Exception | None = None
+    for attempt in range(1, retries + 1):
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": "build_profile"})
+            with urllib.request.urlopen(req, timeout=60) as resp:
+                return parse_notes(resp.read().decode("utf-8"))
+        except (urllib.error.URLError, TimeoutError, OSError, ET.ParseError) as exc:
+            last_exc = exc
+            if attempt == retries:
+                break
+            time.sleep(2 ** (attempt - 1))
+    raise RuntimeError(f"could not fetch notes feed: {last_exc}")
+
+
+def render_notes_table(content: str, notes: list[tuple[str, str, datetime, str]] | None) -> str:
+    """Render the Recent-Notes block as a two-column table: note link, subject badge.
+
+    No notes (fetch failed) leaves the block untouched rather than emptying it. The
+    table header sits inside the markers, so header and rows must come from the same
+    renderer: anything written inside the markers is replaced wholesale.
+    """
+    if not notes:
+        return content
+    rows = []
+    for title, link, _published, topic in notes[:NOTES_LIMIT]:
+        url = link if "utm_source=" in link else f"{link}{'&' if '?' in link else '?'}{NOTES_UTM}"
+        safe_title = title.replace("|", r"\|")
+        rows.append(f"| [{safe_title}]({url}) | ![{topic}]({_topic_badge(topic)}) |")
+    body = "\n".join(["| Заметка | Тема |", "| --- | --- |", *rows])
+    block = f"<!-- RECENT-POSTS-LIST:START -->\n{body}\n<!-- RECENT-POSTS-LIST:END -->"
+    return _NOTES_BLOCK_RE.sub(lambda _: block, content)
 
 
 # Project registry — the portfolio site publishes every project as JSON, and the
@@ -1843,9 +1901,14 @@ def update_readme_refresh_block(
             f"### \u26a1 Activity\n\n{block}\n\n",
             1,
         )
-    # One write, several repairs: the RSS job leaves the notes list on one line
-    # and the All Projects section is rendered from the site registry.
-    new_content = normalize_notes_block(new_content)
+    # One write, several repairs: the notes table and the All Projects section are
+    # both rendered here from their upstream sources (site RSS, site registry).
+    try:
+        notes = fetch_notes()
+    except RuntimeError as exc:
+        print(f"notes: {exc}; leaving the notes block as-is")
+        notes = None
+    new_content = render_notes_table(new_content, notes)
     if projects_block is not None:
         new_content = sync_projects_block(new_content, projects_block)
     if new_content == content:

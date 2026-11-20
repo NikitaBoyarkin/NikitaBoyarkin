@@ -9,6 +9,7 @@ import re
 import sys
 import urllib.error
 import xml.etree.ElementTree as ET
+from datetime import datetime, timezone
 from html.parser import HTMLParser
 from pathlib import Path
 
@@ -468,7 +469,7 @@ def test_hero_terminal_glyphs_cover_every_character_on_a_3x5_grid():
         assert all(0 <= bits <= 7 for bits in rows), char
 
 
-# ---------- normalize_notes_block ----------
+# ---------- Recent Notes table ----------
 
 
 def _notes_block(items):
@@ -486,44 +487,101 @@ def _notes_body(content):
     )[0]
 
 
-def test_notes_block_splits_glued_items():
-    glued = _notes_block("- [A](https://a)- [B](https://b)- [C](https://c)")
-    out = bp.normalize_notes_block(glued)
-    assert _notes_body(out).strip().splitlines() == [
-        "- [A](https://a)",
-        "- [B](https://b)",
-        "- [C](https://c)",
+def _feed(*items):
+    entries = "".join(
+        f"<item><title>{t}</title><link>{u}</link><pubDate>{d}</pubDate>"
+        f"<category>{c}</category><category>extra</category></item>"
+        for t, u, d, c in items
+    )
+    return f"<?xml version='1.0'?><rss version='2.0'><channel>{entries}</channel></rss>"
+
+
+AUG = "Thu, 27 Aug 2026 00:00:00 GMT"
+SEP = "Sun, 27 Sep 2026 00:00:00 GMT"
+
+
+def test_notes_table_renders_a_header_and_one_row_per_note():
+    notes = bp.parse_notes(
+        _feed(("B", "https://b", AUG, "note"), ("A", "https://a", SEP, "decision-log"))
+    )
+    lines = _notes_body(bp.render_notes_table(_notes_block("- [old](https://old)"), notes))
+    lines = lines.strip().splitlines()
+    assert lines[0] == "| Заметка | Тема |"
+    assert lines[1] == "| --- | --- |"
+    assert lines[2].startswith("| [A](https://a?utm_source=")
+    assert "![decision-log](https://img.shields.io/badge/decision--log-fe4e02" in lines[2]
+    assert "![note](" in lines[3]
+
+
+def test_notes_badge_doubles_the_dash_shields_requires():
+    assert "decision--log" in bp._topic_badge("decision-log")
+
+
+def test_notes_badge_falls_back_to_the_default_colour():
+    assert bp._topic_badge("unmapped").endswith(f"-{bp.NOTES_TOPIC_COLOR}?style=flat-square")
+
+
+def test_notes_table_is_idempotent():
+    notes = bp.parse_notes(_feed(("A", "https://a", AUG, "guide")))
+    once = bp.render_notes_table(_notes_block(""), notes)
+    assert bp.render_notes_table(once, notes) == once
+
+
+def test_notes_table_without_marker_is_untouched():
+    content = "### Recent Notes\n\n- [A](https://a)\n"
+    notes = bp.parse_notes(_feed(("A", "https://a", AUG, "guide")))
+    assert bp.render_notes_table(content, notes) == content
+
+
+def test_notes_table_leaves_the_block_alone_when_the_feed_is_unavailable():
+    content = _notes_block("- [A](https://a)")
+    assert bp.render_notes_table(content, []) == content
+    assert bp.render_notes_table(content, None) == content
+
+
+def test_notes_table_escapes_a_pipe_in_the_title():
+    notes = bp.parse_notes(_feed(("A | B", "https://a", AUG, "note")))
+    assert r"[A \| B]" in bp.render_notes_table(_notes_block(""), notes)
+
+
+def test_notes_table_caps_the_section_at_five_rows():
+    notes = bp.parse_notes(_feed(*[(f"P{i}", f"https://{i}", AUG, "note") for i in range(7)]))
+    body = _notes_body(bp.render_notes_table(_notes_block(""), notes))
+    assert len([line for line in body.splitlines() if line.startswith("| [")]) == 5
+
+
+def test_parse_notes_sorts_newest_first_and_skips_incomplete_items():
+    notes = bp.parse_notes(
+        _feed(("Old", "https://old", AUG, "note"), ("New", "https://new", SEP, "guide"))
+    )
+    assert [(title, topic) for title, _, _, topic in notes] == [
+        ("New", "guide"),
+        ("Old", "note"),
     ]
+    assert bp.parse_notes(_feed(("NoDate", "https://x", "", "note"))) == []
 
 
-def test_notes_block_is_idempotent():
-    once = bp.normalize_notes_block(_notes_block("- [A](https://a)- [B](https://b)"))
-    assert bp.normalize_notes_block(once) == once
-
-
-def test_notes_block_without_marker_is_untouched():
-    content = "### Recent Notes\n\n- [A](https://a)- [B](https://b)\n"
-    assert bp.normalize_notes_block(content) == content
-
-
-def test_notes_block_keeps_utm_urls_intact():
-    url = "https://x.dev/posts/a/?utm_source=github&utm_medium=profile_readme&utm_campaign=notes"
-    assert f"- [A]({url})" in bp.normalize_notes_block(_notes_block(f"- [A]({url})"))
-
-
-def test_refresh_block_writes_normalized_notes(tmp_path, monkeypatch):
-    """The daily README write is also the repair pass for the glued RSS list."""
+def test_refresh_block_writes_the_notes_table(tmp_path, monkeypatch):
     readme = tmp_path / "README.md"
     readme.write_text(
         "### ⚡ Activity\n\n"
         "<!-- LAST-REFRESHED:START -->\n_old_\n<!-- LAST-REFRESHED:END -->\n\n"
-        + _notes_block("- [A](https://a)- [B](https://b)")
+        + _notes_block("- [A](https://a)")
     )
     monkeypatch.setattr(bp, "REPO_ROOT", tmp_path)
+    monkeypatch.setattr(
+        bp,
+        "fetch_notes",
+        lambda *args, **kwargs: [
+            ("A", "https://a", datetime(2026, 9, 27, tzinfo=timezone.utc), "guide")
+        ],
+    )
     assert bp.update_readme_refresh_block(_days([1] * 7)) is True
     written = readme.read_text()
-    assert "- [A](https://a)\n- [B](https://b)" in written
-    assert "- [A](https://a)- [B](https://b)" not in written
+    assert "| Заметка | Тема |" in written
+    assert (
+        "| [A](https://a?utm_source=github&utm_medium=profile_readme&utm_campaign=notes)" in written
+    )
 
 
 def _repo_readme() -> str:
